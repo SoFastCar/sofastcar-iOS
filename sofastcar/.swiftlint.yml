@@ -1,0 +1,10 @@
+#해당 파일 위치 변경 금지 (루트에 있어야 적용됨)
+#규칙 비활성화 규칙은 SwiftLint 사이트에서 확인
+disapled_rules:
+
+#추가
+included:
+
+#제외
+excluded:
+- Pods
