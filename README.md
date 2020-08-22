@@ -25,6 +25,12 @@
 
 
 
+### GitHub 관련
+
+-  [github에 100메가 이상의 큰 파일 올리는 법 :: Learning Python](https://lpython.tistory.com/53) 
+
+
+
 ### Refrense
 
 - SwiftLint
