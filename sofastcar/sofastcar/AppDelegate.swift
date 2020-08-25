@@ -13,15 +13,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   var window: UIWindow?
 
-  func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-    
-    let viewContoller = ViewController()
-    
+  func application(_ application: UIApplication,
+                   didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+    let viewContoller = MainVC()
     window = UIWindow(frame: UIScreen.main.bounds)
     window?.rootViewController = viewContoller
     window?.makeKeyAndVisible()
-    
     return true
   }
 }
-
