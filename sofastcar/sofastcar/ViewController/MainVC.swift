@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  MainVC.swift
 //  sofastcar
 //
 //  Created by 김광수 on 2020/08/21.
@@ -9,7 +9,8 @@
 import UIKit
 import NMapsMap
 
-class ViewController: UIViewController {
+
+class MainVC: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     let mapView = NMFMapView(frame: view.frame)
