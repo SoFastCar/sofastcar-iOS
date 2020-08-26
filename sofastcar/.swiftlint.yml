@@ -2,6 +2,7 @@
 #규칙 비활성화 규칙은 SwiftLint 사이트에서 확인
 disapled_rules:
 - trailing_whitespace
+- line_length
 
 #추가
 included:
