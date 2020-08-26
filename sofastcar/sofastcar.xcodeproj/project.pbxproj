@@ -8,9 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		1226A60FC1A80A06F7DAB1AE /* Pods_sofastcar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC793DBC933237B89DC3FEED /* Pods_sofastcar.framework */; };
+		C72A913824F5E15B005D464F /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72A913724F5E15B005D464F /* Extension.swift */; };
+		C72A913A24F5E32A005D464F /* SingUpInitVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72A913924F5E32A005D464F /* SingUpInitVC.swift */; };
+		C72A913F24F60CD9005D464F /* TouVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72A913E24F60CD9005D464F /* TouVC.swift */; };
+		C72A914124F61857005D464F /* TouButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72A914024F61857005D464F /* TouButton.swift */; };
+		C72A914424F67D9F005D464F /* TouView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72A914324F67D9F005D464F /* TouView.swift */; };
 		C75451F424F4E58F00E13280 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = C75451F324F4E58F00E13280 /* RxSwift */; };
 		C75451F624F4E58F00E13280 /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = C75451F524F4E58F00E13280 /* RxRelay */; };
 		C75451F824F4E58F00E13280 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = C75451F724F4E58F00E13280 /* RxCocoa */; };
+		C7BD348C24F54A5700089F0D /* InitVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BD348B24F54A5700089F0D /* InitVC.swift */; };
 		C7EA08F624EFF29C001A7ED4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7EA08F524EFF29C001A7ED4 /* AppDelegate.swift */; };
 		C7EA08FA24EFF29C001A7ED4 /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7EA08F924EFF29C001A7ED4 /* MainVC.swift */; };
 		C7EA08FF24EFF29D001A7ED4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C7EA08FE24EFF29D001A7ED4 /* Assets.xcassets */; };
@@ -23,6 +29,12 @@
 /* Begin PBXFileReference section */
 		385247949553C4B863A7F4DF /* Pods-sofastcar.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sofastcar.debug.xcconfig"; path = "Target Support Files/Pods-sofastcar/Pods-sofastcar.debug.xcconfig"; sourceTree = "<group>"; };
 		BC793DBC933237B89DC3FEED /* Pods_sofastcar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_sofastcar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C72A913724F5E15B005D464F /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
+		C72A913924F5E32A005D464F /* SingUpInitVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingUpInitVC.swift; sourceTree = "<group>"; };
+		C72A913E24F60CD9005D464F /* TouVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouVC.swift; sourceTree = "<group>"; };
+		C72A914024F61857005D464F /* TouButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouButton.swift; sourceTree = "<group>"; };
+		C72A914324F67D9F005D464F /* TouView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouView.swift; sourceTree = "<group>"; };
+		C7BD348B24F54A5700089F0D /* InitVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitVC.swift; sourceTree = "<group>"; tabWidth = 3; };
 		C7EA08F224EFF29C001A7ED4 /* sofastcar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sofastcar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C7EA08F524EFF29C001A7ED4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C7EA08F924EFF29C001A7ED4 /* MainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
@@ -50,9 +62,34 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C72A913624F5E13F005D464F /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				C72A913724F5E15B005D464F /* Extension.swift */,
+				C72A914024F61857005D464F /* TouButton.swift */,
+			);
+			path = Utility;
+			sourceTree = "<group>";
+		};
+		C72A913B24F5E50B005D464F /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "New Group";
+			sourceTree = "<group>";
+		};
+		C72A914224F67D87005D464F /* View */ = {
+			isa = PBXGroup;
+			children = (
+				C72A914324F67D9F005D464F /* TouView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		C75451F924F4E5CF00E13280 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				C72A914224F67D87005D464F /* View */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -67,9 +104,20 @@
 		C75451FB24F4E5DB00E13280 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				C7BD348724F53BDE00089F0D /* Login */,
 				C7EA08F924EFF29C001A7ED4 /* MainVC.swift */,
 			);
 			path = ViewController;
+			sourceTree = "<group>";
+		};
+		C7BD348724F53BDE00089F0D /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				C7BD348B24F54A5700089F0D /* InitVC.swift */,
+				C72A913924F5E32A005D464F /* SingUpInitVC.swift */,
+				C72A913E24F60CD9005D464F /* TouVC.swift */,
+			);
+			path = Login;
 			sourceTree = "<group>";
 		};
 		C7EA08E924EFF29C001A7ED4 = {
@@ -95,10 +143,12 @@
 			isa = PBXGroup;
 			children = (
 				C7EA08F524EFF29C001A7ED4 /* AppDelegate.swift */,
+				C72A913624F5E13F005D464F /* Utility */,
 				C75451FB24F4E5DB00E13280 /* ViewController */,
 				C75451FA24F4E5D700E13280 /* Model */,
 				C75451F924F4E5CF00E13280 /* View */,
 				C7EA08FE24EFF29D001A7ED4 /* Assets.xcassets */,
+				C72A913B24F5E50B005D464F /* New Group */,
 				C7EA090024EFF29D001A7ED4 /* LaunchScreen.storyboard */,
 				C7EA090324EFF29D001A7ED4 /* Info.plist */,
 			);
@@ -279,6 +329,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C72A914124F61857005D464F /* TouButton.swift in Sources */,
+				C72A913A24F5E32A005D464F /* SingUpInitVC.swift in Sources */,
+				C72A913824F5E15B005D464F /* Extension.swift in Sources */,
+				C72A914424F67D9F005D464F /* TouView.swift in Sources */,
+				C7BD348C24F54A5700089F0D /* InitVC.swift in Sources */,
+				C72A913F24F60CD9005D464F /* TouVC.swift in Sources */,
 				C7EA08FA24EFF29C001A7ED4 /* MainVC.swift in Sources */,
 				C7EA08F624EFF29C001A7ED4 /* AppDelegate.swift in Sources */,
 			);
@@ -348,7 +404,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -402,7 +458,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
