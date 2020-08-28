@@ -1,8 +1,9 @@
 #해당 파일 위치 변경 금지 (루트에 있어야 적용됨)
 #규칙 비활성화 규칙은 SwiftLint 사이트에서 확인
 disabled_rules:
-- trailing_whitespace
-- line_length
+- trailing_whitespace   # 함수내 빈 줄 에러
+- line_length           # 한줄에 160자 제한
+- type_body_length      # 하나의 파일에 200 Line 이상
 
 #추가
 included:

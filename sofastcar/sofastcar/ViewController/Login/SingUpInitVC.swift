@@ -82,9 +82,9 @@ class SingUpInitVC: UIViewController {
   }
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    
-    navigationController?.navigationBar.isHidden = true
-    
+    if let navi = navigationController {
+      navi.navigationBar.isHidden = true
+    }
   }
   
   // MARK: - Handler

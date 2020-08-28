@@ -82,7 +82,7 @@ class InitVC: UIViewController {
       timer.invalidate()
     }
   }
-  
+
   private func configureScrollView() {
     
     let imageNumber = scrollViewImagArray.count

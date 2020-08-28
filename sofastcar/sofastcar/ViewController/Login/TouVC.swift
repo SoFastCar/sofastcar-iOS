@@ -6,15 +6,19 @@
 //  Copyright © 2020 김광수. All rights reserved.
 //
 
-import UIKit
+import WebKit
 
 class TouVC: UIViewController {
   // MARK: - Properties
   let touView = TouView()
+  
+  let user = User()
 
   // MARK: - Life cycle
   override func viewDidLoad() {
     super.viewDidLoad()
+    
+    title = "약관 동의"
     
     touView.frame = self.view.frame
     
@@ -27,8 +31,10 @@ class TouVC: UIViewController {
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    navigationController?.navigationBar.isHidden = false
-    title = "약관 동의"
+    if let navi = navigationController {
+      navi.navigationBar.isHidden = false
+      navi.navigationBar.tintColor = .black
+    }
   }
 
   private func configureButtonAction() {
@@ -40,7 +46,11 @@ class TouVC: UIViewController {
     touView.marketingAcceptButton.addTarget(self, action: #selector(tabMarketingButton(_:)), for: .touchUpInside)
     touView.pushAcceptButton.addTarget(self, action: #selector(tabMarketingButton(_:)), for: .touchUpInside)
     touView.emailAcceptButton.addTarget(self, action: #selector(tabMarketingButton(_:)), for: .touchUpInside)
+    touView.smsAcceptButton.addTarget(self, action: #selector(tabMarketingButton(_:)), for: .touchUpInside)
     touView.continueSignUpButton.addTarget(self, action: #selector(singupContinueButtonTap), for: .touchUpInside)
+    touView.touShowButton.addTarget(self, action: #selector(tabShowTouButton(_:)), for: .touchUpInside)
+    touView.privacyShowButton.addTarget(self, action: #selector(tabShowTouButton(_:)), for: .touchUpInside)
+    touView.locationShowButton.addTarget(self, action: #selector(tabShowTouButton(_:)), for: .touchUpInside)
   }
   
   // MARK: - Handler
@@ -90,8 +100,39 @@ class TouVC: UIViewController {
     }
   }
   
+  @objc private func tabShowTouButton(_ sender: UIButton) {
+    var urlString: String = ""
+    
+    urlString = sender == touView.touShowButton ? "https://socar-docs.zendesk.com/hc/ko/articles/360048397194" :
+      sender == touView.privacyShowButton ?
+        "https://socar-docs.zendesk.com/hc/ko/articles/360048398254" :
+        "https://socar-docs.zendesk.com/hc/ko/articles/360049150593"
+    /*
+     이용약관 : https://socar-docs.zendesk.com/hc/ko/articles/360048397194
+     개인정보 : https://socar-docs.zendesk.com/hc/ko/articles/360048398254
+     위치정보 : https://socar-docs.zendesk.com/hc/ko/articles/360049150593
+     */
+    guard let url = URL(string: urlString) else { return print("Error") }
+    let request = URLRequest(url: url)
+    touView.webView.load(request)
+    touView.webView.frame = CGRect(x: 0, y: 0, width: touView.frame.width, height: touView.frame.height)
+    touView.addSubview(touView.webView)
+  }
+  
+  @objc private func tabWebViewColseButton() {
+    print("Aaaa")
+    touView.willRemoveSubview(touView.webView)
+//    touView.addSubview(touView)
+  }
+  
   @objc private func singupContinueButtonTap() {
-    print("Tab Button")
+    let userAuthVC = UserAuthVC()
+    user.smsMarketing = touView.smsAcceptButton.isSelected
+    user.emailMarketing = touView.emailAcceptButton.isSelected
+    user.pushMarketing = touView.pushAcceptButton.isSelected
+    
+    userAuthVC.user = self.user
+    navigationController?.pushViewController(userAuthVC, animated: true)
   }
   
   private func checkAllAccept() {

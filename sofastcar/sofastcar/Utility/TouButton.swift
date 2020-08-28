@@ -9,9 +9,13 @@
 import Foundation
 import UIKit
 
+enum MyButtonStyle: String {
+  case touStyle = "tou"
+  case authStyle = "Auth"
+}
+
 class TouButton: UIButton {
-  
-  init(title: String, imageName: String, textColor: UIColor, fontSize: CGFloat) {
+  init(title: String, imageName: String, textColor: UIColor, fontSize: CGFloat, style: MyButtonStyle) {
     super.init(frame: .zero)
     
     let imageConf = UIImage.SymbolConfiguration(pointSize: fontSize, weight: .medium)
@@ -24,8 +28,16 @@ class TouButton: UIButton {
       image: UIImage(systemName: imageName,
                      withConfiguration: imageConf)!.withTintColor(.black))
     
-    let selectedString = NSAttributedString.touStyle(imageAttach: selectButtonImage, setText: title)
-    let unSelectedString = NSAttributedString.touStyle(imageAttach: unSelectButtonImage, setText: title)
+    var selectedString = NSAttributedString()
+    var unSelectedString = NSAttributedString()
+    
+    if style == .touStyle {
+      selectedString = NSAttributedString.touStyle(imageAttach: selectButtonImage, setText: title)!
+      unSelectedString = NSAttributedString.touStyle(imageAttach: unSelectButtonImage, setText: title)!
+    } else if style == .authStyle {
+      selectedString = NSAttributedString.authStyle(imageAttach: selectButtonImage, setText: title)!
+      unSelectedString = NSAttributedString.authStyle(imageAttach: unSelectButtonImage, setText: title)!
+    }
     
     self.setAttributedTitle(unSelectedString, for: .normal)
     self.setAttributedTitle(selectedString, for: .selected)

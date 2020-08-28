@@ -7,23 +7,26 @@
 //
 
 import UIKit
+import WebKit
 import SnapKit
 
 class TouView: UIView {
   // MARK: - Properties
   let padding: CGFloat = 20
   
+  let webView: WKWebView = {
+    let webView = WKWebView()
+    return webView
+  }()
+  
   let allAcceptButton: TouButton = {
     let button = TouButton(title: "전체 내용에 동의합니다.",
                            imageName: "checkmark.circle.fill",
-                           textColor: .darkGray,
-                           fontSize: 17)
-    
+                           textColor: .darkGray, fontSize: 17, style: .touStyle)
     if let stringWidth = button.currentAttributedTitle?.size().width {
       let leftInset = (button.frame.width - stringWidth)/3*2
       button.titleEdgeInsets = .init(top: 0, left: leftInset-60, bottom: 0, right: 0)
     }
-    
     button.isSelected = false
     return button
   }()
@@ -59,36 +62,35 @@ class TouView: UIView {
   // First Square View
   let serviceAcceptButton: TouButton = {
     let button = TouButton(title: "서비스 이용약관 전체 동의",
-                           imageName: "checkmark.circle.fill", textColor: .darkGray, fontSize: 15)
+                           imageName: "checkmark.circle.fill", textColor: .darkGray, fontSize: 15, style: .touStyle)
     button.isSelected = false
     return button
   }()
   
   let socarTouAcceptButton: TouButton = {
-    let button = TouButton(title: "(필수) 쏘카 이용약관",
-                           imageName: "checkmark", textColor: .darkGray, fontSize: 15)
+    let button = TouButton(title: "(필수) 쏘카 이용약관", imageName: "checkmark",
+                           textColor: .darkGray, fontSize: 15, style: .touStyle)
     button.isSelected = false
     return button
   }()
   
   let personalInfoAcceptButton: TouButton = {
-    let button = TouButton(title: "(필수) 개인정보 수집 및 이용 동의",
-                           imageName: "checkmark", textColor: .darkGray, fontSize: 15)
+    let button = TouButton(title: "(필수) 개인정보 수집 및 이용 동의", imageName: "checkmark",
+                           textColor: .darkGray, fontSize: 15, style: .touStyle)
     button.isSelected = false
     return button
   }()
   
   let locationInfoAcceptButton: TouButton = {
-    let button = TouButton(title: "(필수) 위치기반서비스 이용약관",
-                           imageName: "checkmark", textColor: .darkGray, fontSize: 15)
+    let button = TouButton(title: "(필수) 위치기반서비스 이용약관", imageName: "checkmark",
+                           textColor: .darkGray, fontSize: 15, style: .touStyle)
     button.isSelected = false
     return button
   }()
   
   // Second Square View
   let marketingAcceptButton: TouButton = {
-    let button = TouButton(title: "(선택) 할인쿠폰⋅이벤트등 마케팅 정보 수신 동의",
-                           imageName: "checkmark.circle.fill", textColor: .darkGray, fontSize: 15)
+    let button = TouButton(title: "(선택) 할인쿠폰⋅이벤트등 마케팅 정보 수신 동의", imageName: "checkmark.circle.fill", textColor: .darkGray, fontSize: 15, style: .touStyle)
     button.isSelected = false
     return button
   }()
@@ -106,25 +108,21 @@ class TouView: UIView {
     let button = TouButton(title: "Push",
                            imageName: "checkmark.circle.fill",
                            textColor: .darkGray,
-                           fontSize: 16)
+                           fontSize: 16, style: .touStyle)
     button.isSelected = false
     return button
   }()
   
   let smsAcceptButton: TouButton = {
-    let button = TouButton(title: "SMS",
-                           imageName: "checkmark.circle.fill",
-                           textColor: .darkGray,
-                           fontSize: 16)
+    let button = TouButton(title: "SMS", imageName: "checkmark.circle.fill",
+                           textColor: .darkGray, fontSize: 16, style: .touStyle)
     button.isSelected = false
     return button
   }()
   
   let emailAcceptButton: TouButton = {
-    let button = TouButton(title: "Email",
-                           imageName: "checkmark.circle.fill",
-                           textColor: .darkGray,
-                           fontSize: 16)
+    let button = TouButton(title: "Email", imageName: "checkmark.circle.fill",
+                           textColor: .darkGray, fontSize: 16, style: .touStyle)
     button.isSelected = false
     return button
   }()
@@ -158,6 +156,27 @@ class TouView: UIView {
     return button
   }()
   
+  let touShowButton: UIButton = {
+    let button = UIButton()
+    button.setImage(UIImage(systemName: "chevron.right"), for: .normal)
+    button.imageView?.tintColor = .darkGray
+    return button
+  }()
+  
+  let privacyShowButton: UIButton = {
+    let button = UIButton()
+    button.setImage(UIImage(systemName: "chevron.right"), for: .normal)
+    button.imageView?.tintColor = .darkGray
+    return button
+  }()
+  
+  let locationShowButton: UIButton = {
+    let button = UIButton()
+    button.setImage(UIImage(systemName: "chevron.right"), for: .normal)
+    button.imageView?.tintColor = .darkGray
+    return button
+  }()
+
   // MARK: - Life Cycle
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -201,7 +220,7 @@ class TouView: UIView {
   
   private func configureFirstSquareView() {
     // First Square View
-    [serviceAcceptButton, firstLine, socarTouAcceptButton, personalInfoAcceptButton, locationInfoAcceptButton].forEach {
+    [serviceAcceptButton, firstLine, socarTouAcceptButton, personalInfoAcceptButton, locationInfoAcceptButton, touShowButton, privacyShowButton, locationShowButton].forEach {
       firstSquareView.addSubview($0)
     }
     
@@ -223,16 +242,31 @@ class TouView: UIView {
       $0.height.equalTo(43)
     }
     
+    touShowButton.snp.makeConstraints {
+      $0.centerY.equalTo(socarTouAcceptButton.snp.centerY)
+      $0.trailing.equalTo(firstSquareView.snp.trailing).offset(-15)
+    }
+    
     personalInfoAcceptButton.snp.makeConstraints {
       $0.top.equalTo(socarTouAcceptButton.snp.bottom)
       $0.leading.equalTo(firstSquareView).offset(padding)
       $0.height.equalTo(43)
     }
     
+    privacyShowButton.snp.makeConstraints {
+      $0.centerY.equalTo(personalInfoAcceptButton.snp.centerY)
+      $0.trailing.equalTo(firstSquareView.snp.trailing).offset(-15)
+    }
+    
     locationInfoAcceptButton.snp.makeConstraints {
       $0.top.equalTo(personalInfoAcceptButton.snp.bottom)
       $0.leading.equalTo(firstSquareView).offset(padding)
       $0.bottom.equalTo(firstSquareView)
+    }
+    
+    locationShowButton.snp.makeConstraints {
+      $0.centerY.equalTo(locationInfoAcceptButton.snp.centerY)
+      $0.trailing.equalTo(firstSquareView.snp.trailing).offset(-15)
     }
   }
   
