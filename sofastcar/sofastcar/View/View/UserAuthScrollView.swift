@@ -16,6 +16,14 @@ class UserAuthScrollView: UIScrollView {
   let padding: CGFloat = 15
   let sectionLabelHeight: CGFloat = 25
   let userInputMenusHeight: CGFloat = 50
+  var barHeight: CGFloat?
+  
+  lazy var blurView: UIVisualEffectView = {
+    let blurEffet = UIBlurEffect(style: .systemMaterialDark)
+    let view = UIVisualEffectView(effect: blurEffet)
+    view.alpha = 0
+    return view
+  }()
   
   var customerAgreeButtonArray: [UIButton] = []  // StackView buttonAction 연결을 위한 배열
   
@@ -36,7 +44,7 @@ class UserAuthScrollView: UIScrollView {
     return view
   }()
   
-  let continerView: UIView = {
+  let stackViewContinerView: UIView = {
     let view = UIView()
     view.backgroundColor = .white
     view.layoutMargins = UIEdgeInsets(top: 20, left: 15, bottom: 20, right: 15)
@@ -73,7 +81,7 @@ class UserAuthScrollView: UIScrollView {
   
   let selectConturyButton: TouButton = {
     let button = TouButton(title: "내국인", imageName: "chevron.down", textColor: .black, fontSize: 16, style: .authStyle)
-    button.isSelected = true
+    button.isSelected = false
     return button
   }()
   
@@ -133,12 +141,13 @@ class UserAuthScrollView: UIScrollView {
   
   let selectMobileCompany: TouButton = {
     let button = TouButton(title: "선택", imageName: "chevron.down", textColor: .systemGray4, fontSize: 16, style: .authStyle)
+    button.isSelected = true
     return button
   }()
   
   let userPhoneNumberTextField: UITextField = {
     let textField = UITextField()
-    textField.placeholder = " 01012341234 "
+    textField.placeholder = "01012341234"
     textField.keyboardType = .numberPad
     return textField
   }()
@@ -174,8 +183,8 @@ class UserAuthScrollView: UIScrollView {
     button.titleLabel?.font = .systemFont(ofSize: 18)
     button.setTitleColor(.systemGray3, for: .disabled)
     button.setTitleColor(.white, for: .normal)
-    button.backgroundColor = .systemGray5
-    button.isEnabled = false
+    button.backgroundColor = #colorLiteral(red: 0.007875645533, green: 0.7243045568, blue: 0.9998746514, alpha: 1) // .systemGray5
+    button.isEnabled = true
     button.contentEdgeInsets = UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0)
     button.contentVerticalAlignment = .top
     return button
@@ -186,19 +195,20 @@ class UserAuthScrollView: UIScrollView {
   // MARK: - Life Cycle
   override init(frame: CGRect) {
     super.init(frame: frame)
-    self.frame = CGRect(x: 0, y: 0,
-                        width: UIScreen.main.bounds.width,
-                        height: UIScreen.main.bounds.height)
-    self.backgroundColor = .systemGray6
-    self.isScrollEnabled = true
     
-    configureStackViewButtons(buttonStrings: essensialAgreeList)
+    configureAgreeButtonStackView(buttonStrings: essensialAgreeList)
     
-    configureDefaultLayout()
+    configureDefaultUISetting()
     
-    userAuthAgreeLayoutSetting()
+    userAuthAgreeSquareUISetting()
     
-    userNameLayoutSetting()
+    configureUserNameInputUI()
+    
+    configureUserBirthInputUI()
+    
+    configureUserPhoneInputUI()
+    
+    configureBottomLabelUISetting()
     
     settingAuthCompleteButton()
   }
@@ -208,7 +218,7 @@ class UserAuthScrollView: UIScrollView {
   }
   
   // 본인 확인 서비스 이용약관 동의 버튼 자동 생성을 위한 함수
-  private func configureStackViewButtons(buttonStrings: [String]) {
+  private func configureAgreeButtonStackView(buttonStrings: [String]) {
     for index in buttonStrings.indices {
       let button = TouButton(title: buttonStrings[index], imageName: "checkmark",
                              textColor: .darkGray, fontSize: 15, style: .touStyle)
@@ -219,23 +229,31 @@ class UserAuthScrollView: UIScrollView {
     }
   }
   
-  private func configureDefaultLayout() {
-    self.addSubview(contentView)
+  private func configureDefaultUISetting() {
+    
+    self.frame = CGRect(x: 0, y: 0,
+                        width: UIScreen.main.bounds.width,
+                        height: UIScreen.main.bounds.height)
+    self.backgroundColor = .systemGray6
+    self.isScrollEnabled = true
+    
+    [contentView, blurView].forEach {
+    self.addSubview($0)
+    }
+    
+    blurView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
     
     // 기기별 스크롤뷰 조절
     var heightPadding: CGFloat = 0
-    var safeBarheght: CGFloat = 90
     if UIScreen.main.bounds.height < 670 { // se, Se2...
       heightPadding = UIScreen.main.bounds.height * 0.2
-      safeBarheght = 0
     } else {
       heightPadding = 0
     }
     
-    print(UIScreen.main.bounds.height)
     self.contentSize = .init(width: UIScreen.main.bounds.width,
-                             height: UIScreen.main.bounds.height+heightPadding)
-    contentView.frame = CGRect(x: 0, y: safeBarheght,
+                             height: UIScreen.main.bounds.height+heightPadding+44)
+    contentView.frame = CGRect(x: 0, y: 0,
                                width: UIScreen.main.bounds.width,
                                height: UIScreen.main.bounds.height+heightPadding)
     
@@ -246,7 +264,7 @@ class UserAuthScrollView: UIScrollView {
       sectionArray[index].textColor = .black
     }
     
-    [customAuthAllAgreeButton, continerView, selectConturyButton, usernameTextField, userBirthTextField,
+    [customAuthAllAgreeButton, stackViewContinerView, selectConturyButton, usernameTextField, userBirthTextField,
     selectMobileCompany, userPhoneNumberTextField, sendAuthenticationSMSButton].forEach {
       $0.layer.borderColor = UIColor.systemGray4.cgColor
       $0.layer.borderWidth = 1
@@ -261,18 +279,8 @@ class UserAuthScrollView: UIScrollView {
     }
   }
   
-  private func settingAuthCompleteButton() {
-    contentView.addSubview(authCompleteButton)
-    authCompleteButton.snp.makeConstraints {
-      $0.leading.trailing.equalTo(self.safeAreaLayoutGuide)
-      $0.bottom.equalTo(self.safeAreaLayoutGuide).offset(40)
-      $0.height.equalTo(100)
-    }
-  }
-  
-  private func userAuthAgreeLayoutSetting() {
-    
-    [customAuthAllAgreeButton, continerView].forEach {
+  private func userAuthAgreeSquareUISetting() {
+    [customAuthAllAgreeButton, stackViewContinerView].forEach {
       contentView.addSubview($0)
     }
     contentView.addSubview(stackView)
@@ -283,27 +291,26 @@ class UserAuthScrollView: UIScrollView {
       $0.height.equalTo(50)
     }
     
-    continerView.snp.makeConstraints {
+    stackViewContinerView.snp.makeConstraints {
       $0.top.equalTo(customAuthAllAgreeButton.snp.bottom).offset(-1)
       $0.leading.trailing.equalTo(guide)
       $0.height.equalTo(191)
     }
     
     stackView.snp.makeConstraints {
-      $0.top.equalTo(continerView.layoutMarginsGuide)
-      $0.leading.equalTo(continerView.layoutMarginsGuide)
-      $0.bottom.equalTo(continerView.layoutMarginsGuide)
+      $0.top.equalTo(stackViewContinerView.layoutMarginsGuide)
+      $0.leading.equalTo(stackViewContinerView.layoutMarginsGuide)
+      $0.bottom.equalTo(stackViewContinerView.layoutMarginsGuide)
     }
   }
   
-  private func userNameLayoutSetting() {
-    // =========== name =============
+  private func configureUserNameInputUI() {
     [usernameLable, selectConturyButton, usernameTextField].forEach {
       contentView.addSubview($0)
     }
     
     usernameLable.snp.makeConstraints {
-      $0.top.equalTo(continerView.snp.bottom).offset(padding*1.5)
+      $0.top.equalTo(stackViewContinerView.snp.bottom).offset(padding*1.5)
       $0.leading.trailing.equalTo(guide)
       $0.height.equalTo(sectionLabelHeight)
     }
@@ -321,8 +328,9 @@ class UserAuthScrollView: UIScrollView {
       $0.height.equalTo(userInputMenusHeight)
       $0.width.equalTo(selectConturyButton.snp.width).multipliedBy(2.5)
     }
-    // =========== Birth =============
-    
+  }
+  
+  private func configureUserBirthInputUI() {
     [userBirthLabel, userBirthTextField, userSexTextField].forEach {
       contentView.addSubview($0)
     }
@@ -358,8 +366,9 @@ class UserAuthScrollView: UIScrollView {
       $0.centerY.equalTo(userBirthTextField.snp.centerY)
       $0.trailing.equalTo(userSexTextField.snp.leading).offset(-padding/2)
     }
-    
-    // ========== Phone Number =========
+  }
+  
+  private func configureUserPhoneInputUI() {
     [userPhoneNumberLabel, selectMobileCompany, userPhoneNumberTextField, sendAuthenticationSMSButton].forEach {
       contentView.addSubview($0)
     }
@@ -389,7 +398,9 @@ class UserAuthScrollView: UIScrollView {
       $0.leading.trailing.equalTo(guide)
       $0.height.equalTo(userInputMenusHeight)
     }
-    
+  }
+  
+  private func configureBottomLabelUISetting() {
     [bottomInfoLabel].forEach {
       contentView.addSubview($0)
     }
@@ -398,6 +409,15 @@ class UserAuthScrollView: UIScrollView {
       $0.top.equalTo(sendAuthenticationSMSButton.snp.bottom).offset(padding*2)
       $0.leading.trailing.equalTo(guide)
       $0.bottom.equalTo(contentView.snp.bottom).offset(20)
+    }
+  }
+  
+  private func settingAuthCompleteButton() {
+    contentView.addSubview(authCompleteButton)
+    authCompleteButton.snp.makeConstraints {
+      $0.leading.trailing.equalTo(self.safeAreaLayoutGuide)
+      $0.bottom.equalTo(self.safeAreaLayoutGuide).offset(40)
+      $0.height.equalTo(100)
     }
   }
   

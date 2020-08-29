@@ -12,17 +12,16 @@ class UserAuthVC: UIViewController {
   
   // MARK: - Properties
   var user: User?
-  
   let scrollView = UserAuthScrollView()
-  
-  var isUserEdtting: Bool = false
-  
+  var isKeyboardUp: Bool = false
+  var isUserAgreeWithAlltou: Bool = false
+
   // MARK: - Life Cycle
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    title = "휴대폰 인증"
-    
+    scrollView.delegate = self
+    configureNavigationBar()
     configureButtonAction()
   }
   
@@ -31,6 +30,7 @@ class UserAuthVC: UIViewController {
   }
   
   override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
     //keyboard 입력에 따른 화면 올리는 Notification 설정
     NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillAppear(noti:)), name: UIResponder.keyboardWillShowNotification, object: nil)
     NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillDisappear(noti:)), name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -44,6 +44,12 @@ class UserAuthVC: UIViewController {
     NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
   }
   
+  private func configureNavigationBar() {
+    title = "휴대폰 인증"
+    self.navigationController?.navigationBar.addSubview(self.scrollView.blurView)
+    self.navigationController?.navigationBar.sendSubviewToBack(self.scrollView.blurView)
+  }
+  
   private func configureButtonAction() {
     // textField 변경 사항 체크
     [scrollView.userSexTextField, scrollView.userBirthTextField, scrollView.userSexTextField, scrollView.userPhoneNumberTextField, scrollView.usernameTextField].forEach {
@@ -51,19 +57,27 @@ class UserAuthVC: UIViewController {
       $0.addTarget(self, action: #selector(textFieldChange(_:)), for: .editingChanged)
     }
     
+    // StackView내 동의 버튼 action 및 초기값
     scrollView.customerAgreeButtonArray.forEach {
       $0.addTarget(self, action: #selector(tabUserAgreeButton(_:)), for: .touchUpInside)
       $0.isSelected = false
     }
     scrollView.customAuthAllAgreeButton.addTarget(self, action: #selector(tabUserAgreeButton(_:)), for: .touchUpInside)
     scrollView.customAuthAllAgreeButton.isSelected = false
+    
+    scrollView.selectConturyButton.addTarget(self, action: #selector(tabSelectPopupMenuButtons(_:)), for: .touchUpInside)
+    scrollView.selectMobileCompany.addTarget(self, action: #selector(tabSelectPopupMenuButtons(_:)), for: .touchUpInside)
   }
-  
-  // MARK: - Handler
+  // MARK: - Check AuthComplete button Enabler
+  private func checkAuthButtonEnable() {
+    
+//    scrollView.authCompleteButton.isEnabled = isUserAgreeWithAlltou && scrollView.selectMobileCompany.isSelected && scrollView.selectMobileCompany.isHidden
+//
+//    let authButtonBGColor = scrollView.authCompleteButton.isSelected == true ?  #colorLiteral(red: 0.007875645533, green: 0.7243045568, blue: 0.9998746514, alpha: 1) : .systemGray4
+//    scrollView.authCompleteButton.backgroundColor = authButtonBGColor
+  }
 
-  
   // MARK: - Button Handler
-  
   @objc private func textFieldChange(_ sender: UITextField) {
     if sender == scrollView.userBirthTextField {
       if sender.text?.count ?? 0 == 6 {
@@ -71,7 +85,11 @@ class UserAuthVC: UIViewController {
       }
     } else if sender == scrollView.userSexTextField {
       if sender.text?.count ?? 0 == 1 {
-        scrollView.selectMobileCompany.becomeFirstResponder()
+        tabSelectPopupMenuButtons(scrollView.selectMobileCompany)
+      }
+    } else if sender == scrollView.userPhoneNumberTextField {
+      if sender.text?.count ?? 0 == 11 {
+        
       }
     }
   }
@@ -95,49 +113,85 @@ class UserAuthVC: UIViewController {
       }
     }
     
-    let view = self.scrollView
-    
+    let sView = self.scrollView //
     if allAgreebutton.isSelected == true {
-      print("animation in")
       UIView.animate(withDuration: 0.1) {
-        view.stackView.transform = .init(scaleX: 0, y: 0)
-        view.continerView.snp.updateConstraints {
+        sView.stackView.transform = .init(scaleX: 0, y: 0)
+        sView.stackViewContinerView.snp.updateConstraints {
           $0.height.equalTo(0)
         }
         self.loadViewIfNeeded()
       }
     } else {
-      print("animation in")
       UIView.animate(withDuration: 0.1) {
-        view.stackView.transform = .identity
-        view.continerView.snp.updateConstraints {
+        sView.stackView.transform = .identity
+        sView.stackViewContinerView.snp.updateConstraints {
           $0.height.equalTo(191)
         }
         self.loadViewIfNeeded()
       }
     }
+    
+    isUserAgreeWithAlltou = allAgreebutton.isSelected
+    checkAuthButtonEnable()
+  }
+  
+  @objc private func tabSelectPopupMenuButtons(_ sender: UIButton) {
+    
+    let selectPopupVC = SelectPopupVC()
+    if sender == scrollView.selectConturyButton {
+      selectPopupVC.sectionTitle = "  국적 선택"
+      selectPopupVC.selectionMenus = ["내국인", "외국인"]
+    } else if sender == scrollView.selectMobileCompany {
+      selectPopupVC.sectionTitle = "  통신사 선택"
+      selectPopupVC.selectionMenus = ["SKT", "KT", "LGU+", "알뜰폰"]
+    }
+    selectPopupVC.passPhoneNuberTextField = scrollView.userPhoneNumberTextField
+    selectPopupVC.passBlurView = scrollView.blurView
+    selectPopupVC.tableView.reloadData()
+    selectPopupVC.modalPresentationStyle = .overFullScreen
+    
+    // 블러효과
+    UIView.animate(withDuration: 0.5) {
+      self.scrollView.blurView.alpha = 0.4
+    }
+    
+    selectPopupVC.passUserSelectDataClosure = { [weak self] userInput in
+      self?.navigationController?.navigationBar.isTranslucent = false
+      
+      let imageConf = UIImage.SymbolConfiguration(pointSize: 16, weight: .medium)
+      let buttonImage = NSTextAttachment( image: UIImage(systemName: "chevron.down",
+                                                         withConfiguration: imageConf)!.withTintColor(.black))
+      let attrubutedString = NSAttributedString.authStyle(imageAttach: buttonImage, setText: userInput)
+      if sender == self?.scrollView.selectConturyButton {
+        self?.scrollView.selectConturyButton.setAttributedTitle(attrubutedString, for: .selected)
+      } else {
+        self?.scrollView.selectMobileCompany.setAttributedTitle(attrubutedString, for: .selected)
+        self?.scrollView.selectMobileCompany.titleLabel?.textColor = .black
+      }
+    }
+    present(selectPopupVC, animated: true)
   }
   
   // MARK: - Keyboard Handler
   @objc func keyboardWillAppear( noti: NSNotification ) {
-    if isUserEdtting == false {
+    if isKeyboardUp == false && isUserAgreeWithAlltou == false {
       if let keyboardFrame: NSValue = noti.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
         let keyboardRectangle = keyboardFrame.cgRectValue
         let keyboardHeight = keyboardRectangle.height
         view.frame.origin.y -= keyboardHeight
       }
-      isUserEdtting = true
+      isKeyboardUp = true
     }
   }
   
   @objc func keyboardWillDisappear( noti: NSNotification ) {
-    
     if let keyboardFrame: NSValue = noti.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
-      if isUserEdtting == true {
+      if isKeyboardUp == true {
         let keyboardRectangle = keyboardFrame.cgRectValue
         let keyboardHeight = keyboardRectangle.height
         view.frame.origin.y += keyboardHeight
-        isUserEdtting = false
+        isKeyboardUp = false
       }
     }
   }
@@ -152,6 +206,7 @@ extension UserAuthVC: UITextFieldDelegate {
     return true
   }
   
+  // 각 텍스트 필드 입력 완료시 다은 TextField 로 Response 넘겨줌
   func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
     let newLength = (textField.text?.count)! + string.count - range.length
     if textField == scrollView.usernameTextField || textField == scrollView.userBirthTextField {
@@ -160,5 +215,17 @@ extension UserAuthVC: UITextFieldDelegate {
       return !(newLength > 1)
     }
     return !(newLength > 11)
+  }
+}
+
+// MARK: - UIScrollViewDelegate
+extension UserAuthVC: UIScrollViewDelegate {
+  func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    // 모든 약관에 동의한 경우 stackview가 줄어듬으로써 스크롤 차단
+    if isUserAgreeWithAlltou == true {
+      if scrollView.contentOffset.y > -999 {
+        scrollView.contentOffset.y = -scrollView.safeAreaInsets.top
+      }
+    }
   }
 }

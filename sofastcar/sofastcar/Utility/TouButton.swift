@@ -36,7 +36,7 @@ class TouButton: UIButton {
       unSelectedString = NSAttributedString.touStyle(imageAttach: unSelectButtonImage, setText: title)!
     } else if style == .authStyle {
       selectedString = NSAttributedString.authStyle(imageAttach: selectButtonImage, setText: title)!
-      unSelectedString = NSAttributedString.authStyle(imageAttach: unSelectButtonImage, setText: title)!
+      unSelectedString = NSAttributedString.authStyle(imageAttach: selectButtonImage, setText: title)!
     }
     
     self.setAttributedTitle(unSelectedString, for: .normal)
