@@ -28,14 +28,11 @@ class UserAuthScrollView: UIScrollView {
   var customerAgreeButtonArray: [UIButton] = []  // StackView buttonAction 연결을 위한 배열
   
   let essensialAgreeList: [String] = [
-    "(필수) 개인정보 수집 및 이용 동의",
-    "(필수) 고유식별정보 처리",
-    "(필수) 서비스 이용약관",
-    "(필수) 통신사 이용약관",
-    "(필수) 개인정보 제3자 제공 동의"
+    "(필수) 개인정보 수집 및 이용 동의", "(필수) 고유식별정보 처리", "(필수) 서비스 이용약관",
+    "(필수) 통신사 이용약관", "(필수) 개인정보 제3자 제공 동의"
   ]
   
-  let sectionLabelText: [String] = ["이름", "주민등록번호 앞 7자리", "휴대폰 정보"]
+  let sectionLabelText: [String] = [" 이름", " 주민등록번호 앞 7자리", " 휴대폰 정보"]
   
   let contentView: UIView = {
     let view = UIView()
@@ -62,12 +59,6 @@ class UserAuthScrollView: UIScrollView {
     return button
   }()
   
-  let seperateLine: UIView = {
-    let view = UIView()
-    view.backgroundColor = .systemGray5
-    return view
-  }()
-  
   lazy var stackView: UIStackView = {
     let view = UIStackView(arrangedSubviews: customerAgreeButtonArray)
     view.backgroundColor = .white
@@ -85,8 +76,8 @@ class UserAuthScrollView: UIScrollView {
     return button
   }()
   
-  let usernameTextField: UITextField = {
-    let textField = UITextField()
+  let usernameTextField: LoginUserInputTextField = {
+    let textField = LoginUserInputTextField()
     textField.placeholder = "본인 실명 (통신사 가입 이름)"
     textField.keyboardType = .default
     textField.clearButtonMode = .whileEditing
@@ -96,8 +87,8 @@ class UserAuthScrollView: UIScrollView {
   // ====== 주민등록정보 정보 =======
   let userBirthLabel = UILabel()
 
-  let userBirthTextField: UITextField = {
-    let textField = UITextField()
+  let userBirthTextField: LoginUserInputTextField = {
+    let textField = LoginUserInputTextField()
     textField.attributedPlaceholder = NSAttributedString(
       string: "• • • • • •",
       attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 30)]
@@ -117,13 +108,14 @@ class UserAuthScrollView: UIScrollView {
     return label
   }()
   
-  let userSexTextField: UITextField = {
-    let textField = UITextField()
+  let userSexTextField: LoginUserInputTextField = {
+    let textField = LoginUserInputTextField()
     textField.attributedPlaceholder = NSAttributedString(
       string: "•",
       attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 30)]
     )
     textField.textColor = .black
+    textField.layer.borderWidth = 0
     textField.keyboardType = .numberPad
     return textField
   }()
@@ -145,8 +137,8 @@ class UserAuthScrollView: UIScrollView {
     return button
   }()
   
-  let userPhoneNumberTextField: UITextField = {
-    let textField = UITextField()
+  let userPhoneNumberTextField: LoginUserInputTextField = {
+    let textField = LoginUserInputTextField()
     textField.placeholder = "01012341234"
     textField.keyboardType = .numberPad
     return textField
@@ -177,24 +169,14 @@ class UserAuthScrollView: UIScrollView {
     return textView
   }()
   
-  let authCompleteButton: UIButton = {
-    let button = UIButton()
-    button.setTitle("인증 완료", for: .normal)
-    button.titleLabel?.font = .systemFont(ofSize: 18)
-    button.setTitleColor(.systemGray3, for: .disabled)
-    button.setTitleColor(.white, for: .normal)
-    button.backgroundColor = #colorLiteral(red: 0.007875645533, green: 0.7243045568, blue: 0.9998746514, alpha: 1) // .systemGray5
-    button.isEnabled = true
-    button.contentEdgeInsets = UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0)
-    button.contentVerticalAlignment = .top
-    return button
-  }()
+  let authCompleteButton = LoginCompleteButton(frame: .zero, title: "인증 완료")
   
   lazy var guide = contentView.layoutMarginsGuide
   
   // MARK: - Life Cycle
   override init(frame: CGRect) {
     super.init(frame: frame)
+    backgroundColor = .systemGray6
     
     configureAgreeButtonStackView(buttonStrings: essensialAgreeList)
     
@@ -234,7 +216,7 @@ class UserAuthScrollView: UIScrollView {
     self.frame = CGRect(x: 0, y: 0,
                         width: UIScreen.main.bounds.width,
                         height: UIScreen.main.bounds.height)
-    self.backgroundColor = .systemGray6
+    
     self.isScrollEnabled = true
     
     [contentView, blurView].forEach {
@@ -264,18 +246,11 @@ class UserAuthScrollView: UIScrollView {
       sectionArray[index].textColor = .black
     }
     
-    [customAuthAllAgreeButton, stackViewContinerView, selectConturyButton, usernameTextField, userBirthTextField,
-    selectMobileCompany, userPhoneNumberTextField, sendAuthenticationSMSButton].forEach {
+    [customAuthAllAgreeButton, stackViewContinerView, selectConturyButton,
+    selectMobileCompany, sendAuthenticationSMSButton].forEach {
       $0.layer.borderColor = UIColor.systemGray4.cgColor
       $0.layer.borderWidth = 1
       $0.backgroundColor = .white
-    }
-    
-    [usernameTextField, userBirthTextField, userSexTextField, userPhoneNumberTextField].forEach {
-      $0.autocorrectionType = .no
-      $0.autocapitalizationType = .none
-      $0.returnKeyType = .next
-      $0.addLeftPadding()
     }
   }
   

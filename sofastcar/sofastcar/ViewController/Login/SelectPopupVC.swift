@@ -16,7 +16,7 @@ class SelectPopupVC: UIViewController {
   
   var passUserSelectDataClosure: ((String) -> Void)!
   var passBlurView: UIView!
-  var passPhoneNuberTextField: UITextField!
+  var passTextField: UITextField!
   
   lazy var tableView: UITableView = {
     let tableView = UITableView()
@@ -45,7 +45,7 @@ class SelectPopupVC: UIViewController {
     self.dismiss(animated: true)
     UIView.animate(withDuration: 0.5) {
       self.passBlurView.alpha = 0
-      self.passPhoneNuberTextField.becomeFirstResponder()
+      self.passTextField.becomeFirstResponder()
     }
   }
 }
@@ -92,7 +92,7 @@ extension SelectPopupVC: UITableViewDelegate {
     self.dismiss(animated: true)
     UIView.animate(withDuration: 0.5) {
       self.passBlurView.alpha = 0
-      self.passPhoneNuberTextField.becomeFirstResponder()
+      self.passTextField.becomeFirstResponder()
     }
   }
 }

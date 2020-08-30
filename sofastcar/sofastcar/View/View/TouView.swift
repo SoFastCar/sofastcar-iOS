@@ -140,21 +140,12 @@ class TouView: UIView {
     )
     textView.font = .systemFont(ofSize: 13)
     textView.textColor = .darkGray
-    textView.backgroundColor = .none
     textView.isUserInteractionEnabled = false
+    textView.backgroundColor = .none
     return textView
   }()
   
-  let continueSignUpButton: UIButton = {
-    let button = UIButton()
-    button.setTitle("가입 계속하기", for: .normal)
-    button.contentVerticalAlignment = .top
-    button.titleEdgeInsets = UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0)
-    button.titleLabel?.font = .boldSystemFont(ofSize: 20)
-    button.backgroundColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
-    button.isEnabled = false
-    return button
-  }()
+  let continueSignUpButton = LoginCompleteButton(frame: .zero, title: "가입 계속하기")
   
   let touShowButton: UIButton = {
     let button = UIButton()

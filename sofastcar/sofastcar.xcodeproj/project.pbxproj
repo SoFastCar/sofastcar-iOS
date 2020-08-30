@@ -21,6 +21,10 @@
 		C76B2A6524F7A7BB004E4CBD /* UserAuthScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76B2A6424F7A7BB004E4CBD /* UserAuthScrollView.swift */; };
 		C7A454AE24FA0C9900FA08B7 /* SelectPopupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A454AD24FA0C9900FA08B7 /* SelectPopupVC.swift */; };
 		C7BD348C24F54A5700089F0D /* InitVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BD348B24F54A5700089F0D /* InitVC.swift */; };
+		C7D66D1224FA925000679B99 /* DefualtUserInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D66D1124FA925000679B99 /* DefualtUserInfoVC.swift */; };
+		C7D66D1424FA930100679B99 /* DefaultUserInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D66D1324FA930100679B99 /* DefaultUserInfoView.swift */; };
+		C7D66D1624FB76D900679B99 /* LoginCompleteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D66D1524FB76D900679B99 /* LoginCompleteButton.swift */; };
+		C7D66D1824FB868A00679B99 /* LoginUserInputTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D66D1724FB868A00679B99 /* LoginUserInputTextField.swift */; };
 		C7EA08F624EFF29C001A7ED4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7EA08F524EFF29C001A7ED4 /* AppDelegate.swift */; };
 		C7EA08FA24EFF29C001A7ED4 /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7EA08F924EFF29C001A7ED4 /* MainVC.swift */; };
 		C7EA08FF24EFF29D001A7ED4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C7EA08FE24EFF29D001A7ED4 /* Assets.xcassets */; };
@@ -43,6 +47,10 @@
 		C76B2A6424F7A7BB004E4CBD /* UserAuthScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAuthScrollView.swift; sourceTree = "<group>"; };
 		C7A454AD24FA0C9900FA08B7 /* SelectPopupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectPopupVC.swift; sourceTree = "<group>"; };
 		C7BD348B24F54A5700089F0D /* InitVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitVC.swift; sourceTree = "<group>"; tabWidth = 3; };
+		C7D66D1124FA925000679B99 /* DefualtUserInfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefualtUserInfoVC.swift; sourceTree = "<group>"; };
+		C7D66D1324FA930100679B99 /* DefaultUserInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultUserInfoView.swift; sourceTree = "<group>"; };
+		C7D66D1524FB76D900679B99 /* LoginCompleteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginCompleteButton.swift; sourceTree = "<group>"; };
+		C7D66D1724FB868A00679B99 /* LoginUserInputTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUserInputTextField.swift; sourceTree = "<group>"; };
 		C7EA08F224EFF29C001A7ED4 /* sofastcar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sofastcar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C7EA08F524EFF29C001A7ED4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C7EA08F924EFF29C001A7ED4 /* MainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
@@ -74,7 +82,6 @@
 			isa = PBXGroup;
 			children = (
 				C72A913724F5E15B005D464F /* Extension.swift */,
-				C72A914024F61857005D464F /* TouButton.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -91,6 +98,7 @@
 			children = (
 				C72A914324F67D9F005D464F /* TouView.swift */,
 				C76B2A6424F7A7BB004E4CBD /* UserAuthScrollView.swift */,
+				C7D66D1324FA930100679B99 /* DefaultUserInfoView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -128,6 +136,25 @@
 				C72A913E24F60CD9005D464F /* TouVC.swift */,
 				C76B2A6224F7A799004E4CBD /* UserAuthVC.swift */,
 				C7A454AD24FA0C9900FA08B7 /* SelectPopupVC.swift */,
+				C7D66D1124FA925000679B99 /* DefualtUserInfoVC.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		C7D66D1924FB869300679B99 /* Custom */ = {
+			isa = PBXGroup;
+			children = (
+				C7D66D1A24FB86A000679B99 /* Login */,
+			);
+			path = Custom;
+			sourceTree = "<group>";
+		};
+		C7D66D1A24FB86A000679B99 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				C72A914024F61857005D464F /* TouButton.swift */,
+				C7D66D1524FB76D900679B99 /* LoginCompleteButton.swift */,
+				C7D66D1724FB868A00679B99 /* LoginUserInputTextField.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -156,6 +183,7 @@
 			children = (
 				C7EA08F524EFF29C001A7ED4 /* AppDelegate.swift */,
 				C72A913624F5E13F005D464F /* Utility */,
+				C7D66D1924FB869300679B99 /* Custom */,
 				C75451FB24F4E5DB00E13280 /* ViewController */,
 				C75451FA24F4E5D700E13280 /* Model */,
 				C75451F924F4E5CF00E13280 /* View */,
@@ -348,10 +376,14 @@
 				C76B2A6324F7A799004E4CBD /* UserAuthVC.swift in Sources */,
 				C7BD348C24F54A5700089F0D /* InitVC.swift in Sources */,
 				C72A913F24F60CD9005D464F /* TouVC.swift in Sources */,
+				C7D66D1624FB76D900679B99 /* LoginCompleteButton.swift in Sources */,
+				C7D66D1424FA930100679B99 /* DefaultUserInfoView.swift in Sources */,
+				C7D66D1824FB868A00679B99 /* LoginUserInputTextField.swift in Sources */,
 				C7EA08FA24EFF29C001A7ED4 /* MainVC.swift in Sources */,
 				C7EA08F624EFF29C001A7ED4 /* AppDelegate.swift in Sources */,
 				C76B2A6524F7A7BB004E4CBD /* UserAuthScrollView.swift in Sources */,
 				C728C85024F7E35100063005 /* User.swift in Sources */,
+				C7D66D1224FA925000679B99 /* DefualtUserInfoVC.swift in Sources */,
 				C7A454AE24FA0C9900FA08B7 /* SelectPopupVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

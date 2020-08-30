@@ -67,14 +67,19 @@ class UserAuthVC: UIViewController {
     
     scrollView.selectConturyButton.addTarget(self, action: #selector(tabSelectPopupMenuButtons(_:)), for: .touchUpInside)
     scrollView.selectMobileCompany.addTarget(self, action: #selector(tabSelectPopupMenuButtons(_:)), for: .touchUpInside)
+    scrollView.authCompleteButton.addTarget(self, action: #selector(tapAuthCompleteButton), for: .touchUpInside)
   }
   // MARK: - Check AuthComplete button Enabler
   private func checkAuthButtonEnable() {
-    
-//    scrollView.authCompleteButton.isEnabled = isUserAgreeWithAlltou && scrollView.selectMobileCompany.isSelected && scrollView.selectMobileCompany.isHidden
-//
-//    let authButtonBGColor = scrollView.authCompleteButton.isSelected == true ?  #colorLiteral(red: 0.007875645533, green: 0.7243045568, blue: 0.9998746514, alpha: 1) : .systemGray4
-//    scrollView.authCompleteButton.backgroundColor = authButtonBGColor
+    scrollView.authCompleteButton.isEnabled = isUserAgreeWithAlltou
+//      isUserAgreeWithAlltou && scrollView.selectConturyButton.isSelected &&
+//      scrollView.selectMobileCompany.isSelected && ((scrollView.usernameTextField.text?.isEmpty) != nil) &&
+//      ((scrollView.userBirthTextField.text?.isEmpty) != nil) && ((scrollView.userSexTextField.text?.isEmpty) != nil) &&
+//      (scrollView.userPhoneNumberTextField.text?.isEmpty != nil)
+
+    print(scrollView.authCompleteButton.isEnabled)
+    let authButtonBGColor = scrollView.authCompleteButton.isEnabled == true ?  #colorLiteral(red: 0.007875645533, green: 0.7243045568, blue: 0.9998746514, alpha: 1) : .systemGray4
+    scrollView.authCompleteButton.backgroundColor = authButtonBGColor
   }
 
   // MARK: - Button Handler
@@ -89,9 +94,10 @@ class UserAuthVC: UIViewController {
       }
     } else if sender == scrollView.userPhoneNumberTextField {
       if sender.text?.count ?? 0 == 11 {
-        
+        scrollView.endEditing(true)
       }
     }
+    checkAuthButtonEnable()
   }
   
   @objc private func tabUserAgreeButton(_ sender: UIButton) {
@@ -142,11 +148,13 @@ class UserAuthVC: UIViewController {
     if sender == scrollView.selectConturyButton {
       selectPopupVC.sectionTitle = "  국적 선택"
       selectPopupVC.selectionMenus = ["내국인", "외국인"]
+      selectPopupVC.passTextField = scrollView.usernameTextField
     } else if sender == scrollView.selectMobileCompany {
       selectPopupVC.sectionTitle = "  통신사 선택"
       selectPopupVC.selectionMenus = ["SKT", "KT", "LGU+", "알뜰폰"]
+      selectPopupVC.passTextField = scrollView.userPhoneNumberTextField
     }
-    selectPopupVC.passPhoneNuberTextField = scrollView.userPhoneNumberTextField
+    
     selectPopupVC.passBlurView = scrollView.blurView
     selectPopupVC.tableView.reloadData()
     selectPopupVC.modalPresentationStyle = .overFullScreen
@@ -171,6 +179,13 @@ class UserAuthVC: UIViewController {
       }
     }
     present(selectPopupVC, animated: true)
+    checkAuthButtonEnable()
+  }
+  
+  @objc private func tapAuthCompleteButton() {
+    let defualtUserInfoVC = DefualtUserInfoVC()
+    defualtUserInfoVC.user = self.user
+    navigationController?.pushViewController(defualtUserInfoVC, animated: true)
   }
   
   // MARK: - Keyboard Handler
@@ -197,17 +212,20 @@ class UserAuthVC: UIViewController {
   }
 }
 
+// MARK: - UITextFieldDelegate
 extension UserAuthVC: UITextFieldDelegate {
   
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     if textField == scrollView.usernameTextField {
       scrollView.userBirthTextField.becomeFirstResponder()
     }
+    checkAuthButtonEnable()
     return true
   }
   
   // 각 텍스트 필드 입력 완료시 다은 TextField 로 Response 넘겨줌
   func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+    checkAuthButtonEnable()
     let newLength = (textField.text?.count)! + string.count - range.length
     if textField == scrollView.usernameTextField || textField == scrollView.userBirthTextField {
       return !(newLength > 6)
@@ -215,6 +233,14 @@ extension UserAuthVC: UITextFieldDelegate {
       return !(newLength > 1)
     }
     return !(newLength > 11)
+  }
+  
+  func textFieldDidBeginEditing(_ textField: UITextField) {
+    textField.layer.borderColor = UIColor.black.cgColor
+  }
+  
+  func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
+    textField.layer.borderColor = UIColor.systemGray4.cgColor //UIColor.black.cgColor
   }
 }
 
