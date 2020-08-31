@@ -11,7 +11,7 @@ import UIKit
 class UserAuthVC: UIViewController {
   
   // MARK: - Properties
-  var user: User?
+  var user: SignUpUserData?
   let scrollView = UserAuthScrollView()
   var isKeyboardUp: Bool = false
   var isUserAgreeWithAlltou: Bool = false
@@ -76,9 +76,8 @@ class UserAuthVC: UIViewController {
 //      scrollView.selectMobileCompany.isSelected && ((scrollView.usernameTextField.text?.isEmpty) != nil) &&
 //      ((scrollView.userBirthTextField.text?.isEmpty) != nil) && ((scrollView.userSexTextField.text?.isEmpty) != nil) &&
 //      (scrollView.userPhoneNumberTextField.text?.isEmpty != nil)
-
-    print(scrollView.authCompleteButton.isEnabled)
-    let authButtonBGColor = scrollView.authCompleteButton.isEnabled == true ?  #colorLiteral(red: 0.007875645533, green: 0.7243045568, blue: 0.9998746514, alpha: 1) : .systemGray4
+    
+    let authButtonBGColor = scrollView.authCompleteButton.isEnabled == true ? CommonUI.mainBlue : .systemGray4
     scrollView.authCompleteButton.backgroundColor = authButtonBGColor
   }
 
@@ -184,6 +183,21 @@ class UserAuthVC: UIViewController {
   
   @objc private func tapAuthCompleteButton() {
     let defualtUserInfoVC = DefualtUserInfoVC()
+    
+    guard let userName = scrollView.usernameTextField.text else { return }
+    guard let userBirthDay = Int(scrollView.userBirthTextField.text ?? "") else { return }
+    guard let userGender = Int(scrollView.userSexTextField.text ?? "") else { return }
+    guard let userPhoneNumber = Int(scrollView.userPhoneNumberTextField.text ?? "") else { return print("Errir0")}
+    guard let userContury = scrollView.selectConturyButton.attributedTitle(for: .selected)?.string.split(separator: " ").first else { return print("Errir1")}
+    guard let mobileCompany = scrollView.selectMobileCompany.attributedTitle(for: .selected)?.string.split(separator: " ").first else { return print("Errir2")}
+
+    user?.useranme = userName
+    user?.userBirthDay = userBirthDay
+    user?.userGender = userGender
+    user?.userPhoneNumber = userPhoneNumber
+    user?.mobileCompany = String(mobileCompany)
+    user?.userContury = String(userContury)
+  
     defualtUserInfoVC.user = self.user
     navigationController?.pushViewController(defualtUserInfoVC, animated: true)
   }

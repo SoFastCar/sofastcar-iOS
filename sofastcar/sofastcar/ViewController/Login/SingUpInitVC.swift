@@ -43,7 +43,7 @@ class SingUpInitVC: UIViewController {
     button.contentVerticalAlignment = .top
     button.titleEdgeInsets = UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0)
     button.titleLabel?.font = .boldSystemFont(ofSize: 20)
-    button.backgroundColor = #colorLiteral(red: 0.00789394509, green: 0.7206848264, blue: 0.9998746514, alpha: 1)
+    button.backgroundColor = CommonUI.mainBlue
     button.addTarget(self, action: #selector(singupButtonTap), for: .touchUpInside)
     return button
   }()
@@ -54,7 +54,7 @@ class SingUpInitVC: UIViewController {
     
     view.backgroundColor = .white
     
-    [pageController, imageView, signupButton, backButton].forEach{
+    [pageController, imageView, signupButton, backButton].forEach {
       view.addSubview($0)
     }
     

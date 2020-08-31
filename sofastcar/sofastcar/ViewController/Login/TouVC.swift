@@ -12,7 +12,7 @@ class TouVC: UIViewController {
   // MARK: - Properties
   let touView = TouView()
   
-  let user = User()
+  let user = SignUpUserData()
 
   // MARK: - Life cycle
   override func viewDidLoad() {
@@ -120,9 +120,7 @@ class TouVC: UIViewController {
   }
   
   @objc private func tabWebViewColseButton() {
-    print("Aaaa")
     touView.willRemoveSubview(touView.webView)
-//    touView.addSubview(touView)
   }
   
   @objc private func singupContinueButtonTap() {
@@ -130,6 +128,7 @@ class TouVC: UIViewController {
     user.smsMarketing = touView.smsAcceptButton.isSelected
     user.emailMarketing = touView.emailAcceptButton.isSelected
     user.pushMarketing = touView.pushAcceptButton.isSelected
+    user.marketingAgreeTime = Date()
     
     userAuthVC.user = self.user
     navigationController?.pushViewController(userAuthVC, animated: true)
@@ -147,6 +146,6 @@ class TouVC: UIViewController {
   private func checkEnableSignUpContinueButton() {
     let trigger = touView.serviceAcceptButton.isSelected
     touView.continueSignUpButton.isEnabled = trigger
-    touView.continueSignUpButton.backgroundColor = trigger ? #colorLiteral(red: 0.00789394509, green: 0.7206848264, blue: 0.9998746514, alpha: 1) : #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
+    touView.continueSignUpButton.backgroundColor = trigger ? CommonUI.mainBlue : #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
   }
 }

@@ -10,11 +10,18 @@ import UIKit
 
 class DefaultUserInfoView: UIScrollView {
   // MARK: - Properties
-  var user: User?
+  var user: SignUpUserData?
   let smallPadding: CGFloat = 10
   let padding: CGFloat = 15
   let sectionLabelHeight: CGFloat = 25
   let userInputMenusHeight: CGFloat = 50
+  
+  lazy var blurView: UIVisualEffectView = {
+    let blurEffet = UIBlurEffect(style: .systemMaterialDark)
+    let view = UIVisualEffectView(effect: blurEffet)
+    view.alpha = 0
+    return view
+  }()
 
   let contentView: UIView = {
     let view = UIView()
@@ -127,11 +134,11 @@ class DefaultUserInfoView: UIScrollView {
     label.text = "추천인 아이디(이메일)를 확인해주세요"
     return label
   }()
-  let warningImage = UIImage(named: "exclamationmark.triangle")
-  lazy var userNameWaringImage = UIImageView(image: warningImage)
-  lazy var userPasswordWaringImage = UIImageView(image: warningImage)
-  lazy var userRePasswordWaringImage = UIImageView(image: warningImage)
-  lazy var recommendWaringImage = UIImageView(image: warningImage)
+  
+  let userNameWaringImage = UIImageView(frame: .zero)
+  let userPasswordWaringImage = UIImageView(frame: .zero)
+  let userRePasswordWaringImage = UIImageView(frame: .zero)
+  let recommendWaringImage = UIImageView(frame: .zero)
 
   // MARK: - LifeCycle
   override init(frame: CGRect) {
@@ -167,7 +174,9 @@ class DefaultUserInfoView: UIScrollView {
                         height: UIScreen.main.bounds.height)
     self.backgroundColor = .systemGray6
     
-    self.addSubview(contentView)
+    [contentView, blurView].forEach {
+      self.addSubview($0)
+    }
     
     // 기기별 스크롤뷰 조절
     var heightPadding: CGFloat = 0
@@ -183,6 +192,8 @@ class DefaultUserInfoView: UIScrollView {
     contentView.frame = CGRect(x: 0, y: 0,
                                width: UIScreen.main.bounds.width,
                                height: UIScreen.main.bounds.height+heightPadding)
+    
+    blurView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
   }
   
   private func configureLayout() {
@@ -287,30 +298,36 @@ class DefaultUserInfoView: UIScrollView {
   }
   
   private func configureWarningImageSetting() {
+    let warningImageSize: CGFloat = 20
+    let warningImageOffset: CGFloat = -8
     [userNameWaringImage, userPasswordWaringImage, userRePasswordWaringImage, recommendWaringImage].forEach {
       contentView.addSubview($0)
-//      $0.isHidden = true
+      
+      let warningImage = UIImage(systemName: "exclamationmark.triangle")!
+      $0.image = warningImage
       $0.tintColor = .red
-      $0.isHidden = false
-      $0.image?.withTintColor(.red)
-//      $0.clipsToBounds = true
-//      $0.contentMode = .scaleAspectFit
+      $0.isHidden = true
     }
+    
     userNameWaringImage.snp.makeConstraints {
-      $0.centerY.trailing.equalTo(userIdTextField)
-      $0.width.height.equalTo(30)
+      $0.centerY.equalTo(userIdTextField)
+      $0.trailing.equalTo(userIdTextField).offset(warningImageOffset)
+      $0.width.height.equalTo(warningImageSize)
     }
     userPasswordWaringImage.snp.makeConstraints {
-      $0.centerY.trailing.equalTo(userPasswordField)
-      $0.width.height.equalTo(30)
+      $0.centerY.equalTo(userPasswordField)
+      $0.trailing.equalTo(userPasswordField).offset(warningImageOffset)
+      $0.width.height.equalTo(warningImageSize)
     }
     userRePasswordWaringImage.snp.makeConstraints {
-      $0.centerY.trailing.equalTo(reUserPasswordField)
-      $0.width.height.equalTo(30)
+      $0.centerY.equalTo(reUserPasswordField)
+      $0.trailing.equalTo(reUserPasswordField).offset(warningImageOffset)
+      $0.width.height.equalTo(warningImageSize)
     }
     recommendWaringImage.snp.makeConstraints {
-      $0.centerY.trailing.equalTo(reCommendIdField)
-      $0.width.height.equalTo(30)
+      $0.centerY.equalTo(reCommendIdField)
+      $0.trailing.equalTo(reCommendIdField).offset(warningImageOffset)
+      $0.width.height.equalTo(warningImageSize)
     }
   }
   

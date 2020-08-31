@@ -147,7 +147,7 @@ class UserAuthScrollView: UIScrollView {
   let sendAuthenticationSMSButton: UIButton = {
     let button = UIButton()
     button.setTitle("인증번호 발송", for: .normal)
-    button.setTitleColor(#colorLiteral(red: 0.007875645533, green: 0.7243045568, blue: 0.9998746514, alpha: 1), for: .normal)
+    button.setTitleColor(CommonUI.mainBlue, for: .normal)
     button.setTitle("인증번호 발송", for: .disabled)
     button.setTitleColor(.darkGray, for: .disabled)
     button.titleLabel?.font = .systemFont(ofSize: 15)

@@ -15,7 +15,7 @@ enum ValidationCheck: String {
 
 class DefualtUserInfoVC: UIViewController {
   // MARK: - Properties
-  var user: User?
+  var user: SignUpUserData?
   var viewUpAmount: CGFloat = 0
   
   let myView = DefaultUserInfoView()
@@ -31,6 +31,8 @@ class DefualtUserInfoVC: UIViewController {
       $0.delegate = self
     }
     
+    configureButtonAction()
+    
   }
 
   override func loadView() {
@@ -40,6 +42,10 @@ class DefualtUserInfoVC: UIViewController {
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     viewUpAmount = 0
+  }
+  
+  private func configureButtonAction() {
+    myView.inputCompleteButton.addTarget(self, action: #selector(tabInputCompletButton), for: .touchUpInside)
   }
   
   // MARK: - Handler
@@ -56,7 +62,6 @@ class DefualtUserInfoVC: UIViewController {
   }
   
   private func checkAuthButtonEnable() {
-    
     guard myView.userIdTextField.text?.isEmpty == false else { return }
     guard myView.userPasswordField.text?.isEmpty == false else { return }
     guard myView.reUserPasswordField.text?.isEmpty == false else { return }
@@ -68,10 +73,58 @@ class DefualtUserInfoVC: UIViewController {
     
     myView.inputCompleteButton.isEnabled = true
   }
+  
+  private func checkUserInputIsValid(textField: UITextField, isValied: Bool) {
+    // warning Label Appear
+    switch textField {
+    case myView.userIdTextField:
+      myView.userNameWaringLable.isHidden = isValied
+      myView.userNameWaringImage.isHidden = isValied
+    case myView.userPasswordField:
+      myView.userPasswordWaringLable.isHidden = isValied
+      myView.userPasswordWaringImage.isHidden = isValied
+    case myView.reUserPasswordField:
+      myView.userRePasswordWaringLable.isHidden = isValied
+      myView.userRePasswordWaringImage.isHidden = isValied
+    case myView.reCommendIdField:
+      if myView.reCommendIdField.text?.isEmpty != nil {
+        myView.recommendWaringLable.isHidden = isValied
+        myView.recommendWaringImage.isHidden = isValied
+      }
+    default:
+      break
+    }
+    
+    if isValied == false {
+      textField.layer.borderColor = UIColor.red.cgColor
+    }
+  }
+  
+  @objc private func tabInputCompletButton() {
+    // 서버 연동 부분
+    
+    // 완료 페이지
+    let singUpCompleteVC = SingUpCompleteVC()
+    singUpCompleteVC.user = self.user
+    singUpCompleteVC.passBlurView = myView.blurView
+    singUpCompleteVC.modalPresentationStyle = .overFullScreen
+    present(singUpCompleteVC, animated: true)
+    
+    UIView.animate(withDuration: 0.5) {
+      self.myView.blurView.alpha = 0.4
+    }
+  }
 }
 
 // MARK: - UITextFieldDelegate
 extension DefualtUserInfoVC: UITextFieldDelegate {
+  
+  func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+    // 재 입력시 정상으로 표기
+    checkUserInputIsValid(textField: textField, isValied: true)
+    return true
+  }
+  
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     switch textField {
     case myView.userIdTextField:
@@ -115,29 +168,11 @@ extension DefualtUserInfoVC: UITextFieldDelegate {
       print(validResult)
     }
     
-    // warning Label Appear
-    switch textField {
-    case myView.userIdTextField:
-      myView.userNameWaringLable.isHidden = validResult
-      myView.userNameWaringImage.isHidden = validResult
-    case myView.userPasswordField:
-      myView.userPasswordWaringLable.isHidden = validResult
-      myView.userPasswordWaringImage.isHidden = validResult
-    case myView.reUserPasswordField:
-      myView.userRePasswordWaringLable.isHidden = validResult
-      myView.userRePasswordWaringImage.isHidden = validResult
-    case myView.reCommendIdField:
-      myView.recommendWaringLable.isHidden = validResult
-      myView.recommendWaringImage.isHidden = validResult
-    default:
-      break
-    }
-    
-    if validResult == false {
-      textField.layer.borderColor = UIColor.red.cgColor
-    }
-    
+    // 검증값 오류시 warning 메시지 이미지 표기
+    checkUserInputIsValid(textField: textField, isValied: validResult)
+    // 입력 종료시 화면 원위치
     moveupViewAmount(amount: -viewUpAmount)
+    // 검증값 조합을 통하 입력 완료 버튼 활성화 여부 체크
     checkAuthButtonEnable() // 체크
   }
 }

@@ -41,7 +41,7 @@ class InitVC: UIViewController {
     button.contentVerticalAlignment = .top
     button.titleEdgeInsets = UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0)
     button.titleLabel?.font = .boldSystemFont(ofSize: 20)
-    button.backgroundColor = #colorLiteral(red: 0.2236447036, green: 0.2728667259, blue: 0.3330967426, alpha: 1)
+    button.backgroundColor = CommonUI.mainDark
     return button
   }()
   
@@ -51,7 +51,7 @@ class InitVC: UIViewController {
     button.contentVerticalAlignment = .top
     button.titleEdgeInsets = UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0)
     button.titleLabel?.font = .boldSystemFont(ofSize: 20)
-    button.backgroundColor = #colorLiteral(red: 0.00789394509, green: 0.7206848264, blue: 0.9998746514, alpha: 1)
+    button.backgroundColor = CommonUI.mainBlue
     button.addTarget(self, action: #selector(singupButtonTap), for: .touchUpInside)
     return button
   }()
