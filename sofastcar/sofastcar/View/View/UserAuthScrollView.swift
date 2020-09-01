@@ -51,9 +51,10 @@ class UserAuthScrollView: UIScrollView {
   let customAuthAllAgreeButton: TouButton = {
     let button = TouButton(title: " 본인 확인 서비스 이용약관 전체 동의",
                            imageName: "checkmark.circle.fill", textColor: .black, fontSize: 15, style: .touStyle)
+    button.addImportantMark()
     if let stringWidth = button.currentAttributedTitle?.size().width {
       let leftInset = (button.frame.width - stringWidth)/2
-      button.titleEdgeInsets = .init(top: 0, left: leftInset+20, bottom: 0, right: 0)
+      button.titleEdgeInsets = .init(top: 0, left: leftInset+40, bottom: 0, right: 0)
     }
     button.isSelected = false
     return button

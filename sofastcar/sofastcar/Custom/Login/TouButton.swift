@@ -46,6 +46,23 @@ class TouButton: UIButton {
     self.titleLabel?.font = .systemFont(ofSize: fontSize)
   }
   
+  func addImportantMark() {
+    
+    if let selectedAttriString = self.attributedTitle(for: .selected) as? NSMutableAttributedString,
+      let unSelectedAttriString = self.attributedTitle(for: .normal) as? NSMutableAttributedString {
+      
+      var attributes = [NSAttributedString.Key: AnyObject]()
+      attributes[.foregroundColor] = UIColor.red
+      attributes[.font] = UIFont.systemFont(ofSize: 20)
+      
+      selectedAttriString.append(NSAttributedString(string: " *", attributes: attributes))
+      unSelectedAttriString.append(NSAttributedString(string: " *", attributes: attributes))
+      
+      self.setAttributedTitle(unSelectedAttriString, for: .normal)
+      self.setAttributedTitle(selectedAttriString, for: .selected)
+    }
+  }
+  
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }

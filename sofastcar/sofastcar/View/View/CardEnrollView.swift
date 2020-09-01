@@ -44,9 +44,10 @@ class CardEnrollView: UIScrollView {
   let customAuthAllAgreeButton: TouButton = {
     let button = TouButton(title: " (필수) 결제 서비스 이용약관 모두 동의",
                            imageName: "checkmark.circle.fill", textColor: .black, fontSize: 15, style: .touStyle)
+    button.addImportantMark()
     if let stringWidth = button.currentAttributedTitle?.size().width {
       let leftInset = (button.frame.width - stringWidth)/2
-      button.titleEdgeInsets = .init(top: 0, left: leftInset+40, bottom: 0, right: 0)
+      button.titleEdgeInsets = .init(top: 0, left: leftInset+60, bottom: 0, right: 0)
     }
     button.backgroundColor = .white
     button.layer.borderColor = UIColor.systemGray4.cgColor
@@ -75,6 +76,8 @@ class CardEnrollView: UIScrollView {
   let cardNumberTextField: LoginUserInputTextField = {
     let textfield = LoginUserInputTextField()
     textfield.placeholder = "카드번호 입력"
+    textfield.keyboardType = .numberPad
+    textfield.clearButtonMode = .whileEditing
     return textfield
   }()
   
@@ -121,6 +124,7 @@ class CardEnrollView: UIScrollView {
       attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 30)]
     )
     textfield.keyboardType = .numberPad
+    textfield.isSecureTextEntry = true
     return textfield
   }()
   

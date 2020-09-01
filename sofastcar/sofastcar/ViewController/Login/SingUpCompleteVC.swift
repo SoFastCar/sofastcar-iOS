@@ -13,6 +13,7 @@ import UserNotifications
 class SingUpCompleteVC: UIViewController {
   // MARK: - Properties
   var passBlurView: UIView!
+  var passPushViewFunc: (()->(Void))?
   var user: SignUpUserData?
   
   let contentView = UIView()
@@ -60,10 +61,11 @@ class SingUpCompleteVC: UIViewController {
     (주)쏘카
     회원님이 \(user?.marketingAgreeTime ?? Date())에 요청하신 마케팅 정보 수신동의는 ~~~~ 처리 되었습니다.
     """
-    textView.font = .systemFont(ofSize: 18)
+    textView.font = .systemFont(ofSize: 13)
     return textView
   }()
   
+  // MARK: - Life Cycle
   override func viewDidLoad() {
     super.viewDidLoad()
     
@@ -74,12 +76,6 @@ class SingUpCompleteVC: UIViewController {
     configureLayout()
     
     configureNotification()
-  }
-  
-  override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-    self.dismiss(animated: true) {
-      self.passBlurView.alpha = 0
-    }
   }
   
   private func configureContentView() {
@@ -147,13 +143,14 @@ class SingUpCompleteVC: UIViewController {
   // MARK: - Handler
   
   @objc private func tabOkButton() {
+    print("Touch Ok")
     UIView.animate(withDuration: 0.5) {
       self.passBlurView.alpha = 0
     }
     self.dismiss(animated: true) {
-      let cardEnrollinitVC = CardEnrollinitVC()
-      cardEnrollinitVC.user = self.user
-      self.navigationController?.pushViewController(cardEnrollinitVC, animated: true)
+      print("dismiss Ok")
+      self.passPushViewFunc!()
     }
+    
   }
 }

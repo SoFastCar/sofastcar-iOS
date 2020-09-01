@@ -24,6 +24,11 @@
 		C769C82524FCDEFC00DC8226 /* CommonUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C769C82424FCDEFC00DC8226 /* CommonUI.swift */; };
 		C769C82724FD09CE00DC8226 /* CardEnrollVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C769C82624FD09CE00DC8226 /* CardEnrollVC.swift */; };
 		C769C82924FD0A1200DC8226 /* CardEnrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C769C82824FD0A1200DC8226 /* CardEnrollView.swift */; };
+		C769C82B24FDB35600DC8226 /* DriverLicenseEnrollinitVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C769C82A24FDB35600DC8226 /* DriverLicenseEnrollinitVC.swift */; };
+		C769C82E24FDB69B00DC8226 /* DriverLicenseEnrollinitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C769C82D24FDB69B00DC8226 /* DriverLicenseEnrollinitView.swift */; };
+		C769C83224FDD97F00DC8226 /* CheckDriverLicenseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C769C83124FDD97F00DC8226 /* CheckDriverLicenseVC.swift */; };
+		C769C83424FDD99300DC8226 /* CheckDriverLicenseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C769C83324FDD99300DC8226 /* CheckDriverLicenseView.swift */; };
+		C769C83624FDF03C00DC8226 /* SocarPassVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C769C83524FDF03C00DC8226 /* SocarPassVC.swift */; };
 		C76B2A6324F7A799004E4CBD /* UserAuthVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76B2A6224F7A799004E4CBD /* UserAuthVC.swift */; };
 		C76B2A6524F7A7BB004E4CBD /* UserAuthScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76B2A6424F7A7BB004E4CBD /* UserAuthScrollView.swift */; };
 		C7A454AE24FA0C9900FA08B7 /* SelectPopupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A454AD24FA0C9900FA08B7 /* SelectPopupVC.swift */; };
@@ -69,6 +74,11 @@
 		C769C82424FCDEFC00DC8226 /* CommonUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonUI.swift; sourceTree = "<group>"; };
 		C769C82624FD09CE00DC8226 /* CardEnrollVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardEnrollVC.swift; sourceTree = "<group>"; };
 		C769C82824FD0A1200DC8226 /* CardEnrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardEnrollView.swift; sourceTree = "<group>"; };
+		C769C82A24FDB35600DC8226 /* DriverLicenseEnrollinitVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DriverLicenseEnrollinitVC.swift; sourceTree = "<group>"; };
+		C769C82D24FDB69B00DC8226 /* DriverLicenseEnrollinitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DriverLicenseEnrollinitView.swift; sourceTree = "<group>"; };
+		C769C83124FDD97F00DC8226 /* CheckDriverLicenseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckDriverLicenseVC.swift; sourceTree = "<group>"; };
+		C769C83324FDD99300DC8226 /* CheckDriverLicenseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckDriverLicenseView.swift; sourceTree = "<group>"; };
+		C769C83524FDF03C00DC8226 /* SocarPassVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocarPassVC.swift; sourceTree = "<group>"; };
 		C76B2A6224F7A799004E4CBD /* UserAuthVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAuthVC.swift; sourceTree = "<group>"; };
 		C76B2A6424F7A7BB004E4CBD /* UserAuthScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAuthScrollView.swift; sourceTree = "<group>"; };
 		C7A454AD24FA0C9900FA08B7 /* SelectPopupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectPopupVC.swift; sourceTree = "<group>"; };
@@ -120,13 +130,6 @@
 			path = Utility;
 			sourceTree = "<group>";
 		};
-		C72A913B24F5E50B005D464F /* New Group */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "New Group";
-			sourceTree = "<group>";
-		};
 		C72A914224F67D87005D464F /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -134,6 +137,8 @@
 				C76B2A6424F7A7BB004E4CBD /* UserAuthScrollView.swift */,
 				C7D66D1324FA930100679B99 /* DefaultUserInfoView.swift */,
 				C769C82824FD0A1200DC8226 /* CardEnrollView.swift */,
+				C769C82D24FDB69B00DC8226 /* DriverLicenseEnrollinitView.swift */,
+				C769C83324FDD99300DC8226 /* CheckDriverLicenseView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -185,6 +190,9 @@
 				C769C81024FCA9FB00DC8226 /* SingUpCompleteVC.swift */,
 				C769C82224FCDEA100DC8226 /* CardEnrollinitVC.swift */,
 				C769C82624FD09CE00DC8226 /* CardEnrollVC.swift */,
+				C769C82A24FDB35600DC8226 /* DriverLicenseEnrollinitVC.swift */,
+				C769C83124FDD97F00DC8226 /* CheckDriverLicenseVC.swift */,
+				C769C83524FDF03C00DC8226 /* SocarPassVC.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -238,7 +246,6 @@
 				C75451FA24F4E5D700E13280 /* Model */,
 				C75451F924F4E5CF00E13280 /* View */,
 				C7EA08FE24EFF29D001A7ED4 /* Assets.xcassets */,
-				C72A913B24F5E50B005D464F /* New Group */,
 				C7EA090024EFF29D001A7ED4 /* LaunchScreen.storyboard */,
 				C7EA090324EFF29D001A7ED4 /* Info.plist */,
 			);
@@ -460,12 +467,16 @@
 			files = (
 				C769C82324FCDEA100DC8226 /* CardEnrollinitVC.swift in Sources */,
 				C72A914124F61857005D464F /* TouButton.swift in Sources */,
+				C769C83624FDF03C00DC8226 /* SocarPassVC.swift in Sources */,
+				C769C83424FDD99300DC8226 /* CheckDriverLicenseView.swift in Sources */,
+				C769C82B24FDB35600DC8226 /* DriverLicenseEnrollinitVC.swift in Sources */,
 				C72A913A24F5E32A005D464F /* SingUpInitVC.swift in Sources */,
 				C72A913824F5E15B005D464F /* Extension.swift in Sources */,
 				C72A914424F67D9F005D464F /* TouView.swift in Sources */,
 				C769C82924FD0A1200DC8226 /* CardEnrollView.swift in Sources */,
 				C76B2A6324F7A799004E4CBD /* UserAuthVC.swift in Sources */,
 				C7BD348C24F54A5700089F0D /* InitVC.swift in Sources */,
+				C769C82E24FDB69B00DC8226 /* DriverLicenseEnrollinitView.swift in Sources */,
 				C72A913F24F60CD9005D464F /* TouVC.swift in Sources */,
 				C769C82724FD09CE00DC8226 /* CardEnrollVC.swift in Sources */,
 				C769C82524FCDEFC00DC8226 /* CommonUI.swift in Sources */,
@@ -475,6 +486,7 @@
 				C769C81124FCA9FB00DC8226 /* SingUpCompleteVC.swift in Sources */,
 				C7EA08FA24EFF29C001A7ED4 /* MainVC.swift in Sources */,
 				C7EA08F624EFF29C001A7ED4 /* AppDelegate.swift in Sources */,
+				C769C83224FDD97F00DC8226 /* CheckDriverLicenseVC.swift in Sources */,
 				C76B2A6524F7A7BB004E4CBD /* UserAuthScrollView.swift in Sources */,
 				C728C85024F7E35100063005 /* SignUpUserData.swift in Sources */,
 				C7D66D1224FA925000679B99 /* DefualtUserInfoVC.swift in Sources */,

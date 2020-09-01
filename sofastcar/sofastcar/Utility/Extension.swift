@@ -36,6 +36,7 @@ extension NSAttributedString {
   }
 }
 // MARK: - UITextField
+// textField내 왼쪽 padding 넣기
 extension UITextField {
   func addLeftPadding() {
     let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: self.frame.height))

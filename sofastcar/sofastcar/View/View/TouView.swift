@@ -63,6 +63,7 @@ class TouView: UIView {
   let serviceAcceptButton: TouButton = {
     let button = TouButton(title: "서비스 이용약관 전체 동의",
                            imageName: "checkmark.circle.fill", textColor: .darkGray, fontSize: 15, style: .touStyle)
+    button.addImportantMark()
     button.isSelected = false
     return button
   }()

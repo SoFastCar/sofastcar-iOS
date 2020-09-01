@@ -9,8 +9,8 @@
 import UIKit
 
 class CardEnrollinitVC: UIViewController {
-
- // MARK: - Properties
+  
+  // MARK: - Properties
   var user: SignUpUserData?
   
   let pageController: UIPageControl = {
@@ -85,6 +85,16 @@ class CardEnrollinitVC: UIViewController {
     
     pageController.currentPage = 1
     
+    configureLayout()
+  }
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    if let navi = navigationController {
+      navi.navigationBar.isHidden = true
+    }
+  }
+  
+  private func configureLayout() {
     [pageController, personalCardEnroll, titleLabel, subTitleLabel, companyCardEnroll,
      backButton, signUpCancel].forEach {
       view.addSubview($0)
@@ -131,12 +141,6 @@ class CardEnrollinitVC: UIViewController {
       $0.height.equalTo(60)
     }
   }
-  override func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(animated)
-    if let navi = navigationController {
-      navi.navigationBar.isHidden = true
-    }
-  }
   
   // MARK: - Handler
   @objc private func tabBackButton() {
@@ -149,6 +153,7 @@ class CardEnrollinitVC: UIViewController {
   
   @objc private func tabCardEnrollButton(_ sender: UIButton) {
     let cardEnrollVC = CardEnrollVC()
+    
     navigationController?.pushViewController(cardEnrollVC, animated: true)
   }
 }

@@ -108,6 +108,7 @@ class DefualtUserInfoVC: UIViewController {
     singUpCompleteVC.user = self.user
     singUpCompleteVC.passBlurView = myView.blurView
     singUpCompleteVC.modalPresentationStyle = .overFullScreen
+    singUpCompleteVC.passPushViewFunc = presentCreditCardInputVC
     present(singUpCompleteVC, animated: true)
     
     UIView.animate(withDuration: 0.5) {
@@ -174,5 +175,11 @@ extension DefualtUserInfoVC: UITextFieldDelegate {
     moveupViewAmount(amount: -viewUpAmount)
     // 검증값 조합을 통하 입력 완료 버튼 활성화 여부 체크
     checkAuthButtonEnable() // 체크
+  }
+  
+  func presentCreditCardInputVC() {
+    let cardEnrollinitVC = CardEnrollinitVC()
+    cardEnrollinitVC.user = self.user
+    navigationController?.pushViewController(cardEnrollinitVC, animated: true)
   }
 }
