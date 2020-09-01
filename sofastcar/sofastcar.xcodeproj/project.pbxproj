@@ -14,6 +14,7 @@
 		BC64AE5D24F64D630019703A /* InteractiveModalTransitionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC64AE5C24F64D630019703A /* InteractiveModalTransitionDelegate.swift */; };
 		BC64AE5F24F64FF40019703A /* CarListTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC64AE5E24F64FF40019703A /* CarListTableViewHeader.swift */; };
 		BC64AE6B24F686670019703A /* InteractiveModalPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC64AE6A24F686660019703A /* InteractiveModalPresentationController.swift */; };
+		BC64AE8D24F8010B0019703A /* CarListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC64AE8C24F8010B0019703A /* CarListView.swift */; };
 		C75451F424F4E58F00E13280 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = C75451F324F4E58F00E13280 /* RxSwift */; };
 		C75451F624F4E58F00E13280 /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = C75451F524F4E58F00E13280 /* RxRelay */; };
 		C75451F824F4E58F00E13280 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = C75451F724F4E58F00E13280 /* RxCocoa */; };
@@ -34,6 +35,7 @@
 		BC64AE5C24F64D630019703A /* InteractiveModalTransitionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractiveModalTransitionDelegate.swift; sourceTree = "<group>"; };
 		BC64AE5E24F64FF40019703A /* CarListTableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CarListTableViewHeader.swift; path = sofastcar/View/CarListTableViewHeader.swift; sourceTree = SOURCE_ROOT; };
 		BC64AE6A24F686660019703A /* InteractiveModalPresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InteractiveModalPresentationController.swift; path = ../../../../../../../../.Trash/InteractiveModalPresentationController.swift; sourceTree = "<group>"; };
+		BC64AE8C24F8010B0019703A /* CarListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarListView.swift; sourceTree = "<group>"; };
 		BC793DBC933237B89DC3FEED /* Pods_sofastcar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_sofastcar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C7EA08F224EFF29C001A7ED4 /* sofastcar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sofastcar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C7EA08F524EFF29C001A7ED4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -83,6 +85,7 @@
 			isa = PBXGroup;
 			children = (
 				C7EA08F924EFF29C001A7ED4 /* MainVC.swift */,
+				BC64AE8C24F8010B0019703A /* CarListView.swift */,
 				BC64AE6A24F686660019703A /* InteractiveModalPresentationController.swift */,
 				BC64AE5C24F64D630019703A /* InteractiveModalTransitionDelegate.swift */,
 				BC64AE5824F646090019703A /* CarListTableViewController.swift */,
@@ -305,6 +308,7 @@
 				BC64AE5B24F646350019703A /* CarListTableViewCell.swift in Sources */,
 				BC64AE5724F63BC00019703A /* TopSearchView.swift in Sources */,
 				BC64AE5F24F64FF40019703A /* CarListTableViewHeader.swift in Sources */,
+				BC64AE8D24F8010B0019703A /* CarListView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

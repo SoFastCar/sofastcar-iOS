@@ -24,7 +24,6 @@ class CarListTableViewController: UITableViewController {
         panGesture.delegate = self
 //        tableView.addGestureRecognizer(panGesture)
         
-        
     }
     @objc func didPan(_ pan: UIPanGestureRecognizer) {
         print(#function)
@@ -123,7 +122,8 @@ class CarListTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: CarListTableViewHeader.identifier)
+        guard let headerView = 
+            tableView.dequeueReusableHeaderFooterView(withIdentifier: CarListTableViewHeader.identifier)
             as? CarListTableViewHeader else { return UIView() }
         
         return headerView
@@ -136,7 +136,8 @@ class CarListTableViewController: UITableViewController {
 }
 
 extension CarListTableViewController: UIGestureRecognizerDelegate {
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
+                           shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         true
     }
 }
