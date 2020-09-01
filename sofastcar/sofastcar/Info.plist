@@ -2,6 +2,13 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSCameraUsageDescription</key>
+	<string>운전명허증 촬영과 신용카드 번호 인식, 자동자 촬영을 위한 카메라 접근을 허용해주세요</string>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
 	<key>NMFClientId</key>
 	<string>xexx2450ca</string>
 	<key>CFBundleDevelopmentRegion</key>

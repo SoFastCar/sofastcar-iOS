@@ -8,9 +8,35 @@
 
 /* Begin PBXBuildFile section */
 		1226A60FC1A80A06F7DAB1AE /* Pods_sofastcar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC793DBC933237B89DC3FEED /* Pods_sofastcar.framework */; };
+		C728C85024F7E35100063005 /* SignUpUserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C728C84F24F7E35100063005 /* SignUpUserData.swift */; };
+		C72A913824F5E15B005D464F /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72A913724F5E15B005D464F /* Extension.swift */; };
+		C72A913A24F5E32A005D464F /* SingUpInitVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72A913924F5E32A005D464F /* SingUpInitVC.swift */; };
+		C72A913F24F60CD9005D464F /* TouVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72A913E24F60CD9005D464F /* TouVC.swift */; };
+		C72A914124F61857005D464F /* TouButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72A914024F61857005D464F /* TouButton.swift */; };
+		C72A914424F67D9F005D464F /* TouView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72A914324F67D9F005D464F /* TouView.swift */; };
 		C75451F424F4E58F00E13280 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = C75451F324F4E58F00E13280 /* RxSwift */; };
 		C75451F624F4E58F00E13280 /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = C75451F524F4E58F00E13280 /* RxRelay */; };
 		C75451F824F4E58F00E13280 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = C75451F724F4E58F00E13280 /* RxCocoa */; };
+		C769C81124FCA9FB00DC8226 /* SingUpCompleteVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C769C81024FCA9FB00DC8226 /* SingUpCompleteVC.swift */; };
+		C769C81924FCCEA900DC8226 /* SofastcarUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C769C81824FCCEA900DC8226 /* SofastcarUITests.swift */; };
+		C769C82124FCCECA00DC8226 /* LoginProcess.swift in Sources */ = {isa = PBXBuildFile; fileRef = C769C82024FCCECA00DC8226 /* LoginProcess.swift */; };
+		C769C82324FCDEA100DC8226 /* CardEnrollinitVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C769C82224FCDEA100DC8226 /* CardEnrollinitVC.swift */; };
+		C769C82524FCDEFC00DC8226 /* CommonUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C769C82424FCDEFC00DC8226 /* CommonUI.swift */; };
+		C769C82724FD09CE00DC8226 /* CardEnrollVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C769C82624FD09CE00DC8226 /* CardEnrollVC.swift */; };
+		C769C82924FD0A1200DC8226 /* CardEnrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C769C82824FD0A1200DC8226 /* CardEnrollView.swift */; };
+		C769C82B24FDB35600DC8226 /* DriverLicenseEnrollinitVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C769C82A24FDB35600DC8226 /* DriverLicenseEnrollinitVC.swift */; };
+		C769C82E24FDB69B00DC8226 /* DriverLicenseEnrollinitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C769C82D24FDB69B00DC8226 /* DriverLicenseEnrollinitView.swift */; };
+		C769C83224FDD97F00DC8226 /* CheckDriverLicenseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C769C83124FDD97F00DC8226 /* CheckDriverLicenseVC.swift */; };
+		C769C83424FDD99300DC8226 /* CheckDriverLicenseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C769C83324FDD99300DC8226 /* CheckDriverLicenseView.swift */; };
+		C769C83624FDF03C00DC8226 /* SocarPassVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C769C83524FDF03C00DC8226 /* SocarPassVC.swift */; };
+		C76B2A6324F7A799004E4CBD /* UserAuthVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76B2A6224F7A799004E4CBD /* UserAuthVC.swift */; };
+		C76B2A6524F7A7BB004E4CBD /* UserAuthScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76B2A6424F7A7BB004E4CBD /* UserAuthScrollView.swift */; };
+		C7A454AE24FA0C9900FA08B7 /* SelectPopupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A454AD24FA0C9900FA08B7 /* SelectPopupVC.swift */; };
+		C7BD348C24F54A5700089F0D /* InitVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BD348B24F54A5700089F0D /* InitVC.swift */; };
+		C7D66D1224FA925000679B99 /* DefualtUserInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D66D1124FA925000679B99 /* DefualtUserInfoVC.swift */; };
+		C7D66D1424FA930100679B99 /* DefaultUserInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D66D1324FA930100679B99 /* DefaultUserInfoView.swift */; };
+		C7D66D1624FB76D900679B99 /* LoginCompleteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D66D1524FB76D900679B99 /* LoginCompleteButton.swift */; };
+		C7D66D1824FB868A00679B99 /* LoginUserInputTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D66D1724FB868A00679B99 /* LoginUserInputTextField.swift */; };
 		C7EA08F624EFF29C001A7ED4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7EA08F524EFF29C001A7ED4 /* AppDelegate.swift */; };
 		C7EA08FA24EFF29C001A7ED4 /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7EA08F924EFF29C001A7ED4 /* MainVC.swift */; };
 		C7EA08FF24EFF29D001A7ED4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C7EA08FE24EFF29D001A7ED4 /* Assets.xcassets */; };
@@ -20,9 +46,47 @@
 		C7EA091A24F001B8001A7ED4 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = C7EA091924F001B8001A7ED4 /* .swiftlint.yml */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		C769C81B24FCCEA900DC8226 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C7EA08EA24EFF29C001A7ED4 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C7EA08F124EFF29C001A7ED4;
+			remoteInfo = sofastcar;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		385247949553C4B863A7F4DF /* Pods-sofastcar.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sofastcar.debug.xcconfig"; path = "Target Support Files/Pods-sofastcar/Pods-sofastcar.debug.xcconfig"; sourceTree = "<group>"; };
 		BC793DBC933237B89DC3FEED /* Pods_sofastcar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_sofastcar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C728C84F24F7E35100063005 /* SignUpUserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpUserData.swift; sourceTree = "<group>"; };
+		C72A913724F5E15B005D464F /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
+		C72A913924F5E32A005D464F /* SingUpInitVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingUpInitVC.swift; sourceTree = "<group>"; };
+		C72A913E24F60CD9005D464F /* TouVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouVC.swift; sourceTree = "<group>"; };
+		C72A914024F61857005D464F /* TouButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouButton.swift; sourceTree = "<group>"; };
+		C72A914324F67D9F005D464F /* TouView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouView.swift; sourceTree = "<group>"; };
+		C769C81024FCA9FB00DC8226 /* SingUpCompleteVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingUpCompleteVC.swift; sourceTree = "<group>"; };
+		C769C81624FCCEA900DC8226 /* sofastcarUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = sofastcarUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C769C81824FCCEA900DC8226 /* SofastcarUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SofastcarUITests.swift; sourceTree = "<group>"; };
+		C769C81A24FCCEA900DC8226 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C769C82024FCCECA00DC8226 /* LoginProcess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginProcess.swift; sourceTree = "<group>"; };
+		C769C82224FCDEA100DC8226 /* CardEnrollinitVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardEnrollinitVC.swift; sourceTree = "<group>"; };
+		C769C82424FCDEFC00DC8226 /* CommonUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonUI.swift; sourceTree = "<group>"; };
+		C769C82624FD09CE00DC8226 /* CardEnrollVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardEnrollVC.swift; sourceTree = "<group>"; };
+		C769C82824FD0A1200DC8226 /* CardEnrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardEnrollView.swift; sourceTree = "<group>"; };
+		C769C82A24FDB35600DC8226 /* DriverLicenseEnrollinitVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DriverLicenseEnrollinitVC.swift; sourceTree = "<group>"; };
+		C769C82D24FDB69B00DC8226 /* DriverLicenseEnrollinitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DriverLicenseEnrollinitView.swift; sourceTree = "<group>"; };
+		C769C83124FDD97F00DC8226 /* CheckDriverLicenseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckDriverLicenseVC.swift; sourceTree = "<group>"; };
+		C769C83324FDD99300DC8226 /* CheckDriverLicenseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckDriverLicenseView.swift; sourceTree = "<group>"; };
+		C769C83524FDF03C00DC8226 /* SocarPassVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocarPassVC.swift; sourceTree = "<group>"; };
+		C76B2A6224F7A799004E4CBD /* UserAuthVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAuthVC.swift; sourceTree = "<group>"; };
+		C76B2A6424F7A7BB004E4CBD /* UserAuthScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAuthScrollView.swift; sourceTree = "<group>"; };
+		C7A454AD24FA0C9900FA08B7 /* SelectPopupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectPopupVC.swift; sourceTree = "<group>"; };
+		C7BD348B24F54A5700089F0D /* InitVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitVC.swift; sourceTree = "<group>"; tabWidth = 3; };
+		C7D66D1124FA925000679B99 /* DefualtUserInfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefualtUserInfoVC.swift; sourceTree = "<group>"; };
+		C7D66D1324FA930100679B99 /* DefaultUserInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultUserInfoView.swift; sourceTree = "<group>"; };
+		C7D66D1524FB76D900679B99 /* LoginCompleteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginCompleteButton.swift; sourceTree = "<group>"; };
+		C7D66D1724FB868A00679B99 /* LoginUserInputTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUserInputTextField.swift; sourceTree = "<group>"; };
 		C7EA08F224EFF29C001A7ED4 /* sofastcar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sofastcar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C7EA08F524EFF29C001A7ED4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C7EA08F924EFF29C001A7ED4 /* MainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
@@ -34,6 +98,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		C769C81324FCCEA900DC8226 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C7EA08EF24EFF29C001A7ED4 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -50,9 +121,32 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C72A913624F5E13F005D464F /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				C72A913724F5E15B005D464F /* Extension.swift */,
+				C769C82424FCDEFC00DC8226 /* CommonUI.swift */,
+			);
+			path = Utility;
+			sourceTree = "<group>";
+		};
+		C72A914224F67D87005D464F /* View */ = {
+			isa = PBXGroup;
+			children = (
+				C72A914324F67D9F005D464F /* TouView.swift */,
+				C76B2A6424F7A7BB004E4CBD /* UserAuthScrollView.swift */,
+				C7D66D1324FA930100679B99 /* DefaultUserInfoView.swift */,
+				C769C82824FD0A1200DC8226 /* CardEnrollView.swift */,
+				C769C82D24FDB69B00DC8226 /* DriverLicenseEnrollinitView.swift */,
+				C769C83324FDD99300DC8226 /* CheckDriverLicenseView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		C75451F924F4E5CF00E13280 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				C72A914224F67D87005D464F /* View */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -60,6 +154,7 @@
 		C75451FA24F4E5D700E13280 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				C728C84F24F7E35100063005 /* SignUpUserData.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -67,9 +162,57 @@
 		C75451FB24F4E5DB00E13280 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				C7BD348724F53BDE00089F0D /* Login */,
 				C7EA08F924EFF29C001A7ED4 /* MainVC.swift */,
 			);
 			path = ViewController;
+			sourceTree = "<group>";
+		};
+		C769C81724FCCEA900DC8226 /* sofastcarUITests */ = {
+			isa = PBXGroup;
+			children = (
+				C769C82024FCCECA00DC8226 /* LoginProcess.swift */,
+				C769C81824FCCEA900DC8226 /* SofastcarUITests.swift */,
+				C769C81A24FCCEA900DC8226 /* Info.plist */,
+			);
+			path = sofastcarUITests;
+			sourceTree = "<group>";
+		};
+		C7BD348724F53BDE00089F0D /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				C7BD348B24F54A5700089F0D /* InitVC.swift */,
+				C72A913924F5E32A005D464F /* SingUpInitVC.swift */,
+				C72A913E24F60CD9005D464F /* TouVC.swift */,
+				C76B2A6224F7A799004E4CBD /* UserAuthVC.swift */,
+				C7A454AD24FA0C9900FA08B7 /* SelectPopupVC.swift */,
+				C7D66D1124FA925000679B99 /* DefualtUserInfoVC.swift */,
+				C769C81024FCA9FB00DC8226 /* SingUpCompleteVC.swift */,
+				C769C82224FCDEA100DC8226 /* CardEnrollinitVC.swift */,
+				C769C82624FD09CE00DC8226 /* CardEnrollVC.swift */,
+				C769C82A24FDB35600DC8226 /* DriverLicenseEnrollinitVC.swift */,
+				C769C83124FDD97F00DC8226 /* CheckDriverLicenseVC.swift */,
+				C769C83524FDF03C00DC8226 /* SocarPassVC.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		C7D66D1924FB869300679B99 /* Custom */ = {
+			isa = PBXGroup;
+			children = (
+				C7D66D1A24FB86A000679B99 /* Login */,
+			);
+			path = Custom;
+			sourceTree = "<group>";
+		};
+		C7D66D1A24FB86A000679B99 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				C72A914024F61857005D464F /* TouButton.swift */,
+				C7D66D1524FB76D900679B99 /* LoginCompleteButton.swift */,
+				C7D66D1724FB868A00679B99 /* LoginUserInputTextField.swift */,
+			);
+			path = Login;
 			sourceTree = "<group>";
 		};
 		C7EA08E924EFF29C001A7ED4 = {
@@ -77,6 +220,7 @@
 			children = (
 				C7EA091924F001B8001A7ED4 /* .swiftlint.yml */,
 				C7EA08F424EFF29C001A7ED4 /* sofastcar */,
+				C769C81724FCCEA900DC8226 /* sofastcarUITests */,
 				C7EA08F324EFF29C001A7ED4 /* Products */,
 				DE1D7629770D95D9A2ECBDDD /* Pods */,
 				DA8E9015D0127F06A760E470 /* Frameworks */,
@@ -87,6 +231,7 @@
 			isa = PBXGroup;
 			children = (
 				C7EA08F224EFF29C001A7ED4 /* sofastcar.app */,
+				C769C81624FCCEA900DC8226 /* sofastcarUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -95,6 +240,8 @@
 			isa = PBXGroup;
 			children = (
 				C7EA08F524EFF29C001A7ED4 /* AppDelegate.swift */,
+				C72A913624F5E13F005D464F /* Utility */,
+				C7D66D1924FB869300679B99 /* Custom */,
 				C75451FB24F4E5DB00E13280 /* ViewController */,
 				C75451FA24F4E5D700E13280 /* Model */,
 				C75451F924F4E5CF00E13280 /* View */,
@@ -135,6 +282,24 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		C769C81524FCCEA900DC8226 /* sofastcarUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C769C81D24FCCEA900DC8226 /* Build configuration list for PBXNativeTarget "sofastcarUITests" */;
+			buildPhases = (
+				C769C81224FCCEA900DC8226 /* Sources */,
+				C769C81324FCCEA900DC8226 /* Frameworks */,
+				C769C81424FCCEA900DC8226 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C769C81C24FCCEA900DC8226 /* PBXTargetDependency */,
+			);
+			name = sofastcarUITests;
+			productName = sofastcarUITests;
+			productReference = C769C81624FCCEA900DC8226 /* sofastcarUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		C7EA08F124EFF29C001A7ED4 /* sofastcar */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = C7EA090624EFF29D001A7ED4 /* Build configuration list for PBXNativeTarget "sofastcar" */;
@@ -173,6 +338,10 @@
 				LastUpgradeCheck = 1160;
 				ORGANIZATIONNAME = "김광수";
 				TargetAttributes = {
+					C769C81524FCCEA900DC8226 = {
+						CreatedOnToolsVersion = 11.6;
+						TestTargetID = C7EA08F124EFF29C001A7ED4;
+					};
 					C7EA08F124EFF29C001A7ED4 = {
 						CreatedOnToolsVersion = 11.6;
 					};
@@ -198,11 +367,19 @@
 			projectRoot = "";
 			targets = (
 				C7EA08F124EFF29C001A7ED4 /* sofastcar */,
+				C769C81524FCCEA900DC8226 /* sofastcarUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		C769C81424FCCEA900DC8226 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C7EA08F024EFF29C001A7ED4 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -275,16 +452,57 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		C769C81224FCCEA900DC8226 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C769C81924FCCEA900DC8226 /* SofastcarUITests.swift in Sources */,
+				C769C82124FCCECA00DC8226 /* LoginProcess.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C7EA08EE24EFF29C001A7ED4 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C769C82324FCDEA100DC8226 /* CardEnrollinitVC.swift in Sources */,
+				C72A914124F61857005D464F /* TouButton.swift in Sources */,
+				C769C83624FDF03C00DC8226 /* SocarPassVC.swift in Sources */,
+				C769C83424FDD99300DC8226 /* CheckDriverLicenseView.swift in Sources */,
+				C769C82B24FDB35600DC8226 /* DriverLicenseEnrollinitVC.swift in Sources */,
+				C72A913A24F5E32A005D464F /* SingUpInitVC.swift in Sources */,
+				C72A913824F5E15B005D464F /* Extension.swift in Sources */,
+				C72A914424F67D9F005D464F /* TouView.swift in Sources */,
+				C769C82924FD0A1200DC8226 /* CardEnrollView.swift in Sources */,
+				C76B2A6324F7A799004E4CBD /* UserAuthVC.swift in Sources */,
+				C7BD348C24F54A5700089F0D /* InitVC.swift in Sources */,
+				C769C82E24FDB69B00DC8226 /* DriverLicenseEnrollinitView.swift in Sources */,
+				C72A913F24F60CD9005D464F /* TouVC.swift in Sources */,
+				C769C82724FD09CE00DC8226 /* CardEnrollVC.swift in Sources */,
+				C769C82524FCDEFC00DC8226 /* CommonUI.swift in Sources */,
+				C7D66D1624FB76D900679B99 /* LoginCompleteButton.swift in Sources */,
+				C7D66D1424FA930100679B99 /* DefaultUserInfoView.swift in Sources */,
+				C7D66D1824FB868A00679B99 /* LoginUserInputTextField.swift in Sources */,
+				C769C81124FCA9FB00DC8226 /* SingUpCompleteVC.swift in Sources */,
 				C7EA08FA24EFF29C001A7ED4 /* MainVC.swift in Sources */,
 				C7EA08F624EFF29C001A7ED4 /* AppDelegate.swift in Sources */,
+				C769C83224FDD97F00DC8226 /* CheckDriverLicenseVC.swift in Sources */,
+				C76B2A6524F7A7BB004E4CBD /* UserAuthScrollView.swift in Sources */,
+				C728C85024F7E35100063005 /* SignUpUserData.swift in Sources */,
+				C7D66D1224FA925000679B99 /* DefualtUserInfoVC.swift in Sources */,
+				C7A454AE24FA0C9900FA08B7 /* SelectPopupVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		C769C81C24FCCEA900DC8226 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C7EA08F124EFF29C001A7ED4 /* sofastcar */;
+			targetProxy = C769C81B24FCCEA900DC8226 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		C7EA090024EFF29D001A7ED4 /* LaunchScreen.storyboard */ = {
@@ -298,6 +516,46 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		C769C81E24FCCEA900DC8226 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 52ZXCPY3WQ;
+				INFOPLIST_FILE = sofastcarUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.kr.tootoomaa.sofastcarUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = sofastcar;
+			};
+			name = Debug;
+		};
+		C769C81F24FCCEA900DC8226 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 52ZXCPY3WQ;
+				INFOPLIST_FILE = sofastcarUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.kr.tootoomaa.sofastcarUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = sofastcar;
+			};
+			name = Release;
+		};
 		C7EA090424EFF29D001A7ED4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -348,7 +606,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -402,7 +660,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -455,6 +713,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		C769C81D24FCCEA900DC8226 /* Build configuration list for PBXNativeTarget "sofastcarUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C769C81E24FCCEA900DC8226 /* Debug */,
+				C769C81F24FCCEA900DC8226 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		C7EA08ED24EFF29C001A7ED4 /* Build configuration list for PBXProject "sofastcar" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
