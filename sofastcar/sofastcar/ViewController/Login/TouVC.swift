@@ -17,11 +17,8 @@ class TouVC: UIViewController {
   // MARK: - Life cycle
   override func viewDidLoad() {
     super.viewDidLoad()
-    
     title = "약관 동의"
-    
     touView.frame = self.view.frame
-    
     configureButtonAction()
   }
   

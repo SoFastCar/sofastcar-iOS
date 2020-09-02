@@ -22,9 +22,8 @@ class DriverLicenseEnrollinitVC: UIViewController {
   // MARK: - LifeCycle
   override func viewDidLoad() {
     super.viewDidLoad()
-    
+    self.navigationController?.navigationBar.topItem?.title = ""
     configureButtonTargetAction()
-    
   }
   
   override func loadView() {
@@ -48,6 +47,7 @@ class DriverLicenseEnrollinitVC: UIViewController {
   
   // MARK: - Handler
   @objc private func tabBackButton() {
+    navigationController?.navigationBar.isHidden = false
     navigationController?.popViewController(animated: true)
   }
   

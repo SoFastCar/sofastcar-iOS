@@ -68,15 +68,16 @@ class SingUpCompleteVC: UIViewController {
   // MARK: - Life Cycle
   override func viewDidLoad() {
     super.viewDidLoad()
-    
     view.backgroundColor = .none
-    
+    navigationSetting()
     configureContentView()
-    
     configureLayout()
-    
     configureNotification()
   }
+  
+  private func navigationSetting() {
+     self.navigationController?.navigationBar.topItem?.title = ""
+   }
   
   private func configureContentView() {
     contentView.backgroundColor = .white

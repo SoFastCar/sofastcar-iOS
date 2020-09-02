@@ -42,6 +42,7 @@ class InitVC: UIViewController {
     button.titleEdgeInsets = UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0)
     button.titleLabel?.font = .boldSystemFont(ofSize: 20)
     button.backgroundColor = CommonUI.mainDark
+    button.addTarget(self, action: #selector(tapLoginButton), for: .touchUpInside)
     return button
   }()
   
@@ -52,7 +53,7 @@ class InitVC: UIViewController {
     button.titleEdgeInsets = UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0)
     button.titleLabel?.font = .boldSystemFont(ofSize: 20)
     button.backgroundColor = CommonUI.mainBlue
-    button.addTarget(self, action: #selector(singupButtonTap), for: .touchUpInside)
+    button.addTarget(self, action: #selector(tapSignupButtonTap), for: .touchUpInside)
     return button
   }()
   
@@ -68,19 +69,13 @@ class InitVC: UIViewController {
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillDisappear(animated)
     navigationController?.navigationBar.isHidden = true
-    timer = Timer.scheduledTimer(timeInterval: 3.0, target: self,
-                                 selector: #selector(moveScrollViewImage),
-                                 userInfo: nil,
-                                 repeats: true)
-    
-    imageScrollView.setContentOffset(.init(x: viewWidthSize, y: 0), animated: false)
+    startMainImageScrollViewMoveTimer()
+    moveMainImageScrollView(movePageIndex: 1, withAnimated: false)
   }
   
   override func viewWillDisappear(_ animated: Bool) {
     super.viewWillDisappear(animated)
-    if let timer = timer {
-      timer.invalidate()
-    }
+    stopImageMoveTimer()
   }
 
   private func configureScrollView() {
@@ -103,7 +98,6 @@ class InitVC: UIViewController {
   }
   
   private func configureLayout() {
-  
     [imageScrollView, loginButton, signupButton, pageController].forEach {
       view.addSubview($0)
     }
@@ -114,13 +108,13 @@ class InitVC: UIViewController {
     
     loginButton.snp.makeConstraints {
       $0.leading.bottom.equalTo(view)
+      $0.trailing.equalTo(view.snp.centerX)
       $0.height.equalTo(buttonHeight)
     }
     
     signupButton.snp.makeConstraints {
-      $0.leading.equalTo(loginButton.snp.trailing)
+      $0.leading.equalTo(view.snp.centerX)
       $0.trailing.bottom.equalTo(view)
-      $0.width.equalTo(loginButton.snp.width).multipliedBy(1)
       $0.height.equalTo(buttonHeight)
     }
     
@@ -131,46 +125,75 @@ class InitVC: UIViewController {
     }
   }
   
+  fileprivate func stopImageMoveTimer() {
+    if let timer = timer {
+      timer.invalidate()
+    }
+  }
+  
+  fileprivate func startMainImageScrollViewMoveTimer() {
+    timer = Timer.scheduledTimer(timeInterval: 3.0, target: self,
+                                 selector: #selector(moveScrollViewImage),
+                                 userInfo: nil,
+                                 repeats: true)
+  }
+  
+  fileprivate func moveMainImageScrollView(movePageIndex: Int, withAnimated: Bool) {
+    imageScrollView.setContentOffset(.init(x: viewWidthSize*CGFloat(movePageIndex), y: 0), animated: withAnimated)
+  }
+  
   // MARK: - Handler
   @objc func moveScrollViewImage() {
     timerMoveMent += 1
-    imageScrollView.setContentOffset(.init(x: viewWidthSize*CGFloat(timerMoveMent+1), y: 0),
-                                     animated: true)
-    
+    moveMainImageScrollView(movePageIndex: timerMoveMent+1, withAnimated: true)
     pageController.currentPage = timerMoveMent%3
     
     if timerMoveMent == 3 { // 마지막페이지에서 첫번째 페이지로 변경
       DispatchQueue.main.asyncAfter(deadline: .now()+1) {
         self.timerMoveMent = 0
-        self.imageScrollView.setContentOffset(.init(x: self.viewWidthSize, y: 0), animated: false)
+        self.moveMainImageScrollView(movePageIndex: 1, withAnimated: false)
       }
     }
   }
-  @objc func singupButtonTap() {
+  
+  @objc private func tapSignupButtonTap() {
     let signUpInit = SingUpInitVC()
     navigationController?.pushViewController(signUpInit, animated: true)
+  }
+  
+  @objc private func tapLoginButton() {
+    let loginVC = LoginVC()
+    navigationController?.pushViewController(loginVC, animated: true)
   }
 }
 
 // MARK: - UIScrollViewDelegate
 extension InitVC: UIScrollViewDelegate {
   func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+    mainImageViewScollInfinity(scrollView)
+  }
+  
+  func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    prevnetScrollAsixY(scrollView)
+  }
+  
+  fileprivate func prevnetScrollAsixY(_ scrollView: UIScrollView) {
+    if scrollView.contentOffset.y > 0 {
+      scrollView.contentOffset.y = 0
+    } else if scrollView.contentOffset.y < 0 {
+      scrollView.contentOffset.y = 0
+    }
+  }
+  
+  fileprivate func mainImageViewScollInfinity(_ scrollView: UIScrollView) {
     pageController.currentPage = Int(scrollView.contentOffset.x/viewWidthSize-1)%3
     timerMoveMent = Int(scrollView.contentOffset.x/viewWidthSize-1)%3
     
     // 무한하게 돌아가도록 설정
     if scrollView.contentOffset.x < viewWidthSize/2 {
-      imageScrollView.setContentOffset(.init(x: viewWidthSize*3, y: 0), animated: false)
+      moveMainImageScrollView(movePageIndex: 3, withAnimated: false)
     } else if scrollView.contentOffset.x > viewWidthSize*3.5 {
-      imageScrollView.setContentOffset(.init(x: viewWidthSize, y: 0), animated: false)
-    }
-  }
-  
-  func scrollViewDidScroll(_ scrollView: UIScrollView) {
-    if scrollView.contentOffset.y > 0 {
-      scrollView.contentOffset.y = 0
-    } else if scrollView.contentOffset.y < 0 {
-      scrollView.contentOffset.y = 0
+      moveMainImageScrollView(movePageIndex: 1, withAnimated: false)
     }
   }
 }

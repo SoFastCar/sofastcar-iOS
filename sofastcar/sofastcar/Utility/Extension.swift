@@ -44,3 +44,25 @@ extension UITextField {
     self.leftViewMode = ViewMode.always
   }
 }
+
+// MARK: - UIViewController
+extension UIViewController {
+  func setBackButton() {
+    let backButtonImage = UIImage(systemName: "arrow.left")
+    self.navigationController?.navigationBar.backIndicatorImage = backButtonImage
+    self.navigationController?.navigationBar.backIndicatorTransitionMaskImage = backButtonImage
+    self.navigationController?.navigationBar.topItem?.title = ""
+  }
+}
+
+extension UINavigationController {
+  func noTitlePushViewController(_ viewController: UIViewController, animated: Bool) {
+    print("add")
+    let backButtonImage = UIImage(systemName: "arrow.left")
+    self.navigationController?.navigationBar.backIndicatorImage = backButtonImage
+    self.navigationController?.navigationBar.backIndicatorTransitionMaskImage = backButtonImage
+    self.navigationController?.navigationBar.topItem?.title = ""
+    pushViewController(viewController, animated: animated)
+  }
+  
+}

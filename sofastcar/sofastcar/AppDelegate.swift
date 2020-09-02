@@ -15,8 +15,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   func application(_ application: UIApplication,
                    didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-    let mainVC = InitVC() // MainVC() CardEnrollVC()
+    let mainVC = InitVC() 
     let navigationController = UINavigationController(rootViewController: mainVC)
+    
+    let backButtonImage = UIImage(systemName: "arrow.left")
+    navigationController.navigationBar.backIndicatorImage = backButtonImage
+    navigationController.navigationBar.backIndicatorTransitionMaskImage = backButtonImage
+    navigationController.navigationBar.topItem?.title = ""
 
     window = UIWindow(frame: UIScreen.main.bounds)
     window?.rootViewController = navigationController
