@@ -11,7 +11,7 @@ import SnapKit
 
 class ReservationDashboardVC: UIViewController {
   
-  lazy var leftNavigationButton: UIBarButtonItem = {
+  fileprivate lazy var leftNavigationButton: UIBarButtonItem = {
     let barButtonItem = UIBarButtonItem(
       image: UIImage(systemName: CommonUI.SFSymbolKey.hamburger.rawValue),
       style: .plain,
@@ -23,7 +23,7 @@ class ReservationDashboardVC: UIViewController {
     return barButtonItem
   }()
   
-  lazy var rightNavigationButton: UIBarButtonItem = {
+  fileprivate lazy var rightNavigationButton: UIBarButtonItem = {
     let barButtonItem = UIBarButtonItem(
       title: "고객센터",
       style: .plain,
@@ -33,6 +33,14 @@ class ReservationDashboardVC: UIViewController {
     barButtonItem.tintColor = .white
     
     return barButtonItem
+  }()
+  
+  fileprivate let reservationCarImage: UIImageView = {
+    let imageView = UIImageView()
+    imageView.image = UIImage(named: "SampleCar")
+    imageView.contentMode = .scaleAspectFit
+    
+    return imageView
   }()
   
   // MARK: - LifeCycle
@@ -46,11 +54,21 @@ class ReservationDashboardVC: UIViewController {
   // MARK: - UI
   
   fileprivate func setUI() {
-    // test code
     view.backgroundColor = CommonUI.mainDark
     
-    // setUI
     setNavigation()
+//    setConstraints()
+    
+    let guid = view.safeAreaLayoutGuide
+    [reservationCarImage].forEach {
+      view.addSubview($0)
+    }
+    
+    reservationCarImage.snp.makeConstraints {
+      $0.top.equalTo(guid).offset(40)
+      $0.centerX.equalTo(guid)
+      $0.height.equalTo(view.frame.height / 6)
+    }
   }
   
   fileprivate func setNavigation() {
