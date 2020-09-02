@@ -172,6 +172,16 @@ class ReservationDashboardVC: UIViewController {
     return stackView
   }()
   
+  fileprivate lazy var reservationProgressView: UIProgressView = {
+    let progressView = UIProgressView()
+    progressView.progressTintColor = CommonUI.mainBlue
+    progressView.trackTintColor = .clear
+    progressView.transform = CGAffineTransform(rotationAngle: .pi)
+    progressView.progress = 0.95
+    
+    return progressView
+  }()
+  
   // MARK: - LifeCycle
   
   override func viewDidLoad() {
@@ -203,7 +213,7 @@ class ReservationDashboardVC: UIViewController {
   fileprivate func setConstraints() {
     let guid = view.safeAreaLayoutGuide
 
-    [reservationCarImage, numberPlateLabel, carInfomationButton, carInfoAndOilStackView, reservationTimeStackView].forEach {
+    [reservationCarImage, numberPlateLabel, carInfomationButton, carInfoAndOilStackView, reservationTimeStackView, reservationProgressView].forEach {
       view.addSubview($0)
     }
     
@@ -232,6 +242,11 @@ class ReservationDashboardVC: UIViewController {
       $0.top.equalTo(carInfoAndOilStackView.snp.bottom).offset(20)
       $0.leading.equalTo(guid).offset(20)
       $0.trailing.equalTo(guid).offset(-20)
+    }
+    
+    reservationProgressView.snp.makeConstraints {
+      $0.top.equalTo(reservationTimeStackView.snp.bottom).offset(10)
+      $0.leading.trailing.equalTo(guid)
     }
   }
   
