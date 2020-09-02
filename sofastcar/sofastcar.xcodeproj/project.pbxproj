@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1226A60FC1A80A06F7DAB1AE /* Pods_sofastcar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC793DBC933237B89DC3FEED /* Pods_sofastcar.framework */; };
+		7EAA8F6824FFBB510049D514 /* ReservationDashboardVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EAA8F6724FFBB510049D514 /* ReservationDashboardVC.swift */; };
 		C728C85024F7E35100063005 /* SignUpUserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C728C84F24F7E35100063005 /* SignUpUserData.swift */; };
 		C72A913824F5E15B005D464F /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72A913724F5E15B005D464F /* Extension.swift */; };
 		C72A913A24F5E32A005D464F /* SingUpInitVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72A913924F5E32A005D464F /* SingUpInitVC.swift */; };
@@ -60,6 +61,7 @@
 
 /* Begin PBXFileReference section */
 		385247949553C4B863A7F4DF /* Pods-sofastcar.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sofastcar.debug.xcconfig"; path = "Target Support Files/Pods-sofastcar/Pods-sofastcar.debug.xcconfig"; sourceTree = "<group>"; };
+		7EAA8F6724FFBB510049D514 /* ReservationDashboardVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationDashboardVC.swift; sourceTree = "<group>"; };
 		BC793DBC933237B89DC3FEED /* Pods_sofastcar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_sofastcar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C728C84F24F7E35100063005 /* SignUpUserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpUserData.swift; sourceTree = "<group>"; };
 		C72A913724F5E15B005D464F /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
@@ -125,6 +127,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7EAA8F6624FFBA300049D514 /* Reservation */ = {
+			isa = PBXGroup;
+			children = (
+				7EAA8F6724FFBB510049D514 /* ReservationDashboardVC.swift */,
+			);
+			path = Reservation;
+			sourceTree = "<group>";
+		};
 		C72A913624F5E13F005D464F /* Utility */ = {
 			isa = PBXGroup;
 			children = (
@@ -168,6 +178,7 @@
 			isa = PBXGroup;
 			children = (
 				C7BD348724F53BDE00089F0D /* Login */,
+				7EAA8F6624FFBA300049D514 /* Reservation */,
 				C7EA08F924EFF29C001A7ED4 /* MainVC.swift */,
 			);
 			path = ViewController;
@@ -496,6 +507,7 @@
 				C769C83A24FE5E5100DC8226 /* LoginView.swift in Sources */,
 				C76B2A6524F7A7BB004E4CBD /* UserAuthScrollView.swift in Sources */,
 				C769C83824FE5E3700DC8226 /* LoginVC.swift in Sources */,
+				7EAA8F6824FFBB510049D514 /* ReservationDashboardVC.swift in Sources */,
 				C728C85024F7E35100063005 /* SignUpUserData.swift in Sources */,
 				C7D66D1224FA925000679B99 /* DefualtUserInfoVC.swift in Sources */,
 				C7A454AE24FA0C9900FA08B7 /* SelectPopupVC.swift in Sources */,

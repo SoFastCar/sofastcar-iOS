@@ -19,4 +19,9 @@ class CommonUI {
   static let sectionLabelHeight: CGFloat = 25   // 입력 메뉴 라벨 높이
   static let sectionLabelPadding: CGFloat = 30  // 각 입력 섹션 메뉴당 차이
   static let sectionMiddlePadding: CGFloat = 3
+  
+  // SFSymbolKey
+  enum SFSymbolKey: String {
+    case hamburger = "line.horizontal.3"
+  }
 }
