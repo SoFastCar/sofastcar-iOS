@@ -142,6 +142,36 @@ class ReservationDashboardVC: UIViewController {
     return stackView
   }()
   
+  fileprivate let reservationRemainingTimeLabel: UILabel = {
+    let label = UILabel()
+    label.text = "쏘카 이용 10분 전"
+    label.font = UIFont.preferredFont(forTextStyle: .footnote)
+    label.textColor = CommonUI.mainBlue
+    
+    return label
+  }()
+  
+  fileprivate let reservationTimeLabel: UILabel = {
+    let label = UILabel()
+    label.text = "8/15 (토) 14:00"
+    label.font = UIFont.preferredFont(forTextStyle: .footnote)
+    label.textColor = CommonUI.mainBlue
+    
+    return label
+  }()
+  
+  fileprivate lazy var reservationTimeStackView: UIStackView = {
+    let stackView = UIStackView(
+      arrangedSubviews: [
+        reservationRemainingTimeLabel,
+        reservationTimeLabel
+      ]
+    )
+    stackView.axis = .horizontal
+    
+    return stackView
+  }()
+  
   // MARK: - LifeCycle
   
   override func viewDidLoad() {
@@ -173,7 +203,7 @@ class ReservationDashboardVC: UIViewController {
   fileprivate func setConstraints() {
     let guid = view.safeAreaLayoutGuide
 
-    [reservationCarImage, numberPlateLabel, carInfomationButton, carInfoAndOilStackView].forEach {
+    [reservationCarImage, numberPlateLabel, carInfomationButton, carInfoAndOilStackView, reservationTimeStackView].forEach {
       view.addSubview($0)
     }
     
@@ -196,6 +226,12 @@ class ReservationDashboardVC: UIViewController {
     carInfoAndOilStackView.snp.makeConstraints {
       $0.top.equalTo(numberPlateLabel.snp.bottom).offset(10)
       $0.centerX.equalTo(guid)
+    }
+    
+    reservationTimeStackView.snp.makeConstraints {
+      $0.top.equalTo(carInfoAndOilStackView.snp.bottom).offset(20)
+      $0.leading.equalTo(guid).offset(20)
+      $0.trailing.equalTo(guid).offset(-20)
     }
   }
   
