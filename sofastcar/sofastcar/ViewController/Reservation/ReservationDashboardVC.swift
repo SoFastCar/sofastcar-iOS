@@ -22,7 +22,7 @@ class ReservationDashboardVC: UIViewController {
     
     return barButtonItem
   }()
-  
+
   fileprivate lazy var rightNavigationButton: UIBarButtonItem = {
     let barButtonItem = UIBarButtonItem(
       title: "고객센터",
@@ -52,7 +52,7 @@ class ReservationDashboardVC: UIViewController {
     return label
   }()
   
-  fileprivate let rightChevronButton: UIButton = {
+  fileprivate let carInfomationButton: UIButton = {
     let button = UIButton()
     button.setImage(
       UIImage(systemName: CommonUI.SFSymbolKey.rightChevron.rawValue),
@@ -62,6 +62,84 @@ class ReservationDashboardVC: UIViewController {
     button.tintColor = UIColor.white.withAlphaComponent(0.55)
     
     return button
+  }()
+  
+  fileprivate let carTypeLabel: UILabel = {
+    let label = UILabel()
+    label.text = "마세라티"
+    label.font = UIFont.preferredFont(forTextStyle: .body)
+    label.textColor = .white
+    label.alpha = 0.55
+    
+    return label
+  }()
+  
+  fileprivate let firstDelimiterLabel: UILabel = {
+    let label = UILabel()
+    label.text = "|"
+    label.font = UIFont.preferredFont(forTextStyle: .body)
+    label.textColor = .white
+    label.alpha = 0.55
+    
+    return label
+  }()
+  
+  fileprivate let carOilTypeLabel: UILabel = {
+    let label = UILabel()
+    label.text = "휘발유"
+    label.font = UIFont.preferredFont(forTextStyle: .body)
+    label.textColor = .white
+    label.alpha = 0.55
+    
+    return label
+  }()
+  
+  fileprivate let secondDelimiterLabel: UILabel = {
+    let label = UILabel()
+    label.text = "|"
+    label.font = UIFont.preferredFont(forTextStyle: .body)
+    label.textColor = .white
+    label.alpha = 0.55
+    
+    return label
+  }()
+  
+  fileprivate let gasStationImage: UIImageView = {
+    let imageView = UIImageView()
+    imageView.image = UIImage(named: "GasStation")
+    imageView.contentMode = .scaleAspectFit
+    imageView.snp.makeConstraints { $0.width.height.equalTo(10) }
+    imageView.alpha = 0.55
+    
+    return imageView
+  }()
+  
+  fileprivate let carOilLevelLabel: UILabel = {
+    let label = UILabel()
+    label.text = "25%"
+    label.font = UIFont.preferredFont(forTextStyle: .body)
+    label.textColor = .white
+    label.alpha = 0.55
+    
+    return label
+  }()
+  
+  fileprivate lazy var carInfoAndOilStackView: UIStackView = {
+    let stackView = UIStackView(
+      arrangedSubviews: [
+        carTypeLabel,
+        firstDelimiterLabel,
+        carOilTypeLabel,
+        secondDelimiterLabel,
+        gasStationImage,
+        carOilLevelLabel
+      ]
+    )
+    stackView.axis = .horizontal
+    stackView.alignment = .center
+    stackView.spacing = 10
+    
+    return stackView
   }()
   
   // MARK: - LifeCycle
@@ -95,7 +173,7 @@ class ReservationDashboardVC: UIViewController {
   fileprivate func setConstraints() {
     let guid = view.safeAreaLayoutGuide
 
-    [reservationCarImage, numberPlateLabel, rightChevronButton].forEach {
+    [reservationCarImage, numberPlateLabel, carInfomationButton, carInfoAndOilStackView].forEach {
       view.addSubview($0)
     }
     
@@ -110,9 +188,14 @@ class ReservationDashboardVC: UIViewController {
       $0.centerX.equalTo(guid)
     }
     
-    rightChevronButton.snp.makeConstraints {
+    carInfomationButton.snp.makeConstraints {
       $0.top.equalTo(reservationCarImage.snp.bottom).offset(5)
       $0.leading.equalTo(numberPlateLabel.snp.trailing).offset(10)
+    }
+    
+    carInfoAndOilStackView.snp.makeConstraints {
+      $0.top.equalTo(numberPlateLabel.snp.bottom).offset(10)
+      $0.centerX.equalTo(guid)
     }
   }
   
@@ -124,7 +207,7 @@ class ReservationDashboardVC: UIViewController {
       print("lef navigation button press")
     case rightNavigationButton:
       print("right navigation button press")
-    case rightChevronButton:
+    case carInfomationButton:
       print("right chevron button press")
     default:
       print("error")
