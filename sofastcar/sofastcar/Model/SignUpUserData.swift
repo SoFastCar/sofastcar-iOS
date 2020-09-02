@@ -15,7 +15,7 @@ class SignUpUserData: CustomStringConvertible {
   var userBirthDay: Int = 0
   var userGender: Int = 0
   var userContury: String = ""
-  var mobileCompany: String = ""
+  var mobileCompany: String = "" // skt, kt, LGU+
   var userPhoneNumber: Int = 0
   
   // 마케팅 정보 동의 여부
@@ -27,5 +27,4 @@ class SignUpUserData: CustomStringConvertible {
   var description: String { // 일반 print 출력 문자열
     "\(useranme), \(userBirthDay), \(userGender), \(mobileCompany), \(userPhoneNumber), \(userContury) ,\(marketingAgreeTime), \(smsMarketing), \(pushMarketing), \(emailMarketing)"
   }
-  
 }

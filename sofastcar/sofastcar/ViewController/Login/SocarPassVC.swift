@@ -40,6 +40,7 @@ class SocarPassVC: UIViewController {
     super.viewDidLoad()
     
     title = "쏘카 패스"
+    self.navigationController?.navigationBar.topItem?.title = ""
     view.backgroundColor = .white
     imageScrollView.backgroundColor = .white
     

@@ -82,7 +82,7 @@ class CardEnrollinitVC: UIViewController {
     super.viewDidLoad()
     
     view.backgroundColor = .white
-    
+    self.navigationController?.navigationBar.topItem?.title = ""
     pageController.currentPage = 1
     
     configureLayout()
@@ -144,6 +144,7 @@ class CardEnrollinitVC: UIViewController {
   
   // MARK: - Handler
   @objc private func tabBackButton() {
+    navigationController?.navigationBar.isHidden = false
     navigationController?.popViewController(animated: true)
   }
   
