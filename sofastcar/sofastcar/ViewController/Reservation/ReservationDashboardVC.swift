@@ -16,9 +16,9 @@ class ReservationDashboardVC: UIViewController {
       image: UIImage(systemName: CommonUI.SFSymbolKey.hamburger.rawValue),
       style: .plain,
       target: self,
-      action: #selector(didTapNavigationButton(_:))
+      action: #selector(didTapButton(_:))
     )
-    barButtonItem.tintColor = .white
+    barButtonItem.tintColor = UIColor.white.withAlphaComponent(0.55)
     
     return barButtonItem
   }()
@@ -28,9 +28,9 @@ class ReservationDashboardVC: UIViewController {
       title: "고객센터",
       style: .plain,
       target: self,
-      action: #selector(didTapNavigationButton(_:))
+      action: #selector(didTapButton(_:))
     )
-    barButtonItem.tintColor = .white
+    barButtonItem.tintColor = UIColor.white.withAlphaComponent(0.55)
     
     return barButtonItem
   }()
@@ -41,6 +41,27 @@ class ReservationDashboardVC: UIViewController {
     imageView.contentMode = .scaleAspectFit
     
     return imageView
+  }()
+  
+  fileprivate let numberPlateLabel: UILabel = {
+    let label = UILabel()
+    label.text = "57하4455"
+    label.font = UIFont.preferredFont(forTextStyle: .title1)
+    label.textColor = .white
+    
+    return label
+  }()
+  
+  fileprivate let rightChevronButton: UIButton = {
+    let button = UIButton()
+    button.setImage(
+      UIImage(systemName: CommonUI.SFSymbolKey.rightChevron.rawValue),
+      for: .normal
+    )
+    button.addTarget(self, action: #selector(didTapButton(_:)), for: .touchUpInside)
+    button.tintColor = UIColor.white.withAlphaComponent(0.55)
+    
+    return button
   }()
   
   // MARK: - LifeCycle
@@ -57,18 +78,7 @@ class ReservationDashboardVC: UIViewController {
     view.backgroundColor = CommonUI.mainDark
     
     setNavigation()
-//    setConstraints()
-    
-    let guid = view.safeAreaLayoutGuide
-    [reservationCarImage].forEach {
-      view.addSubview($0)
-    }
-    
-    reservationCarImage.snp.makeConstraints {
-      $0.top.equalTo(guid).offset(40)
-      $0.centerX.equalTo(guid)
-      $0.height.equalTo(view.frame.height / 6)
-    }
+    setConstraints()
   }
   
   fileprivate func setNavigation() {
@@ -82,14 +92,42 @@ class ReservationDashboardVC: UIViewController {
     navBar?.backgroundColor = UIColor.clear
   }
   
+  fileprivate func setConstraints() {
+    let guid = view.safeAreaLayoutGuide
+
+    [reservationCarImage, numberPlateLabel, rightChevronButton].forEach {
+      view.addSubview($0)
+    }
+    
+    reservationCarImage.snp.makeConstraints {
+      $0.top.equalTo(guid).offset(40)
+      $0.centerX.equalTo(guid)
+      $0.height.equalTo(view.frame.height / 6)
+    }
+    
+    numberPlateLabel.snp.makeConstraints {
+      $0.top.equalTo(reservationCarImage.snp.bottom)
+      $0.centerX.equalTo(guid)
+    }
+    
+    rightChevronButton.snp.makeConstraints {
+      $0.top.equalTo(reservationCarImage.snp.bottom).offset(5)
+      $0.leading.equalTo(numberPlateLabel.snp.trailing).offset(10)
+    }
+  }
+  
   // MARK: - Action
   
-  @objc fileprivate func didTapNavigationButton(_ sender: UIButton) {
+  @objc fileprivate func didTapButton(_ sender: UIButton) {
     switch sender {
     case leftNavigationButton:
       print("lef navigation button press")
-    default:
+    case rightNavigationButton:
       print("right navigation button press")
+    case rightChevronButton:
+      print("right chevron button press")
+    default:
+      print("error")
     }
   }
 }

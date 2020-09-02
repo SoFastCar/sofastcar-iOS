@@ -23,5 +23,6 @@ class CommonUI {
   // SFSymbolKey
   enum SFSymbolKey: String {
     case hamburger = "line.horizontal.3"
+    case rightChevron = "chevron.right"
   }
 }
