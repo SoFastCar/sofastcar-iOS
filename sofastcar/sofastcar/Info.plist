@@ -29,7 +29,6 @@
 	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>운전명허증 촬영과 신용카드 번호 인식, 자동자 촬영을 위한 카메라 접근을 허용해주세요</string>
-	<string>10nhse2dsn</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>
