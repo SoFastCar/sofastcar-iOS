@@ -15,8 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   func application(_ application: UIApplication,
                    didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-    
-    let mainVC = MainVC() // MainVC() CardEnrollVC()
+    let mainVC = ReservationDashboardVC()
     let navigationController = UINavigationController(rootViewController: mainVC)
     
     let backButtonImage = UIImage(systemName: "arrow.left")
