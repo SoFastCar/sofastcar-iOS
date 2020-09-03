@@ -41,6 +41,7 @@ class CarListView: UIView {
         
         carListTableView.delegate = self
         carListTableView.dataSource = self
+        carListTableView.bounces = false
         
         self.addSubview(carListTableView)
     }

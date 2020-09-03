@@ -8,22 +8,16 @@
 
 /* Begin PBXBuildFile section */
 		1226A60FC1A80A06F7DAB1AE /* Pods_sofastcar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC793DBC933237B89DC3FEED /* Pods_sofastcar.framework */; };
-
 		BC64AE5724F63BC00019703A /* TopSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC64AE5624F63BC00019703A /* TopSearchView.swift */; };
-		BC64AE5924F646090019703A /* CarListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC64AE5824F646090019703A /* CarListTableViewController.swift */; };
 		BC64AE5B24F646350019703A /* CarListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC64AE5A24F646350019703A /* CarListTableViewCell.swift */; };
-		BC64AE5D24F64D630019703A /* InteractiveModalTransitionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC64AE5C24F64D630019703A /* InteractiveModalTransitionDelegate.swift */; };
 		BC64AE5F24F64FF40019703A /* CarListTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC64AE5E24F64FF40019703A /* CarListTableViewHeader.swift */; };
-		BC64AE6B24F686670019703A /* InteractiveModalPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC64AE6A24F686660019703A /* InteractiveModalPresentationController.swift */; };
 		BC64AE8D24F8010B0019703A /* CarListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC64AE8C24F8010B0019703A /* CarListView.swift */; };
-
 		C728C85024F7E35100063005 /* SignUpUserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C728C84F24F7E35100063005 /* SignUpUserData.swift */; };
 		C72A913824F5E15B005D464F /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72A913724F5E15B005D464F /* Extension.swift */; };
 		C72A913A24F5E32A005D464F /* SingUpInitVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72A913924F5E32A005D464F /* SingUpInitVC.swift */; };
 		C72A913F24F60CD9005D464F /* TouVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72A913E24F60CD9005D464F /* TouVC.swift */; };
 		C72A914124F61857005D464F /* TouButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72A914024F61857005D464F /* TouButton.swift */; };
 		C72A914424F67D9F005D464F /* TouView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72A914324F67D9F005D464F /* TouView.swift */; };
-
 		C75451F424F4E58F00E13280 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = C75451F324F4E58F00E13280 /* RxSwift */; };
 		C75451F624F4E58F00E13280 /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = C75451F524F4E58F00E13280 /* RxRelay */; };
 		C75451F824F4E58F00E13280 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = C75451F724F4E58F00E13280 /* RxCocoa */; };
@@ -69,11 +63,8 @@
 /* Begin PBXFileReference section */
 		385247949553C4B863A7F4DF /* Pods-sofastcar.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sofastcar.debug.xcconfig"; path = "Target Support Files/Pods-sofastcar/Pods-sofastcar.debug.xcconfig"; sourceTree = "<group>"; };
 		BC64AE5624F63BC00019703A /* TopSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopSearchView.swift; sourceTree = "<group>"; };
-		BC64AE5824F646090019703A /* CarListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarListTableViewController.swift; sourceTree = "<group>"; };
 		BC64AE5A24F646350019703A /* CarListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CarListTableViewCell.swift; path = sofastcar/View/CarListTableViewCell.swift; sourceTree = SOURCE_ROOT; };
-		BC64AE5C24F64D630019703A /* InteractiveModalTransitionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractiveModalTransitionDelegate.swift; sourceTree = "<group>"; };
 		BC64AE5E24F64FF40019703A /* CarListTableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CarListTableViewHeader.swift; path = sofastcar/View/CarListTableViewHeader.swift; sourceTree = SOURCE_ROOT; };
-		BC64AE6A24F686660019703A /* InteractiveModalPresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InteractiveModalPresentationController.swift; path = ../../../../../../../../.Trash/InteractiveModalPresentationController.swift; sourceTree = "<group>"; };
 		BC64AE8C24F8010B0019703A /* CarListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarListView.swift; sourceTree = "<group>"; };
 		BC793DBC933237B89DC3FEED /* Pods_sofastcar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_sofastcar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C728C84F24F7E35100063005 /* SignUpUserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpUserData.swift; sourceTree = "<group>"; };
@@ -166,7 +157,6 @@
 				BC64AE5624F63BC00019703A /* TopSearchView.swift */,
 				BC64AE5A24F646350019703A /* CarListTableViewCell.swift */,
 				BC64AE5E24F64FF40019703A /* CarListTableViewHeader.swift */,
-
 				C72A914224F67D87005D464F /* View */,
 			);
 			path = View;
@@ -186,9 +176,6 @@
 				C7BD348724F53BDE00089F0D /* Login */,
 				C7EA08F924EFF29C001A7ED4 /* MainVC.swift */,
 				BC64AE8C24F8010B0019703A /* CarListView.swift */,
-				BC64AE6A24F686660019703A /* InteractiveModalPresentationController.swift */,
-				BC64AE5C24F64D630019703A /* InteractiveModalTransitionDelegate.swift */,
-				BC64AE5824F646090019703A /* CarListTableViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -490,10 +477,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-
-				BC64AE5924F646090019703A /* CarListTableViewController.swift in Sources */,
-				BC64AE6B24F686670019703A /* InteractiveModalPresentationController.swift in Sources */,
-
 				C769C82324FCDEA100DC8226 /* CardEnrollinitVC.swift in Sources */,
 				C72A914124F61857005D464F /* TouButton.swift in Sources */,
 				C769C83624FDF03C00DC8226 /* SocarPassVC.swift in Sources */,
@@ -513,22 +496,17 @@
 				C7D66D1424FA930100679B99 /* DefaultUserInfoView.swift in Sources */,
 				C7D66D1824FB868A00679B99 /* LoginUserInputTextField.swift in Sources */,
 				C769C81124FCA9FB00DC8226 /* SingUpCompleteVC.swift in Sources */,
-
 				C7EA08FA24EFF29C001A7ED4 /* MainVC.swift in Sources */,
-				BC64AE5D24F64D630019703A /* InteractiveModalTransitionDelegate.swift in Sources */,
 				C7EA08F624EFF29C001A7ED4 /* AppDelegate.swift in Sources */,
-
 				BC64AE5B24F646350019703A /* CarListTableViewCell.swift in Sources */,
 				BC64AE5724F63BC00019703A /* TopSearchView.swift in Sources */,
 				BC64AE5F24F64FF40019703A /* CarListTableViewHeader.swift in Sources */,
 				BC64AE8D24F8010B0019703A /* CarListView.swift in Sources */,
-
 				C769C83224FDD97F00DC8226 /* CheckDriverLicenseVC.swift in Sources */,
 				C76B2A6524F7A7BB004E4CBD /* UserAuthScrollView.swift in Sources */,
 				C728C85024F7E35100063005 /* SignUpUserData.swift in Sources */,
 				C7D66D1224FA925000679B99 /* DefualtUserInfoVC.swift in Sources */,
 				C7A454AE24FA0C9900FA08B7 /* SelectPopupVC.swift in Sources */,
-
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
