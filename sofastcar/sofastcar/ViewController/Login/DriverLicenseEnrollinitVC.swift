@@ -88,7 +88,7 @@ extension DriverLicenseEnrollinitVC: UIImagePickerControllerDelegate & UINavigat
         let originalImage = info[.originalImage] as? UIImage    // 이미지를 가져옴
         let editedImage = info[.editedImage] as? UIImage        // editedImage
 //        let cripImage = info[.cropRect]  as? UIImage
-//        let selectedImage = cripImage ?? editedImage ?? originalImage
+        _ = editedImage ?? originalImage
       }
     }
     dismiss(animated: true, completion: {

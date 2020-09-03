@@ -13,7 +13,7 @@ import UserNotifications
 class SingUpCompleteVC: UIViewController {
   // MARK: - Properties
   var passBlurView: UIView!
-  var passPushViewFunc: (()->(Void))?
+  var passPushViewFunc: (() -> Void)?
   var user: SignUpUserData?
   
   let contentView = UIView()
@@ -69,13 +69,13 @@ class SingUpCompleteVC: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     view.backgroundColor = .none
-    navigationSetting()
+    configureNavigationController()
     configureContentView()
     configureLayout()
     configureNotification()
   }
   
-  private func navigationSetting() {
+  private func configureNavigationController() {
      self.navigationController?.navigationBar.topItem?.title = ""
    }
   
@@ -142,7 +142,6 @@ class SingUpCompleteVC: UIViewController {
   }
   
   // MARK: - Handler
-  
   @objc private func tabOkButton() {
     print("Touch Ok")
     UIView.animate(withDuration: 0.5) {

@@ -35,6 +35,7 @@ class DefualtUserInfoVC: UIViewController {
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
+    navigationController?.navigationBar.isHidden = false
     viewUpAmount = 0
   }
   
@@ -47,6 +48,7 @@ class DefualtUserInfoVC: UIViewController {
     [myView.userIdTextField, myView.userPasswordField,
      myView.reUserPasswordField, myView.reCommendIdField].forEach {
       $0.delegate = self
+      $0.addTarget(self, action: #selector(inputCompleteVaild), for: .editingChanged)
     }
   }
   
@@ -121,6 +123,10 @@ class DefualtUserInfoVC: UIViewController {
       self.myView.blurView.alpha = 0.4
     }
   }
+  
+  @objc private func inputCompleteVaild() {
+    checkAuthButtonEnable()
+  }
 }
 
 // MARK: - UITextFieldDelegate
@@ -170,9 +176,13 @@ extension DefualtUserInfoVC: UITextFieldDelegate {
     textField.layer.borderColor = UIColor.systemGray4.cgColor //UIColor.black.cgColor
     if textField == myView.userIdTextField || textField == myView.reCommendIdField {
       validResult = checkUserInput(kind: .email, checkStr: textField.text ?? "")
-    } else if textField == myView.userPasswordField || textField == myView.reUserPasswordField {
+    } else if textField == myView.userPasswordField {
       validResult = checkUserInput(kind: .passwd, checkStr: textField.text ?? "")
-      print(validResult)
+    } else if textField == myView.reUserPasswordField {
+      validResult = checkUserInput(kind: .passwd, checkStr: textField.text ?? "")
+      if myView.userPasswordField.text != myView.reUserPasswordField.text {
+        validResult = false
+      }
     }
     
     // 검증값 오류시 warning 메시지 이미지 표기

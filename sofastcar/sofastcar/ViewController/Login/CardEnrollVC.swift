@@ -12,6 +12,12 @@ class CardEnrollVC: UIViewController {
   // MARK: - Properties
   let myView = CardEnrollView()
   
+  // 텍스트 필드 리스폰스 체인 용
+  var responseChainIndex: Int?
+  lazy var textFieldResponseArray = [myView.cardNumberTextField, myView.cardExpDateMonthTextField,
+  myView.cardExpDateYearTextField, myView.cardPasswordTextField, myView.personNumberTextfield]
+  let textCountRestrictArray = [19, 2, 2, 2, 6]
+  
   // MARK: - LifeCycle
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -55,8 +61,8 @@ class CardEnrollVC: UIViewController {
   
   private func checkAuthEnabler() {
     myView.authCompleteButton.isEnabled = false
-    guard myView.customAuthAllAgreeButton.isSelected == true else { return print("a")}
-    guard myView.cardNumberTextField.text?.isEmpty == false else { return print("b")}
+    guard myView.customAuthAllAgreeButton.isSelected == true else { return }
+    guard myView.cardNumberTextField.text?.isEmpty == false else { return }
     guard myView.cardExpDateMonthTextField.text?.isEmpty == false else { return }
     guard myView.cardExpDateYearTextField.text?.isEmpty == false else { return }
     guard myView.cardPasswordTextField.text?.isEmpty == false else { return }
@@ -85,30 +91,39 @@ class CardEnrollVC: UIViewController {
   }
   
   @objc private func textFieldChange(_ sender: UITextField) {
-    if sender == myView.cardNumberTextField {
-      if let text = sender.text {
-        if text.components(separatedBy: " ").joined().count % 4 == 0 && text.count != 0 {
-          sender.text = "\(text) "
+    if let sender = sender as? LoginUserInputTextField {
+      // 최초 선택인 경우 확인 or 텍스트 필드 변경된 경우
+      if responseChainIndex == nil || sender != textFieldResponseArray[responseChainIndex ?? 0] {
+        responseChainIndex = fetchNowEdittingTextFieldIndex(sender)
+      } else {
+        guard let index = responseChainIndex else { return }
+        if sender.text?.count ?? 0 == textCountRestrictArray[index] {
+          if index+1 == textFieldResponseArray.count {
+            // 마지막 텍스트 필드인 경우 입력 종료
+            print("dd")
+            myView.endEditing(true)
+            responseChainIndex = nil
+            return
+          }
+          print("ff")
+          textFieldResponseArray[index+1].becomeFirstResponder()
         }
       }
-      if sender.text?.count ?? 0 == 20 {
-        myView.cardExpDateMonthTextField.becomeFirstResponder()
+      
+      if sender == myView.cardNumberTextField {
+        changeCardNumberWithSpace(sender)
       }
-    } else if sender == myView.cardExpDateMonthTextField {
-      if sender.text?.count ?? 0 == 2 {
-        myView.cardExpDateYearTextField.becomeFirstResponder()
-      }
-    } else if sender == myView.cardExpDateYearTextField {
-      if sender.text?.count ?? 0 == 2 {
-        myView.cardPasswordTextField.becomeFirstResponder()
-      }
-    } else if sender == myView.cardPasswordTextField {
-      if sender.text?.count ?? 0 == 2 {
-        myView.personNumberTextfield.becomeFirstResponder()
-      }
-    } else if sender == myView.personNumberTextfield {
-      if sender.text?.count ?? 0 == 6 {
-        myView.endEditing(true)
+    }
+  }
+  
+  private func fetchNowEdittingTextFieldIndex(_ sender: LoginUserInputTextField) -> Int {
+    return textFieldResponseArray.firstIndex(of: sender) ?? 0
+  }
+  
+  private func changeCardNumberWithSpace(_ sender: UITextField) {
+    if let text = sender.text {
+      if text.components(separatedBy: " ").joined().count % 4 == 0 && text.count != 0 {
+        sender.text = "\(text) "
       }
     }
   }
@@ -120,15 +135,6 @@ class CardEnrollVC: UIViewController {
 }
 
 extension CardEnrollVC: UITextFieldDelegate {
-//  [myView.cardNumberTextField, myView.cardExpDateMonthTextField,
-//  myView.cardExpDateYearTextField, myView.cardPasswordTextField,
-//  myView.personNumberTextfield]
-  func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-    // 재 입력시 정상으로 표기
-//    checkUserInputIsValid(textField: textField, isValied: true)
-    return true
-  }
-  
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
     switch textField {
     case myView.cardNumberTextField:
@@ -156,12 +162,10 @@ extension CardEnrollVC: UITextFieldDelegate {
   }
   
   func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
-    var validResult: Bool = true
     textField.layer.borderColor = UIColor.systemGray4.cgColor
     if textField == myView.cardExpDateYearTextField {
       myView.cardExpDateMonthTextField.layer.borderColor = UIColor.systemGray4.cgColor
     }
-    
     checkAuthEnabler()
   }
 }
