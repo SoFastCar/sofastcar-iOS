@@ -22,7 +22,6 @@ class MainVC: UIViewController {
     let topSearchView = TopSearchView()
     let carListView = CarListView()
     lazy var panGesture = UIPanGestureRecognizer(target: self, action: #selector(didPan(_:)))
-    var carListTransitionDelegate: InteractiveModalTransitionDelegate!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,8 +31,6 @@ class MainVC: UIViewController {
         setupConstraint()
         setupMarkers()
         
-    }
-    private func setupCarListView() {
     }
     
     @objc func didPan(_ pan: UIPanGestureRecognizer) {
@@ -77,55 +74,6 @@ class MainVC: UIViewController {
             }
         }
     
-//    @objc func didPan(_ pan: UIPanGestureRecognizer) {
-//        
-//        let tableViewYOffset = round(view.frame.origin.y)
-//        let topPresentedY = round(view.frame.height * 0.09)
-//        let centerPresentedY = round(view.frame.height / 2)
-//        let bottomPresentedY = round(view.frame.height * 0.82)
-//        let borderBetweenTopCenter = round(topPresentedY + (centerPresentedY - topPresentedY) / 2)
-//        let borderBetrweenCenterBottom = round(centerPresentedY + (bottomPresentedY - centerPresentedY) / 2)
-//        
-//        print("top: \(topPresentedY), center: \(centerPresentedY), bottom: \(bottomPresentedY)")
-//        
-//        let location = pan.translation(in: view)
-//        switch pan.state {
-//        case .began:
-//            carListView.frame.size.height = view.frame.height
-//        case .changed:
-//            
-//            switch carListView.frame.origin.y {
-//            case topPresentedY...bottomPresentedY:
-//                
-//                carListView.frame.origin.y = round(location.y) + tableViewYOffset
-//                pan.setTranslation(.zero, in: carListView)
-//            case 0..<topPresentedY:
-//                print("top: \(topPresentedY), tableView: \(carListView.frame.origin.y)")
-//            default:
-//                print("bottom: \(bottomPresentedY), tableView: \(carListView.frame.origin.y)")
-//            }
-//        case .ended:
-//            switch carListView.frame.origin.y {
-//            case ...topPresentedY:
-//                carListView.frame.origin.y = topPresentedY
-//            case topPresentedY..<borderBetweenTopCenter:
-//                carListView.frame.origin.y = topPresentedY
-//            case borderBetweenTopCenter...centerPresentedY:
-//                carListView.frame.origin.y = centerPresentedY
-//            case centerPresentedY..<borderBetrweenCenterBottom:
-//                carListView.frame.origin.y = centerPresentedY
-//            case borderBetrweenCenterBottom...bottomPresentedY:
-//                carListView.frame.origin.y = bottomPresentedY
-//            case bottomPresentedY...:
-//                carListView.frame.origin.y = bottomPresentedY
-//            default:
-//                print("Panning Error")
-//            }
-//        default:
-//            break
-//        }
-//    }
-    
     private func setupNM() {
         naverMapView.frame = view.frame
         view.addSubview(naverMapView)
@@ -140,13 +88,6 @@ class MainVC: UIViewController {
         marker.touchHandler = { (overlay) in
             if let marker = overlay as? NMFMarker {
                 marker.iconImage = NMFOverlayImage(name: "mSNormalBlue")
-                // Car List 팝업 by Controller
-//                let carListTableVC = CarListTableViewController()
-//                self.carListTransitionDelegate = InteractiveModalTransitionDelegate(from: self, to: carListTableVC)
-//                carListTableVC.modalPresentationStyle = .custom
-//                carListTableVC.isModalInPresentation = true
-//                carListTableVC.transitioningDelegate = self.carListTransitionDelegate
-//                self.present(carListTableVC, animated: true)
                 
                 // Car List 팝업 by View
                 UIView.animate(withDuration: 0.5, animations: {
