@@ -46,6 +46,7 @@ class UserAuthVC: UIViewController {
   
   private func configureNavigationBar() {
     title = "휴대폰 인증"
+    self.navigationController?.navigationBar.topItem?.title = ""
     self.navigationController?.navigationBar.addSubview(self.scrollView.blurView)
     self.navigationController?.navigationBar.sendSubviewToBack(self.scrollView.blurView)
   }

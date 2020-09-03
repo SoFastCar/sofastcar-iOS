@@ -51,7 +51,7 @@ class SingUpInitVC: UIViewController {
   // MARK: - Life Cycle
   override func viewDidLoad() {
     super.viewDidLoad()
-    
+    title = ""
     view.backgroundColor = .white
     
     [pageController, imageView, signupButton, backButton].forEach {

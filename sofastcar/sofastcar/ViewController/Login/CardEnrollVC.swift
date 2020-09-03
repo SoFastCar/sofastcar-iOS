@@ -15,13 +15,9 @@ class CardEnrollVC: UIViewController {
   // MARK: - LifeCycle
   override func viewDidLoad() {
     super.viewDidLoad()
-    
-    title = "개인카드 등록"
-    
+    navigationSetting()
     configureTextFieldDelegate()
-    
     configureButtonTargetAction()
-    
   }
   
   override func loadView() {
@@ -33,6 +29,11 @@ class CardEnrollVC: UIViewController {
       navi.navigationBar.isHidden = false
       navi.navigationBar.tintColor = .black
     }
+  }
+  
+  private func navigationSetting() {
+    title = "개인카드 등록"
+    self.navigationController?.navigationBar.topItem?.title = ""
   }
   
   private func configureTextFieldDelegate() {

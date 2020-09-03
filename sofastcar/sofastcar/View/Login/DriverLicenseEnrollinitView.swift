@@ -51,6 +51,7 @@ class DriverLicenseEnrollinitView: UIView {
     """
     textView.font = .systemFont(ofSize: 18)
     textView.textColor = .systemGray2
+    textView.isUserInteractionEnabled = false
     return textView
   }()
   

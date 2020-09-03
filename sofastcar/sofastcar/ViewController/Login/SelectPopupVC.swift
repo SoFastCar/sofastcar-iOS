@@ -28,7 +28,7 @@ class SelectPopupVC: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    
+    self.navigationController?.navigationBar.topItem?.title = ""
     view.backgroundColor = .none
     
     view.addSubview(tableView)

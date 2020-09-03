@@ -23,14 +23,8 @@ class DefualtUserInfoVC: UIViewController {
   // MARK: - Life Cycle
   override func viewDidLoad() {
     super.viewDidLoad()
-    
-    title = "기본정보"
-    
-    [myView.userIdTextField, myView.userPasswordField,
-     myView.reUserPasswordField, myView.reCommendIdField].forEach {
-      $0.delegate = self
-    }
-    
+    navigationSetting()
+    textFieldDelegateSetting()
     configureButtonAction()
     
   }
@@ -42,6 +36,18 @@ class DefualtUserInfoVC: UIViewController {
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     viewUpAmount = 0
+  }
+  
+  private func navigationSetting() {
+    title = "기본정보"
+    self.navigationController?.navigationBar.topItem?.title = ""
+  }
+  
+  private func textFieldDelegateSetting() {
+    [myView.userIdTextField, myView.userPasswordField,
+     myView.reUserPasswordField, myView.reCommendIdField].forEach {
+      $0.delegate = self
+    }
   }
   
   private func configureButtonAction() {

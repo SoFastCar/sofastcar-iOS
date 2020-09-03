@@ -30,6 +30,7 @@ class CheckDriverLicenseVC: UIViewController {
       navi.navigationBar.tintColor = .black
     }
     title = "운전면허 확인"
+    self.navigationController?.navigationBar.topItem?.title = ""
   }
   
   // MARK: - Button handler
