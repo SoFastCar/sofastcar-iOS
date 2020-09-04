@@ -9,7 +9,7 @@
 import UIKit
 import SnapKit
 
-class TopSearchView: UIView {
+class TopView: UIView {
     
     let stackView = UIStackView()
     let sideBarButton = UIButton()

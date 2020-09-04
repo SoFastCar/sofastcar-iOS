@@ -8,10 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		1226A60FC1A80A06F7DAB1AE /* Pods_sofastcar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC793DBC933237B89DC3FEED /* Pods_sofastcar.framework */; };
-		BC64AE5724F63BC00019703A /* TopSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC64AE5624F63BC00019703A /* TopSearchView.swift */; };
+		BC64AE5724F63BC00019703A /* TopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC64AE5624F63BC00019703A /* TopView.swift */; };
 		BC64AE5B24F646350019703A /* CarListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC64AE5A24F646350019703A /* CarListTableViewCell.swift */; };
 		BC64AE5F24F64FF40019703A /* CarListTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC64AE5E24F64FF40019703A /* CarListTableViewHeader.swift */; };
 		BC64AE8D24F8010B0019703A /* CarListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC64AE8C24F8010B0019703A /* CarListView.swift */; };
+		BC80F8B82502280F0044C36D /* SearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC80F8B72502280F0044C36D /* SearchVC.swift */; };
+		BC80F8BA2502382D0044C36D /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC80F8B92502382D0044C36D /* SearchView.swift */; };
 		C728C85024F7E35100063005 /* SignUpUserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C728C84F24F7E35100063005 /* SignUpUserData.swift */; };
 		C72A913824F5E15B005D464F /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72A913724F5E15B005D464F /* Extension.swift */; };
 		C72A913A24F5E32A005D464F /* SingUpInitVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72A913924F5E32A005D464F /* SingUpInitVC.swift */; };
@@ -64,11 +66,13 @@
 
 /* Begin PBXFileReference section */
 		385247949553C4B863A7F4DF /* Pods-sofastcar.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sofastcar.debug.xcconfig"; path = "Target Support Files/Pods-sofastcar/Pods-sofastcar.debug.xcconfig"; sourceTree = "<group>"; };
-		BC64AE5624F63BC00019703A /* TopSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopSearchView.swift; sourceTree = "<group>"; };
+		BC64AE5624F63BC00019703A /* TopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopView.swift; sourceTree = "<group>"; };
 		BC64AE5A24F646350019703A /* CarListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CarListTableViewCell.swift; path = sofastcar/View/CarListTableViewCell.swift; sourceTree = SOURCE_ROOT; };
 		BC64AE5E24F64FF40019703A /* CarListTableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CarListTableViewHeader.swift; path = sofastcar/View/CarListTableViewHeader.swift; sourceTree = SOURCE_ROOT; };
 		BC64AE8C24F8010B0019703A /* CarListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarListView.swift; sourceTree = "<group>"; };
 		BC793DBC933237B89DC3FEED /* Pods_sofastcar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_sofastcar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BC80F8B72502280F0044C36D /* SearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVC.swift; sourceTree = "<group>"; };
+		BC80F8B92502382D0044C36D /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SearchView.swift; path = sofastcar/View/SearchView.swift; sourceTree = SOURCE_ROOT; };
 		C728C84F24F7E35100063005 /* SignUpUserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpUserData.swift; sourceTree = "<group>"; };
 		C72A913724F5E15B005D464F /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		C72A913924F5E32A005D464F /* SingUpInitVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingUpInitVC.swift; sourceTree = "<group>"; };
@@ -159,10 +163,10 @@
 		C75451F924F4E5CF00E13280 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				BC64AE5624F63BC00019703A /* TopSearchView.swift */,
+				BC80F8B92502382D0044C36D /* SearchView.swift */,
+				BC64AE5624F63BC00019703A /* TopView.swift */,
 				BC64AE5A24F646350019703A /* CarListTableViewCell.swift */,
 				BC64AE5E24F64FF40019703A /* CarListTableViewHeader.swift */,
-				C72A914224F67D87005D464F /* View */,
 				C72A914224F67D87005D464F /* Login */,
 			);
 			path = View;
@@ -181,6 +185,7 @@
 			children = (
 				C7BD348724F53BDE00089F0D /* Login */,
 				C7EA08F924EFF29C001A7ED4 /* MainVC.swift */,
+				BC80F8B72502280F0044C36D /* SearchVC.swift */,
 				BC64AE8C24F8010B0019703A /* CarListView.swift */,
 			);
 			path = ViewController;
@@ -490,12 +495,14 @@
 				C769C83424FDD99300DC8226 /* CheckDriverLicenseView.swift in Sources */,
 				C769C82B24FDB35600DC8226 /* DriverLicenseEnrollinitVC.swift in Sources */,
 				C72A913A24F5E32A005D464F /* SingUpInitVC.swift in Sources */,
+				BC80F8BA2502382D0044C36D /* SearchView.swift in Sources */,
 				C72A913824F5E15B005D464F /* Extension.swift in Sources */,
 				C72A914424F67D9F005D464F /* TouView.swift in Sources */,
 				C769C82924FD0A1200DC8226 /* CardEnrollView.swift in Sources */,
 				C76B2A6324F7A799004E4CBD /* UserAuthVC.swift in Sources */,
 				C7BD348C24F54A5700089F0D /* InitVC.swift in Sources */,
 				C769C82E24FDB69B00DC8226 /* DriverLicenseEnrollinitView.swift in Sources */,
+				BC80F8B82502280F0044C36D /* SearchVC.swift in Sources */,
 				C72A913F24F60CD9005D464F /* TouVC.swift in Sources */,
 				C769C82724FD09CE00DC8226 /* CardEnrollVC.swift in Sources */,
 				C769C82524FCDEFC00DC8226 /* CommonUI.swift in Sources */,
@@ -506,7 +513,7 @@
 				C7EA08FA24EFF29C001A7ED4 /* MainVC.swift in Sources */,
 				C7EA08F624EFF29C001A7ED4 /* AppDelegate.swift in Sources */,
 				BC64AE5B24F646350019703A /* CarListTableViewCell.swift in Sources */,
-				BC64AE5724F63BC00019703A /* TopSearchView.swift in Sources */,
+				BC64AE5724F63BC00019703A /* TopView.swift in Sources */,
 				BC64AE5F24F64FF40019703A /* CarListTableViewHeader.swift in Sources */,
 				BC64AE8D24F8010B0019703A /* CarListView.swift in Sources */,
 				C769C83224FDD97F00DC8226 /* CheckDriverLicenseVC.swift in Sources */,
