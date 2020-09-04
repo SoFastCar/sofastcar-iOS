@@ -18,10 +18,11 @@ public let defaultMarkerPosition = NMGLatLng(lat: 37.545303, lng: 127.057221)
 class MainVC: UIViewController {
     
     var topAreaFlag = false
-    
     let marker = NMFMarker()
     let naverMapView = NMFNaverMapView()
     let topView = TopView()
+    let searchView = SearchView()
+    let whiteView = UIView()
     let carListView = CarListView()
     lazy var panGesture = UIPanGestureRecognizer(target: self, action: #selector(didPan(_:)))
     lazy var visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
@@ -58,6 +59,7 @@ class MainVC: UIViewController {
         topView.searchButton.addTarget(self, action: #selector(didTapSearchButton(_:)), for: .touchUpInside)
     }
     
+    // MARK: - Selector
     @objc func didTapSearchButton(_ sender: UIButton) {
         print("search button")
         let safeArea = view.safeAreaLayoutGuide
@@ -73,9 +75,19 @@ class MainVC: UIViewController {
                 $0.height.equalTo(60)
             })
             self.view.layoutIfNeeded()
+            self.topView.alpha = 0
+            self.searchView.alpha = 1
+            self.whiteView.alpha = 1
         })
-        let searchVC = SearchVC()
-        navigationController?.pushViewController(searchVC, animated: true)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
+            let searchVC = SearchVC()
+            searchVC.
+//            searchVC.modalPresentationStyle = .none
+            self.present(searchVC, animated: true)
+        })
+//        let searchVC = SearchVC()
+//        navigationController?.pushViewController(searchVC, animated: true)
         
         // animateKeyframes
 //        UIView.animateKeyframes(withDuration: 2, delay: 0, animations: {
@@ -102,7 +114,6 @@ class MainVC: UIViewController {
         
     }
     
-    // MARK: - Selector
     @objc func didPan(_ pan: UIPanGestureRecognizer) {
         let topY = view.frame.height * 0.09
         let centerY = view.frame.height / 2
@@ -211,19 +222,25 @@ class MainVC: UIViewController {
     private func setupUI() {
         navigationController?.navigationBar.isHidden = true
         
-        topView.backgroundColor = .systemTeal
-        topView.layer.shadowOpacity = 1
-        topView.layer.shadowPath = CGPath(rect: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height), transform: nil)
-        topView.layer.shadowRadius = 10
+        view.addSubview(whiteView)
+        
+        searchView.alpha = 0
+        view.addSubview(searchView)
+        
         view.addSubview(topView)
         
-        panGesture.delegate = self
-        
+        carListView.carListTableView.delegate = self
+        carListView.carListTableView.dataSource = self
         carListView.frame = CGRect(x: 0, y: view.frame.height, width: view.frame.width, height: view.frame.height)
+        panGesture.delegate = self
         carListView.addGestureRecognizer(panGesture)
         
         visualEffectView.frame = view.frame
         visualEffectView.alpha = 0
+        
+        whiteView.frame = view.frame
+        whiteView.backgroundColor = .white
+        whiteView.alpha = 0
         
         view.addSubview(visualEffectView)
         view.addSubview(carListView)
@@ -232,6 +249,13 @@ class MainVC: UIViewController {
     // MARK: - Setup Constraint
     private func setupConstraint() {
         let safeArea = view.safeAreaLayoutGuide
+        searchView.translatesAutoresizingMaskIntoConstraints = false
+        searchView.snp.makeConstraints({
+            $0.top.equalTo(safeArea.snp.top).offset(0)
+            $0.leading.equalTo(safeArea.snp.leading).offset(0)
+            $0.trailing.equalTo(safeArea.snp.trailing).offset(0)
+            $0.height.equalTo(60)
+        })
         topView.translatesAutoresizingMaskIntoConstraints = false
         topView.snp.makeConstraints({
             $0.top.equalTo(safeArea.snp.top).offset(8)
@@ -242,6 +266,7 @@ class MainVC: UIViewController {
     }
 }
 
+// MARK: - Extension
 extension MainVC: NMFMapViewTouchDelegate {
     func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
         print("마커 탭 델리게이트")
@@ -286,4 +311,27 @@ extension MainVC: UIGestureRecognizerDelegate {
 }
 extension MainVC: UINavigationControllerDelegate {
     
+}
+
+extension MainVC: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        30
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        return UITableViewCell()
+    }
+
+}
+
+extension MainVC: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        80
+    }
+}
+
+extension MainVC: UIAdaptivePresentationControllerDelegate {
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return UIModalPresentationStyle.none
+    }
 }

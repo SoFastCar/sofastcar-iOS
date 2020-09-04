@@ -7,26 +7,37 @@
 //
 
 import UIKit
+import SnapKit
 
 class SearchVC: UIViewController {
-
+    
+    let searchView = SearchView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
         view.backgroundColor = .systemBackground
-        navigationController?.navigationBar.isHidden = false
-        // Do any additional setup after loading the view.
+        setupUI()
+        setupConstraint()
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    // MARK: - Setup UI
+    private func setupUI() {
+        view.addSubview(searchView)
+        
     }
-    */
+    
+    // MARK: - Setup Constraint
+    private func setupConstraint() {
+        let safeArea = view.safeAreaLayoutGuide
+        searchView.translatesAutoresizingMaskIntoConstraints = false
+        searchView.snp.makeConstraints({
+            $0.top.equalTo(safeArea.snp.top).offset(0)
+            $0.leading.equalTo(safeArea.snp.leading).offset(0)
+            $0.trailing.equalTo(safeArea.snp.trailing).offset(0)
+            $0.height.equalTo(60)
+        })
+    }
+    
+    
 
 }

@@ -59,10 +59,10 @@ class CarListView: UIView {
         stackView.distribution = .fillEqually
         self.addSubview(stackView)
         
-        carListTableView.delegate = self
-        carListTableView.dataSource = self
+        // to be moved to MainVC
+//        carListTableView.delegate = self
+//        carListTableView.dataSource = self
         carListTableView.bounces = false
-//        carListTableView.isScrollEnabled = false
         
         let visualEffectView = UIVisualEffectView()
         visualEffectView.frame = self.frame
@@ -88,19 +88,20 @@ class CarListView: UIView {
     }
 }
 
-extension CarListView: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        30
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
-    }
-
-}
-
-extension CarListView: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        80
-    }
-}
+// to be moved to MainVC
+//extension CarListView: UITableViewDataSource {
+//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        30
+//    }
+//    
+//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        return UITableViewCell()
+//    }
+//
+//}
+//
+//extension CarListView: UITableViewDelegate {
+//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        80
+//    }
+//}

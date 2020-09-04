@@ -11,6 +11,8 @@ import SnapKit
 
 class TopView: UIView {
     
+//    var shadowLayout: CAShapeLayer!
+    let shadowContainer = UIView()
     let stackView = UIStackView()
     let sideBarButton = UIButton()
     let searchButton = UIButton()
@@ -26,7 +28,32 @@ class TopView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+//    override func layoutSubviews() {
+//        super.layoutSubviews()
+//        if shadowLayout == nil {
+//            shadowLayout = CAShapeLayer()
+//            shadowLayout.path = UIBezierPath(roundedRect: bounds, cornerRadius: 20).cgPath
+//            shadowLayout.fillColor = UIColor.black.cgColor
+//            shadowLayout.shadowColor = UIColor.black.cgColor
+//            shadowLayout.shadowOffset = CGSize(width: 0, height: 1)
+//            shadowLayout.shadowPath = shadowLayout.path
+//            shadowLayout.shadowOpacity = 0.5
+//            shadowLayout.shadowRadius = 3
+//            
+//            layer.insertSublayer(shadowLayout, at: 0)
+//        }
+//    }
+    
     private func setupUI() {
+        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowOffset = CGSize(width: 0, height: 1)
+        layer.shadowRadius = 3
+        layer.shadowOpacity = 0.5
+        
+        shadowContainer.layer.cornerRadius = 5
+        shadowContainer.clipsToBounds = true
+        self.addSubview(shadowContainer)
+        
         sideBarButton.setImage(UIImage(systemName: "flame.fill"), for: .normal)
         sideBarButton.backgroundColor = .systemYellow
         stackView.addArrangedSubview(sideBarButton)
@@ -37,12 +64,20 @@ class TopView: UIView {
         
         stackView.axis = .horizontal
         stackView.distribution = .fillProportionally
-        self.addSubview(stackView)
+        shadowContainer.addSubview(stackView)
+//        self.addSubview(stackView)
     }
     
     private func setupConstraint() {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.snp.makeConstraints({
+            $0.top.equalToSuperview()
+            $0.leading.equalToSuperview()
+            $0.trailing.equalToSuperview()
+            $0.bottom.equalToSuperview()
+        })
+        shadowContainer.translatesAutoresizingMaskIntoConstraints = false
+        shadowContainer.snp.makeConstraints({
             $0.top.equalTo(self)
             $0.leading.equalTo(self)
             $0.trailing.equalTo(self)
