@@ -18,6 +18,7 @@ public let defaultMarkerPosition = NMGLatLng(lat: 37.545303, lng: 127.057221)
 class MainVC: UIViewController {
     
     var topAreaFlag = false
+    var markerTapFlag = false
     let marker = NMFMarker()
     let naverMapView = NMFNaverMapView()
     let topView = TopView()
@@ -42,17 +43,45 @@ class MainVC: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         print(#function)
+        let safeArea = view.safeAreaLayoutGuide
+        UIView.animate(withDuration: 0.5, animations: {
+            self.searchView.alpha = 0
+            self.whiteView.alpha = 0
+            self.topView.translatesAutoresizingMaskIntoConstraints = false
+            self.topView.snp.updateConstraints({
+                $0.top.equalTo(safeArea.snp.top).offset(8)
+                $0.leading.equalTo(safeArea.snp.leading).offset(10)
+                $0.trailing.equalTo(safeArea.snp.trailing).offset(-10)
+                $0.height.equalTo(52)
+            })
+            self.topView.alpha = 1
+        })
     }
     
+    // MARK: - Touch Methods
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if !topAreaFlag {
-            UIView.animate(withDuration: 0.3, animations: {
-                self.topView.alpha = 1
-                self.carListView.frame.origin.y = self.view.frame.height * 0.82
-            })
-        } else {
-            // do nothing
-        }
+        super.touchesBegan(touches, with: event)
+        print(#function)
+//        if !topAreaFlag,
+//            markerTapFlag {
+//            UIView.animate(withDuration: 0.3, animations: {
+//                self.topView.alpha = 1
+//                self.carListView.frame.origin.y = self.view.frame.height * 0.82
+//            })
+//            markerTapFlag = true
+//        } else {
+//            // do nothing
+//        }
+    }
+    
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesMoved(touches, with: event)
+        print("!")
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesEnded(touches, with: event)
+        print(#function)
     }
     
     private func activateSearchView() {
@@ -79,11 +108,15 @@ class MainVC: UIViewController {
             self.searchView.alpha = 1
             self.whiteView.alpha = 1
         })
-        
+//        let searchVC = SearchVC()
+//                   searchVC.modalPresentationStyle = .fullScreen
+//                   searchVC.modalTransitionStyle = .crossDissolve
+//                   self.present(searchVC, animated: true)
         DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
             let searchVC = SearchVC()
-            searchVC.
-//            searchVC.modalPresentationStyle = .none
+//            searchVC.searchView.layer.shadowOpacity = 0
+            searchVC.modalPresentationStyle = .fullScreen
+            searchVC.modalTransitionStyle = .crossDissolve
             self.present(searchVC, animated: true)
         })
 //        let searchVC = SearchVC()
@@ -193,6 +226,7 @@ class MainVC: UIViewController {
     // MARK: - SetupMarkers
     private func setupMarkers() {
         marker.touchHandler = { (overlay) in
+            self.markerTapFlag = true
             if let marker = overlay as? NMFMarker {
                 marker.iconImage = NMFOverlayImage(name: "mSNormalBlue")
                 
@@ -232,7 +266,7 @@ class MainVC: UIViewController {
         carListView.carListTableView.delegate = self
         carListView.carListTableView.dataSource = self
         carListView.frame = CGRect(x: 0, y: view.frame.height, width: view.frame.width, height: view.frame.height)
-        panGesture.delegate = self
+//        panGesture.delegate = self
         carListView.addGestureRecognizer(panGesture)
         
         visualEffectView.frame = view.frame
@@ -269,46 +303,46 @@ class MainVC: UIViewController {
 // MARK: - Extension
 extension MainVC: NMFMapViewTouchDelegate {
     func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
-        print("마커 탭 델리게이트")
+        print("didTapMap")
     }
 }
 
-extension MainVC: UIGestureRecognizerDelegate {
-    
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive press: UIPress) -> Bool {
-        print(#function, "press")
-        return true
-    }
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive event: UIEvent) -> Bool {
-        print(#function, "event")
-        return true
-    }
-    
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-        print(#function, "touch")
-        return true
-    }
-    
-    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-        print(#function)
-        return true
-    }
-    
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        print(#function, otherGestureRecognizer)
-        return false
-    }
-    
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRequireFailureOf otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        print(#function, otherGestureRecognizer)
-        return false
-    }
-    
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        print(otherGestureRecognizer)
-        return false
-    }
-}
+//extension MainVC: UIGestureRecognizerDelegate {
+//    
+//    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive press: UIPress) -> Bool {
+//        print(#function, "press")
+//        return true
+//    }
+//    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive event: UIEvent) -> Bool {
+//        print(#function, "event")
+//        return true
+//    }
+//    
+//    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+//        print(#function, "touch")
+//        return true
+//    }
+//    
+//    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+//        print(#function)
+//        return true
+//    }
+//    
+//    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+//        print(#function, otherGestureRecognizer)
+//        return false
+//    }
+//    
+//    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRequireFailureOf otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+//        print(#function, otherGestureRecognizer)
+//        return false
+//    }
+//    
+//    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+//        print(otherGestureRecognizer)
+//        return false
+//    }
+//}
 extension MainVC: UINavigationControllerDelegate {
     
 }
@@ -332,6 +366,7 @@ extension MainVC: UITableViewDelegate {
 
 extension MainVC: UIAdaptivePresentationControllerDelegate {
     func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        print(#function)
         return UIModalPresentationStyle.none
     }
 }

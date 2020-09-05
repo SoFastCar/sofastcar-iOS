@@ -14,6 +14,7 @@
 		BC64AE8D24F8010B0019703A /* CarListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC64AE8C24F8010B0019703A /* CarListView.swift */; };
 		BC80F8B82502280F0044C36D /* SearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC80F8B72502280F0044C36D /* SearchVC.swift */; };
 		BC80F8BA2502382D0044C36D /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC80F8B92502382D0044C36D /* SearchView.swift */; };
+		BCE8A9B82503B75C00E7BC21 /* SearchResultTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCE8A9B72503B75C00E7BC21 /* SearchResultTableVC.swift */; };
 		C728C85024F7E35100063005 /* SignUpUserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C728C84F24F7E35100063005 /* SignUpUserData.swift */; };
 		C72A913824F5E15B005D464F /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72A913724F5E15B005D464F /* Extension.swift */; };
 		C72A913A24F5E32A005D464F /* SingUpInitVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72A913924F5E32A005D464F /* SingUpInitVC.swift */; };
@@ -73,6 +74,7 @@
 		BC793DBC933237B89DC3FEED /* Pods_sofastcar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_sofastcar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC80F8B72502280F0044C36D /* SearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVC.swift; sourceTree = "<group>"; };
 		BC80F8B92502382D0044C36D /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SearchView.swift; path = sofastcar/View/SearchView.swift; sourceTree = SOURCE_ROOT; };
+		BCE8A9B72503B75C00E7BC21 /* SearchResultTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SearchResultTableVC.swift; path = sofastcar/ViewController/SearchResultTableVC.swift; sourceTree = SOURCE_ROOT; };
 		C728C84F24F7E35100063005 /* SignUpUserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpUserData.swift; sourceTree = "<group>"; };
 		C72A913724F5E15B005D464F /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		C72A913924F5E32A005D464F /* SingUpInitVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingUpInitVC.swift; sourceTree = "<group>"; };
@@ -187,6 +189,7 @@
 				C7EA08F924EFF29C001A7ED4 /* MainVC.swift */,
 				BC80F8B72502280F0044C36D /* SearchVC.swift */,
 				BC64AE8C24F8010B0019703A /* CarListView.swift */,
+				BCE8A9B72503B75C00E7BC21 /* SearchResultTableVC.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -513,6 +516,7 @@
 				C7EA08FA24EFF29C001A7ED4 /* MainVC.swift in Sources */,
 				C7EA08F624EFF29C001A7ED4 /* AppDelegate.swift in Sources */,
 				BC64AE5B24F646350019703A /* CarListTableViewCell.swift in Sources */,
+				BCE8A9B82503B75C00E7BC21 /* SearchResultTableVC.swift in Sources */,
 				BC64AE5724F63BC00019703A /* TopView.swift in Sources */,
 				BC64AE5F24F64FF40019703A /* CarListTableViewHeader.swift in Sources */,
 				BC64AE8D24F8010B0019703A /* CarListView.swift in Sources */,

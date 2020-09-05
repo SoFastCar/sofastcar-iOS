@@ -20,8 +20,20 @@ class SearchVC: UIViewController {
         setupConstraint()
     }
     
+    // MARK: - Selector
+    @objc func didTapBackButton(_ sender: UIButton) {
+        print(self.presentingViewController)
+        guard let presentingVC = self.presentingViewController as? MainVC else { return }
+        presentingVC.dismiss(animated: true, completion: {
+            print(#function)
+            // do nothing
+        })
+    }
+    
     // MARK: - Setup UI
     private func setupUI() {
+        searchView.backButton.addTarget(self, action: #selector(didTapBackButton(_:)), for: .touchUpInside)
+//        let searchContainerVC = UISearchContainerViewController(searchController: searchView.searchController)
         view.addSubview(searchView)
         
     }

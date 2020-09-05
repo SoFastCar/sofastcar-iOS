@@ -54,12 +54,14 @@ class TopView: UIView {
         shadowContainer.clipsToBounds = true
         self.addSubview(shadowContainer)
         
+        sideBarButton.backgroundColor = .white
         sideBarButton.setImage(UIImage(systemName: "flame.fill"), for: .normal)
-        sideBarButton.backgroundColor = .systemYellow
         stackView.addArrangedSubview(sideBarButton)
         
+        searchButton.backgroundColor = .white
         searchButton.setTitle("주소가 들어감", for: .normal)
-        searchButton.backgroundColor = .systemOrange
+        searchButton.titleLabel?.textColor = .systemBlue
+        searchButton.tintColor = .systemBlue
         stackView.addArrangedSubview(searchButton)
         
         stackView.axis = .horizontal
