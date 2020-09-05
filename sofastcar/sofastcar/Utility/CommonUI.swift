@@ -31,5 +31,8 @@ class CommonUI {
     case hamburger = "line.horizontal.3"
     case rightChevron = "chevron.right"
     case warning = "exclamationmark.triangle.fill"
+    case bolt = "bolt.fill"
+    case lock = "lock"
+    case unlock = "lock.open"
   }
 }

@@ -11,7 +11,30 @@ import SnapKit
 
 class ReservationDashboardVC: UIViewController {
   
+  // MARK: - CarKey
+  
+  
+//
+//  enum CarKeyState {
+//    case expanded
+//    case collapsed
+//  }
+//
   let reservationStateView = ReservationStateView()
+//
+//  var carKeyView: CarKeyView!
+//  var visualEffectView: UIVisualEffectView!
+//
+//  let carKeyViewHeight: CGFloat = 600
+//  let carKeyViewHandleAreaHeight: CGFloat = 65
+//
+//  var cardVisible = false
+//  var nextState: CarKeyState {
+//    return cardVisible ? .collapsed : .expanded
+//  }
+//
+//  var runningAnimations = [UIViewPropertyAnimator]()
+//  var animationProgressWhenInterrupted: CGFloat = 0
   
   // MARK: - LifeCycle
   
@@ -31,6 +54,7 @@ class ReservationDashboardVC: UIViewController {
     view.backgroundColor = CommonUI.reservationBackground
     
     setNavigation()
+//    setCarKeyView()
   }
   
   fileprivate func setNavigation() {
@@ -43,4 +67,10 @@ class ReservationDashboardVC: UIViewController {
     navBar?.isTranslucent = true
     navBar?.backgroundColor = UIColor.clear
   }
+}
+
+// MARK: - CarKey
+
+extension ReservationDashboardVC {
+
 }
