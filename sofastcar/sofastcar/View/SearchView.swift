@@ -15,7 +15,8 @@ class SearchView: UIView {
     let stackView = UIStackView()
     let shadowContainer = UIView()
     let searchController = UISearchController(searchResultsController: nil)
-    
+    let searchTextField = UITextField()
+    let searchResultTableView = UITableView()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -34,20 +35,27 @@ class SearchView: UIView {
         layer.shadowRadius = 3
         layer.shadowOpacity = 0.5
         
-        backButton.backgroundColor = .white
+        backButton.backgroundColor = .systemGreen
         backButton.setImage(UIImage(systemName: "arrow.left"), for: .normal)
         stackView.addArrangedSubview(backButton)
 
-        searchController.searchBar.barTintColor = .white
-        searchController.searchBar.placeholder = "주소 또는 건물명 검색"
-//        searchController.searchBar.barStyle = .default
-//        searchController.searchBar.showsCancelButton = true
-        searchController.searchBar.searchTextField.clearButtonMode = .whileEditing
-        searchController.searchBar.searchBarStyle = .prominent
-        stackView.addArrangedSubview(searchController.searchBar)
+//        searchController.searchBar.barTintColor = .white
+//        searchController.searchBar.placeholder = "주소 또는 건물명 검색"
+//        searchController.searchBar.searchTextField.clearButtonMode = .whileEditing
+//        searchController.searchBar.searchBarStyle = .prominent
+//        stackView.addArrangedSubview(searchController.searchBar)
+        
+        searchResultTableView.frame = self.frame
+        self.addSubview(searchResultTableView)
+        
+        searchTextField.backgroundColor = .systemGreen
+        searchTextField.clearButtonMode = .whileEditing
+        searchTextField.placeholder = "주소 또는 건물명 검색"
+        searchTextField.borderStyle = .none
+        stackView.addArrangedSubview(searchTextField)
         
         stackView.axis = .horizontal
-        stackView.alignment = .fill
+//        stackView.alignment = .fill
         stackView.distribution = .fill
         shadowContainer.addSubview(stackView)
         
@@ -63,7 +71,7 @@ class SearchView: UIView {
             $0.top.equalTo(self)
             $0.leading.equalTo(self)
             $0.trailing.equalTo(self)
-//            $0.height.equalTo(self)
+            $0.height.equalTo(60)
         })
         
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -83,6 +91,14 @@ class SearchView: UIView {
         backButton.snp.makeConstraints({
             $0.width.equalTo(52)
         })
+        
+//        searchResultTableView.translatesAutoresizingMaskIntoConstraints = false
+//        searchResultTableView.snp.makeConstraints({
+//            $0.top.equalTo(shadowContainer.snp.bottom).offset(5)
+//            $0.leading.equalTo(self)
+//            $0.trailing.equalTo(self)
+//            $0.bottom.equalTo(self)
+//        })
     }
     
 }

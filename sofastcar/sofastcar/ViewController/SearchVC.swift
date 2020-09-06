@@ -22,10 +22,8 @@ class SearchVC: UIViewController {
     
     // MARK: - Selector
     @objc func didTapBackButton(_ sender: UIButton) {
-        print(self.presentingViewController)
         guard let presentingVC = self.presentingViewController as? MainVC else { return }
         presentingVC.dismiss(animated: true, completion: {
-            print(#function)
             // do nothing
         })
     }
@@ -33,6 +31,10 @@ class SearchVC: UIViewController {
     // MARK: - Setup UI
     private func setupUI() {
         searchView.backButton.addTarget(self, action: #selector(didTapBackButton(_:)), for: .touchUpInside)
+        searchView.searchTextField.delegate = self
+        searchView.searchTextField.becomeFirstResponder()
+        searchView.searchResultTableView.dataSource = self
+        searchView.searchResultTableView.delegate = self
 //        let searchContainerVC = UISearchContainerViewController(searchController: searchView.searchController)
         view.addSubview(searchView)
         
@@ -46,10 +48,32 @@ class SearchVC: UIViewController {
             $0.top.equalTo(safeArea.snp.top).offset(0)
             $0.leading.equalTo(safeArea.snp.leading).offset(0)
             $0.trailing.equalTo(safeArea.snp.trailing).offset(0)
-            $0.height.equalTo(60)
+            $0.bottom.equalTo(safeArea.snp.bottom)
         })
     }
     
-    
+    deinit {
+        searchView.searchTextField.resignFirstResponder()
+    }
+}
 
+// MARK: - Extension
+extension SearchVC: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        20
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        return UITableViewCell()
+    }    
+}
+
+extension SearchVC: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        100
+    }
+}
+
+extension SearchVC: UITextFieldDelegate {
+    
 }

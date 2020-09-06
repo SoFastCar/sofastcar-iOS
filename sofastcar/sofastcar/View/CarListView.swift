@@ -26,26 +26,6 @@ class CarListView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-//    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-//        print(#function)
-//    }
-//    
-//    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-//        print(#function)
-//    }
-//    
-//    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-//        print(#function)
-//    }
-//    
-//    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-//        print(#function)
-//    }
-//    
-//    override func touchesEstimatedPropertiesUpdated(_ touches: Set<UITouch>) {
-//        print(#function)
-//    }
-    
     private func setupUI() {
         parkingLotInfoButton.setTitle("주차장 정보", for: .normal)
         parkingLotInfoButton.backgroundColor = .systemRed

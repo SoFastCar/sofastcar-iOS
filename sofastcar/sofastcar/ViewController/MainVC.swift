@@ -21,6 +21,7 @@ class MainVC: UIViewController {
     var markerTapFlag = false
     let marker = NMFMarker()
     let naverMapView = NMFNaverMapView()
+    lazy var callPosition = NMFMarker(position: defaultMarkerPosition, iconImage: NMF_MARKER_IMAGE_YELLOW)
     let topView = TopView()
     let searchView = SearchView()
     let whiteView = UIView()
@@ -31,8 +32,6 @@ class MainVC: UIViewController {
     // MARK: - View Life Cycle        
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(#function)
-        print(view.bounds.height)
         setupNM()
         setupUI()
         setupConstraint()
@@ -42,7 +41,6 @@ class MainVC: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        print(#function)
         let safeArea = view.safeAreaLayoutGuide
         UIView.animate(withDuration: 0.5, animations: {
             self.searchView.alpha = 0
@@ -61,7 +59,6 @@ class MainVC: UIViewController {
     // MARK: - Touch Methods
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
-        print(#function)
 //        if !topAreaFlag,
 //            markerTapFlag {
 //            UIView.animate(withDuration: 0.3, animations: {
@@ -76,12 +73,10 @@ class MainVC: UIViewController {
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesMoved(touches, with: event)
-        print("!")
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesEnded(touches, with: event)
-        print(#function)
     }
     
     private func activateSearchView() {
@@ -90,10 +85,7 @@ class MainVC: UIViewController {
     
     // MARK: - Selector
     @objc func didTapSearchButton(_ sender: UIButton) {
-        print("search button")
         let safeArea = view.safeAreaLayoutGuide
-        topView.searchButton.titleLabel?.text = "눌러짐"
-        topView.sideBarButton.setImage(UIImage(systemName: "flame.fill"), for: .normal)
         
         // animate
         UIView.animate(withDuration: 1, animations: {
@@ -125,7 +117,6 @@ class MainVC: UIViewController {
         // animateKeyframes
 //        UIView.animateKeyframes(withDuration: 2, delay: 0, animations: {
 //            UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 1, animations: {
-//                print("1")
 //                self.topSearchView.snp.updateConstraints({
 //                    $0.top.equalTo(safeArea.snp.top).offset(0)
 //                    $0.leading.equalTo(safeArea.snp.leading).offset(0)
@@ -135,7 +126,6 @@ class MainVC: UIViewController {
 //                self.view.layoutIfNeeded()
 //            })
 //            UIView.addKeyframe(withRelativeStartTime: 1, relativeDuration: 1, animations: {
-//                print("2")
 //                let searchVC = SearchVC()
 //                self.navigationController?.pushViewController(searchVC, animated: true)
 //            })
@@ -217,10 +207,12 @@ class MainVC: UIViewController {
         naverMapView.frame = view.frame
         view.addSubview(naverMapView)
         naverMapView.mapView.touchDelegate = self
+        naverMapView.mapView.addCameraDelegate(delegate: self)
         print(defaultCamPosition)
         naverMapView.mapView.moveCamera(NMFCameraUpdate(position: defaultCamPosition))
         marker.position = defaultMarkerPosition
         marker.mapView = naverMapView.mapView
+        callPosition.mapView = naverMapView.mapView
     }
     
     // MARK: - SetupMarkers
@@ -343,6 +335,7 @@ extension MainVC: NMFMapViewTouchDelegate {
 //        return false
 //    }
 //}
+
 extension MainVC: UINavigationControllerDelegate {
     
 }
@@ -364,9 +357,11 @@ extension MainVC: UITableViewDelegate {
     }
 }
 
-extension MainVC: UIAdaptivePresentationControllerDelegate {
-    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
-        print(#function)
-        return UIModalPresentationStyle.none
+extension MainVC: NMFMapViewCameraDelegate {
+    func mapView(_ mapView: NMFMapView, cameraDidChangeByReason reason: Int, animated: Bool) {
+         let camPosition = mapView.cameraPosition.target
+        callPosition.position = camPosition
+//        topView.searchButton.setTitle("\(camPosition)", for: .normal)
+        topView.searchButton.setTitle("Geocoding", for: .normal)
     }
 }

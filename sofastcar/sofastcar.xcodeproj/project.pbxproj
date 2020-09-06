@@ -165,8 +165,9 @@
 		C75451F924F4E5CF00E13280 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				BC80F8B92502382D0044C36D /* SearchView.swift */,
 				BC64AE5624F63BC00019703A /* TopView.swift */,
+				BC80F8B92502382D0044C36D /* SearchView.swift */,
+				BC64AE8C24F8010B0019703A /* CarListView.swift */,
 				BC64AE5A24F646350019703A /* CarListTableViewCell.swift */,
 				BC64AE5E24F64FF40019703A /* CarListTableViewHeader.swift */,
 				C72A914224F67D87005D464F /* Login */,
@@ -188,7 +189,6 @@
 				C7BD348724F53BDE00089F0D /* Login */,
 				C7EA08F924EFF29C001A7ED4 /* MainVC.swift */,
 				BC80F8B72502280F0044C36D /* SearchVC.swift */,
-				BC64AE8C24F8010B0019703A /* CarListView.swift */,
 				BCE8A9B72503B75C00E7BC21 /* SearchResultTableVC.swift */,
 			);
 			path = ViewController;
