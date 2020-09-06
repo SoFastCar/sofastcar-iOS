@@ -13,6 +13,12 @@ class CommonUI {
   
   static let mainBlue: UIColor = .init(red: 0.08, green: 0.7, blue: 1, alpha: 1)
   static let mainDark: UIColor = .init(red: 0.22, green: 0.28, blue: 0.33, alpha: 1)
+  static let reservationBackground: UIColor = UIColor(
+    red: 30 / 255,
+    green: 37 / 255,
+    blue: 46 / 255,
+    alpha: 1
+  )
   
   // Login VC
   static let userInputMenusHeight: CGFloat = 50 // 텍스트 필드 높이
@@ -20,9 +26,12 @@ class CommonUI {
   static let sectionLabelPadding: CGFloat = 30  // 각 입력 섹션 메뉴당 차이
   static let sectionMiddlePadding: CGFloat = 3
   
-  // TextSize
   static let titleTextFontSize: CGFloat = 15
   static let contentsTextFontSize: CGFloat = 13
   
-  
+  enum SFSymbolKey: String {
+    case hamburger = "line.horizontal.3"
+    case rightChevron = "chevron.right"
+    case warning = "exclamationmark.triangle.fill"
+  }
 }
