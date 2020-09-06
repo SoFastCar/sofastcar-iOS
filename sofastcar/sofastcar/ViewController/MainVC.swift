@@ -19,9 +19,10 @@ class MainVC: UIViewController {
     
     var topAreaFlag = false
     var markerTapFlag = false
+    var carListonTopFlag = false
     let marker = NMFMarker()
     let naverMapView = NMFNaverMapView()
-    lazy var callPosition = NMFMarker(position: defaultMarkerPosition, iconImage: NMF_MARKER_IMAGE_YELLOW)
+    lazy var callPositionMarker = NMFMarker(position: defaultMarkerPosition, iconImage: NMF_MARKER_IMAGE_YELLOW)
     let topView = TopView()
     let searchView = SearchView()
     let whiteView = UIView()
@@ -42,33 +43,36 @@ class MainVC: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         let safeArea = view.safeAreaLayoutGuide
-        UIView.animate(withDuration: 0.5, animations: {
+        UIView.animate(withDuration: 1, animations: {
             self.searchView.alpha = 0
             self.whiteView.alpha = 0
+            self.topView.alpha = 1
             self.topView.translatesAutoresizingMaskIntoConstraints = false
             self.topView.snp.updateConstraints({
                 $0.top.equalTo(safeArea.snp.top).offset(8)
                 $0.leading.equalTo(safeArea.snp.leading).offset(10)
                 $0.trailing.equalTo(safeArea.snp.trailing).offset(-10)
                 $0.height.equalTo(52)
+//                $0.centerY.equalTo(safeArea.snp.centerY).offset(-333)
+//                $0.leading.equalTo(safeArea.snp.leading).offset(10)
+//                $0.trailing.equalTo(safeArea.snp.trailing).offset(-10)
+//                $0.height.equalTo(52)
             })
-            self.topView.alpha = 1
         })
     }
     
     // MARK: - Touch Methods
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
-//        if !topAreaFlag,
-//            markerTapFlag {
-//            UIView.animate(withDuration: 0.3, animations: {
-//                self.topView.alpha = 1
-//                self.carListView.frame.origin.y = self.view.frame.height * 0.82
-//            })
-//            markerTapFlag = true
-//        } else {
-//            // do nothing
-//        }
+        if !topAreaFlag,
+            markerTapFlag {
+            UIView.animate(withDuration: 0.3, animations: {
+                self.topView.alpha = 1
+                self.carListView.frame.origin.y = self.view.frame.height * 0.82
+            })
+        } else {
+            // do nothing
+        }
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -94,25 +98,33 @@ class MainVC: UIViewController {
                 $0.leading.equalTo(safeArea.snp.leading).offset(0)
                 $0.trailing.equalTo(safeArea.snp.trailing).offset(0)
                 $0.height.equalTo(60)
+                
+//                $0.centerY.equalTo(safeArea.snp.centerY).offset(-333)
+//                $0.leading.equalTo(safeArea.snp.leading).offset(0)
+//                $0.trailing.equalTo(safeArea.snp.trailing).offset(0)
+//                $0.height.equalTo(60)
             })
+            self.searchView.snp.updateConstraints({
+                $0.top.equalTo(safeArea.snp.top).offset(0)
+                $0.leading.equalTo(safeArea.snp.leading).offset(0)
+                $0.trailing.equalTo(safeArea.snp.trailing).offset(0)
+                $0.height.equalTo(60)
+//                $0.centerY.equalTo(safeArea.snp.centerY).offset(-333)
+//                $0.leading.equalTo(safeArea.snp.leading).offset(0)
+//                $0.trailing.equalTo(safeArea.snp.trailing).offset(0)
+//                $0.height.equalTo(60)
+                    })
             self.view.layoutIfNeeded()
             self.topView.alpha = 0
             self.searchView.alpha = 1
             self.whiteView.alpha = 1
         })
-//        let searchVC = SearchVC()
-//                   searchVC.modalPresentationStyle = .fullScreen
-//                   searchVC.modalTransitionStyle = .crossDissolve
-//                   self.present(searchVC, animated: true)
         DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
             let searchVC = SearchVC()
-//            searchVC.searchView.layer.shadowOpacity = 0
             searchVC.modalPresentationStyle = .fullScreen
             searchVC.modalTransitionStyle = .crossDissolve
             self.present(searchVC, animated: true)
         })
-//        let searchVC = SearchVC()
-//        navigationController?.pushViewController(searchVC, animated: true)
         
         // animateKeyframes
 //        UIView.animateKeyframes(withDuration: 2, delay: 0, animations: {
@@ -144,9 +156,15 @@ class MainVC: UIViewController {
         let betweenTopCenterY = topY + (centerY - topY) / 2
         let betrweenCenterBottomY = centerY + (bottomY - centerY) / 2
         let yOffset: CGFloat = carListView.frame.origin.y
-        
+        print(#function)
         let translation = pan.translation(in: view)
-        carListView.frame.origin.y = yOffset + translation.y
+        if yOffset + translation.y <= topY {
+            carListView.frame.origin.y = yOffset
+        } else {
+            carListView.frame.origin.y = yOffset + translation.y
+            topAreaFlag = false
+        }
+//        carListView.frame.origin.y = yOffset + translation.y
         pan.setTranslation(.zero, in: view)
         
         switch pan.state {
@@ -154,13 +172,13 @@ class MainVC: UIViewController {
             switch yOffset {
             case 0..<topY:
                 visualEffectView.alpha = 1 - yOffset / centerY
-                print("visualEffectView.alpha: \(visualEffectView.alpha)")
+//                print("visualEffectView.alpha: \(visualEffectView.alpha)")
             case topY..<betweenTopCenterY:
                 visualEffectView.alpha = 1 - yOffset / centerY
-                print("visualEffectView.alpha: \(visualEffectView.alpha)")
+//                print("visualEffectView.alpha: \(visualEffectView.alpha)")
             case betweenTopCenterY..<centerY:
                 visualEffectView.alpha = 1 - yOffset / centerY
-                print("visualEffectView.alpha: \(visualEffectView.alpha)")
+//                print("visualEffectView.alpha: \(visualEffectView.alpha)")
             default:
                 break
             }
@@ -168,35 +186,38 @@ class MainVC: UIViewController {
             switch yOffset {
             case 0..<topY:
                 topAreaFlag = true
+                carListView.carListTableView.isScrollEnabled = true
                 carListView.frame.origin.y = topY
-                print("yOffset: \(yOffset), originY: \(carListView.frame.origin.y), topY: \(topY)")
+//                print("yOffset: \(yOffset), originY: \(carListView.frame.origin.y), topY: \(topY)")
             case topY..<betweenTopCenterY:
                 topAreaFlag = true
+                carListView.carListTableView.isScrollEnabled = true
                 carListView.frame.origin.y = topY
-                print("yOffset: \(yOffset), originY: \(carListView.frame.origin.y), topY: \(topY)")
+//                print("yOffset: \(yOffset), originY: \(carListView.frame.origin.y), topY: \(topY)")
             case betweenTopCenterY..<centerY:
                 topAreaFlag = false
                 carListView.frame.origin.y = centerY
                 visualEffectView.alpha = 0
-                print("yOffset: \(yOffset), originY: \(carListView.frame.origin.y), centerY: \(centerY)")
+//                print("yOffset: \(yOffset), originY: \(carListView.frame.origin.y), centerY: \(centerY)")
             case centerY..<betrweenCenterBottomY:
                 topAreaFlag = false
                 carListView.frame.origin.y = centerY
                 visualEffectView.alpha = 0
-                print("yOffset: \(yOffset), originY: \(carListView.frame.origin.y), centerY: \(centerY)")
+//                print("yOffset: \(yOffset), originY: \(carListView.frame.origin.y), centerY: \(centerY)")
             case betrweenCenterBottomY..<bottomY:
                 topAreaFlag = false
                 carListView.frame.origin.y = bottomY
                 visualEffectView.alpha = 0
-                print("yOffset: \(yOffset), originY: \(carListView.frame.origin.y), bottomY: \(bottomY)")
+//                print("yOffset: \(yOffset), originY: \(carListView.frame.origin.y), bottomY: \(bottomY)")
             case bottomY...:
                 topAreaFlag = false
                 carListView.frame.origin.y = bottomY
                 visualEffectView.alpha = 0
-                print("yOffset: \(yOffset), originY: \(carListView.frame.origin.y), bottomY: \(bottomY)")
+//                print("yOffset: \(yOffset), originY: \(carListView.frame.origin.y), bottomY: \(bottomY)")
             default:
                 break
             }
+            carListonTopFlag = false
         default:
             break
         }
@@ -208,11 +229,11 @@ class MainVC: UIViewController {
         view.addSubview(naverMapView)
         naverMapView.mapView.touchDelegate = self
         naverMapView.mapView.addCameraDelegate(delegate: self)
-        print(defaultCamPosition)
+//        print(defaultCamPosition)
         naverMapView.mapView.moveCamera(NMFCameraUpdate(position: defaultCamPosition))
         marker.position = defaultMarkerPosition
         marker.mapView = naverMapView.mapView
-        callPosition.mapView = naverMapView.mapView
+        callPositionMarker.mapView = naverMapView.mapView
     }
     
     // MARK: - SetupMarkers
@@ -221,7 +242,7 @@ class MainVC: UIViewController {
             self.markerTapFlag = true
             if let marker = overlay as? NMFMarker {
                 marker.iconImage = NMFOverlayImage(name: "mSNormalBlue")
-                
+                self.callPositionMarker.mapView = nil
                 // Car List 팝업 by View
                 UIView.animate(withDuration: 0.5, animations: {
                     self.carListView.frame.origin.y = self.view.center.y
@@ -246,8 +267,6 @@ class MainVC: UIViewController {
     
     // MARK: - SetupUI
     private func setupUI() {
-        navigationController?.navigationBar.isHidden = true
-        
         view.addSubview(whiteView)
         
         searchView.alpha = 0
@@ -257,8 +276,9 @@ class MainVC: UIViewController {
         
         carListView.carListTableView.delegate = self
         carListView.carListTableView.dataSource = self
+        carListView.carListTableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         carListView.frame = CGRect(x: 0, y: view.frame.height, width: view.frame.width, height: view.frame.height)
-//        panGesture.delegate = self
+        panGesture.delegate = self
         carListView.addGestureRecognizer(panGesture)
         
         visualEffectView.frame = view.frame
@@ -277,10 +297,14 @@ class MainVC: UIViewController {
         let safeArea = view.safeAreaLayoutGuide
         searchView.translatesAutoresizingMaskIntoConstraints = false
         searchView.snp.makeConstraints({
-            $0.top.equalTo(safeArea.snp.top).offset(0)
-            $0.leading.equalTo(safeArea.snp.leading).offset(0)
-            $0.trailing.equalTo(safeArea.snp.trailing).offset(0)
-            $0.height.equalTo(60)
+            $0.top.equalTo(safeArea.snp.top).offset(8)
+            $0.leading.equalTo(safeArea.snp.leading).offset(10)
+            $0.trailing.equalTo(safeArea.snp.trailing).offset(-10)
+            $0.height.equalTo(52)
+//            $0.centerY.equalTo(safeArea.snp.centerY).offset(-333)
+//            $0.leading.equalTo(safeArea.snp.leading).offset(0)
+//            $0.trailing.equalTo(safeArea.snp.trailing).offset(0)
+//            $0.height.equalTo(60)
         })
         topView.translatesAutoresizingMaskIntoConstraints = false
         topView.snp.makeConstraints({
@@ -288,6 +312,10 @@ class MainVC: UIViewController {
             $0.leading.equalTo(safeArea.snp.leading).offset(10)
             $0.trailing.equalTo(safeArea.snp.trailing).offset(-10)
             $0.height.equalTo(52)
+//            $0.centerY.equalTo(safeArea.snp.centerY).offset(-333)
+//            $0.leading.equalTo(safeArea.snp.leading).offset(10)
+//            $0.trailing.equalTo(safeArea.snp.trailing).offset(-10)
+//            $0.height.equalTo(52)
         })
     }
 }
@@ -295,11 +323,17 @@ class MainVC: UIViewController {
 // MARK: - Extension
 extension MainVC: NMFMapViewTouchDelegate {
     func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
-        print("didTapMap")
+        callPositionMarker.mapView = mapView
+        UIView.animate(withDuration: 0.3, animations: {
+            self.topView.alpha = 1
+            self.carListView.frame.origin.y = self.view.frame.height
+        })
+        markerTapFlag = false
+//        print("didTapMap")
     }
 }
 
-//extension MainVC: UIGestureRecognizerDelegate {
+extension MainVC: UIGestureRecognizerDelegate {
 //    
 //    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive press: UIPress) -> Bool {
 //        print(#function, "press")
@@ -315,15 +349,31 @@ extension MainVC: NMFMapViewTouchDelegate {
 //        return true
 //    }
 //    
-//    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-//        print(#function)
-//        return true
-//    }
+    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        print(#function)
+        if topAreaFlag,
+            !carListonTopFlag {
+            carListView.carListTableView.isScrollEnabled = true
+            return false
+        } else {
+            carListView.carListTableView.isScrollEnabled = false
+            return true
+        }
+    }
 //    
-//    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-//        print(#function, otherGestureRecognizer)
-//        return false
-//    }
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        print(#function)
+        return false
+//        print(topAreaFlag)
+//        if topAreaFlag,
+//            !carListonTopFlag {
+//            carListView.carListTableView.isScrollEnabled = true
+//            return false
+//        } else {
+//            carListView.carListTableView.isScrollEnabled = false
+//            return false
+//        }
+    }
 //    
 //    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRequireFailureOf otherGestureRecognizer: UIGestureRecognizer) -> Bool {
 //        print(#function, otherGestureRecognizer)
@@ -334,10 +384,6 @@ extension MainVC: NMFMapViewTouchDelegate {
 //        print(otherGestureRecognizer)
 //        return false
 //    }
-//}
-
-extension MainVC: UINavigationControllerDelegate {
-    
 }
 
 extension MainVC: UITableViewDataSource {
@@ -346,7 +392,9 @@ extension MainVC: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        cell.textLabel?.text = "\(indexPath.row)"
+        return cell
     }
 
 }
@@ -355,13 +403,22 @@ extension MainVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         80
     }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        print(indexPath.row)
+        if indexPath.row == 0 {
+            carListonTopFlag = true
+        } else {
+            carListonTopFlag = false
+        }
+    }
+    
 }
 
 extension MainVC: NMFMapViewCameraDelegate {
     func mapView(_ mapView: NMFMapView, cameraDidChangeByReason reason: Int, animated: Bool) {
          let camPosition = mapView.cameraPosition.target
-        callPosition.position = camPosition
-//        topView.searchButton.setTitle("\(camPosition)", for: .normal)
+        callPositionMarker.position = camPosition
         topView.searchButton.setTitle("Geocoding", for: .normal)
     }
 }

@@ -35,8 +35,8 @@ class SearchView: UIView {
         layer.shadowRadius = 3
         layer.shadowOpacity = 0.5
         
-        backButton.backgroundColor = .systemGreen
-        backButton.setImage(UIImage(systemName: "arrow.left"), for: .normal)
+        backButton.backgroundColor = .white
+        backButton.setImage(UIImage(named: "icons8-left-50"), for: .normal)
         stackView.addArrangedSubview(backButton)
 
 //        searchController.searchBar.barTintColor = .white
@@ -45,17 +45,17 @@ class SearchView: UIView {
 //        searchController.searchBar.searchBarStyle = .prominent
 //        stackView.addArrangedSubview(searchController.searchBar)
         
-        searchResultTableView.frame = self.frame
         self.addSubview(searchResultTableView)
         
-        searchTextField.backgroundColor = .systemGreen
+        searchTextField.backgroundColor = .white
         searchTextField.clearButtonMode = .whileEditing
-        searchTextField.placeholder = "주소 또는 건물명 검색"
+//        searchTextField.placeholder = "주소 또는 건물명 검색"
+        searchTextField.attributedPlaceholder = NSAttributedString(string: "주소 또는 건물명 검색", attributes: [NSAttributedString.Key.foregroundColor: UIColor.darkGray, NSAttributedString.Key.backgroundColor: UIColor.white])
+        searchTextField.tintColor = .systemGray
         searchTextField.borderStyle = .none
         stackView.addArrangedSubview(searchTextField)
         
         stackView.axis = .horizontal
-//        stackView.alignment = .fill
         stackView.distribution = .fill
         shadowContainer.addSubview(stackView)
         
@@ -92,13 +92,13 @@ class SearchView: UIView {
             $0.width.equalTo(52)
         })
         
-//        searchResultTableView.translatesAutoresizingMaskIntoConstraints = false
-//        searchResultTableView.snp.makeConstraints({
-//            $0.top.equalTo(shadowContainer.snp.bottom).offset(5)
-//            $0.leading.equalTo(self)
-//            $0.trailing.equalTo(self)
-//            $0.bottom.equalTo(self)
-//        })
+        searchResultTableView.translatesAutoresizingMaskIntoConstraints = false
+        searchResultTableView.snp.makeConstraints({
+            $0.top.equalTo(shadowContainer.snp.bottom)
+            $0.leading.equalTo(self)
+            $0.trailing.equalTo(self)
+            $0.bottom.equalTo(self)
+        })
     }
     
 }

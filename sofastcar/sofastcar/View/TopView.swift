@@ -54,9 +54,9 @@ class TopView: UIView {
         shadowContainer.clipsToBounds = true
         self.addSubview(shadowContainer)
         
-        sideBarButton.backgroundColor = .systemGreen
-//        sideBarButton.setImage(UIImage(named: "icons8-menu-24"), for: .normal)
-        sideBarButton.setImage(UIImage(systemName: "flame"), for: .normal)
+        sideBarButton.backgroundColor = .white
+        sideBarButton.setImage(UIImage(named: "icons8-menu-rounded-50"), for: .normal)
+//        sideBarButton.setImage(UIImage(systemName: "flame"), for: .normal)
 //        sideBarButton.setContentHuggingPriority(UILayoutPriority(251), for: .horizontal)
         
         sideBarButton.setContentCompressionResistancePriority(UILayoutPriority(751), for: .horizontal)
