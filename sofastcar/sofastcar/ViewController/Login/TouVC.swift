@@ -122,10 +122,10 @@ class TouVC: UIViewController {
   
   @objc private func singupContinueButtonTap() {
     let userAuthVC = UserAuthVC()
-    user.smsMarketing = touView.smsAcceptButton.isSelected
-    user.emailMarketing = touView.emailAcceptButton.isSelected
-    user.pushMarketing = touView.pushAcceptButton.isSelected
-    user.marketingAgreeTime = Date()
+//    user.smsMarketing = touView.smsAcceptButton.isSelected
+//    user.emailMarketing = touView.emailAcceptButton.isSelected
+//    user.pushMarketing = touView.pushAcceptButton.isSelected
+//    user.marketingAgreeTime = Date()
     
     userAuthVC.user = self.user
     navigationController?.pushViewController(userAuthVC, animated: true)
