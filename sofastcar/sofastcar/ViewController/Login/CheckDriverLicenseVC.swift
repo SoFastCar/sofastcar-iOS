@@ -37,10 +37,11 @@ class CheckDriverLicenseVC: UIViewController {
   
   @objc func tabComplutebutton() {
     let socarPassVC = SocarPassVC()
-    socarPassVC.modalPresentationStyle = .overFullScreen
-//    present(socarPassVC, animated: true)
-    
-    navigationController?.pushViewController(socarPassVC, animated: true)
+    let naviController = UINavigationController(rootViewController: socarPassVC)
+    naviController.modalPresentationStyle = .overFullScreen
+    navigationController?.present(naviController, animated: true, completion: {
+      self.navigationController?.popToRootViewController(animated: false)
+    })
   }
   
   @objc func tabAgreeButton(_ sender: UIButton) {

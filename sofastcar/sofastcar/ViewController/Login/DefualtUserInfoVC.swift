@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import CryptoKit
+import Alamofire
 
 enum ValidationCheck: String {
   case email = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
@@ -26,7 +28,6 @@ class DefualtUserInfoVC: UIViewController {
     navigationSetting()
     textFieldDelegateSetting()
     configureButtonAction()
-    
   }
 
   override func loadView() {
@@ -70,6 +71,8 @@ class DefualtUserInfoVC: UIViewController {
   }
   
   private func checkAuthButtonEnable() {
+    myView.inputCompleteButton.isEnabled = false
+    
     guard myView.userIdTextField.text?.isEmpty == false else { return }
     guard myView.userPasswordField.text?.isEmpty == false else { return }
     guard myView.reUserPasswordField.text?.isEmpty == false else { return }
@@ -109,18 +112,51 @@ class DefualtUserInfoVC: UIViewController {
   }
   
   @objc private func tabInputCompletButton() {
-    // 서버 연동 부분
+    guard let userEmailText = myView.userIdTextField.text else { return }
+    guard let userPassword = myView.userPasswordField.text else { return }
+//    guard let encryptedUserPassword = sha256(userPassword: userPassword) else { return }
+    let sendUSerSignUpData: [String: Any] = [
+      "email": userEmailText,
+      "password": userPassword
+    ]
     
-    // 완료 페이지
-    let singUpCompleteVC = SingUpCompleteVC()
-    singUpCompleteVC.user = self.user
-    singUpCompleteVC.passBlurView = myView.blurView
-    singUpCompleteVC.modalPresentationStyle = .overFullScreen
-    singUpCompleteVC.passPushViewFunc = presentCreditCardInputVC
-    present(singUpCompleteVC, animated: true)
+    print(sendUSerSignUpData)
     
-    UIView.animate(withDuration: 0.5) {
-      self.myView.blurView.alpha = 0.4
+    let url = URL(string: "https://sofastcar.moorekwon.xyz/members/")!
+    
+    AF.request(url, method: .post,
+               parameters: sendUSerSignUpData)
+      .responseJSON { response in
+        if response.response?.statusCode == 201 {
+          self.presentSignUpCompleteVC()
+        } else {
+          let alertCtroller = UIAlertController(title: "오류", message: "다른 이메일 주소를 입력해주세요", preferredStyle: .alert)
+          alertCtroller.addAction(UIAlertAction(title: "확인", style: .cancel, handler: nil))
+          DispatchQueue.main.async {
+            self.present(alertCtroller, animated: true, completion: nil)
+          }
+        }
+    }
+  }
+  
+  private func sha256(userPassword: String) -> String? {
+    guard let data = userPassword.data(using: .utf8) else { return nil }
+    let digest = SHA256.hash(data: data)
+    return digest.description
+  }
+  
+  private func presentSignUpCompleteVC() {
+    DispatchQueue.main.async {
+      let singUpCompleteVC = SingUpCompleteVC()
+      singUpCompleteVC.user = self.user
+      singUpCompleteVC.passBlurView = self.myView.blurView
+      singUpCompleteVC.modalPresentationStyle = .overFullScreen
+      singUpCompleteVC.passPushViewFunc = self.presentCreditCardInputVC
+      self.present(singUpCompleteVC, animated: true)
+      
+      UIView.animate(withDuration: 0.5) {
+        self.myView.blurView.alpha = 0.4
+      }
     }
   }
   

@@ -21,16 +21,6 @@ class SocarPassVC: UIViewController {
     return view
   }()
   
-  let backButton: UIButton = {
-    let button = UIButton()
-    let attributeImage = UIImage.SymbolConfiguration(pointSize: 25, weight: .thin)
-    let leftChevronImage = UIImage(systemName: "arrow.left", withConfiguration: attributeImage)
-    button.setImage(leftChevronImage, for: .normal)
-    button.imageView?.tintColor = .black
-    button.addTarget(self, action: #selector(tabBackButton), for: .touchUpInside)
-    return button
-  }()
-  
   let buttonHeight = UIScreen.main.bounds.height*0.1
   let viewHeightSize = UIScreen.main.bounds.height
   let viewWidthSize = UIScreen.main.bounds.width
@@ -38,22 +28,22 @@ class SocarPassVC: UIViewController {
   // MARK: - Life Cycle
   override func viewDidLoad() {
     super.viewDidLoad()
-    
-    title = "쏘카 패스"
-    self.navigationController?.navigationBar.topItem?.title = ""
     view.backgroundColor = .white
-    imageScrollView.backgroundColor = .white
     
+    configureNavigationContoller()
     configureScrollView()
+  }
     
-    configureXButtonUI()
+  private func configureNavigationContoller() {
+    navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "xmark"), style: .plain, target: self, action: #selector(tabBackButton))
+    navigationItem.leftBarButtonItem?.tintColor = .black
   }
   
   private func configureScrollView() {
-    
+    imageScrollView.backgroundColor = .white
     view.addSubview(imageScrollView)
     imageScrollView.snp.makeConstraints {
-      $0.top.bottom.equalTo(view.layoutMarginsGuide).offset(30)
+      $0.top.bottom.equalTo(view.safeAreaLayoutGuide).offset(30)
       $0.leading.equalTo(view.layoutMarginsGuide).offset(10)
       $0.trailing.equalTo(view.layoutMarginsGuide).offset(-10)
     }
@@ -71,21 +61,15 @@ class SocarPassVC: UIViewController {
                                y: Int(viewHeightSize)*index,
                                width: Int(viewWidthSize),
                                height: Int(UIScreen.main.bounds.height))
-      print(imageView.frame)
-    }
-  }
-  
-  private func configureXButtonUI() {
-    view.addSubview(backButton)
-    backButton.snp.makeConstraints {
-      $0.top.equalTo(view.layoutMarginsGuide).offset(10)
-      $0.leading.equalTo(view.layoutMarginsGuide).offset(10)
     }
   }
   
   @objc private func tabBackButton() {
+    print("Tab Back BTuuton")
     dismiss(animated: true) {
-      //메인 화면으로 이동
+      let mainVC = MainVC()
+      let navigationController = UINavigationController(rootViewController: mainVC)
+      self.present(navigationController, animated: true, completion: nil)
     }
   }
 }
