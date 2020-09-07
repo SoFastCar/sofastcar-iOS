@@ -11,7 +11,24 @@ import SnapKit
 
 class CarKeyView: UIView {
   
-  // MARK: - Attribute
+  let screenSize = UIScreen.main.bounds
+  
+  enum CarKeyState {
+    case expanded
+    case collapsed
+  }
+  
+  let carKeyViewHeight: CGFloat = 600
+  let carKeyViewHandleAreaHeight: CGFloat = 235
+  
+  var visualEffectView = UIVisualEffectView()
+  var cardVisible = false
+  var nextState: CarKeyState {
+    return cardVisible ? .collapsed : .expanded
+  }
+  var runningAnimations = [UIViewPropertyAnimator]()
+  var animationProgressWhenInterrupted: CGFloat = 0
+  
   fileprivate let handleArea: UIView = {
     let view = UIView()
     view.backgroundColor = .clear
@@ -153,6 +170,12 @@ class CarKeyView: UIView {
   // MARK: - LifeCycle
   override init(frame: CGRect) {
     super.init(frame: frame)
+    self.frame = CGRect(
+      x: 0,
+      y: screenSize.height - 255,
+      width: screenSize.width,
+      height: screenSize.height - 255
+    )
     
     setUI()
   }
@@ -162,13 +185,14 @@ class CarKeyView: UIView {
   }
   
   // MARK: - UI
+  
   fileprivate func setUI() {
     self.backgroundColor = .white
     self.clipsToBounds = true
     self.layer.cornerRadius = 10
     self.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
     
-    [handleArea, smartKeyLabel, onLabel, boltIcon, openOneSecondLabel, rightChevronIcon, returnButton, lockView].forEach {
+    [handleArea, smartKeyLabel, onLabel, boltIcon, openOneSecondLabel, rightChevronIcon, returnButton, lockView, visualEffectView].forEach {
       self.addSubview($0)
     }
     handleArea.addSubview(handler)
@@ -177,7 +201,7 @@ class CarKeyView: UIView {
     handleArea.snp.makeConstraints {
       $0.top.equalTo(self)
       $0.leading.trailing.equalTo(self)
-      $0.height.equalTo(25)
+      $0.height.equalTo(45)
     }
     
     handler.snp.makeConstraints {
@@ -230,9 +254,12 @@ class CarKeyView: UIView {
     lockStackView.snp.makeConstraints {
       $0.centerY.equalTo(lockView)
       $0.centerX.equalTo(lockView)
-      //      $0.leading.equalTo(lockView).offset(30)
     }
+    
+    setGesture()
   }
+  
+  // MARK: - Action
   
   @objc func didTapButton(_ sender: UIButton) {
     switch sender {
@@ -244,6 +271,112 @@ class CarKeyView: UIView {
       print("unlockButton button press")
     default:
       print("error")
+    }
+  }
+}
+
+// MARK: - setGesture
+
+extension CarKeyView {
+  @objc func handleCarkeyTap(recongnize: UITapGestureRecognizer) {
+    switch recongnize.state {
+    case .began:
+      print("start Transition")
+    case .changed:
+      print("update Transition")
+    case .ended:
+      print("handle continue Transition")
+    default:
+      break
+    }
+  }
+  @objc func handleCarkeyPan(recongnize: UIPanGestureRecognizer) {
+    switch recongnize.state {
+    case .began:
+      startInteractiveTransition(state: nextState, duration: 0.9)
+      print("pan degan Transition")
+    case .changed:
+      updateInteractiveTransition(fractionCompleted: 0)
+      print("pan update Transition")
+    case .ended:
+      continueInteractiveTransition()
+      print("pan continue Transition")
+    default:
+      break
+    }
+  }
+  
+  fileprivate func setGesture() {
+    let tapGestureRecongnizer = UITapGestureRecognizer(target: self, action: #selector(self.handleCarkeyTap(recongnize:)))
+    let panGestureRecongnizer = UIPanGestureRecognizer(target: self, action: #selector(self.handleCarkeyPan(recongnize:)))
+    
+    handleArea.addGestureRecognizer(tapGestureRecongnizer)
+    handleArea.addGestureRecognizer(panGestureRecongnizer)
+  }
+  
+  fileprivate func animationTransitionIfNeeded(state: CarKeyState, duration: TimeInterval) {
+    if runningAnimations.isEmpty {
+      let frameAnimator = UIViewPropertyAnimator(duration: duration, dampingRatio: 1) {
+        switch state {
+        case .expanded:
+          self.frame = CGRect(
+            x: 0,
+            y: self.screenSize.height - (self.screenSize.height - self.carKeyViewHandleAreaHeight),
+            width: self.screenSize.width,
+            height: self.screenSize.height
+          )
+        case .collapsed:
+          self.frame = CGRect(
+            x: 0,
+            y: self.screenSize.height - 255,
+            width: self.screenSize.width,
+            height: self.screenSize.height - 255
+          )
+        }
+      }
+      frameAnimator.addCompletion { _ in
+        self.cardVisible = !self.cardVisible
+        self.runningAnimations.removeAll()
+      }
+      
+      frameAnimator.startAnimation()
+      runningAnimations.append(frameAnimator)
+      
+      let blurAnimation = UIViewPropertyAnimator(duration: duration, dampingRatio: 1) {
+        switch state {
+        case .expanded:
+          self.visualEffectView.effect = UIBlurEffect(style: .dark)
+          print("expanded")
+        case .collapsed:
+         print("collapsed")
+          self.visualEffectView.effect = nil
+        }
+      }
+      
+      blurAnimation.startAnimation()
+      runningAnimations.append(blurAnimation)
+    }
+  }
+  
+  fileprivate func startInteractiveTransition(state: CarKeyState, duration: TimeInterval) {
+    if runningAnimations.isEmpty {
+      animationTransitionIfNeeded(state: state, duration: duration)
+    }
+    for animator in runningAnimations {
+      animator.pauseAnimation()
+      animationProgressWhenInterrupted = animator.fractionComplete
+    }
+  }
+  
+  fileprivate func updateInteractiveTransition(fractionCompleted: CGFloat) {
+    for animator in runningAnimations {
+      animator.fractionComplete = fractionCompleted + animationProgressWhenInterrupted
+    }
+  }
+  
+  fileprivate func continueInteractiveTransition() {
+    for animator in runningAnimations {
+      animator.continueAnimation(withTimingParameters: nil, durationFactor: 0)
     }
   }
 }

@@ -10,7 +10,9 @@ import UIKit
 import SnapKit
 
 class ReservationStateView: UIScrollView {
+  
   // MARK: - Attribute
+  
   let carKey: CarKeyView = {
     let view = CarKeyView()
     
@@ -298,7 +300,6 @@ class ReservationStateView: UIScrollView {
   // MARK: - UI
   fileprivate func setUI() {
     self.backgroundColor = CommonUI.mainBlue
-//    self.layoutMargins = UIEdgeInsets(top: 30, left: 20, bottom: 30, right: 20)
     self.layer.cornerRadius = 5
     
     setConstraints()
@@ -418,25 +419,8 @@ class ReservationStateView: UIScrollView {
       $0.top.equalTo(reservationPlaceWrapView.snp.top).offset(30)
       $0.leading.equalTo(reservationPlaceStateSubLabel.snp.trailing).offset(40)
     }
-    carKeyPanel()
-  }
-  
-  fileprivate func carKeyPanel() {
-    let screenSize = UIScreen.main.bounds
-    let screenWidth = screenSize.width
-    let screenHeight = screenSize.height
-    
-    carKey.frame = CGRect(
-      x: 0,
-      y: screenHeight - 245,
-      width: screenWidth,
-      height: 300
-    )
   }
   // MARK: - Action
-//  override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-//    print("did tap reservationStateView")
-//  }
   
   @objc func didTapButton(_ sender: UIButton) {
     switch sender {

@@ -11,7 +11,6 @@
 		7EAA8F6824FFBB510049D514 /* ReservationDashboardVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EAA8F6724FFBB510049D514 /* ReservationDashboardVC.swift */; };
 		7EF41FC32500AB3A0030752A /* ReservationStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF41FC22500AB3A0030752A /* ReservationStateView.swift */; };
 		7EF41FC62501F6D90030752A /* CarKeyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF41FC52501F6D90030752A /* CarKeyView.swift */; };
-		7EF41FC82502045F0030752A /* CarKeyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF41FC72502045F0030752A /* CarKeyViewController.swift */; };
 		BC64AE5724F63BC00019703A /* TopSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC64AE5624F63BC00019703A /* TopSearchView.swift */; };
 		BC64AE5B24F646350019703A /* CarListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC64AE5A24F646350019703A /* CarListTableViewCell.swift */; };
 		BC64AE5F24F64FF40019703A /* CarListTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC64AE5E24F64FF40019703A /* CarListTableViewHeader.swift */; };
@@ -71,7 +70,6 @@
 		7EAA8F6724FFBB510049D514 /* ReservationDashboardVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationDashboardVC.swift; sourceTree = "<group>"; };
 		7EF41FC22500AB3A0030752A /* ReservationStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationStateView.swift; sourceTree = "<group>"; };
 		7EF41FC52501F6D90030752A /* CarKeyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarKeyView.swift; sourceTree = "<group>"; };
-		7EF41FC72502045F0030752A /* CarKeyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarKeyViewController.swift; sourceTree = "<group>"; };
 		BC64AE5624F63BC00019703A /* TopSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopSearchView.swift; sourceTree = "<group>"; };
 		BC64AE5A24F646350019703A /* CarListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CarListTableViewCell.swift; path = sofastcar/View/CarListTableViewCell.swift; sourceTree = SOURCE_ROOT; };
 		BC64AE5E24F64FF40019703A /* CarListTableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CarListTableViewHeader.swift; path = sofastcar/View/CarListTableViewHeader.swift; sourceTree = SOURCE_ROOT; };
@@ -145,7 +143,6 @@
 			isa = PBXGroup;
 			children = (
 				7EAA8F6724FFBB510049D514 /* ReservationDashboardVC.swift */,
-				7EF41FC72502045F0030752A /* CarKeyViewController.swift */,
 			);
 			path = Reservation;
 			sourceTree = "<group>";
@@ -522,7 +519,6 @@
 				C769C82924FD0A1200DC8226 /* CardEnrollView.swift in Sources */,
 				C76B2A6324F7A799004E4CBD /* UserAuthVC.swift in Sources */,
 				7EF41FC62501F6D90030752A /* CarKeyView.swift in Sources */,
-				7EF41FC82502045F0030752A /* CarKeyViewController.swift in Sources */,
 				C7BD348C24F54A5700089F0D /* InitVC.swift in Sources */,
 				C769C82E24FDB69B00DC8226 /* DriverLicenseEnrollinitView.swift in Sources */,
 				C72A913F24F60CD9005D464F /* TouVC.swift in Sources */,
