@@ -61,6 +61,7 @@
 		C7EA090B24EFF32B001A7ED4 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = C7EA090A24EFF32B001A7ED4 /* SnapKit */; };
 		C7EA090E24EFF4CC001A7ED4 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = C7EA090D24EFF4CC001A7ED4 /* Kingfisher */; };
 		C7EA091A24F001B8001A7ED4 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = C7EA091924F001B8001A7ED4 /* .swiftlint.yml */; };
+		C7F2E6352505FE8E0004EBF9 /* UserDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F2E6342505FE8E0004EBF9 /* UserDefault.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -127,6 +128,7 @@
 		C7EA090124EFF29D001A7ED4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C7EA090324EFF29D001A7ED4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C7EA091924F001B8001A7ED4 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+		C7F2E6342505FE8E0004EBF9 /* UserDefault.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefault.swift; sourceTree = "<group>"; };
 		F696BB68DE39C7A6CB2DD8B1 /* Pods-sofastcar.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sofastcar.release.xcconfig"; path = "Target Support Files/Pods-sofastcar/Pods-sofastcar.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -176,6 +178,7 @@
 			children = (
 				C72A913724F5E15B005D464F /* Extension.swift */,
 				C769C82424FCDEFC00DC8226 /* CommonUI.swift */,
+				C7F2E6342505FE8E0004EBF9 /* UserDefault.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -559,6 +562,7 @@
 			files = (
 				C769C82324FCDEA100DC8226 /* CardEnrollinitVC.swift in Sources */,
 				C72A914124F61857005D464F /* TouButton.swift in Sources */,
+				C7F2E6352505FE8E0004EBF9 /* UserDefault.swift in Sources */,
 				C769C83624FDF03C00DC8226 /* SocarPassVC.swift in Sources */,
 				C79A0B502501231C0061F078 /* ReservationConfirmTableVC.swift in Sources */,
 				C769C83424FDD99300DC8226 /* CheckDriverLicenseView.swift in Sources */,

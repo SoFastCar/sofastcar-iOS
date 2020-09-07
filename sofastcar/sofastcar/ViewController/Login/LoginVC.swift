@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class LoginVC: UIViewController {
   
@@ -26,6 +27,7 @@ class LoginVC: UIViewController {
   
   private func configureButtonTargetAction() {
     myView.backButton.addTarget(self, action: #selector(tabBackButton), for: .touchUpInside)
+    myView.loginButton.addTarget(self, action: #selector(tabLoginButton), for: .touchUpInside)
   }
   
   private func configureTextFieldDelegate() {
@@ -37,7 +39,6 @@ class LoginVC: UIViewController {
   
   // MARK: - Button Handler
   @objc private func tabBackButton() {
-    print("tab Button")
     navigationController?.popViewController(animated: true)
   }
   
@@ -48,6 +49,38 @@ class LoginVC: UIViewController {
     guard myView.passwordTextField.text?.isEmpty == false else { return print("b")}
     myView.loginButton.isEnabled = true
     myView.loginButton.backgroundColor = CommonUI.mainBlue
+  }
+  
+  @objc private func tabLoginButton() {
+    guard let userid = myView.emailTextField.text else { return }
+    guard let userPassword = myView.passwordTextField.text else { return }
+    
+    let url = URL(string: "https://sofastcar.moorekwon.xyz/api-jwt-auth/")!
+    
+    let userLoginAuthPatameters = [
+      "email": userid,
+      "password": userPassword
+    ]
+    
+    AF.request(url, method: .post, parameters: userLoginAuthPatameters)
+      .responseJSON { response in
+        if response.response?.statusCode == 200 {
+          guard let data = response.data else { return }
+          if let jsonObjcet = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String: Any] {
+            if let userTocken = jsonObjcet["token"] as? String {
+              UserDefaults.saveUserAuthTocken(authToken: userTocken)
+              let mainVC = MainVC()
+              self.navigationController?.pushViewController(mainVC, animated: false)
+            }
+          }
+        } else {
+          let alertCtroller = UIAlertController(title: "오류", message: "아이디&패스워드를 확인해주세요", preferredStyle: .alert)
+          alertCtroller.addAction(UIAlertAction(title: "확인", style: .cancel, handler: nil))
+          DispatchQueue.main.async {
+            self.present(alertCtroller, animated: true, completion: nil)
+          }
+        }
+    }
   }
 }
 
