@@ -26,7 +26,9 @@ class CommonUI {
   static let sectionLabelPadding: CGFloat = 30  // 각 입력 섹션 메뉴당 차이
   static let sectionMiddlePadding: CGFloat = 3
   
-  // SFSymbolKey
+  static let titleTextFontSize: CGFloat = 15
+  static let contentsTextFontSize: CGFloat = 13
+  
   enum SFSymbolKey: String {
     case hamburger = "line.horizontal.3"
     case rightChevron = "chevron.right"

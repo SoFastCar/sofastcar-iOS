@@ -28,6 +28,7 @@ class LoginCompleteButton: UIButton {
     
     self.contentEdgeInsets = UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0)
     self.contentVerticalAlignment = .top
+    
     self.isEnabled = false
   }
   
