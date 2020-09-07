@@ -12,6 +12,7 @@ import SnapKit
 class SearchVC: UIViewController {
     
     let searchView = SearchView()
+    lazy var safeArea = self.view.safeAreaLayoutGuide
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,49 +24,33 @@ class SearchVC: UIViewController {
     // MARK: - Selector
     @objc func didTapBackButton(_ sender: UIButton) {
         guard let presentingVC = self.presentingViewController as? MainVC else { return }
-//        let safeArea = presentingVC.view.safeAreaLayoutGuide
-//        UIView.animate(withDuration: 1, animations: {
-//            
-//        })
-//        presentingVC.searchView.alpha = 0
-//        presentingVC.topView.snp.updateConstraints({
-//            $0.top.equalTo(safeArea.snp.top).offset(8)
-//            $0.leading.equalTo(safeArea.snp.leading).offset(10)
-//            $0.trailing.equalTo(safeArea.snp.trailing).offset(-10)
-//            $0.height.equalTo(52)
-//        })
-//        presentingVC.topView.alpha = 1
-        presentingVC.dismiss(animated: true, completion: {
-            // do nothing
-        })
+        presentingVC.searchVCDismissFlag = true
+        presentingVC.dismiss(animated: true, completion: nil)
     }
     
     // MARK: - Setup UI
     private func setupUI() {
+        searchView.layer.shadowOpacity = 0
+    
         searchView.backButton.addTarget(self, action: #selector(didTapBackButton(_:)), for: .touchUpInside)
+        
         searchView.searchTextField.delegate = self
         searchView.searchTextField.becomeFirstResponder()
+        
         searchView.searchResultTableView.dataSource = self
         searchView.searchResultTableView.delegate = self
-//        let searchContainerVC = UISearchContainerViewController(searchController: searchView.searchController)
         view.addSubview(searchView)
         
     }
     
     // MARK: - Setup Constraint
     private func setupConstraint() {
-        let safeArea = view.safeAreaLayoutGuide
         searchView.translatesAutoresizingMaskIntoConstraints = false
         searchView.snp.makeConstraints({
-            $0.top.equalTo(safeArea.snp.top)
-            $0.leading.equalTo(safeArea.snp.leading)
-            $0.trailing.equalTo(safeArea.snp.trailing)
-            $0.bottom.equalTo(safeArea.snp.bottom)
-            
-//            $0.centerY.equalTo(safeArea.snp.centerY).offset(-333)
-//            $0.leading.equalTo(safeArea.snp.leading).offset(0)
-//            $0.trailing.equalTo(safeArea.snp.trailing).offset(0)
-//            $0.height.equalTo(60)
+            $0.top.equalTo(self.safeArea)
+            $0.leading.equalTo(self.safeArea)
+            $0.trailing.equalTo(self.safeArea)
+            $0.bottom.equalTo(self.safeArea)
         })
     }
     

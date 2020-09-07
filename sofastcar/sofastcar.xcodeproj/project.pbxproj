@@ -16,6 +16,7 @@
 		BC80F8B82502280F0044C36D /* SearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC80F8B72502280F0044C36D /* SearchVC.swift */; };
 		BC80F8BA2502382D0044C36D /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC80F8B92502382D0044C36D /* SearchView.swift */; };
 		BCC816162505FAB500BD0BC3 /* TopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC816152505FAB500BD0BC3 /* TopView.swift */; };
+		BCC8161925066CE000BD0BC3 /* NMFData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC8161825066CE000BD0BC3 /* NMFData.swift */; };
 		BCE8A9B82503B75C00E7BC21 /* SearchResultTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCE8A9B72503B75C00E7BC21 /* SearchResultTableVC.swift */; };
 		C728C85024F7E35100063005 /* SignUpUserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C728C84F24F7E35100063005 /* SignUpUserData.swift */; };
 		C72A913824F5E15B005D464F /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72A913724F5E15B005D464F /* Extension.swift */; };
@@ -83,6 +84,7 @@
 		BC80F8B72502280F0044C36D /* SearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVC.swift; sourceTree = "<group>"; };
 		BC80F8B92502382D0044C36D /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SearchView.swift; path = sofastcar/View/Main/SearchView.swift; sourceTree = SOURCE_ROOT; };
 		BCC816152505FAB500BD0BC3 /* TopView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopView.swift; sourceTree = "<group>"; };
+		BCC8161825066CE000BD0BC3 /* NMFData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NMFData.swift; sourceTree = "<group>"; };
 		BCE8A9B72503B75C00E7BC21 /* SearchResultTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SearchResultTableVC.swift; path = sofastcar/ViewController/Main/SearchResultTableVC.swift; sourceTree = SOURCE_ROOT; };
 		C728C84F24F7E35100063005 /* SignUpUserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpUserData.swift; sourceTree = "<group>"; };
 		C72A913724F5E15B005D464F /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
@@ -172,6 +174,14 @@
 			path = Reservation;
 			sourceTree = "<group>";
 		};
+		BCC8161725066CB900BD0BC3 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				BCC8161825066CE000BD0BC3 /* NMFData.swift */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
 		C72A913624F5E13F005D464F /* Utility */ = {
 			isa = PBXGroup;
 			children = (
@@ -208,6 +218,7 @@
 		C75451FA24F4E5D700E13280 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				BCC8161725066CB900BD0BC3 /* Main */,
 				C79A0B59250465460061F078 /* Login */,
 			);
 			path = Model;
@@ -571,6 +582,7 @@
 				BC80F8B82502280F0044C36D /* SearchVC.swift in Sources */,
 				C79A0B5B2504656B0061F078 /* PhoneAuthResponse.swift in Sources */,
 				C72A913F24F60CD9005D464F /* TouVC.swift in Sources */,
+				BCC8161925066CE000BD0BC3 /* NMFData.swift in Sources */,
 				C769C82724FD09CE00DC8226 /* CardEnrollVC.swift in Sources */,
 				C769C82524FCDEFC00DC8226 /* CommonUI.swift in Sources */,
 				C79A0B522501274F0061F078 /* ReservationConfirmTableHeaderView.swift in Sources */,

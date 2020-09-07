@@ -20,9 +20,12 @@ class MainVC: UIViewController {
     var topAreaFlag = false
     var markerTapFlag = false
     var carListonTopFlag = false
+    var searchVCDismissFlag = false
     let marker = NMFMarker()
     let naverMapView = NMFNaverMapView()
     lazy var callPositionMarker = NMFMarker(position: defaultMarkerPosition, iconImage: NMF_MARKER_IMAGE_YELLOW)
+    
+    lazy var safeArea = self.view.safeAreaLayoutGuide
     let topView = TopView()
     let searchView = SearchView()
     let whiteView = UIView()
@@ -42,23 +45,28 @@ class MainVC: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        let safeArea = view.safeAreaLayoutGuide
-        UIView.animate(withDuration: 1, animations: {
-            self.searchView.alpha = 0
-            self.whiteView.alpha = 0
-            self.topView.alpha = 1
-            self.topView.translatesAutoresizingMaskIntoConstraints = false
-            self.topView.snp.updateConstraints({
-                $0.top.equalTo(safeArea.snp.top).offset(8)
-                $0.leading.equalTo(safeArea.snp.leading).offset(10)
-                $0.trailing.equalTo(safeArea.snp.trailing).offset(-10)
-                $0.height.equalTo(52)
-//                $0.centerY.equalTo(safeArea.snp.centerY).offset(-333)
-//                $0.leading.equalTo(safeArea.snp.leading).offset(10)
-//                $0.trailing.equalTo(safeArea.snp.trailing).offset(-10)
-//                $0.height.equalTo(52)
+        if searchVCDismissFlag {
+            UIView.animate(withDuration: 0.5, animations: {
+                self.topView.snp.updateConstraints({
+                    $0.top.equalTo(self.safeArea).offset(8)
+                    $0.leading.equalTo(self.safeArea).offset(10)
+                    $0.trailing.equalTo(self.safeArea).offset(-10)
+                    $0.height.equalTo(52)
+                })
+                self.searchView.snp.updateConstraints({
+                    $0.top.equalTo(self.safeArea).offset(8)
+                    $0.leading.equalTo(self.safeArea).offset(10)
+                    $0.trailing.equalTo(self.safeArea).offset(-10)
+                    $0.height.equalTo(52)
+                })
+                self.view.layoutIfNeeded()
+                self.topView.alpha = 1
+                self.searchView.alpha = 0
+                self.whiteView.alpha = 0
             })
-        })
+        } else {
+            
+        }
     }
     
     // MARK: - Touch Methods
@@ -67,7 +75,6 @@ class MainVC: UIViewController {
         if !topAreaFlag,
             markerTapFlag {
             UIView.animate(withDuration: 0.3, animations: {
-                self.topView.alpha = 1
                 self.carListView.frame.origin.y = self.view.frame.height * 0.82
             })
         } else {
@@ -89,63 +96,33 @@ class MainVC: UIViewController {
     
     // MARK: - Selector
     @objc func didTapSearchButton(_ sender: UIButton) {
-        let safeArea = view.safeAreaLayoutGuide
         
         // animate
-        UIView.animate(withDuration: 1, animations: {
+        UIView.animate(withDuration: 0.5, animations: {
             self.topView.snp.updateConstraints({
-                $0.top.equalTo(safeArea.snp.top).offset(0)
-                $0.leading.equalTo(safeArea.snp.leading).offset(0)
-                $0.trailing.equalTo(safeArea.snp.trailing).offset(0)
+                $0.top.equalTo(self.safeArea.snp.top).offset(0)
+                $0.leading.equalTo(self.safeArea.snp.leading).offset(0)
+                $0.trailing.equalTo(self.safeArea.snp.trailing).offset(0)
                 $0.height.equalTo(60)
-                
-//                $0.centerY.equalTo(safeArea.snp.centerY).offset(-333)
-//                $0.leading.equalTo(safeArea.snp.leading).offset(0)
-//                $0.trailing.equalTo(safeArea.snp.trailing).offset(0)
-//                $0.height.equalTo(60)
             })
             self.searchView.snp.updateConstraints({
-                $0.top.equalTo(safeArea.snp.top).offset(0)
-                $0.leading.equalTo(safeArea.snp.leading).offset(0)
-                $0.trailing.equalTo(safeArea.snp.trailing).offset(0)
+                $0.top.equalTo(self.safeArea.snp.top).offset(0)
+                $0.leading.equalTo(self.safeArea.snp.leading).offset(0)
+                $0.trailing.equalTo(self.safeArea.snp.trailing).offset(0)
                 $0.height.equalTo(60)
-//                $0.centerY.equalTo(safeArea.snp.centerY).offset(-333)
-//                $0.leading.equalTo(safeArea.snp.leading).offset(0)
-//                $0.trailing.equalTo(safeArea.snp.trailing).offset(0)
-//                $0.height.equalTo(60)
-                    })
+            })
             self.view.layoutIfNeeded()
             self.topView.alpha = 0
             self.searchView.alpha = 1
             self.whiteView.alpha = 1
         })
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
             let searchVC = SearchVC()
             searchVC.modalPresentationStyle = .fullScreen
             searchVC.modalTransitionStyle = .crossDissolve
+            self.searchVCDismissFlag = false
             self.present(searchVC, animated: true)
         })
-        
-        // animateKeyframes
-//        UIView.animateKeyframes(withDuration: 2, delay: 0, animations: {
-//            UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 1, animations: {
-//                self.topSearchView.snp.updateConstraints({
-//                    $0.top.equalTo(safeArea.snp.top).offset(0)
-//                    $0.leading.equalTo(safeArea.snp.leading).offset(0)
-//                    $0.trailing.equalTo(safeArea.snp.trailing).offset(0)
-//                    $0.height.equalTo(70)
-//                })
-//                self.view.layoutIfNeeded()
-//            })
-//            UIView.addKeyframe(withRelativeStartTime: 1, relativeDuration: 1, animations: {
-//                let searchVC = SearchVC()
-//                self.navigationController?.pushViewController(searchVC, animated: true)
-//            })
-//        })
-        
-        // transition
-//        let searchView = SearchView()
-//        UIView.transition(from: topView, to: searchView, duration: 2, options: .overrideInheritedDuration, completion: nil)
         
     }
     
@@ -156,29 +133,30 @@ class MainVC: UIViewController {
         let betweenTopCenterY = topY + (centerY - topY) / 2
         let betrweenCenterBottomY = centerY + (bottomY - centerY) / 2
         let yOffset: CGFloat = carListView.frame.origin.y
-        print(#function)
         let translation = pan.translation(in: view)
+        
         if yOffset + translation.y <= topY {
             carListView.frame.origin.y = yOffset
         } else {
             carListView.frame.origin.y = yOffset + translation.y
+            if yOffset + translation.y >= centerY {
+                self.naverMapView.mapView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: view.frame.height - carListView.frame.origin.y, right: 0)    
+            } else {
+                // do nothing
+            }
             topAreaFlag = false
         }
-//        carListView.frame.origin.y = yOffset + translation.y
-        pan.setTranslation(.zero, in: view)
         
+        pan.setTranslation(.zero, in: view)
         switch pan.state {
         case .changed:
             switch yOffset {
             case 0..<topY:
                 visualEffectView.alpha = 1 - yOffset / centerY
-//                print("visualEffectView.alpha: \(visualEffectView.alpha)")
             case topY..<betweenTopCenterY:
                 visualEffectView.alpha = 1 - yOffset / centerY
-//                print("visualEffectView.alpha: \(visualEffectView.alpha)")
             case betweenTopCenterY..<centerY:
                 visualEffectView.alpha = 1 - yOffset / centerY
-//                print("visualEffectView.alpha: \(visualEffectView.alpha)")
             default:
                 break
             }
@@ -197,21 +175,25 @@ class MainVC: UIViewController {
             case betweenTopCenterY..<centerY:
                 topAreaFlag = false
                 carListView.frame.origin.y = centerY
+                self.naverMapView.mapView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: view.frame.height - carListView.frame.origin.y, right: 0)
                 visualEffectView.alpha = 0
 //                print("yOffset: \(yOffset), originY: \(carListView.frame.origin.y), centerY: \(centerY)")
             case centerY..<betrweenCenterBottomY:
                 topAreaFlag = false
                 carListView.frame.origin.y = centerY
+                self.naverMapView.mapView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: view.frame.height - carListView.frame.origin.y, right: 0)
                 visualEffectView.alpha = 0
 //                print("yOffset: \(yOffset), originY: \(carListView.frame.origin.y), centerY: \(centerY)")
             case betrweenCenterBottomY..<bottomY:
                 topAreaFlag = false
                 carListView.frame.origin.y = bottomY
+                self.naverMapView.mapView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: view.frame.height - carListView.frame.origin.y, right: 0)
                 visualEffectView.alpha = 0
 //                print("yOffset: \(yOffset), originY: \(carListView.frame.origin.y), bottomY: \(bottomY)")
             case bottomY...:
                 topAreaFlag = false
                 carListView.frame.origin.y = bottomY
+                self.naverMapView.mapView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: view.frame.height - carListView.frame.origin.y, right: 0)
                 visualEffectView.alpha = 0
 //                print("yOffset: \(yOffset), originY: \(carListView.frame.origin.y), bottomY: \(bottomY)")
             default:
@@ -229,7 +211,6 @@ class MainVC: UIViewController {
         view.addSubview(naverMapView)
         naverMapView.mapView.touchDelegate = self
         naverMapView.mapView.addCameraDelegate(delegate: self)
-//        print(defaultCamPosition)
         naverMapView.mapView.moveCamera(NMFCameraUpdate(position: defaultCamPosition))
         marker.position = defaultMarkerPosition
         marker.mapView = naverMapView.mapView
@@ -246,12 +227,16 @@ class MainVC: UIViewController {
                 // Car List 팝업 by View
                 UIView.animate(withDuration: 0.5, animations: {
                     self.carListView.frame.origin.y = self.view.center.y
+                    self.naverMapView.mapView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: self.view.center.y, right: 0)
                     self.topView.alpha = 0
                 })
+                // NMF Content Inset 이용
+//                self.naverMapView.mapView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: self.view.center.y, right: 0)
                 
                 // 지도 좌표로 카메라 위치 이동
-                let camUpdate = NMFCameraUpdate(position: NMFCameraPosition(NMGLatLng(lat: 37.540003, lng: 127.057221),
-                                                                            zoom: 14))
+//                let selectedMarkerPosition = defaultMarkerPosition - NMGLatLng(lat: 5300, lng: 0)
+                let camUpdate = NMFCameraUpdate(position: NMFCameraPosition(defaultMarkerPosition, zoom: 14))
+//                let camUpdate = NMFCameraUpdate(position: NMFCameraPosition(NMGLatLng(lat: 37.540003, lng: 127.057221), zoom: 14))
                 // 뷰 좌표로 카메라 위치 이동
                 //                let camUpdateParams = NMFCameraUpdateParams()
                 //                camUpdateParams.scroll(by: CGPoint(x: .zero, y: -1 * (self.view.bounds.height / 4)))
@@ -294,28 +279,19 @@ class MainVC: UIViewController {
     
     // MARK: - Setup Constraint
     private func setupConstraint() {
-        let safeArea = view.safeAreaLayoutGuide
         searchView.translatesAutoresizingMaskIntoConstraints = false
         searchView.snp.makeConstraints({
-            $0.top.equalTo(safeArea.snp.top).offset(8)
-            $0.leading.equalTo(safeArea.snp.leading).offset(10)
-            $0.trailing.equalTo(safeArea.snp.trailing).offset(-10)
+            $0.top.equalTo(self.safeArea).offset(8)
+            $0.leading.equalTo(self.safeArea).offset(10)
+            $0.trailing.equalTo(self.safeArea).offset(-10)
             $0.height.equalTo(52)
-//            $0.centerY.equalTo(safeArea.snp.centerY).offset(-333)
-//            $0.leading.equalTo(safeArea.snp.leading).offset(0)
-//            $0.trailing.equalTo(safeArea.snp.trailing).offset(0)
-//            $0.height.equalTo(60)
         })
         topView.translatesAutoresizingMaskIntoConstraints = false
         topView.snp.makeConstraints({
-            $0.top.equalTo(safeArea.snp.top).offset(8)
-            $0.leading.equalTo(safeArea.snp.leading).offset(10)
-            $0.trailing.equalTo(safeArea.snp.trailing).offset(-10)
+            $0.top.equalTo(self.safeArea).offset(8)
+            $0.leading.equalTo(self.safeArea).offset(10)
+            $0.trailing.equalTo(self.safeArea).offset(-10)
             $0.height.equalTo(52)
-//            $0.centerY.equalTo(safeArea.snp.centerY).offset(-333)
-//            $0.leading.equalTo(safeArea.snp.leading).offset(10)
-//            $0.trailing.equalTo(safeArea.snp.trailing).offset(-10)
-//            $0.height.equalTo(52)
         })
     }
 }
@@ -324,12 +300,13 @@ class MainVC: UIViewController {
 extension MainVC: NMFMapViewTouchDelegate {
     func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
         callPositionMarker.mapView = mapView
+        print("didTapMap")
         UIView.animate(withDuration: 0.3, animations: {
             self.topView.alpha = 1
             self.carListView.frame.origin.y = self.view.frame.height
+            self.naverMapView.mapView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         })
         markerTapFlag = false
-//        print("didTapMap")
     }
 }
 
@@ -337,7 +314,7 @@ extension MainVC: NMFMapViewCameraDelegate {
     func mapView(_ mapView: NMFMapView, cameraDidChangeByReason reason: Int, animated: Bool) {
         let camPosition = mapView.cameraPosition.target
         let meterPerPixel = mapView.projection.metersPerPixel(atLatitude: mapView.cameraPosition.target.lat, zoom: mapView.cameraPosition.zoom)
-        print(meterPerPixel)
+//        print(meterPerPixel)
         callPositionMarker.position = camPosition
         topView.searchButton.setTitle("Geocoding", for: .normal)
     }
