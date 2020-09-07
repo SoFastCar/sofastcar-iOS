@@ -10,7 +10,6 @@ import UIKit
 import SnapKit
 
 class ReservationDashboardVC: UIViewController {
-  
   let reservationStateView = ReservationStateView()
   
   // MARK: - LifeCycle

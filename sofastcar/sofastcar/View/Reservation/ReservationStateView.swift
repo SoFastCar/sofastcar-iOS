@@ -10,7 +10,14 @@ import UIKit
 import SnapKit
 
 class ReservationStateView: UIScrollView {
+  
   // MARK: - Attribute
+  
+  let carKey: CarKeyView = {
+    let view = CarKeyView()
+    
+    return view
+  }()
   
   lazy var leftNavigationButton: UIBarButtonItem = {
     let barButtonItem = UIBarButtonItem(
@@ -293,7 +300,6 @@ class ReservationStateView: UIScrollView {
   // MARK: - UI
   fileprivate func setUI() {
     self.backgroundColor = CommonUI.mainBlue
-//    self.layoutMargins = UIEdgeInsets(top: 30, left: 20, bottom: 30, right: 20)
     self.layer.cornerRadius = 5
     
     setConstraints()
@@ -302,14 +308,14 @@ class ReservationStateView: UIScrollView {
   fileprivate func setConstraints() {
     let guid = self.safeAreaLayoutGuide
     
-    [reservationCarImage, numberPlateLabel, carInfomationButton, carInfoAndOilStackView, reservationTimeStackView, reservationProgressView, reservationCommentLabel, reservationStateView].forEach {
+    [reservationCarImage, numberPlateLabel, carInfomationButton, carInfoAndOilStackView, reservationTimeStackView, reservationProgressView, reservationCommentLabel, reservationStateView, carKey].forEach {
       self.addSubview($0)
     }
     
     reservationCarImage.snp.makeConstraints {
       $0.top.equalTo(guid).offset(40)
       $0.centerX.equalTo(guid)
-      $0.height.equalTo(150)
+      $0.height.equalTo(130)
     }
     
     numberPlateLabel.snp.makeConstraints {
@@ -413,13 +419,8 @@ class ReservationStateView: UIScrollView {
       $0.top.equalTo(reservationPlaceWrapView.snp.top).offset(30)
       $0.leading.equalTo(reservationPlaceStateSubLabel.snp.trailing).offset(40)
     }
-    // end reservationPlaceWrapView
   }
-  
   // MARK: - Action
-//  override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-//    print("did tap reservationStateView")
-//  }
   
   @objc func didTapButton(_ sender: UIButton) {
     switch sender {
