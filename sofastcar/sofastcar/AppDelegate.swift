@@ -25,7 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     navigationController.navigationBar.topItem?.title = ""
 
     window = UIWindow(frame: UIScreen.main.bounds)
-    window?.rootViewController = navigationController
+    window?.rootViewController = mainVC
     window?.makeKeyAndVisible()
     return true
   }
