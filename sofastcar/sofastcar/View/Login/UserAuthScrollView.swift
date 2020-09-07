@@ -34,6 +34,8 @@ class UserAuthScrollView: UIScrollView {
   
   let sectionLabelText: [String] = [" 이름", " 주민등록번호 앞 7자리", " 휴대폰 정보"]
   
+  let activityIndicator = UIActivityIndicatorView(style: .medium)
+  
   let contentView: UIView = {
     let view = UIView()
     view.backgroundColor = .systemGray6
@@ -156,6 +158,22 @@ class UserAuthScrollView: UIScrollView {
     return button
   }()
   
+  let phoneAuthNumberInputTextField: LoginUserInputTextField = {
+    let textField = LoginUserInputTextField()
+    textField.placeholder = "인증번호 6자리 입력"
+    textField.textContentType = .oneTimeCode
+    textField.keyboardType = .numberPad
+    return textField
+  }()
+  
+  let authLimitCountTimerLabel: UILabel = {
+    let label = UILabel()
+    label.text = "03:00"
+    label.font = .systemFont(ofSize: 12)
+    label.textColor = .red
+    return label
+  }()
+  
   let bottomInfoLabel: UITextView = {
     let textView = UITextView()
     textView.text = """
@@ -191,9 +209,13 @@ class UserAuthScrollView: UIScrollView {
     
     configureUserPhoneInputUI()
     
+    phoneAuthCodeInputUI()
+    
     configureBottomLabelUISetting()
     
     settingAuthCompleteButton()
+    
+    configureActivityIndicator()
   }
   
   override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -358,14 +380,14 @@ class UserAuthScrollView: UIScrollView {
     selectMobileCompany.snp.makeConstraints {
       $0.top.equalTo(userPhoneNumberLabel.snp.bottom).offset(5)
       $0.leading.equalTo(guide)
-      $0.height.equalTo(userInputMenusHeight)
+      $0.height.equalTo(CommonUI.userInputMenusHeight)
     }
     
     userPhoneNumberTextField.snp.makeConstraints {
       $0.top.equalTo(userPhoneNumberLabel.snp.bottom).offset(5)
       $0.leading.equalTo(selectMobileCompany.snp.trailing).offset(-1)
       $0.trailing.equalTo(guide)
-      $0.height.equalTo(userInputMenusHeight)
+      $0.height.equalTo(CommonUI.userInputMenusHeight)
       $0.width.equalTo(selectMobileCompany.snp.width).multipliedBy(2.5)
     }
     
@@ -376,13 +398,31 @@ class UserAuthScrollView: UIScrollView {
     }
   }
   
+  private func phoneAuthCodeInputUI() {
+    [phoneAuthNumberInputTextField, authLimitCountTimerLabel].forEach {
+      contentView.addSubview($0)
+    }
+    
+    phoneAuthNumberInputTextField.snp.makeConstraints {
+      $0.top.equalTo(sendAuthenticationSMSButton.snp.bottom).offset(CommonUI.sectionLabelPadding)
+      $0.leading.trailing.equalTo(guide)
+      $0.height.equalTo(0)
+    }
+    
+    authLimitCountTimerLabel.snp.makeConstraints {
+      $0.trailing.equalTo(phoneAuthNumberInputTextField).offset(-20)
+      $0.centerY.equalTo(phoneAuthNumberInputTextField.snp.centerY)
+      $0.height.equalTo(0)
+    }
+  }
+  
   private func configureBottomLabelUISetting() {
     [bottomInfoLabel].forEach {
       contentView.addSubview($0)
     }
     
     bottomInfoLabel.snp.makeConstraints {
-      $0.top.equalTo(sendAuthenticationSMSButton.snp.bottom).offset(padding*2)
+      $0.top.equalTo(phoneAuthNumberInputTextField.snp.bottom).offset(padding*2)
       $0.leading.trailing.equalTo(guide)
       $0.bottom.equalTo(contentView.snp.bottom).offset(20)
     }
@@ -394,6 +434,13 @@ class UserAuthScrollView: UIScrollView {
       $0.leading.trailing.equalTo(self.safeAreaLayoutGuide)
       $0.bottom.equalTo(self.safeAreaLayoutGuide).offset(40)
       $0.height.equalTo(100)
+    }
+  }
+  
+  private func configureActivityIndicator() {
+    contentView.addSubview(activityIndicator)
+    activityIndicator.snp.makeConstraints {
+      $0.centerX.centerY.equalTo(contentView)
     }
   }
   

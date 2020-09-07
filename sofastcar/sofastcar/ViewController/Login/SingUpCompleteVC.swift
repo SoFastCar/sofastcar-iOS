@@ -59,7 +59,7 @@ class SingUpCompleteVC: UIViewController {
     let textView = UITextView()
     textView.text = """
     (주)쏘카
-    회원님이 \(user?.marketingAgreeTime ?? Date())에 요청하신 마케팅 정보 수신동의는 ~~~~ 처리 되었습니다.
+    회원님이 \(Date())에 요청하신 마케팅 정보 수신동의는 ~~~~ 처리 되었습니다.
     """
     textView.font = .systemFont(ofSize: 13)
     return textView

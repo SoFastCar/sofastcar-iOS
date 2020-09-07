@@ -15,6 +15,23 @@ class UserAuthVC: UIViewController {
   let scrollView = UserAuthScrollView()
   var isKeyboardUp: Bool = false
   var isUserAgreeWithAlltou: Bool = false
+  
+  var responsedPhoneAuthCode: PhoneAuthResponse?
+  
+  var timer: Timer?
+  var threeMinutetime = 180
+  
+  enum AuthError: String {
+    case bithDayInputError = "생년월일을 확인해주세요"
+    case smsAuthCodeError = "입력된 인증번호 6자리를 확인해주세요"
+    case serverSideError = "잠시 후 다시 요청해주시기 바랍니다"
+    case phoneNumberInputError = "휴대전화 번호를 확인해주세요"
+  }
+  
+  enum ValidtionType: String {
+    case bithDay = "([0-9]{2}(0[1-9]|1[0-2])(0[1-9]|[1,2][0-9]|3[0,1]))"
+    case phoneNumber = "^01(?:0|1|[6-9])[.-]?(\\d{3}|\\d{4})[.-]?(\\d{4})$"
+  }
 
   // MARK: - Life Cycle
   override func viewDidLoad() {
@@ -31,6 +48,7 @@ class UserAuthVC: UIViewController {
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
+    scrollView.authLimitCountTimerLabel.text = "03:00"
     //keyboard 입력에 따른 화면 올리는 Notification 설정
     NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillAppear(noti:)), name: UIResponder.keyboardWillShowNotification, object: nil)
     NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillDisappear(noti:)), name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -51,9 +69,16 @@ class UserAuthVC: UIViewController {
     self.navigationController?.navigationBar.sendSubviewToBack(self.scrollView.blurView)
   }
   
+  private func startCountDownTimer() {
+    timer = Timer.scheduledTimer(timeInterval: 1.0, target: self,
+                                 selector: #selector(countDownTime),
+                                 userInfo: nil,
+                                 repeats: true)
+  }
+  
   private func configureButtonAction() {
     // textField 변경 사항 체크
-    [scrollView.userSexTextField, scrollView.userBirthTextField, scrollView.userSexTextField, scrollView.userPhoneNumberTextField, scrollView.usernameTextField].forEach {
+    [scrollView.userSexTextField, scrollView.userBirthTextField, scrollView.userSexTextField, scrollView.userPhoneNumberTextField, scrollView.usernameTextField, scrollView.phoneAuthNumberInputTextField].forEach {
       $0.delegate = self
       $0.addTarget(self, action: #selector(textFieldChange(_:)), for: .editingChanged)
     }
@@ -68,21 +93,29 @@ class UserAuthVC: UIViewController {
     
     scrollView.selectConturyButton.addTarget(self, action: #selector(tabSelectPopupMenuButtons(_:)), for: .touchUpInside)
     scrollView.selectMobileCompany.addTarget(self, action: #selector(tabSelectPopupMenuButtons(_:)), for: .touchUpInside)
+    scrollView.sendAuthenticationSMSButton.addTarget(self, action: #selector(tapSendAuthSMSButton(_:)), for: .touchUpInside)
     scrollView.authCompleteButton.addTarget(self, action: #selector(tapAuthCompleteButton), for: .touchUpInside)
   }
-  // MARK: - Check AuthComplete button Enabler
-  private func checkAuthButtonEnable() {
-    scrollView.authCompleteButton.isEnabled = isUserAgreeWithAlltou
-//      isUserAgreeWithAlltou && scrollView.selectConturyButton.isSelected &&
-//      scrollView.selectMobileCompany.isSelected && ((scrollView.usernameTextField.text?.isEmpty) != nil) &&
-//      ((scrollView.userBirthTextField.text?.isEmpty) != nil) && ((scrollView.userSexTextField.text?.isEmpty) != nil) &&
-//      (scrollView.userPhoneNumberTextField.text?.isEmpty != nil)
-    
-    let authButtonBGColor = scrollView.authCompleteButton.isEnabled == true ? CommonUI.mainBlue : .systemGray4
-    scrollView.authCompleteButton.backgroundColor = authButtonBGColor
-  }
-
+  
   // MARK: - Button Handler
+  @objc private func countDownTime() {
+    var timerTitleText: String = ""
+    threeMinutetime -= 1
+    if threeMinutetime >= 0 {
+      let minute = threeMinutetime/60
+      let second = threeMinutetime%60
+      if second < 10 {
+        timerTitleText = "0\(minute):0\(second)"
+      } else {
+        timerTitleText = "0\(minute):\(second)"
+      }
+    } else {
+      timerTitleText = "시간초과"
+      timer?.invalidate()
+    }
+    scrollView.authLimitCountTimerLabel.text = timerTitleText
+  }
+  
   @objc private func textFieldChange(_ sender: UITextField) {
     if sender == scrollView.userBirthTextField {
       if sender.text?.count ?? 0 == 6 {
@@ -96,8 +129,11 @@ class UserAuthVC: UIViewController {
       if sender.text?.count ?? 0 == 11 {
         scrollView.endEditing(true)
       }
+    } else if sender == scrollView.phoneAuthNumberInputTextField {
+      if sender.text?.count ?? 0 == 6 {
+        scrollView.endEditing(true)
+      }
     }
-    checkAuthButtonEnable()
   }
   
   @objc private func tabUserAgreeButton(_ sender: UIButton) {
@@ -137,13 +173,10 @@ class UserAuthVC: UIViewController {
         self.loadViewIfNeeded()
       }
     }
-    
     isUserAgreeWithAlltou = allAgreebutton.isSelected
-    checkAuthButtonEnable()
   }
   
   @objc private func tabSelectPopupMenuButtons(_ sender: UIButton) {
-    
     let selectPopupVC = SelectPopupVC()
     if sender == scrollView.selectConturyButton {
       selectPopupVC.sectionTitle = "  국적 선택"
@@ -179,33 +212,139 @@ class UserAuthVC: UIViewController {
       }
     }
     present(selectPopupVC, animated: true)
-    checkAuthButtonEnable()
   }
   
   @objc private func tapAuthCompleteButton() {
-    let defualtUserInfoVC = DefualtUserInfoVC()
-    
-    guard let userName = scrollView.usernameTextField.text else { return }
-    guard let userBirthDay = Int(scrollView.userBirthTextField.text ?? "") else { return }
-    guard let userGender = Int(scrollView.userSexTextField.text ?? "") else { return }
-    guard let userPhoneNumber = Int(scrollView.userPhoneNumberTextField.text ?? "") else { return print("Errir0")}
-    guard let userContury = scrollView.selectConturyButton.attributedTitle(for: .selected)?.string.split(separator: " ").first else { return print("Errir1")}
-    guard let mobileCompany = scrollView.selectMobileCompany.attributedTitle(for: .selected)?.string.split(separator: " ").first else { return print("Errir2")}
 
-    user?.useranme = userName
-    user?.userBirthDay = userBirthDay
-    user?.userGender = userGender
-    user?.userPhoneNumber = userPhoneNumber
-    user?.mobileCompany = String(mobileCompany)
-    user?.userContury = String(userContury)
+    guard let inputAuthCode = scrollView.phoneAuthNumberInputTextField.text else {
+      errorAlertControllerPresent(.phoneNumberInputError)
+      return
+    }
+    guard let responseKey = responsedPhoneAuthCode?.responseKey else { return print("기존 저장된 registration 코드가 없습니다.")}
+    
+    // 인증 데이터 생성
+    let jsonValue: [String: Any] = [
+      "check_auth_number": "\(inputAuthCode)"
+    ]
+    
+    let url = URL(string: "https://sofastcar.moorekwon.xyz/phone_auth/\(responseKey)/check_auth_number/")!
+    var request = URLRequest(url: url)
+    do {
+      let jsonData = try JSONSerialization.data(withJSONObject: jsonValue, options: .prettyPrinted)
+      request.httpBody = jsonData
+    } catch let err {
+      print(err)
+    }
+    request.httpMethod = "PUT"
+    request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+    
+    let getAuthResponse = URLSession.shared.dataTask(with: request) { (_, response, error) in
+      self.startActivityIndicator()
+      if let error = error {
+        print("Error", error.localizedDescription)
+        self.stopAactivityIndicator()
+        return
+      }
+      
+      if let header = response as? HTTPURLResponse {
+        if header.statusCode == 200 {
+          self.successPhoneAuth()
+        } else {
+          self.errorAlertControllerPresent(.smsAuthCodeError)
+        }
+      }
+      
+      DispatchQueue.main.async {
+        self.stopAactivityIndicator()
+        self.timer?.invalidate()
+      }
+    }
+    getAuthResponse.resume()
+  }
   
-    defualtUserInfoVC.user = self.user
-    navigationController?.pushViewController(defualtUserInfoVC, animated: true)
+  @objc private func tapSendAuthSMSButton(_ sender: UIButton) {
+    guard let userBirthDay = scrollView.userBirthTextField.text else { return }
+    guard let userGender = scrollView.userSexTextField.text else { return }
+    guard let userPhoneNumber = scrollView.userPhoneNumberTextField.text else { return }
+    
+    guard userInputValueValidCheck(checkStr: userBirthDay, checkType: ValidtionType.bithDay) == true else {
+      errorAlertControllerPresent(.bithDayInputError); return }
+    
+    guard userInputValueValidCheck(checkStr: userPhoneNumber, checkType: ValidtionType.phoneNumber) == true else {
+      errorAlertControllerPresent(.phoneNumberInputError); return }
+    
+    startActivityIndicator()
+    
+    let sendUserAuthData: [String: Any] = [
+      "phone_number": "\(userPhoneNumber)",
+      "registration_id": "\(userBirthDay)\(userGender)"
+    ]
+  
+    let url = URL(string: "https://sofastcar.moorekwon.xyz/phone_auth/")!
+    var request = URLRequest(url: url)
+    
+    do {
+      let requestUserAuthData = try JSONSerialization.data(withJSONObject: sendUserAuthData, options: .prettyPrinted)
+      request.httpBody = requestUserAuthData
+    } catch let err {
+      print(err)
+    }
+    request.httpMethod = "POST"
+    request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+
+    let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
+      if let error = error {
+        print("Error", error.localizedDescription)
+        self.errorAlertControllerPresent(.serverSideError)
+        return
+      }
+      // 오류 처리
+      guard let header = response as? HTTPURLResponse,
+        (200..<300) ~= header.statusCode,
+        let responseData = data else {
+          self.errorAlertControllerPresent(.serverSideError)
+          return
+      }
+      self.showUserAuthcodeInputTextField()
+      self.responsedPhoneAuthCode = try? JSONDecoder().decode(PhoneAuthResponse.self, from: responseData)
+    }
+    task.resume()
+  }
+  
+  private func userInputValueValidCheck(checkStr: String, checkType: ValidtionType) -> Bool {
+    let testMethod = NSPredicate(format: "SELF MATCHES %@", checkType.rawValue)
+    return testMethod.evaluate(with: checkStr)
+  }
+  
+  private func errorAlertControllerPresent(_ errorKind: AuthError) {
+    let alertCtroller = UIAlertController(title: "오류", message: errorKind.rawValue, preferredStyle: .alert)
+    alertCtroller.addAction(UIAlertAction(title: "확인", style: .cancel, handler: nil))
+    DispatchQueue.main.async {
+      self.present(alertCtroller, animated: true, completion: nil)
+    }
+  }
+  
+  private func successPhoneAuth() {
+    DispatchQueue.main.async {
+      let view = self.scrollView
+      guard let userName = view.usernameTextField.text else { return }
+      guard let userBirthDay = view.userBirthTextField.text else { return }
+      guard let userGender = view.userSexTextField.text else { return }
+      guard let userPhoneNumber = Int(view.userPhoneNumberTextField.text ?? "") else { return print("Errir0")}
+      
+      self.user?.useranme = userName
+      self.user?.userBirthDay = "\(userBirthDay)\(userGender)"
+      self.user?.userPhoneNumber = userPhoneNumber
+      
+      let defualtUserInfoVC = DefualtUserInfoVC()
+      defualtUserInfoVC.user = self.user
+      self.navigationController?.pushViewController(defualtUserInfoVC, animated: true)
+    }
   }
   
   // MARK: - Keyboard Handler
   @objc func keyboardWillAppear( noti: NSNotification ) {
-    if isKeyboardUp == false && isUserAgreeWithAlltou == false {
+    if isKeyboardUp == false && isUserAgreeWithAlltou == false || scrollView.phoneAuthNumberInputTextField.isFirstResponder {
       if let keyboardFrame: NSValue = noti.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
         let keyboardRectangle = keyboardFrame.cgRectValue
         let keyboardHeight = keyboardRectangle.height
@@ -225,6 +364,33 @@ class UserAuthVC: UIViewController {
       }
     }
   }
+  
+  private func showUserAuthcodeInputTextField() {
+    DispatchQueue.main.async {
+      self.scrollView.phoneAuthNumberInputTextField.snp.updateConstraints {
+        $0.height.equalTo(CommonUI.userInputMenusHeight)
+      }
+      self.scrollView.authLimitCountTimerLabel.snp.updateConstraints {
+        $0.height.equalTo(CommonUI.sectionLabelHeight)
+      }
+      self.scrollView.authCompleteButton.isEnabled = true
+      self.scrollView.sendAuthenticationSMSButton.setTitle("재발송", for: .normal)
+      self.stopAactivityIndicator()
+      self.startCountDownTimer()
+    }
+  }
+  
+  private func startActivityIndicator() {
+    DispatchQueue.main.async {
+      self.scrollView.activityIndicator.startAnimating()
+    }
+  }
+  
+  private func stopAactivityIndicator() {
+    DispatchQueue.main.async {
+      self.scrollView.activityIndicator.stopAnimating()
+    }
+  }
 }
 
 // MARK: - UITextFieldDelegate
@@ -234,15 +400,13 @@ extension UserAuthVC: UITextFieldDelegate {
     if textField == scrollView.usernameTextField {
       scrollView.userBirthTextField.becomeFirstResponder()
     }
-    checkAuthButtonEnable()
     return true
   }
   
   // 각 텍스트 필드 입력 완료시 다은 TextField 로 Response 넘겨줌
   func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-    checkAuthButtonEnable()
     let newLength = (textField.text?.count)! + string.count - range.length
-    if textField == scrollView.usernameTextField || textField == scrollView.userBirthTextField {
+    if textField == scrollView.usernameTextField || textField == scrollView.userBirthTextField || textField == scrollView.phoneAuthNumberInputTextField {
       return !(newLength > 6)
     } else if textField == scrollView.userSexTextField {
       return !(newLength > 1)
@@ -255,7 +419,7 @@ extension UserAuthVC: UITextFieldDelegate {
   }
   
   func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
-    textField.layer.borderColor = UIColor.systemGray4.cgColor //UIColor.black.cgColor
+    textField.layer.borderColor = UIColor.systemGray4.cgColor
   }
 }
 
