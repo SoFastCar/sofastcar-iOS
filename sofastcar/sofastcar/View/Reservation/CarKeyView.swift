@@ -240,7 +240,89 @@ class CarKeyView: UIView {
     
     return view
   }()
-
+  
+  fileprivate let riseLockButton: UIButton = {
+    let button = UIButton()
+    let config = UIImage.SymbolConfiguration(pointSize: 30, weight: .light, scale: .large)
+    let largeLockSymbol = UIImage(systemName: CommonUI.SFSymbolKey.lock.rawValue, withConfiguration: config)
+    button.setImage(
+      largeLockSymbol,
+      for: .normal
+    )
+    button.addTarget(self, action: #selector(didTapButton(_:)), for: .touchUpInside)
+    button.tintColor = CommonUI.mainDark
+    
+    return button
+  }()
+  
+  fileprivate let riseLockLabel: UILabel = {
+    let label = UILabel()
+    label.text = "문잠금"
+    label.font = UIFont.preferredFont(forTextStyle: .body)
+    label.textColor = CommonUI.mainDark
+    
+    return label
+  }()
+  
+  fileprivate let riseLockMilestoneLabel: UILabel = {
+    let label = UILabel()
+    label.text = "|"
+    label.font = UIFont.preferredFont(forTextStyle: .largeTitle)
+    label.textColor = .black
+    label.alpha = 0.1
+    label.transform = CGAffineTransform(rotationAngle: CGFloat.pi / 2)
+    
+    return label
+  }()
+  
+  fileprivate let riseUnlockButton: UIButton = {
+    let button = UIButton()
+    let config = UIImage.SymbolConfiguration(pointSize: 30, weight: .light, scale: .large)
+    let largeLockSymbol = UIImage(systemName: CommonUI.SFSymbolKey.unlock.rawValue, withConfiguration: config)
+    button.setImage(
+      largeLockSymbol,
+      for: .normal
+    )
+    button.addTarget(self, action: #selector(didTapButton(_:)), for: .touchUpInside)
+    button.tintColor = CommonUI.mainDark
+    
+    return button
+  }()
+  
+  fileprivate let riseUnlockLabel: UILabel = {
+    let label = UILabel()
+    label.text = "문열기"
+    label.font = UIFont.preferredFont(forTextStyle: .body)
+    label.textColor = CommonUI.mainDark
+    
+    return label
+  }()
+  
+  fileprivate lazy var riseLockStackView: UIStackView = {
+    let stackView = UIStackView(arrangedSubviews: [riseLockButton, riseLockLabel])
+    stackView.axis = .vertical
+    stackView.spacing = 10
+    
+    return stackView
+  }()
+  
+  fileprivate lazy var riseUnlockStackView: UIStackView = {
+    let stackView = UIStackView(arrangedSubviews: [riseUnlockButton, riseUnlockLabel])
+    stackView.axis = .vertical
+    stackView.spacing = 10
+    
+    return stackView
+  }()
+  
+  fileprivate lazy var riseLockWrapStackView: UIStackView = {
+    let stackView = UIStackView(arrangedSubviews: [riseLockStackView, riseLockMilestoneLabel, riseUnlockStackView])
+    stackView.axis = .vertical
+    stackView.spacing = 40
+    stackView.alignment = .center
+    
+    return stackView
+  }()
+  
   fileprivate let riseReturnView: UIView = {
     let view = UIView()
     view.layer.cornerRadius = 15
@@ -289,6 +371,8 @@ class CarKeyView: UIView {
     
     handleArea.addSubview(handler)
     lockView.addSubview(lockStackView)
+    
+    riseLockView.addSubview(riseLockWrapStackView)
     
     handleArea.snp.makeConstraints {
       $0.top.equalTo(self)
@@ -389,6 +473,10 @@ class CarKeyView: UIView {
       $0.trailing.equalTo(self).offset(-20)
       $0.width.equalTo(135)
       $0.height.equalTo(325)
+    }
+    
+    riseLockWrapStackView.snp.makeConstraints {
+      $0.centerX.centerY.equalTo(riseLockView)
     }
     
     setGesture()
