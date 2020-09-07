@@ -232,6 +232,24 @@ class CarKeyView: UIView {
     return label
   }()
   
+  fileprivate let riseLockView: UIView = {
+    let view = UIView()
+    view.layer.cornerRadius = 15
+    view.layer.borderWidth = 1
+    view.layer.borderColor = UIColor(red: 0 / 255, green: 0 / 255, blue: 0 / 255, alpha: 0.1).cgColor
+    
+    return view
+  }()
+
+  fileprivate let riseReturnView: UIView = {
+    let view = UIView()
+    view.layer.cornerRadius = 15
+    view.layer.borderWidth = 1
+    view.layer.borderColor = UIColor(red: 0 / 255, green: 0 / 255, blue: 0 / 255, alpha: 0.1).cgColor
+    
+    return view
+  }()
+  
   // MARK: - LifeCycle
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -265,7 +283,7 @@ class CarKeyView: UIView {
       underGestureView.addSubview($0)
     }
     
-    [emergencyButton, emergencyLabel, emergencyRiseMilestoneLabel, hornButton, hornLabel].forEach {
+    [emergencyButton, emergencyLabel, emergencyRiseMilestoneLabel, hornButton, hornLabel, riseLockView, riseReturnView].forEach {
       riseGestureView.addSubview($0)
     }
     
@@ -307,7 +325,7 @@ class CarKeyView: UIView {
     
     rightChevronIcon.snp.makeConstraints {
       $0.top.equalTo(handleArea.snp.bottom).offset(-3)
-      $0.trailing.equalTo(self).offset(-40)
+      $0.trailing.equalTo(self).offset(-20)
     }
     
     underGestureView.snp.makeConstraints {
@@ -360,6 +378,19 @@ class CarKeyView: UIView {
       $0.leading.equalTo(emergencyRiseMilestoneLabel.snp.trailing).offset(20)
     }
     
+    riseReturnView.snp.makeConstraints {
+      $0.top.equalTo(emergencyLabel.snp.bottom).offset(65)
+      $0.leading.equalTo(self).offset(20)
+      $0.width.height.equalTo(180)
+    }
+    
+    riseLockView.snp.makeConstraints {
+      $0.top.equalTo(smartKeyLabel.snp.bottom).offset(30)
+      $0.trailing.equalTo(self).offset(-20)
+      $0.width.equalTo(135)
+      $0.height.equalTo(325)
+    }
+    
     setGesture()
   }
   
@@ -373,6 +404,10 @@ class CarKeyView: UIView {
       print("lockButton button press")
     case unlockButton:
       print("unlockButton button press")
+    case emergencyButton:
+      print("emergencyButton button press")
+    case hornButton:
+      print("hornButton button press")
     default:
       print("error")
     }
