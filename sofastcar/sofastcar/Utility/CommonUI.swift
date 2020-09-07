@@ -34,5 +34,6 @@ class CommonUI {
     case bolt = "bolt.fill"
     case lock = "lock"
     case unlock = "lock.open"
+    case horn = "speaker.1"
   }
 }

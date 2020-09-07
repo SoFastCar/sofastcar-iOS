@@ -97,6 +97,12 @@ class CarKeyView: UIView {
     return imageView
   }()
   
+  fileprivate let underGestureView: UIView = {
+    let view = UIView()
+    
+    return view
+  }()
+  
   fileprivate let returnButton: UIButton = {
     let button = UIButton()
     button.setTitle("반납하기", for: .normal)
@@ -167,6 +173,65 @@ class CarKeyView: UIView {
     return stackView
   }()
   
+  fileprivate let riseGestureView: UIView = {
+    let view = UIView()
+    view.isHidden = true
+    
+    return view
+  }()
+  
+  fileprivate let emergencyButton: UIButton = {
+    let button = UIButton()
+    button.setImage(
+      UIImage(systemName: CommonUI.SFSymbolKey.warning.rawValue),
+      for: .normal
+    )
+    button.addTarget(self, action: #selector(didTapButton(_:)), for: .touchUpInside)
+    button.tintColor = CommonUI.mainDark
+    
+    return button
+  }()
+  
+  fileprivate let emergencyLabel: UILabel = {
+    let label = UILabel()
+    label.text = "비상등"
+    label.font = UIFont.preferredFont(forTextStyle: .body)
+    label.textColor = CommonUI.mainDark
+    
+    return label
+  }()
+  
+  fileprivate let emergencyRiseMilestoneLabel: UILabel = {
+    let label = UILabel()
+    label.text = "|"
+    label.font = UIFont.preferredFont(forTextStyle: .title1)
+    label.textColor = .black
+    label.alpha = 0.1
+    
+    return label
+  }()
+  
+  fileprivate let hornButton: UIButton = {
+    let button = UIButton()
+    button.setImage(
+      UIImage(systemName: CommonUI.SFSymbolKey.horn.rawValue),
+      for: .normal
+    )
+    button.addTarget(self, action: #selector(didTapButton(_:)), for: .touchUpInside)
+    button.tintColor = CommonUI.mainDark
+    
+    return button
+  }()
+  
+  fileprivate let hornLabel: UILabel = {
+    let label = UILabel()
+    label.text = "경적"
+    label.font = UIFont.preferredFont(forTextStyle: .body)
+    label.textColor = CommonUI.mainDark
+    
+    return label
+  }()
+  
   // MARK: - LifeCycle
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -192,9 +257,18 @@ class CarKeyView: UIView {
     self.layer.cornerRadius = 10
     self.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
     
-    [handleArea, smartKeyLabel, onLabel, boltIcon, openOneSecondLabel, rightChevronIcon, returnButton, lockView, visualEffectView].forEach {
+    [handleArea, smartKeyLabel, onLabel, boltIcon, openOneSecondLabel, rightChevronIcon, underGestureView, riseGestureView].forEach {
       self.addSubview($0)
     }
+    
+    [returnButton, lockView, visualEffectView].forEach {
+      underGestureView.addSubview($0)
+    }
+    
+    [emergencyButton, emergencyLabel, emergencyRiseMilestoneLabel, hornButton, hornLabel].forEach {
+      riseGestureView.addSubview($0)
+    }
+    
     handleArea.addSubview(handler)
     lockView.addSubview(lockStackView)
     
@@ -236,6 +310,11 @@ class CarKeyView: UIView {
       $0.trailing.equalTo(self).offset(-40)
     }
     
+    underGestureView.snp.makeConstraints {
+      $0.top.equalTo(smartKeyLabel.snp.bottom).offset(20)
+      $0.leading.trailing.equalTo(self)
+    }
+    
     returnButton.snp.makeConstraints {
       $0.top.equalTo(smartKeyLabel.snp.bottom).offset(20)
       $0.leading.equalTo(self).offset(20)
@@ -254,6 +333,31 @@ class CarKeyView: UIView {
     lockStackView.snp.makeConstraints {
       $0.centerY.equalTo(lockView)
       $0.centerX.equalTo(lockView)
+    }
+    
+    emergencyButton.snp.makeConstraints {
+      $0.top.equalTo(smartKeyLabel.snp.bottom).offset(60)
+      $0.leading.equalTo(self).offset(50)
+    }
+    
+    emergencyLabel.snp.makeConstraints {
+      $0.top.equalTo(emergencyButton.snp.bottom).offset(5)
+      $0.leading.equalTo(self).offset(45)
+    }
+    
+    emergencyRiseMilestoneLabel.snp.makeConstraints {
+      $0.top.equalTo(smartKeyLabel.snp.bottom).offset(60)
+      $0.leading.equalTo(emergencyButton.snp.trailing).offset(25)
+    }
+    
+    hornButton.snp.makeConstraints {
+      $0.top.equalTo(smartKeyLabel.snp.bottom).offset(60)
+      $0.leading.equalTo(emergencyRiseMilestoneLabel.snp.trailing).offset(25)
+    }
+    
+    hornLabel.snp.makeConstraints {
+      $0.top.equalTo(hornButton.snp.bottom).offset(5)
+      $0.leading.equalTo(emergencyRiseMilestoneLabel.snp.trailing).offset(20)
     }
     
     setGesture()
@@ -280,12 +384,8 @@ class CarKeyView: UIView {
 extension CarKeyView {
   @objc func handleCarkeyTap(recongnize: UITapGestureRecognizer) {
     switch recongnize.state {
-    case .began:
-      print("start Transition")
-    case .changed:
-      print("update Transition")
     case .ended:
-      print("handle continue Transition")
+      animationTransitionIfNeeded(state: nextState, duration: 0.9)
     default:
       break
     }
@@ -325,6 +425,8 @@ extension CarKeyView {
             width: self.screenSize.width,
             height: self.screenSize.height
           )
+          self.isHiddenView(view: self.underGestureView, isHidden: true)
+          self.isHiddenView(view: self.riseGestureView, isHidden: false)
         case .collapsed:
           self.frame = CGRect(
             x: 0,
@@ -332,6 +434,8 @@ extension CarKeyView {
             width: self.screenSize.width,
             height: self.screenSize.height - 255
           )
+          self.isHiddenView(view: self.underGestureView, isHidden: false)
+          self.isHiddenView(view: self.riseGestureView, isHidden: true)
         }
       }
       frameAnimator.addCompletion { _ in
@@ -345,11 +449,10 @@ extension CarKeyView {
       let blurAnimation = UIViewPropertyAnimator(duration: duration, dampingRatio: 1) {
         switch state {
         case .expanded:
-          self.visualEffectView.effect = UIBlurEffect(style: .dark)
+          self.underGestureView.isHidden = true
           print("expanded")
         case .collapsed:
-         print("collapsed")
-          self.visualEffectView.effect = nil
+          print("collapsed")
         }
       }
       
@@ -377,6 +480,29 @@ extension CarKeyView {
   fileprivate func continueInteractiveTransition() {
     for animator in runningAnimations {
       animator.continueAnimation(withTimingParameters: nil, durationFactor: 0)
+    }
+  }
+  
+  fileprivate func isHiddenView(view: UIView, isHidden: Bool) {
+    switch view {
+    case underGestureView:
+      if isHidden == true {
+        self.underGestureView.isHidden = true
+        self.underGestureView.alpha = 0
+      } else {
+        self.underGestureView.isHidden = false
+        self.underGestureView.alpha = 1
+      }
+    case riseGestureView:
+      if isHidden == true {
+        self.riseGestureView.isHidden = true
+        self.riseGestureView.alpha = 0
+      } else {
+        self.riseGestureView.isHidden = false
+        self.riseGestureView.alpha = 1
+      }
+    default:
+      break
     }
   }
 }
