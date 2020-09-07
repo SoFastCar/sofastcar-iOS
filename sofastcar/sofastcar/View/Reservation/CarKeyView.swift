@@ -332,6 +332,36 @@ class CarKeyView: UIView {
     return view
   }()
   
+  fileprivate let riseReturnButton: UIButton = {
+    let button = UIButton()
+    let config = UIImage.SymbolConfiguration(pointSize: 30, weight: .light, scale: .large)
+    let largeLockSymbol = UIImage(systemName: CommonUI.SFSymbolKey.return.rawValue, withConfiguration: config)
+    button.setImage(
+      largeLockSymbol,
+      for: .normal
+    )
+    button.addTarget(self, action: #selector(didTapButton(_:)), for: .touchUpInside)
+    button.tintColor = CommonUI.mainDark
+    button.transform = CGAffineTransform(rotationAngle: CGFloat.pi / 2)
+    
+    return button
+  }()
+  fileprivate let riseReturnLabel: UILabel = {
+    let label = UILabel()
+    label.text = "반납하기"
+    label.font = UIFont.preferredFont(forTextStyle: .body)
+    label.textColor = CommonUI.mainDark
+    
+    return label
+  }()
+  fileprivate lazy var riseReturnStackView: UIStackView = {
+    let stackView = UIStackView(arrangedSubviews: [riseReturnButton, riseReturnLabel])
+    stackView.axis = .vertical
+    stackView.spacing = 10
+    
+    return stackView
+  }()
+  
   // MARK: - LifeCycle
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -373,6 +403,7 @@ class CarKeyView: UIView {
     lockView.addSubview(lockStackView)
     
     riseLockView.addSubview(riseLockWrapStackView)
+    riseReturnView.addSubview(riseReturnStackView)
     
     handleArea.snp.makeConstraints {
       $0.top.equalTo(self)
@@ -477,6 +508,10 @@ class CarKeyView: UIView {
     
     riseLockWrapStackView.snp.makeConstraints {
       $0.centerX.centerY.equalTo(riseLockView)
+    }
+    
+    riseReturnStackView.snp.makeConstraints {
+      $0.centerX.centerY.equalTo(riseReturnView)
     }
     
     setGesture()

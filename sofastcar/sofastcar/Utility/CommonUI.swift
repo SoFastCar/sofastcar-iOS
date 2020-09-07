@@ -35,5 +35,6 @@ class CommonUI {
     case lock = "lock"
     case unlock = "lock.open"
     case horn = "speaker.1"
+    case `return` = "goforward"
   }
 }
