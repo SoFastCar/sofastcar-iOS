@@ -320,7 +320,7 @@ class MainVC: UIViewController {
     }
 }
 
-// MARK: - Extension
+// MARK: - Extension(NMF)
 extension MainVC: NMFMapViewTouchDelegate {
     func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
         callPositionMarker.mapView = mapView
@@ -333,6 +333,17 @@ extension MainVC: NMFMapViewTouchDelegate {
     }
 }
 
+extension MainVC: NMFMapViewCameraDelegate {
+    func mapView(_ mapView: NMFMapView, cameraDidChangeByReason reason: Int, animated: Bool) {
+        let camPosition = mapView.cameraPosition.target
+        let meterPerPixel = mapView.projection.metersPerPixel(atLatitude: mapView.cameraPosition.target.lat, zoom: mapView.cameraPosition.zoom)
+        print(meterPerPixel)
+        callPositionMarker.position = camPosition
+        topView.searchButton.setTitle("Geocoding", for: .normal)
+    }
+}
+
+// MARK: - Extenstion(Gesture)
 extension MainVC: UIGestureRecognizerDelegate {
 //    
 //    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive press: UIPress) -> Bool {
@@ -364,9 +375,8 @@ extension MainVC: UIGestureRecognizerDelegate {
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         print(#function)
         return false
-//        print(topAreaFlag)
 //        if topAreaFlag,
-//            !carListonTopFlag {
+//        !carListonTopFlag {
 //            carListView.carListTableView.isScrollEnabled = true
 //            return false
 //        } else {
@@ -386,6 +396,7 @@ extension MainVC: UIGestureRecognizerDelegate {
 //    }
 }
 
+// MARK: - Extension(TableView)
 extension MainVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         30
@@ -405,7 +416,7 @@ extension MainVC: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        print(indexPath.row)
+        print(#function)
         if indexPath.row == 0 {
             carListonTopFlag = true
         } else {
@@ -413,12 +424,4 @@ extension MainVC: UITableViewDelegate {
         }
     }
     
-}
-
-extension MainVC: NMFMapViewCameraDelegate {
-    func mapView(_ mapView: NMFMapView, cameraDidChangeByReason reason: Int, animated: Bool) {
-         let camPosition = mapView.cameraPosition.target
-        callPositionMarker.position = camPosition
-        topView.searchButton.setTitle("Geocoding", for: .normal)
-    }
 }
