@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Alamofire
 
 class UserAuthVC: UIViewController {
   
@@ -17,7 +16,10 @@ class UserAuthVC: UIViewController {
   var isKeyboardUp: Bool = false
   var isUserAgreeWithAlltou: Bool = false
   
-  var phoneAuthResponse: PhoneAuthResponse?
+  var responsedPhoneAuthCode: PhoneAuthResponse?
+  
+  var timer: Timer?
+  var threeMinutetime = 180
   
   enum AuthError: String {
     case bithDayInputError = "생년월일을 확인해주세요"
@@ -46,6 +48,7 @@ class UserAuthVC: UIViewController {
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
+    scrollView.authLimitCountTimerLabel.text = "03:00"
     //keyboard 입력에 따른 화면 올리는 Notification 설정
     NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillAppear(noti:)), name: UIResponder.keyboardWillShowNotification, object: nil)
     NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillDisappear(noti:)), name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -64,6 +67,13 @@ class UserAuthVC: UIViewController {
     self.navigationController?.navigationBar.topItem?.title = ""
     self.navigationController?.navigationBar.addSubview(self.scrollView.blurView)
     self.navigationController?.navigationBar.sendSubviewToBack(self.scrollView.blurView)
+  }
+  
+  private func startCountDownTimer() {
+    timer = Timer.scheduledTimer(timeInterval: 1.0, target: self,
+                                 selector: #selector(countDownTime),
+                                 userInfo: nil,
+                                 repeats: true)
   }
   
   private func configureButtonAction() {
@@ -88,6 +98,24 @@ class UserAuthVC: UIViewController {
   }
   
   // MARK: - Button Handler
+  @objc private func countDownTime() {
+    var timerTitleText: String = ""
+    threeMinutetime -= 1
+    if threeMinutetime >= 0 {
+      let minute = threeMinutetime/60
+      let second = threeMinutetime%60
+      if second < 10 {
+        timerTitleText = "0\(minute):0\(second)"
+      } else {
+        timerTitleText = "0\(minute):\(second)"
+      }
+    } else {
+      timerTitleText = "시간초과"
+      timer?.invalidate()
+    }
+    scrollView.authLimitCountTimerLabel.text = timerTitleText
+  }
+  
   @objc private func textFieldChange(_ sender: UITextField) {
     if sender == scrollView.userBirthTextField {
       if sender.text?.count ?? 0 == 6 {
@@ -149,7 +177,6 @@ class UserAuthVC: UIViewController {
   }
   
   @objc private func tabSelectPopupMenuButtons(_ sender: UIButton) {
-    
     let selectPopupVC = SelectPopupVC()
     if sender == scrollView.selectConturyButton {
       selectPopupVC.sectionTitle = "  국적 선택"
@@ -193,8 +220,7 @@ class UserAuthVC: UIViewController {
       errorAlertControllerPresent(.phoneNumberInputError)
       return
     }
-    
-    guard let responseKey = phoneAuthResponse?.responseKey else { return print("기존 저장된 registration 코드가 없습니다.")}
+    guard let responseKey = responsedPhoneAuthCode?.responseKey else { return print("기존 저장된 registration 코드가 없습니다.")}
     
     // 인증 데이터 생성
     let jsonValue: [String: Any] = [
@@ -203,22 +229,20 @@ class UserAuthVC: UIViewController {
     
     let url = URL(string: "https://sofastcar.moorekwon.xyz/phone_auth/\(responseKey)/check_auth_number/")!
     var request = URLRequest(url: url)
-    
     do {
       let jsonData = try JSONSerialization.data(withJSONObject: jsonValue, options: .prettyPrinted)
       request.httpBody = jsonData
     } catch let err {
       print(err)
     }
-    
-    request.httpMethod = HTTPMethod.put.rawValue
+    request.httpMethod = "PUT"
     request.addValue("application/json", forHTTPHeaderField: "Content-Type")
     
-    scrollView.activityIndicator.startAnimating()
-    
     let getAuthResponse = URLSession.shared.dataTask(with: request) { (_, response, error) in
+      self.startActivityIndicator()
       if let error = error {
         print("Error", error.localizedDescription)
+        self.stopAactivityIndicator()
         return
       }
       
@@ -229,8 +253,10 @@ class UserAuthVC: UIViewController {
           self.errorAlertControllerPresent(.smsAuthCodeError)
         }
       }
+      
       DispatchQueue.main.async {
-        self.scrollView.activityIndicator.stopAnimating()
+        self.stopAactivityIndicator()
+        self.timer?.invalidate()
       }
     }
     getAuthResponse.resume()
@@ -247,10 +273,9 @@ class UserAuthVC: UIViewController {
     guard userInputValueValidCheck(checkStr: userPhoneNumber, checkType: ValidtionType.phoneNumber) == true else {
       errorAlertControllerPresent(.phoneNumberInputError); return }
     
-    scrollView.activityIndicator.startAnimating()
+    startActivityIndicator()
     
-    // 인증 데이터 생성
-    let jsonValue: [String: Any] = [
+    let sendUserAuthData: [String: Any] = [
       "phone_number": "\(userPhoneNumber)",
       "registration_id": "\(userBirthDay)\(userGender)"
     ]
@@ -259,13 +284,12 @@ class UserAuthVC: UIViewController {
     var request = URLRequest(url: url)
     
     do {
-      let jsonData = try JSONSerialization.data(withJSONObject: jsonValue, options: .prettyPrinted)
-      request.httpBody = jsonData
+      let requestUserAuthData = try JSONSerialization.data(withJSONObject: sendUserAuthData, options: .prettyPrinted)
+      request.httpBody = requestUserAuthData
     } catch let err {
       print(err)
     }
-
-    request.httpMethod = HTTPMethod.post.rawValue
+    request.httpMethod = "POST"
     request.addValue("application/json", forHTTPHeaderField: "Content-Type")
 
     let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
@@ -281,12 +305,8 @@ class UserAuthVC: UIViewController {
           self.errorAlertControllerPresent(.serverSideError)
           return
       }
-      
-      // 인증번호 입력 UI 변경
-      self.showUserAuthcodeInputView()
-      self.phoneAuthResponse = try? JSONDecoder().decode(PhoneAuthResponse.self, from: responseData)
-      print("Sucess to get phoneAuthResponse", self.phoneAuthResponse?.registrationId ?? "")
-      
+      self.showUserAuthcodeInputTextField()
+      self.responsedPhoneAuthCode = try? JSONDecoder().decode(PhoneAuthResponse.self, from: responseData)
     }
     task.resume()
   }
@@ -311,15 +331,10 @@ class UserAuthVC: UIViewController {
       guard let userBirthDay = view.userBirthTextField.text else { return }
       guard let userGender = view.userSexTextField.text else { return }
       guard let userPhoneNumber = Int(view.userPhoneNumberTextField.text ?? "") else { return print("Errir0")}
-      //    guard let userContury = scrollView.selectConturyButton.attributedTitle(for: .selected)?.string.split(separator: " ").first else { return print("Errir1")}
-      //    guard let mobileCompany = scrollView.selectMobileCompany.attributedTitle(for: .selected)?.string.split(separator: " ").first else { return print("Errir2")}
       
       self.user?.useranme = userName
       self.user?.userBirthDay = "\(userBirthDay)\(userGender)"
       self.user?.userPhoneNumber = userPhoneNumber
-      //    user?.userGender = userGender
-      //    user?.mobileCompany = String(mobileCompany)
-      //    user?.userContury = String(userContury)
       
       let defualtUserInfoVC = DefualtUserInfoVC()
       defualtUserInfoVC.user = self.user
@@ -350,7 +365,7 @@ class UserAuthVC: UIViewController {
     }
   }
   
-  private func showUserAuthcodeInputView() {
+  private func showUserAuthcodeInputTextField() {
     DispatchQueue.main.async {
       self.scrollView.phoneAuthNumberInputTextField.snp.updateConstraints {
         $0.height.equalTo(CommonUI.userInputMenusHeight)
@@ -360,6 +375,19 @@ class UserAuthVC: UIViewController {
       }
       self.scrollView.authCompleteButton.isEnabled = true
       self.scrollView.sendAuthenticationSMSButton.setTitle("재발송", for: .normal)
+      self.stopAactivityIndicator()
+      self.startCountDownTimer()
+    }
+  }
+  
+  private func startActivityIndicator() {
+    DispatchQueue.main.async {
+      self.scrollView.activityIndicator.startAnimating()
+    }
+  }
+  
+  private func stopAactivityIndicator() {
+    DispatchQueue.main.async {
       self.scrollView.activityIndicator.stopAnimating()
     }
   }

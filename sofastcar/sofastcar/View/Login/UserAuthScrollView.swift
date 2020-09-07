@@ -161,6 +161,7 @@ class UserAuthScrollView: UIScrollView {
   let phoneAuthNumberInputTextField: LoginUserInputTextField = {
     let textField = LoginUserInputTextField()
     textField.placeholder = "인증번호 6자리 입력"
+    textField.textContentType = .oneTimeCode
     textField.keyboardType = .numberPad
     return textField
   }()
@@ -169,6 +170,7 @@ class UserAuthScrollView: UIScrollView {
     let label = UILabel()
     label.text = "03:00"
     label.font = .systemFont(ofSize: 12)
+    label.textColor = .red
     return label
   }()
   
@@ -404,7 +406,6 @@ class UserAuthScrollView: UIScrollView {
     phoneAuthNumberInputTextField.snp.makeConstraints {
       $0.top.equalTo(sendAuthenticationSMSButton.snp.bottom).offset(CommonUI.sectionLabelPadding)
       $0.leading.trailing.equalTo(guide)
-//      $0.height.equalTo(CommonUI.userInputMenusHeight)
       $0.height.equalTo(0)
     }
     
