@@ -204,7 +204,7 @@ class ReservationStateView: UIScrollView {
     return view
   }()
   // reservation
-  fileprivate let vehiclePictureViewButton: UIView = {
+  let vehiclePictureViewButton: UIView = {
     let view = UIView()
     view.backgroundColor = CommonUI.mainBlue
     view.layer.cornerRadius = 5
@@ -302,7 +302,6 @@ class ReservationStateView: UIScrollView {
     self.contentSize = CGSize(width: self.frame.width, height: contentView.frame.height)
     
     setConstraints()
-    setGesture()
   }
   
   fileprivate func setConstraints() {
@@ -434,11 +433,6 @@ class ReservationStateView: UIScrollView {
     }
   }
   
-  fileprivate func setGesture() {
-    let tapGestureRecongnizer = UITapGestureRecognizer(target: self, action: #selector(self.didTapVehiclePictureView(recongnize:)))
-    
-    vehiclePictureViewButton.addGestureRecognizer(tapGestureRecongnizer)
-  }
   // MARK: - Action
   
   @objc func didTapButton(_ sender: UIButton) {
@@ -453,15 +447,6 @@ class ReservationStateView: UIScrollView {
       print("reservation place button")
     default:
       print("error")
-    }
-  }
-
-  @objc func didTapVehiclePictureView(recongnize: UITapGestureRecognizer) {
-    switch recongnize.state {
-    case .ended:
-      
-    default:
-      break
     }
   }
 }

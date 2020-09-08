@@ -40,15 +40,36 @@ class ReservationDashboardVC: UIViewController {
     [reservationStateView, carKey].forEach {
       view.addSubview($0)
     }
+    
+    setGesture()
   }
   
   fileprivate func setNavigation() {
     let navBar = self.navigationController?.navigationBar
     self.navigationItem.leftBarButtonItem = reservationStateView.leftNavigationButton
     self.navigationItem.rightBarButtonItem = reservationStateView.rightNavigationButton
-
+    
     navBar?.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
     navBar?.shadowImage = UIImage()
     navBar?.backgroundColor = UIColor.clear
+  }
+  
+  fileprivate func setGesture() {
+    let tapGestureRecongnizer = UITapGestureRecognizer(target: self, action: #selector(didTapVehiclePictureView(recongnize:)))
+    
+    reservationStateView.vehiclePictureViewButton.addGestureRecognizer(tapGestureRecongnizer)
+  }
+  
+  @objc func didTapVehiclePictureView(recongnize: UITapGestureRecognizer) {
+    switch recongnize.state {
+    case .ended:
+      print("qwerqwer")
+      let vehicleCheckVC = VehicleCheckVC()
+      let navigationController = UINavigationController(rootViewController: vehicleCheckVC)
+      navigationController.modalPresentationStyle = .fullScreen
+      self.present(navigationController, animated: false)
+    default:
+      break
+    }
   }
 }
