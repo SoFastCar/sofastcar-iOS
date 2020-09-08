@@ -7,12 +7,59 @@
 //
 
 import UIKit
+import SnapKit
 
 class VehicleCheckVC: UIViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+  
+  let vehicleCheckView = VehicleCheckView()
+  
+  lazy var leftNavigationButton: UIBarButtonItem = {
+    let barButtonItem = UIBarButtonItem(
+      image: UIImage(systemName: CommonUI.SFSymbolKey.close.rawValue),
+      style: .plain,
+      target: self,
+      action: #selector(didTapButton(_:))
+    )
+    barButtonItem.tintColor = UIColor.white.withAlphaComponent(0.55)
+    
+    return barButtonItem
+  }()
+  
+  // MARK: - LifeCycle
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    
+    setUI()
+  }
+  
+  // MARK: - UI
+  
+  fileprivate func setUI() {
+    
+    setNavigation()
+    [vehicleCheckView].forEach {
+      view.addSubview($0)
     }
+  }
+  
+  fileprivate func setNavigation() {
+    let navBar = self.navigationController?.navigationBar
+    self.navigationItem.leftBarButtonItem = self.leftNavigationButton
+    
+    navBar?.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+    navBar?.shadowImage = UIImage()
+    navBar?.backgroundColor = UIColor.clear
+  }
+  
+  // MARK: - Action
+  
+  @objc func didTapButton(_ sender: UIButton) {
+    switch sender {
+    case leftNavigationButton:
+      dismiss(animated: false, completion: nil)
+    default:
+      break
+    }
+  }
 }

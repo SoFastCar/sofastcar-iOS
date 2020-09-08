@@ -298,7 +298,6 @@ class ReservationStateView: UIScrollView {
   
   // MARK: - UI
   fileprivate func setUI() {
-    self.layer.cornerRadius = 5
     self.contentSize = CGSize(width: self.frame.width, height: contentView.frame.height)
     
     setConstraints()
@@ -306,9 +305,12 @@ class ReservationStateView: UIScrollView {
   
   fileprivate func setConstraints() {
     let guid = contentView.safeAreaLayoutGuide
-    self.frame = CGRect(x: 0, y: 0,
-                        width: UIScreen.main.bounds.width,
-                        height: UIScreen.main.bounds.height)
+    self.frame = CGRect(
+      x: 0,
+      y: 0,
+      width: UIScreen.main.bounds.width,
+      height: UIScreen.main.bounds.height
+    )
     self.addSubview(contentView)
     
     var heightPadding: CGFloat = 0
