@@ -10,8 +10,17 @@ import UIKit
 import SnapKit
 
 class ReservationDashboardVC: UIViewController {
+  let reservationStateView: ReservationStateView = {
+    let scrollView = ReservationStateView()
+    
+    return scrollView
+  }()
   
-  let reservationStateView = ReservationStateView()
+  let carKey: CarKeyView = {
+    let view = CarKeyView()
+    
+    return view
+  }()
   
   // MARK: - LifeCycle
   
@@ -21,16 +30,16 @@ class ReservationDashboardVC: UIViewController {
     setUI()
   }
   
-  override func loadView() {
-    view = reservationStateView
-  }
-  
   // MARK: - UI
   
   fileprivate func setUI() {
     view.backgroundColor = CommonUI.reservationBackground
     
     setNavigation()
+    
+    [reservationStateView, carKey].forEach {
+      view.addSubview($0)
+    }
   }
   
   fileprivate func setNavigation() {
