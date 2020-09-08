@@ -10,7 +10,10 @@ import UIKit
 
 class CarListView: UIView {
     
+    let socarZoneData = SocarZoneData()
+    
     let parkingLotInfoButton = UIButton()
+    let socarZoneInfoButton = SocarZoneInfoButton()
     let setDateButton = UIButton()
     let stackView = UIStackView()
     let carListTableView = UITableView()
@@ -27,17 +30,22 @@ class CarListView: UIView {
     }
     
     private func setupUI() {
-        parkingLotInfoButton.setTitle("주차장 정보", for: .normal)
-        parkingLotInfoButton.backgroundColor = .systemRed
-        stackView.addArrangedSubview(parkingLotInfoButton)
+//        parkingLotInfoButton.setTitle("주차장 정보", for: .normal)
+//        parkingLotInfoButton.backgroundColor = .systemRed
+//        stackView.addArrangedSubview(parkingLotInfoButton)
+        socarZoneInfoButton.backgroundColor = .systemTeal
+        socarZoneInfoButton.configuration(socarZoneData.name.randomElement() ?? "이름 없음", socarZoneData.groundLevel.randomElement() ?? "모름", socarZoneData.discription.randomElement() ?? "설명 없음", socarZoneData.imageName.randomElement() ?? "사진 없음")
+//        stackView.addArrangedSubview(socarZoneInfoButton)
+        self.addSubview(socarZoneInfoButton)
         
         setDateButton.setTitle("예약일 변경", for: .normal)
         setDateButton.backgroundColor = .systemBlue
-        stackView.addArrangedSubview(setDateButton)
+//        stackView.addArrangedSubview(setDateButton)
+        self.addSubview(setDateButton)
         
-        stackView.axis = .vertical
-        stackView.distribution = .fillEqually
-        self.addSubview(stackView)
+//        stackView.axis = .vertical
+//        stackView.distribution = .fillProportionally
+//        self.addSubview(stackView)
         
         // to be moved to MainVC
 //        carListTableView.delegate = self
@@ -52,15 +60,30 @@ class CarListView: UIView {
     }
     
     private func setupConstraint() {
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.snp.makeConstraints({
+        socarZoneInfoButton.translatesAutoresizingMaskIntoConstraints = false
+        socarZoneInfoButton.snp.makeConstraints({
             $0.top.equalTo(self)
             $0.leading.equalTo(self)
             $0.trailing.equalTo(self)
+            $0.height.equalTo(120)
         })
+        setDateButton.translatesAutoresizingMaskIntoConstraints = false
+        setDateButton.snp.makeConstraints({
+            $0.top.equalTo(socarZoneInfoButton.snp.bottom)
+            $0.leading.equalTo(self)
+            $0.trailing.equalTo(self)
+            $0.height.equalTo(60)
+        })
+        
+//        stackView.translatesAutoresizingMaskIntoConstraints = false
+//        stackView.snp.makeConstraints({
+//            $0.top.equalTo(self)
+//            $0.leading.equalTo(self)
+//            $0.trailing.equalTo(self)
+//        })
         carListTableView.translatesAutoresizingMaskIntoConstraints = false
         carListTableView.snp.makeConstraints({
-            $0.top.equalTo(stackView.snp.bottom)
+            $0.top.equalTo(setDateButton.snp.bottom)
             $0.leading.equalTo(self)
             $0.trailing.equalTo(self)
             $0.bottom.equalTo(self)

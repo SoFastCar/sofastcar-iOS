@@ -21,6 +21,8 @@ class MainVC: UIViewController {
     var markerTapFlag = false
     var carListonTopFlag = false
     var searchVCDismissFlag = false
+    var insuranceMenuViewFlag = false
+    
     let marker = NMFMarker()
     let naverMapView = NMFNaverMapView()
     lazy var callPositionMarker = NMFMarker(position: defaultMarkerPosition, iconImage: NMF_MARKER_IMAGE_YELLOW)
@@ -29,7 +31,9 @@ class MainVC: UIViewController {
     let topView = TopView()
     let searchView = SearchView()
     let whiteView = UIView()
+    
     let carListView = CarListView()
+    let insuranceMenuView = InsuranceMenuView()
     lazy var panGesture = UIPanGestureRecognizer(target: self, action: #selector(didPan(_:)))
     lazy var visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
     
@@ -72,14 +76,42 @@ class MainVC: UIViewController {
     // MARK: - Touch Methods
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
+        print("1")
         if !topAreaFlag,
             markerTapFlag {
-            UIView.animate(withDuration: 0.3, animations: {
-                self.carListView.frame.origin.y = self.view.frame.height * 0.82
-            })
+            if insuranceMenuViewFlag {
+                print("4")
+                UIView.animate(withDuration: 0.3, animations: {
+                    self.visualEffectView.alpha = 0
+                    self.insuranceMenuView.frame.origin.y = self.view.frame.height
+                })
+                insuranceMenuViewFlag.toggle()
+            } else {
+                print("2")
+                UIView.animate(withDuration: 0.3, animations: {
+                    self.carListView.frame.origin.y = self.view.frame.height * 0.82
+                })
+            }
+            
         } else {
-            // do nothing
+            print("3")
+            
         }
+//        if insuranceMenuViewFlag {
+//            UIView.animate(withDuration: 0.3, animations: {
+//                self.visualEffectView.alpha = 0
+//                self.insuranceMenuView.frame.origin.y = self.view.frame.height
+//            })
+//        } else {
+//            if !topAreaFlag,
+//                markerTapFlag {
+//                UIView.animate(withDuration: 0.3, animations: {
+//                    self.carListView.frame.origin.y = self.view.frame.height * 0.82
+//                })
+//            } else {
+//                // do nothing
+//            }
+//        }
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -95,6 +127,10 @@ class MainVC: UIViewController {
     }
     
     // MARK: - Selector
+    @objc func didTapZoneInfo(_ sender: UIButton) {
+        
+    }
+    
     @objc func didTapSearchButton(_ sender: UIButton) {
         
         // animate
@@ -211,6 +247,19 @@ class MainVC: UIViewController {
         view.addSubview(naverMapView)
         naverMapView.mapView.touchDelegate = self
         naverMapView.mapView.addCameraDelegate(delegate: self)
+        naverMapView.showZoomControls = false
+        naverMapView.showLocationButton = false
+        naverMapView.showScaleBar = true
+        
+//        let southWest = NMGLatLng(lat: 31.43, lng: 122.37)
+//        let northEast = NMGLatLng(lat: 44.35, lng: 132)
+//        let bounds = NMGLatLngBounds(southWest: southWest, northEast: northEast)
+        
+        let southWestCoord = naverMapView.mapView.projection.latlng(from: CGPoint(x: 0, y: 0))
+        let northEastCoord = naverMapView.mapView.projection.latlng(from: CGPoint(x: view.frame.width, y: view.frame.height))
+        let bounds = NMGLatLngBounds(southWest: southWestCoord, northEast: northEastCoord)
+        print(bounds)
+        
         naverMapView.mapView.moveCamera(NMFCameraUpdate(position: defaultCamPosition))
         marker.position = defaultMarkerPosition
         marker.mapView = naverMapView.mapView
@@ -259,12 +308,16 @@ class MainVC: UIViewController {
         
         view.addSubview(topView)
         
+        carListView.socarZoneInfoButton.addTarget(self, action: #selector(didTapZoneInfo(_:)), for: .touchUpInside)
+        
         carListView.carListTableView.delegate = self
         carListView.carListTableView.dataSource = self
         carListView.carListTableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         carListView.frame = CGRect(x: 0, y: view.frame.height, width: view.frame.width, height: view.frame.height)
         panGesture.delegate = self
         carListView.addGestureRecognizer(panGesture)
+        
+        
         
         visualEffectView.frame = view.frame
         visualEffectView.alpha = 0
@@ -275,6 +328,8 @@ class MainVC: UIViewController {
         
         view.addSubview(visualEffectView)
         view.addSubview(carListView)
+        insuranceMenuView.frame = CGRect(x: 0, y: view.frame.height, width: view.frame.width, height: 500 )
+        view.addSubview(insuranceMenuView)
     }
     
     // MARK: - Setup Constraint
@@ -314,7 +369,13 @@ extension MainVC: NMFMapViewCameraDelegate {
     func mapView(_ mapView: NMFMapView, cameraDidChangeByReason reason: Int, animated: Bool) {
         let camPosition = mapView.cameraPosition.target
         let meterPerPixel = mapView.projection.metersPerPixel(atLatitude: mapView.cameraPosition.target.lat, zoom: mapView.cameraPosition.zoom)
-//        print(meterPerPixel)
+//        print(meterPerPixel, mapView.cameraPosition.zoom)
+        
+        let southWestCoord = naverMapView.mapView.projection.latlng(from: CGPoint(x: 0, y: 0))
+        let northEastCoord = naverMapView.mapView.projection.latlng(from: CGPoint(x: view.frame.width, y: view.frame.height))
+        let bounds = NMGLatLngBounds(southWest: southWestCoord, northEast: northEastCoord)
+        print(bounds)
+        
         callPositionMarker.position = camPosition
         topView.searchButton.setTitle("Geocoding", for: .normal)
     }
@@ -399,6 +460,14 @@ extension MainVC: UITableViewDelegate {
         } else {
             carListonTopFlag = false
         }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        insuranceMenuViewFlag = true
+        UIView.animate(withDuration: 0.5, animations: {
+            self.insuranceMenuView.frame.origin.y = (self.view.frame.height / 2 ) - 50
+            self.visualEffectView.alpha = 1
+        })
     }
     
 }

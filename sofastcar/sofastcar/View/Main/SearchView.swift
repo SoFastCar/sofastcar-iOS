@@ -74,7 +74,7 @@ class SearchView: UIView {
         backButton.snp.makeConstraints({
             $0.top.equalToSuperview()
             $0.leading.equalToSuperview()
-            $0.width.equalTo(67)
+            $0.width.equalTo(50)
             $0.bottom.equalToSuperview()
         })
         
