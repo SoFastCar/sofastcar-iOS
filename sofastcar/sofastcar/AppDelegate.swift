@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   func application(_ application: UIApplication,
                    didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
     
-    let mainVC = LoginVC() // ReservationConfirmTableVC
+    let mainVC = ReservationConfirmTableVC() // ReservationConfirmTableVC
     let navigationController = UINavigationController(rootViewController: mainVC)
     
     let backButtonImage = UIImage(systemName: "arrow.left")
@@ -25,7 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     navigationController.navigationBar.topItem?.title = ""
 
     window = UIWindow(frame: UIScreen.main.bounds)
-    window?.rootViewController = mainVC
+    window?.rootViewController = navigationController
     window?.makeKeyAndVisible()
     return true
   }
