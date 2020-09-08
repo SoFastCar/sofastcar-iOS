@@ -12,13 +12,6 @@ import SnapKit
 class ReservationStateView: UIScrollView {
   
   // MARK: - Attribute
-  
-  let carKey: CarKeyView = {
-    let view = CarKeyView()
-    
-    return view
-  }()
-  
   lazy var leftNavigationButton: UIBarButtonItem = {
     let barButtonItem = UIBarButtonItem(
       image: UIImage(systemName: CommonUI.SFSymbolKey.hamburger.rawValue),
@@ -41,6 +34,12 @@ class ReservationStateView: UIScrollView {
     barButtonItem.tintColor = UIColor.white.withAlphaComponent(0.55)
     
     return barButtonItem
+  }()
+  
+  fileprivate let contentView: UIView = {
+    let view = UIView()
+    
+    return view
   }()
   
   fileprivate let reservationCarImage: UIImageView = {
@@ -299,17 +298,30 @@ class ReservationStateView: UIScrollView {
   
   // MARK: - UI
   fileprivate func setUI() {
-    self.backgroundColor = CommonUI.mainBlue
     self.layer.cornerRadius = 5
+    self.contentSize = CGSize(width: self.frame.width, height: contentView.frame.height)
     
     setConstraints()
   }
   
   fileprivate func setConstraints() {
-    let guid = self.safeAreaLayoutGuide
+    let guid = contentView.safeAreaLayoutGuide
+    self.frame = CGRect(x: 0, y: 0,
+                        width: UIScreen.main.bounds.width,
+                        height: UIScreen.main.bounds.height)
+    self.addSubview(contentView)
     
-    [reservationCarImage, numberPlateLabel, carInfomationButton, carInfoAndOilStackView, reservationTimeStackView, reservationProgressView, reservationCommentLabel, reservationStateView, carKey].forEach {
-      self.addSubview($0)
+    var heightPadding: CGFloat = 0
+    if UIScreen.main.bounds.height < 670 { // se, Se2...
+      heightPadding = UIScreen.main.bounds.height * 0.2
+    }
+    
+    self.contentSize = .init(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height+heightPadding-44)
+    contentView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height+heightPadding-144)
+    contentView.layoutMargins = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
+    
+    [reservationCarImage, numberPlateLabel, carInfomationButton, carInfoAndOilStackView, reservationTimeStackView, reservationProgressView, reservationCommentLabel, reservationStateView].forEach {
+      contentView.addSubview($0)
     }
     
     reservationCarImage.snp.makeConstraints {

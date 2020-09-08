@@ -19,7 +19,7 @@ class CarKeyView: UIView {
   }
   
   let carKeyViewHeight: CGFloat = 600
-  let carKeyViewHandleAreaHeight: CGFloat = 235
+  let carKeyViewHandleAreaHeight: CGFloat = 365
   
   var visualEffectView = UIVisualEffectView()
   var cardVisible = false
@@ -367,11 +367,11 @@ class CarKeyView: UIView {
     super.init(frame: frame)
     self.frame = CGRect(
       x: 0,
-      y: screenSize.height - 255,
+      y: screenSize.maxY - 180,
       width: screenSize.width,
-      height: screenSize.height - 255
+      height: 400
     )
-    
+    print(screenSize.maxY)
     setUI()
   }
   
@@ -577,20 +577,21 @@ extension CarKeyView {
       let frameAnimator = UIViewPropertyAnimator(duration: duration, dampingRatio: 1) {
         switch state {
         case .expanded:
+          print(self.screenSize.height)
           self.frame = CGRect(
             x: 0,
-            y: self.screenSize.height - (self.screenSize.height - self.carKeyViewHandleAreaHeight),
+            y: self.screenSize.maxY - (820 - self.carKeyViewHandleAreaHeight),
             width: self.screenSize.width,
-            height: self.screenSize.height
+            height: self.carKeyViewHeight
           )
           self.isHiddenView(view: self.underGestureView, isHidden: true)
           self.isHiddenView(view: self.riseGestureView, isHidden: false)
         case .collapsed:
           self.frame = CGRect(
             x: 0,
-            y: self.screenSize.height - 255,
+            y: self.screenSize.maxY - 180,
             width: self.screenSize.width,
-            height: self.screenSize.height - 255
+            height: self.carKeyViewHeight
           )
           self.isHiddenView(view: self.underGestureView, isHidden: false)
           self.isHiddenView(view: self.riseGestureView, isHidden: true)
