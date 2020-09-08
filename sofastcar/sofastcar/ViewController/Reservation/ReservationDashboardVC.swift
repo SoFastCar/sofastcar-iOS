@@ -46,10 +46,9 @@ class ReservationDashboardVC: UIViewController {
     let navBar = self.navigationController?.navigationBar
     self.navigationItem.leftBarButtonItem = reservationStateView.leftNavigationButton
     self.navigationItem.rightBarButtonItem = reservationStateView.rightNavigationButton
-    
+
     navBar?.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
     navBar?.shadowImage = UIImage()
-    navBar?.isTranslucent = true
     navBar?.backgroundColor = UIColor.clear
   }
 }

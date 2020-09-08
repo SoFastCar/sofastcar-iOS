@@ -302,6 +302,7 @@ class ReservationStateView: UIScrollView {
     self.contentSize = CGSize(width: self.frame.width, height: contentView.frame.height)
     
     setConstraints()
+    setGesture()
   }
   
   fileprivate func setConstraints() {
@@ -318,7 +319,6 @@ class ReservationStateView: UIScrollView {
     
     self.contentSize = .init(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height+heightPadding-44)
     contentView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height+heightPadding-144)
-    contentView.layoutMargins = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
     
     [reservationCarImage, numberPlateLabel, carInfomationButton, carInfoAndOilStackView, reservationTimeStackView, reservationProgressView, reservationCommentLabel, reservationStateView].forEach {
       contentView.addSubview($0)
@@ -366,6 +366,7 @@ class ReservationStateView: UIScrollView {
       $0.top.equalTo(reservationCommentLabel.snp.bottom).offset(20)
       $0.leading.equalTo(guid).offset(20)
       $0.trailing.equalTo(guid).offset(-20)
+      $0.height.equalTo(240)
     }
     
     [vehiclePictureViewButton, reservationPlaceWrapView].forEach {
@@ -377,7 +378,7 @@ class ReservationStateView: UIScrollView {
       $0.top.equalTo(reservationCommentLabel.snp.bottom).offset(20)
       $0.leading.equalTo(guid).offset(20)
       $0.trailing.equalTo(guid).offset(-20)
-      $0.height.equalTo(110)
+      $0.height.equalTo(120)
     }
     
     [reservationStateLabel, reservationStateSubLabel, reservationStatsWarningIcon, reservationStateMessageLabel].forEach {
@@ -432,6 +433,12 @@ class ReservationStateView: UIScrollView {
       $0.leading.equalTo(reservationPlaceStateSubLabel.snp.trailing).offset(40)
     }
   }
+  
+  fileprivate func setGesture() {
+    let tapGestureRecongnizer = UITapGestureRecognizer(target: self, action: #selector(self.didTapVehiclePictureView(recongnize:)))
+    
+    vehiclePictureViewButton.addGestureRecognizer(tapGestureRecongnizer)
+  }
   // MARK: - Action
   
   @objc func didTapButton(_ sender: UIButton) {
@@ -446,6 +453,15 @@ class ReservationStateView: UIScrollView {
       print("reservation place button")
     default:
       print("error")
+    }
+  }
+
+  @objc func didTapVehiclePictureView(recongnize: UITapGestureRecognizer) {
+    switch recongnize.state {
+    case .ended:
+      
+    default:
+      break
     }
   }
 }
