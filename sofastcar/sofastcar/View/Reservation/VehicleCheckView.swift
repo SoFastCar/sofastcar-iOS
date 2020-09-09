@@ -78,9 +78,38 @@ class VehicleCheckView: UIScrollView {
     let button = UIButton()
     button.setTitle("외관 촬영 시작하기", for: .normal)
     button.backgroundColor = CommonUI.mainBlue
+    button.addTarget(self, action: #selector(didTapButton(_:)), for: .touchUpInside)
     
     return button
   }()
+  
+  fileprivate let vehicleCheckTagView: UIView = {
+    let view = UIView()
+    view.backgroundColor = .white
+    
+    return view
+  }()
+  
+  fileprivate let vehicleCheckTagDescriptionTitleLabel: UILabel = {
+    let label = UILabel()
+    label.text = "운행 전 추가 확인"
+    label.font = UIFont.preferredFont(forTextStyle: .headline)
+    label.textColor = CommonUI.mainDark
+    
+    return label
+  }()
+  
+  fileprivate let vehicleCheckTagDescriptionLabel: UILabel = {
+    let label = UILabel()
+    label.text = "차량 내부 상태와 관련된 테그를 선택하거나 메모를 남겨주세요. 차량 게시판에 경고등이 들어와있다면 고객센터로 문의해주세요."
+    label.font = UIFont.preferredFont(forTextStyle: .callout)
+    label.textColor = CommonUI.mainDark
+    label.numberOfLines = .max
+    
+    return label
+  }()
+  
+  
   
   // MARK: - LifeCycle
   override init(frame: CGRect) {
@@ -88,7 +117,7 @@ class VehicleCheckView: UIScrollView {
     
     setUI()
   }
- 
+  
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
@@ -131,10 +160,10 @@ class VehicleCheckView: UIScrollView {
   fileprivate func setConstraints() {
     let guid = contentView.safeAreaLayoutGuide
     
-    [vehicleCheckStartView].forEach {
+    [vehicleCheckStartView, vehicleCheckTagView].forEach {
       contentView.addSubview($0)
     }
-
+    
     // vehicleCheckStartView
     vehicleCheckStartView.snp.makeConstraints {
       $0.top.equalTo(guid)
@@ -143,6 +172,13 @@ class VehicleCheckView: UIScrollView {
     }
     vehicleCheckStartConstraints()
     
+    // vehicleCheckTagView
+    vehicleCheckTagView.snp.makeConstraints {
+      $0.top.equalTo(vehicleCheckStartView.snp.bottom).offset(10)
+      $0.leading.trailing.equalTo(guid)
+      $0.height.equalTo(500)
+    }
+    vehicleCheckTagConstraints()
   }
   
   fileprivate func vehicleCheckStartConstraints() {
@@ -156,7 +192,7 @@ class VehicleCheckView: UIScrollView {
       vehicleCheckStartSubDescriptionButton,
       vehicleCheckStartButton
     ].forEach {
-      vehicleCheckStartView.addSubview($0)
+        vehicleCheckStartView.addSubview($0)
     }
     
     vehicleCheckStartTitleLabel.snp.makeConstraints {
@@ -194,12 +230,36 @@ class VehicleCheckView: UIScrollView {
     }
   }
   
+  fileprivate func vehicleCheckTagConstraints() {
+    let guid = vehicleCheckTagView.safeAreaLayoutGuide
+    
+    [
+      vehicleCheckTagDescriptionTitleLabel,
+      vehicleCheckTagDescriptionLabel
+    ].forEach {
+      vehicleCheckTagView.addSubview($0)
+    }
+    
+    vehicleCheckTagDescriptionTitleLabel.snp.makeConstraints {
+      $0.top.equalTo(guid).offset(20)
+      $0.leading.equalTo(guid).offset(20)
+    }
+    
+    vehicleCheckTagDescriptionLabel.snp.makeConstraints {
+      $0.top.equalTo(vehicleCheckTagDescriptionTitleLabel.snp.bottom).offset(20)
+      $0.leading.equalTo(guid).offset(20)
+      $0.trailing.equalTo(guid).offset(-20)
+    }
+  }
+  
   // MARK: - Action
   
   @objc func didTapButton(_ sender: UIButton) {
     switch sender {
     case vehicleCheckStartSubDescriptionButton:
       print("vehicleCheckStartSubDescriptionButton button press")
+    case vehicleCheckStartButton:
+      print("vehicleCheckStartButton button press")
     default:
       break
     }
