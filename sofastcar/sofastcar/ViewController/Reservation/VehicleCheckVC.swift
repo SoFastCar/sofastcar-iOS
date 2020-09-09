@@ -20,7 +20,7 @@ class VehicleCheckVC: UIViewController {
       target: self,
       action: #selector(didTapButton(_:))
     )
-    barButtonItem.tintColor = CommonUI.grayColor
+    barButtonItem.tintColor = CommonUI.mainDark
     
     return barButtonItem
   }()
@@ -28,7 +28,7 @@ class VehicleCheckVC: UIViewController {
   // MARK: - LifeCycle
   
   override func viewDidLoad() {
-    super.viewDidLoad()
+//    super.viewDidLoad()
     
     setUI()
   }
@@ -50,7 +50,7 @@ class VehicleCheckVC: UIViewController {
     
     navBar?.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
     navBar?.shadowImage = UIImage()
-    navBar?.backgroundColor = CommonUI.grayColor
+    navBar?.backgroundColor = .white
   }
   
   // MARK: - Action

@@ -20,9 +20,9 @@ class CommonUI {
     alpha: 1
   )
   static let grayColor: UIColor = UIColor(
-    red: 251 / 255,
-    green: 251 / 255,
-    blue: 251 / 255,
+    red: 242 / 255,
+    green: 242 / 255,
+    blue: 242 / 255,
     alpha: 1
   )
   
@@ -45,5 +45,6 @@ class CommonUI {
     case horn = "speaker.1"
     case `return` = "goforward"
     case close = "xmark"
+    case questionMark = "questionmark.circle"
   }
 }
