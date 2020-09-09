@@ -28,20 +28,23 @@ class SocarZoneInfoButton: UIButton {
     }
     
     private func setupUI() {
+        
         socarZoneNameLabel.backgroundColor = .systemYellow
+        socarZoneNameLabel.font = .systemFont(ofSize: 20, weight: .semibold)
         self.addSubview(socarZoneNameLabel)
         
-        socarZoneGroundLevelLabel.backgroundColor = .systemOrange
-        stackView.addArrangedSubview(socarZoneGroundLevelLabel)
+        socarZoneGroundLevelLabel.layer.cornerRadius = 5
+        socarZoneGroundLevelLabel.clipsToBounds = true
+        socarZoneGroundLevelLabel.backgroundColor = .lightGray
+        socarZoneGroundLevelLabel.textAlignment = .center
+        socarZoneGroundLevelLabel.font = .systemFont(ofSize: 13, weight: .regular)
+        self.addSubview(socarZoneGroundLevelLabel)
         
         socarZoneDiscripitionLabel.backgroundColor = .systemRed
-        stackView.addArrangedSubview(socarZoneDiscripitionLabel)
+        socarZoneDiscripitionLabel.font = .systemFont(ofSize: 15, weight: .thin)
+        self.addSubview(socarZoneDiscripitionLabel)
         
-        stackView.axis = .horizontal
-        stackView.distribution = .fillProportionally
-        self.addSubview(stackView)
-        
-        socarZoneImageView.contentMode = .scaleAspectFit
+        socarZoneImageView.contentMode = .scaleToFill
         self.addSubview(socarZoneImageView)
     }
     
@@ -51,17 +54,22 @@ class SocarZoneInfoButton: UIButton {
         })
         socarZoneNameLabel.snp.makeConstraints({
             $0.top.equalTo(self).offset(20)
-            $0.leading.equalTo(self).offset(10)
+            $0.leading.equalTo(self).offset(20)
         })
-        stackView.snp.makeConstraints({
-            $0.top.equalTo(socarZoneNameLabel.snp.bottom)
-            $0.leading.equalTo(self).offset(10)
-            $0.bottom.equalTo(self).offset(-20)
+        socarZoneGroundLevelLabel.snp.makeConstraints({
+            $0.top.equalTo(socarZoneNameLabel.snp.bottom).offset(10)
+            $0.leading.equalTo(self).offset(20)
+            $0.width.equalTo(40)
+            $0.height.equalTo(25)
+        })
+        socarZoneDiscripitionLabel.snp.makeConstraints({
+            $0.centerY.equalTo(socarZoneGroundLevelLabel)
+            $0.leading.equalTo(socarZoneGroundLevelLabel.snp.trailing).offset(10)
         })
         socarZoneImageView.snp.makeConstraints({
-            $0.centerY.equalTo(self)
-            $0.trailing.equalTo(self).offset(-10)
-            $0.width.equalTo(50)
+            $0.top.equalTo(self).offset(20)
+            $0.trailing.equalTo(self).offset(-20)
+            $0.width.equalTo(65)
             $0.height.equalTo(50)
         })
     }

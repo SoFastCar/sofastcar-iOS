@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                    didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
     
     let mainVC = MainVC()
-    let navigationController = UINavigationController(rootViewController: mainVC)
+    let navigationController = UINavigationController(rootViewController: ReservationDashboardVC())
     
     let backButtonImage = UIImage(systemName: "arrow.left")
     navigationController.navigationBar.backIndicatorImage = backButtonImage

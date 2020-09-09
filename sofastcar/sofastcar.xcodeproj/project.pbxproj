@@ -22,6 +22,7 @@
 		BCC8161925066CE000BD0BC3 /* NMFData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC8161825066CE000BD0BC3 /* NMFData.swift */; };
 		BCC8161B25067E3300BD0BC3 /* SearchResultTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC8161A25067E3300BD0BC3 /* SearchResultTableViewCell.swift */; };
 		BCC8161D2506855300BD0BC3 /* SocarZoneData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC8161C2506855300BD0BC3 /* SocarZoneData.swift */; };
+		BCF849362508D1DC00215B0C /* AxaButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCF849352508D1DC00215B0C /* AxaButton.swift */; };
 		C728C85024F7E35100063005 /* SignUpUserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C728C84F24F7E35100063005 /* SignUpUserData.swift */; };
 		C72A913824F5E15B005D464F /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72A913724F5E15B005D464F /* Extension.swift */; };
 		C72A913A24F5E32A005D464F /* SingUpInitVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72A913924F5E32A005D464F /* SingUpInitVC.swift */; };
@@ -94,6 +95,7 @@
 		BCC8161825066CE000BD0BC3 /* NMFData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NMFData.swift; sourceTree = "<group>"; };
 		BCC8161A25067E3300BD0BC3 /* SearchResultTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SearchResultTableViewCell.swift; path = "/Users/woobincheon/Documents/fcios11/06-Code/finalProject/sofastcar-iOS/sofastcar/sofastcar/View/Main/SearchResultTableViewCell.swift"; sourceTree = "<absolute>"; };
 		BCC8161C2506855300BD0BC3 /* SocarZoneData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SocarZoneData.swift; path = sofastcar/Model/Main/SocarZoneData.swift; sourceTree = SOURCE_ROOT; };
+		BCF849352508D1DC00215B0C /* AxaButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AxaButton.swift; sourceTree = "<group>"; };
 		C728C84F24F7E35100063005 /* SignUpUserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpUserData.swift; sourceTree = "<group>"; };
 		C72A913724F5E15B005D464F /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		C72A913924F5E32A005D464F /* SingUpInitVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingUpInitVC.swift; sourceTree = "<group>"; };
@@ -274,6 +276,7 @@
 				BC25C9F92507A93500382B9C /* InsuranceMenuView.swift */,
 				BC25C9FD2507AA7A00382B9C /* InsuranceMenuHeaderView.swift */,
 				BC25C9FB2507AA1500382B9C /* InsuranceMenuItemButton.swift */,
+				BCF849352508D1DC00215B0C /* AxaButton.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -596,6 +599,7 @@
 				BC80F8B82502280F0044C36D /* SearchVC.swift in Sources */,
 				C79A0B5B2504656B0061F078 /* PhoneAuthResponse.swift in Sources */,
 				C72A913F24F60CD9005D464F /* TouVC.swift in Sources */,
+				BCF849362508D1DC00215B0C /* AxaButton.swift in Sources */,
 				BCC8161925066CE000BD0BC3 /* NMFData.swift in Sources */,
 				C769C82724FD09CE00DC8226 /* CardEnrollVC.swift in Sources */,
 				C769C82524FCDEFC00DC8226 /* CommonUI.swift in Sources */,

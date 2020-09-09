@@ -11,31 +11,34 @@
 import UIKit
 import NMapsMap
 
-public let defaultCamPosition = NMFCameraPosition(NMGLatLng(lat: 37.545303, lng: 127.057221),
+public let defaultCamPosition = NMFCameraPosition(NMGLatLng(lat: 37.549303, lng: 127.057221),
                                                   zoom: 14, tilt: 0, heading: 0)
 public let defaultMarkerPosition = NMGLatLng(lat: 37.545303, lng: 127.057221)
 
 class MainVC: UIViewController {
     
+    // Flags
     var topAreaFlag = false
     var markerTapFlag = false
-    var carListonTopFlag = false
+    var carListOnTopFlag = false
     var searchVCDismissFlag = false
     var insuranceMenuViewFlag = false
     
+    // Naver Map Framework
     let marker = NMFMarker()
     let naverMapView = NMFNaverMapView()
     lazy var callPositionMarker = NMFMarker(position: defaultMarkerPosition, iconImage: NMF_MARKER_IMAGE_YELLOW)
     
+    // Views
     lazy var safeArea = self.view.safeAreaLayoutGuide
     let topView = TopView()
     let searchView = SearchView()
     let whiteView = UIView()
-    
     let carListView = CarListView()
     let insuranceMenuView = InsuranceMenuView()
     lazy var panGesture = UIPanGestureRecognizer(target: self, action: #selector(didPan(_:)))
     lazy var visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
+    lazy var visualEffectView2 = UIVisualEffectView(effect: UIBlurEffect(style: .dark)) 
     
     // MARK: - View Life Cycle        
     override func viewDidLoad() {
@@ -76,42 +79,44 @@ class MainVC: UIViewController {
     // MARK: - Touch Methods
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
-        print("1")
-        if !topAreaFlag,
-            markerTapFlag {
-            if insuranceMenuViewFlag {
-                print("4")
-                UIView.animate(withDuration: 0.3, animations: {
-                    self.visualEffectView.alpha = 0
-                    self.insuranceMenuView.frame.origin.y = self.view.frame.height
-                })
-                insuranceMenuViewFlag.toggle()
-            } else {
-                print("2")
-                UIView.animate(withDuration: 0.3, animations: {
-                    self.carListView.frame.origin.y = self.view.frame.height * 0.82
-                })
-            }
-            
-        } else {
-            print("3")
-            
-        }
-//        if insuranceMenuViewFlag {
-//            UIView.animate(withDuration: 0.3, animations: {
-//                self.visualEffectView.alpha = 0
-//                self.insuranceMenuView.frame.origin.y = self.view.frame.height
-//            })
-//        } else {
-//            if !topAreaFlag,
-//                markerTapFlag {
+//        print("1")
+//        if !topAreaFlag,
+//            markerTapFlag {
+//            print("2")
+//            if insuranceMenuViewFlag {
+//                print("3")
+//                UIView.animate(withDuration: 0.3, animations: {
+//                    self.visualEffectView2.alpha = 0
+//                    self.insuranceMenuView.frame.origin.y = self.view.frame.height
+//                })
+//                insuranceMenuViewFlag.toggle()
+//            } else {
+//                print("4")
 //                UIView.animate(withDuration: 0.3, animations: {
 //                    self.carListView.frame.origin.y = self.view.frame.height * 0.82
 //                })
-//            } else {
-//                // do nothing
 //            }
+//            
+//        } else {
+//            print("5")
+//            
 //        }
+        if insuranceMenuViewFlag {
+            UIView.animate(withDuration: 0.3, animations: {
+                self.visualEffectView2.alpha = 0
+                self.insuranceMenuView.frame.origin.y = self.view.frame.height
+            })
+            insuranceMenuViewFlag.toggle()
+        } else {
+            if !topAreaFlag,
+                markerTapFlag {
+                UIView.animate(withDuration: 0.3, animations: {
+                    self.carListView.frame.origin.y = self.view.frame.height * 0.82
+                })
+            } else {
+                // do nothing
+            }
+        }
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -129,6 +134,34 @@ class MainVC: UIViewController {
     // MARK: - Selector
     @objc func didTapZoneInfo(_ sender: UIButton) {
         
+    }
+    
+    @objc func didTapInsuranceItem(_ sender: InsuranceMenuItemButton) {
+        switch sender.tag {
+        case 0:
+            sender.selectSymbolImageView.image = UIImage(systemName: "circle.fill", withConfiguration: sender.symbolConfig)
+            sender.itemPriceLabel.textColor = .systemBlue
+            insuranceMenuView.standard.selectSymbolImageView.image = UIImage(systemName: "circle", withConfiguration: sender.symbolConfig)
+            insuranceMenuView.standard.itemPriceLabel.textColor = .gray
+            insuranceMenuView.light.selectSymbolImageView.image = UIImage(systemName: "circle", withConfiguration: sender.symbolConfig)
+            insuranceMenuView.light.itemPriceLabel.textColor = .gray
+        case 1:
+            sender.selectSymbolImageView.image = UIImage(systemName: "circle.fill", withConfiguration: sender.symbolConfig)
+            sender.itemPriceLabel.textColor = .systemBlue
+            insuranceMenuView.special.selectSymbolImageView.image = UIImage(systemName: "circle", withConfiguration: sender.symbolConfig)
+            insuranceMenuView.special.itemPriceLabel.textColor = .gray
+            insuranceMenuView.light.selectSymbolImageView.image = UIImage(systemName: "circle", withConfiguration: sender.symbolConfig)
+            insuranceMenuView.light.itemPriceLabel.textColor = .gray
+        case 2:
+            sender.selectSymbolImageView.image = UIImage(systemName: "circle.fill", withConfiguration: sender.symbolConfig)
+            sender.itemPriceLabel.textColor = .systemBlue
+            insuranceMenuView.special.selectSymbolImageView.image = UIImage(systemName: "circle", withConfiguration: sender.symbolConfig)
+            insuranceMenuView.special.itemPriceLabel.textColor = .gray
+            insuranceMenuView.standard.selectSymbolImageView.image = UIImage(systemName: "circle", withConfiguration: sender.symbolConfig)
+            insuranceMenuView.standard.itemPriceLabel.textColor = .gray
+        default:
+            break
+        }
     }
     
     @objc func didTapSearchButton(_ sender: UIButton) {
@@ -235,7 +268,7 @@ class MainVC: UIViewController {
             default:
                 break
             }
-            carListonTopFlag = false
+            carListOnTopFlag = false
         default:
             break
         }
@@ -301,7 +334,14 @@ class MainVC: UIViewController {
     
     // MARK: - SetupUI
     private func setupUI() {
+        whiteView.frame = view.frame
+        whiteView.backgroundColor = .white
+        whiteView.alpha = 0
         view.addSubview(whiteView)
+        
+        visualEffectView.frame = view.frame
+        visualEffectView.alpha = 0
+        view.addSubview(visualEffectView)
         
         searchView.alpha = 0
         view.addSubview(searchView)
@@ -309,26 +349,26 @@ class MainVC: UIViewController {
         view.addSubview(topView)
         
         carListView.socarZoneInfoButton.addTarget(self, action: #selector(didTapZoneInfo(_:)), for: .touchUpInside)
-        
         carListView.carListTableView.delegate = self
         carListView.carListTableView.dataSource = self
         carListView.carListTableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         carListView.frame = CGRect(x: 0, y: view.frame.height, width: view.frame.width, height: view.frame.height)
         panGesture.delegate = self
         carListView.addGestureRecognizer(panGesture)
-        
-        
-        
-        visualEffectView.frame = view.frame
-        visualEffectView.alpha = 0
-        
-        whiteView.frame = view.frame
-        whiteView.backgroundColor = .white
-        whiteView.alpha = 0
-        
-        view.addSubview(visualEffectView)
         view.addSubview(carListView)
-        insuranceMenuView.frame = CGRect(x: 0, y: view.frame.height, width: view.frame.width, height: 500 )
+        
+        visualEffectView2.frame = view.frame
+        visualEffectView2.alpha = 0
+        view.addSubview(visualEffectView2)
+        
+        insuranceMenuView.special.tag = 0
+        insuranceMenuView.special.addTarget(self, action: #selector(didTapInsuranceItem(_:)), for: .touchUpInside)
+        insuranceMenuView.standard.tag = 1
+        insuranceMenuView.standard.addTarget(self, action: #selector(didTapInsuranceItem(_:)), for: .touchUpInside)
+        insuranceMenuView.light.tag = 2
+        insuranceMenuView.light.addTarget(self, action: #selector(didTapInsuranceItem(_:)), for: .touchUpInside)
+        
+        insuranceMenuView.frame = CGRect(x: 0, y: view.frame.height, width: view.frame.width, height: view.frame.height / 2 + 50 )
         view.addSubview(insuranceMenuView)
     }
     
@@ -354,12 +394,13 @@ class MainVC: UIViewController {
 // MARK: - Extension(NMF)
 extension MainVC: NMFMapViewTouchDelegate {
     func mapView(_ mapView: NMFMapView, didTapMap latlng: NMGLatLng, point: CGPoint) {
-        callPositionMarker.mapView = mapView
         print("didTapMap")
         UIView.animate(withDuration: 0.3, animations: {
             self.topView.alpha = 1
             self.carListView.frame.origin.y = self.view.frame.height
             self.naverMapView.mapView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+            self.callPositionMarker.position = mapView.cameraPosition.target
+            self.callPositionMarker.mapView = mapView
         })
         markerTapFlag = false
     }
@@ -401,36 +442,53 @@ extension MainVC: UIGestureRecognizerDelegate {
     func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         print(#function)
         if topAreaFlag,
-            !carListonTopFlag {
+            !carListOnTopFlag {
+            print("1")
             carListView.carListTableView.isScrollEnabled = true
-            return false
+            return true
         } else {
+            print("2")
             carListView.carListTableView.isScrollEnabled = false
             return true
         }
     }
 //    
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        print(#function)
-        return false
+//    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+//        print(#function)
+////        return false
 //        if topAreaFlag,
-//        !carListonTopFlag {
+//        !carListOnTopFlag {
+//            print("3")
 //            carListView.carListTableView.isScrollEnabled = true
 //            return false
 //        } else {
+//            print("4")
 //            carListView.carListTableView.isScrollEnabled = false
-//            return false
+//            return true
 //        }
-    }
-//    
+//    }
+    
 //    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRequireFailureOf otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-//        print(#function, otherGestureRecognizer)
-//        return false
+//
+//        if topAreaFlag,
+//            !carListOnTopFlag {
+//            otherGestureRecognizer.
+//            return false
+//        } else {
+//            print("2")
+//            return true
+//        }
 //    }
 //    
 //    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-//        print(otherGestureRecognizer)
-//        return false
+//        if topAreaFlag,
+//            !carListOnTopFlag {
+//            print("3")
+//            return false
+//        } else {
+//            print("4")
+//            return true
+//        }
 //    }
 }
 
@@ -454,19 +512,31 @@ extension MainVC: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        print(#function)
+        print(indexPath.row)
         if indexPath.row == 0 {
-            carListonTopFlag = true
+            carListOnTopFlag = true
         } else {
-            carListonTopFlag = false
+            carListOnTopFlag = false
         }
     }
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        print(#function)
+    }
+    
+    func scrollViewDidScrollToTop(_ scrollView: UIScrollView) {
+        print(#function)
+    }
+    
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        print(#function)
+    }
+    
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         insuranceMenuViewFlag = true
         UIView.animate(withDuration: 0.5, animations: {
             self.insuranceMenuView.frame.origin.y = (self.view.frame.height / 2 ) - 50
-            self.visualEffectView.alpha = 1
+            self.visualEffectView2.alpha = 1
         })
     }
     

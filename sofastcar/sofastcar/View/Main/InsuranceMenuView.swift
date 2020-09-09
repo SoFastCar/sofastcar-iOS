@@ -10,9 +10,9 @@ import UIKit
 
 class InsuranceMenuView: UIView {
     let insuranceMenuHeaderView = InsuranceMenuHeaderView()
-    let special = InsuranceMenuItemButton()
-    let standard = InsuranceMenuItemButton()
-    let light = InsuranceMenuItemButton()
+    let special = InsuranceMenuItemButton(isSpecial: true)
+    let standard = InsuranceMenuItemButton(isSpecial: false)
+    let light = InsuranceMenuItemButton(isSpecial: false)
     let itemStackView = UIStackView()
     let confirmButton = UIButton()
     
@@ -42,7 +42,7 @@ class InsuranceMenuView: UIView {
         itemStackView.addArrangedSubview(light)
         self.addSubview(itemStackView)
         
-        confirmButton.backgroundColor = .systemBlue
+        confirmButton.backgroundColor = CommonUI.mainBlue
         confirmButton.setTitle("확인", for: .normal)
         confirmButton.setTitleColor(.white, for: .normal)
         self.addSubview(confirmButton)
@@ -57,21 +57,22 @@ class InsuranceMenuView: UIView {
             $0.top.equalTo(self).offset(10)
             $0.leading.equalTo(self).offset(10)
             $0.trailing.equalTo(self).offset(-10)
-            $0.height.equalTo(100)            
+            $0.height.equalTo((UIScreen.main.bounds.height / 2 + 50) * 0.2)            
         })
         
         itemStackView.snp.makeConstraints({
             $0.top.equalTo(insuranceMenuHeaderView.snp.bottom)
             $0.leading.equalTo(self).offset(10)
             $0.trailing.equalTo(self).offset(-10)
-            $0.height.equalTo(250)            
+            $0.height.equalTo((UIScreen.main.bounds.height / 2 + 50) * 0.56)            
         })
         
         confirmButton.snp.makeConstraints({
             $0.top.equalTo(itemStackView.snp.bottom)
             $0.leading.equalTo(self)
             $0.trailing.equalTo(self)
-            $0.height.equalTo(100)            
+//            $0.height.equalTo((UIScreen.main.bounds.height / 2 + 50) * 0.15)  
+            $0.bottom.equalTo(self)
         })
     }
 }
