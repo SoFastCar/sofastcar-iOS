@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class LoginCompleteButton: UIButton {
+class CompleteButton: UIButton {
   override var isEnabled: Bool {
     didSet {
       self.backgroundColor = isEnabled == true ? #colorLiteral(red: 0.007875645533, green: 0.7243045568, blue: 0.9998746514, alpha: 1) : #colorLiteral(red: 0.9178397655, green: 0.9184700847, blue: 0.9351041913, alpha: 1)

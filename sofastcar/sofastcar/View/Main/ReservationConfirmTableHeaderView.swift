@@ -101,7 +101,7 @@ class ReservationConfirmTableHeaderView: UIView {
     let text = """
     다음 이용자를 위해 배터리 잔량을 50% 이상으로 충전하여 반납해주세요. 50% 미만이면 충전제반비용이 결제되고, 50% 이상이면 조건에 따라 보너스 크레딧이 지급됩니다.
     """
-    let font = UIFont.systemFont(ofSize: CommonUI.contentsTextFontSize)
+    let font = UIFont.systemFont(ofSize: CommonUI.contentsTextViewFontSize)
     let attributedString = NSAttributedString.attributedStringWithLienSpacing(text: text, font: font)
     textView.attributedText = attributedString
     textView.textColor = .systemGray
@@ -130,10 +130,9 @@ class ReservationConfirmTableHeaderView: UIView {
     let label = UILabel()
     label.numberOfLines = 2
     let text = "주행요금은 반납 후 등록하신 결제카드로 자동 결제됩니다.\n주행요금은 거리에 따라 구간별 차등 적용하여 계산됩니다."
-    let font = UIFont.systemFont(ofSize: CommonUI.contentsTextFontSize)
+    let font = UIFont.systemFont(ofSize: CommonUI.contentsTextViewFontSize)
     let attrText = NSAttributedString.attributedStringWithLienSpacing(text: text, font: font)
     label.attributedText = attrText
-    label.font = .systemFont(ofSize: CommonUI.contentsTextFontSize)
     label.textColor = .systemGray
     return label
   }()
@@ -153,7 +152,7 @@ class ReservationConfirmTableHeaderView: UIView {
     - 주행거리 30 초과 ~ 100km 이하: (km 당 주행요금)
     - 주행거리 100km 초과: (km 당 주행요금) 130원
     """
-    let font = UIFont.systemFont(ofSize: CommonUI.contentsTextFontSize)
+    let font = UIFont.systemFont(ofSize: CommonUI.contentsTextViewFontSize)
     let attrText = NSAttributedString.attributedStringWithLienSpacing(text: text, font: font)
     textView.attributedText = attrText
     textView.textColor = .systemGray
@@ -262,7 +261,7 @@ class ReservationConfirmTableHeaderView: UIView {
     
     electronicCarUsingTitle.snp.makeConstraints {
       $0.top.equalTo(carImageContainerView.snp.bottom).offset(30)
-      $0.leading.equalTo(guide)
+      $0.leading.equalTo(guide).offset(3)
       $0.height.equalTo(30)
     }
     
@@ -275,7 +274,7 @@ class ReservationConfirmTableHeaderView: UIView {
     electorinicCarDrivingCostInfoTextView.snp.makeConstraints {
       $0.top.equalTo(electronicCarUsingTitle.snp.bottom).offset(5)
       $0.leading.trailing.equalTo(guide)
-      $0.height.equalTo(80)
+      $0.height.equalTo(90)
     }
   }
   

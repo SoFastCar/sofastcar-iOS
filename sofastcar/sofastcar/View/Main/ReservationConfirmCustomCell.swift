@@ -116,17 +116,20 @@ class ReservationConfirmCustomCell: UITableViewCell {
   func confiure(cellType: String) {
     sectionTitleLabel.text = cellType
     
-    if cellType == MyTalbleViewCellType.insuranceCell.rawValue {
+    switch cellType {
+    case MyTalbleViewCellType.insuranceCell.rawValue:
       twoLineWithChangeButton()
       configureinsuranceCellContent()
-    } else if cellType == MyTalbleViewCellType.usingTiemCell.rawValue {
+    case MyTalbleViewCellType.usingTiemCell.rawValue:
       twoLineWithChangeButton()
       configureUsingTiemCellContent()
-    } else if cellType == MyTalbleViewCellType.usingSocarZone.rawValue {
+    case MyTalbleViewCellType.usingSocarZone.rawValue:
       usingSocarZoneCellUI()
-    } else if cellType == MyTalbleViewCellType.business.rawValue {
+    case MyTalbleViewCellType.business.rawValue:
       businessCellUI()
       configureUsingBusinessCellContent()
+    default:
+      break
     }
   }
   

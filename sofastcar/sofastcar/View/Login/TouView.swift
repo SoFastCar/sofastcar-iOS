@@ -146,7 +146,7 @@ class TouView: UIView {
     return textView
   }()
   
-  let continueSignUpButton = LoginCompleteButton(frame: .zero, title: "가입 계속하기")
+  let continueSignUpButton = CompleteButton(frame: .zero, title: "가입 계속하기")
   
   let touShowButton: UIButton = {
     let button = UIButton()

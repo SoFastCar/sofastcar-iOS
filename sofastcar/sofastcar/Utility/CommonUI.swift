@@ -29,6 +29,7 @@ class CommonUI {
   // Reservation
   static let titleTextFontSize: CGFloat = 17
   static let contentsTextFontSize: CGFloat = 15
+  static let contentsTextViewFontSize: CGFloat = 13
   
   enum SFSymbolKey: String {
     case hamburger = "line.horizontal.3"
