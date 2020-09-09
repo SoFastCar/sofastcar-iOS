@@ -19,6 +19,12 @@ class CommonUI {
     blue: 46 / 255,
     alpha: 1
   )
+  static let grayColor: UIColor = UIColor(
+    red: 251 / 255,
+    green: 251 / 255,
+    blue: 251 / 255,
+    alpha: 1
+  )
   
   // Login VC
   static let userInputMenusHeight: CGFloat = 50 // 텍스트 필드 높이

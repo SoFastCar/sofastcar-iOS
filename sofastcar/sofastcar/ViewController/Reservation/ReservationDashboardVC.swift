@@ -63,7 +63,6 @@ class ReservationDashboardVC: UIViewController {
   @objc func didTapVehiclePictureView(recongnize: UITapGestureRecognizer) {
     switch recongnize.state {
     case .ended:
-      print("qwerqwer")
       let vehicleCheckVC = VehicleCheckVC()
       let navigationController = UINavigationController(rootViewController: vehicleCheckVC)
       navigationController.modalPresentationStyle = .fullScreen

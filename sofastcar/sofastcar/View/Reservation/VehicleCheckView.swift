@@ -12,6 +12,7 @@ import SnapKit
 class VehicleCheckView: UIScrollView {
   fileprivate let contentView: UIView = {
     let view = UIView()
+    view.backgroundColor = CommonUI.grayColor
     
     return view
   }()
