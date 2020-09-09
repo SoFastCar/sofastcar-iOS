@@ -41,6 +41,7 @@ class ReservationConfirmTableVC: UITableViewController {
     button.backgroundColor = CommonUI.mainBlue
     button.titleLabel?.textColor = .white
     button.titleLabel?.font = .boldSystemFont(ofSize: CommonUI.titleTextFontSize)
+    button.addTarget(self, action: #selector(tabReservationConfirmButton), for: .touchUpInside)
     return button
   }()
   
@@ -59,20 +60,22 @@ class ReservationConfirmTableVC: UITableViewController {
     configureNavigationContoller()
     configureTableHeaderView()
     configureReservationConfirmButton()
-    configureButtonAction()
     
     if isEelectronicCar {
-      guard let headerView = tableView.tableHeaderView as? ReservationConfirmTableHeaderView else { return }
-      [headerView.electronicCarUsingTitle, headerView.electorinicCarDrivingCostInfoTextView, headerView.showElectronicCostWebViewButton] .forEach {
-        $0.snp.updateConstraints {
-          $0.height.equalTo(0)
-        }
-      }
-      tableView.tableHeaderView?.frame = CGRect(x: 0, y: 10,
-                                                width: UIScreen.main.bounds.width,
-                                                height: 550)
+      hideElectronicCarInfoUI()
     }
-
+  }
+  
+  private func hideElectronicCarInfoUI() {
+    guard let headerView = tableView.tableHeaderView as? ReservationConfirmTableHeaderView else { return }
+    [headerView.electronicCarUsingTitle, headerView.electorinicCarDrivingCostInfoTextView, headerView.showElectronicCostWebViewButton] .forEach {
+      $0.snp.updateConstraints {
+        $0.height.equalTo(0)
+      }
+    }
+    tableView.tableHeaderView?.frame = CGRect(x: 0, y: 10,
+                                              width: UIScreen.main.bounds.width,
+                                              height: 550)
   }
   
   private func configureStatusBar() {
@@ -85,12 +88,10 @@ class ReservationConfirmTableVC: UITableViewController {
   }
   
   private func configureNavigationContoller() {
+    title = "대여 정보 확인"
     navigationController?.navigationBar.prefersLargeTitles = true
     navigationController?.navigationBar.backgroundColor = .white
-    
     navigationController?.navigationBar.barTintColor = UIColor.white
-    
-    title = "대여 정보 확인"
   }
   
   private func configureTableHeaderView() {
@@ -127,11 +128,11 @@ class ReservationConfirmTableVC: UITableViewController {
     }
   }
   
-  private func configureButtonAction() {
-    
-  }
-  
   // MARK: - Button Action
+  @objc func tabReservationConfirmButton() {
+    let paymentConfirmTableVC = PaymentConfirmTableVC(style: .grouped)
+    navigationController?.pushViewController(paymentConfirmTableVC, animated: true)
+  }
   
   // MARK: - UITableViewDataSource
   override func numberOfSections(in tableView: UITableView) -> Int {
@@ -143,8 +144,7 @@ class ReservationConfirmTableVC: UITableViewController {
   }
   
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    guard let cell = tableView.dequeueReusableCell(withIdentifier: ReservationConfirmCustomCell.identifier,
-                                                   for: indexPath) as? ReservationConfirmCustomCell else { fatalError() }
+    let cell = ReservationConfirmCustomCell(style: .default, reuseIdentifier: ReservationConfirmCustomCell.identifier)
     cell.confiure(cellType: sectionTitle[indexPath.section].rawValue)
     cell.delegate = self
     return cell

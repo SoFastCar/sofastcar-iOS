@@ -172,8 +172,8 @@ class CheckDriverLicenseView: UIScrollView {
     return textView
   }()
   
-  let driverAuthCompleteButton: LoginCompleteButton = {
-    let button = LoginCompleteButton(frame: .zero, title: "운전면허 등록 완료")
+  let driverAuthCompleteButton: CompleteButton = {
+    let button = CompleteButton(frame: .zero, title: "운전면허 등록 완료")
     button.isEnabled = true
     return button
   }()

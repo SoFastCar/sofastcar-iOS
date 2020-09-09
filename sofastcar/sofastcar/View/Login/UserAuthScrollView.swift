@@ -188,7 +188,7 @@ class UserAuthScrollView: UIScrollView {
     return textView
   }()
   
-  let authCompleteButton = LoginCompleteButton(frame: .zero, title: "인증 완료")
+  let authCompleteButton = CompleteButton(frame: .zero, title: "인증 완료")
   
   lazy var guide = contentView.layoutMarginsGuide
   

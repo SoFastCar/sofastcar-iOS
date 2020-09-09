@@ -9,7 +9,14 @@
 import Foundation
 
 protocol ResrvationConfirmCellDelegate: class {
-  func tabChangeInsuranceButton(forCell: ReservationConfirmCustomCell)
-  func tabChangeUsingTime(forCell: ReservationConfirmCustomCell)
-  func tabSocarZoneDetailButton(forCell: ReservationConfirmCustomCell)
+  func tabChangeInsuranceButton(forCell cell: ReservationConfirmCustomCell)
+  func tabChangeUsingTime(forCell cell: ReservationConfirmCustomCell)
+  func tabSocarZoneDetailButton(forCell cell: ReservationConfirmCustomCell)
+}
+
+protocol PaymentConfirmCellDelegate: class {
+  func tabChangeCouponButton(forCell cell: PaymentConfirmCell)
+  func tabChangePaymentCardButton(forCell cell: PaymentConfirmCell)
+  func tabWarningBeforeConfirmButton(forCell cell: PaymentConfirmCell)
+  func tabAgreeButton(forCell cell: PaymentConfirmCell, tapedButton: TouButton)
 }
