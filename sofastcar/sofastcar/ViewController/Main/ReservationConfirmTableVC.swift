@@ -11,20 +11,39 @@ import UIKit
 class ReservationConfirmTableVC: UITableViewController {
   // MARK: - Properties
   let myHeaderView = ReservationConfirmTableHeaderView()
-  
-  lazy var sectionTitle: [TalbleViewCellType: String] = [
-    .insuranceCell: "차량손해면책 상품",
-    .usingTiemCell: "이용시간",
-    .usingSocarZone: "이용장소",
-    .business: "비지니스 예약"
-  ]
-  
-  enum TalbleViewCellType: Int {
-    case insuranceCell = 0
-    case usingTiemCell = 1
-    case usingSocarZone = 2
-    case business = 3
+  var sectionTitle: [TalbleViewCellType] = [.insuranceCell, .usingTiemCell, .usingSocarZone, .business]
+  enum TalbleViewCellType: String {
+    case insuranceCell = "차량손해면책 상품"
+    case usingTiemCell = "이용시간"
+    case usingSocarZone = "이용장소"
+    case business = "비지니스 예약"
   }
+  
+  var isEelectronicCar: Bool = false
+  
+  let reservationCostInfoButton: UIButton = {
+    let button = UIButton()
+    button.setTitle("총 합계 23,380원", for: .normal)
+    button.contentVerticalAlignment = .top
+    button.backgroundColor = CommonUI.mainDark
+    button.titleEdgeInsets = UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0)
+    button.titleLabel?.font = .boldSystemFont(ofSize: CommonUI.titleTextFontSize)
+    button.titleLabel?.textColor = .white
+    button.isEnabled = false
+    return button
+  }()
+  
+  let reservationConfirmButton: UIButton = {
+    let button = UIButton()
+    button.setTitle("결제정보 확인", for: .normal)
+    button.contentVerticalAlignment = .top
+    button.titleEdgeInsets = UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0)
+    button.backgroundColor = CommonUI.mainBlue
+    button.titleLabel?.textColor = .white
+    button.titleLabel?.font = .boldSystemFont(ofSize: CommonUI.titleTextFontSize)
+    button.addTarget(self, action: #selector(tabReservationConfirmButton), for: .touchUpInside)
+    return button
+  }()
   
   // MARK: - Life Cycle
   init() {
@@ -37,31 +56,82 @@ class ReservationConfirmTableVC: UITableViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    
+    configureStatusBar()
     configureNavigationContoller()
-    
     configureTableHeaderView()
+    configureReservationConfirmButton()
+    
+    if isEelectronicCar {
+      hideElectronicCarInfoUI()
+    }
+  }
+  
+  private func hideElectronicCarInfoUI() {
+    guard let headerView = tableView.tableHeaderView as? ReservationConfirmTableHeaderView else { return }
+    [headerView.electronicCarUsingTitle, headerView.electorinicCarDrivingCostInfoTextView, headerView.showElectronicCostWebViewButton] .forEach {
+      $0.snp.updateConstraints {
+        $0.height.equalTo(0)
+      }
+    }
+    tableView.tableHeaderView?.frame = CGRect(x: 0, y: 10,
+                                              width: UIScreen.main.bounds.width,
+                                              height: 550)
+  }
+  
+  private func configureStatusBar() {
+    let statusBar =  UIView()
+    let window = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
+    guard let statusBarFrame = window?.windowScene?.statusBarManager?.statusBarFrame else { return }
+    statusBar.frame = statusBarFrame
+    statusBar.backgroundColor = .white
+    UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.addSubview(statusBar)
   }
   
   private func configureNavigationContoller() {
-    navigationController?.navigationBar.prefersLargeTitles = true
     title = "대여 정보 확인"
+    navigationController?.navigationBar.prefersLargeTitles = true
+    navigationController?.navigationBar.backgroundColor = .white
+    navigationController?.navigationBar.barTintColor = UIColor.white
   }
   
   private func configureTableHeaderView() {
-//    tableView.backgroundColor = .white
-    
-    tableView.tableHeaderView = myHeaderView
-//    tableView.estimatedSectionHeaderHeight = 300
-    tableView.tableHeaderView?.frame.size.height = 300
-    
+    tableView.allowsSelection = false
     tableView.register(ReservationConfirmCustomCell.self,
                        forCellReuseIdentifier: ReservationConfirmCustomCell.identifier)
-    
+    tableView.tableHeaderView = myHeaderView
+    tableView.tableHeaderView?.frame = CGRect(x: 0, y: 10,
+                                              width: UIScreen.main.bounds.width,
+                                              height: 650)
     tableView.rowHeight = UITableView.automaticDimension
-    tableView.estimatedRowHeight = 80
+    tableView.estimatedRowHeight = 700
     tableView.sectionHeaderHeight = 10
     tableView.sectionFooterHeight = 0
+  }
+  
+  private func configureReservationConfirmButton() {
+    [reservationCostInfoButton, reservationConfirmButton].forEach {
+      tableView.addSubview($0)
+    }
+    
+    reservationCostInfoButton.snp.makeConstraints {
+      $0.leading.equalTo(tableView.safeAreaLayoutGuide)
+      $0.bottom.equalTo(tableView.safeAreaLayoutGuide).offset(35)
+      $0.height.equalTo(100)
+    }
+    
+    reservationConfirmButton.snp.makeConstraints {
+      $0.leading.equalTo(reservationCostInfoButton.snp.trailing)
+      $0.trailing.equalTo(tableView.safeAreaLayoutGuide)
+      $0.bottom.equalTo(tableView.safeAreaLayoutGuide).offset(35)
+      $0.height.equalTo(reservationCostInfoButton)
+      $0.width.equalTo(reservationCostInfoButton.snp.width).multipliedBy(0.5)
+    }
+  }
+  
+  // MARK: - Button Action
+  @objc func tabReservationConfirmButton() {
+    let paymentConfirmTableVC = PaymentConfirmTableVC(style: .grouped)
+    navigationController?.pushViewController(paymentConfirmTableVC, animated: true)
   }
   
   // MARK: - UITableViewDataSource
@@ -74,11 +144,23 @@ class ReservationConfirmTableVC: UITableViewController {
   }
   
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    guard let cell = tableView.dequeueReusableCell(withIdentifier: ReservationConfirmCustomCell.identifier,
-                                                   for: indexPath) as? ReservationConfirmCustomCell else { fatalError() }
-    
+    let cell = ReservationConfirmCustomCell(style: .default, reuseIdentifier: ReservationConfirmCustomCell.identifier)
+    cell.confiure(cellType: sectionTitle[indexPath.section].rawValue)
+    cell.delegate = self
     return cell
   }
-  // MARK: - UITableViewDelegate
+}
+
+extension ReservationConfirmTableVC: ResrvationConfirmCellDelegate {
+  func tabChangeInsuranceButton(forCell: ReservationConfirmCustomCell) {
+    print("tabChangeInsuranceButton")
+  }
   
+  func tabChangeUsingTime(forCell: ReservationConfirmCustomCell) {
+    print("tabChangeUsingTime")
+  }
+  
+  func tabSocarZoneDetailButton(forCell: ReservationConfirmCustomCell) {
+    print("tabSocarZoneDetailButton")
+  }
 }

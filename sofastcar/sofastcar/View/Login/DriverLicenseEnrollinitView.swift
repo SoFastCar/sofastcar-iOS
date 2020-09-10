@@ -55,8 +55,8 @@ class DriverLicenseEnrollinitView: UIView {
     return textView
   }()
   
-  let driverAuthCompleteButton: LoginCompleteButton = {
-    let button = LoginCompleteButton(frame: .zero, title: "입력 완료")
+  let driverAuthCompleteButton: CompleteButton = {
+    let button = CompleteButton(frame: .zero, title: "입력 완료")
     button.isEnabled = true
     return button
   }()

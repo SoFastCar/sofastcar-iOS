@@ -111,8 +111,8 @@ class DefaultUserInfoView: UIScrollView {
     return textView
   }()
   
-  let inputCompleteButton: LoginCompleteButton = {
-    let button = LoginCompleteButton(frame: .zero, title: "입력 완료")
+  let inputCompleteButton: CompleteButton = {
+    let button = CompleteButton(frame: .zero, title: "입력 완료")
     return button
   }()
   
