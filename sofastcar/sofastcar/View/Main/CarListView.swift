@@ -16,10 +16,10 @@ class CarListView: UIView {
     var decoBar = UIView()
     let parkingLotInfoButton = UIButton()
     let socarZoneInfoButton = SocarZoneInfoButton()
-    let setDateButton = UIButton()
+    let setBookingTimeButton = SetBookingTimeButton()
     let stackView = UIStackView()
     let carListTableView = UITableView()
-
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -32,23 +32,23 @@ class CarListView: UIView {
     }
     
     private func setupUI() {
+        self.backgroundColor = .systemBackground
+        self.layer.shadowOpacity = 0.3
         
-        decoBar.backgroundColor = .darkGray
+        decoBar.backgroundColor = .systemGray6
         decoBar.layer.cornerRadius = 2
         decoView.addSubview(decoBar)
         decoView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         decoView.layer.cornerRadius = 5
         decoView.clipsToBounds = true
-        decoView.backgroundColor = .systemGreen
         self.addSubview(decoView)
-        
-        socarZoneInfoButton.backgroundColor = .systemTeal
+    
         socarZoneInfoButton.configuration(socarZoneData.name.randomElement() ?? "이름 없음", socarZoneData.groundLevel.randomElement() ?? "모름", socarZoneData.discription.randomElement() ?? "설명 없음", socarZoneData.imageName.randomElement() ?? "사진 없음")
         self.addSubview(socarZoneInfoButton)
         
-        setDateButton.setTitle("예약일 변경", for: .normal)
-        setDateButton.backgroundColor = .systemBlue
-        self.addSubview(setDateButton)
+//        setBookingTimeButton.addBorder(toSide: .top, withColor: UIColor.lightGray.cgColor, andThickness: 1)
+//        setBookingTimeButton.addBorder(toSide: .bottom, withColor: UIColor.lightGray.cgColor, andThickness: 1)
+        self.addSubview(setBookingTimeButton)
         
         carListTableView.bounces = false
         
@@ -60,14 +60,14 @@ class CarListView: UIView {
     }
     
     private func setupConstraint() {
-        [socarZoneInfoButton, setDateButton, carListTableView, decoBar, decoView].forEach({
+        [socarZoneInfoButton, setBookingTimeButton, carListTableView, decoBar, decoView].forEach({
             $0.translatesAutoresizingMaskIntoConstraints = false
         })
         
         decoView.snp.makeConstraints({
-            $0.top.equalTo(self)
-            $0.leading.equalTo(self)
-            $0.trailing.equalTo(self)
+            $0.top.equalToSuperview()
+            $0.leading.equalToSuperview()
+            $0.trailing.equalToSuperview()
             $0.height.equalTo(20)
         })
         decoBar.snp.makeConstraints({
@@ -79,22 +79,22 @@ class CarListView: UIView {
         
         socarZoneInfoButton.snp.makeConstraints({
             $0.top.equalTo(decoView.snp.bottom)
-            $0.leading.equalTo(self)
-            $0.trailing.equalTo(self)
+            $0.leading.equalToSuperview()
+            $0.trailing.equalToSuperview()
             $0.height.equalTo((UIScreen.main.bounds.height / 2) * 0.25)
         })
-        setDateButton.snp.makeConstraints({
+        setBookingTimeButton.snp.makeConstraints({
             $0.top.equalTo(socarZoneInfoButton.snp.bottom)
-            $0.leading.equalTo(self)
-            $0.trailing.equalTo(self)
+            $0.leading.equalToSuperview().offset(-1)
+            $0.trailing.equalToSuperview().offset(1)
             $0.height.equalTo((UIScreen.main.bounds.height / 2) * 0.15)
         })
         
         carListTableView.snp.makeConstraints({
-            $0.top.equalTo(setDateButton.snp.bottom)
-            $0.leading.equalTo(self)
-            $0.trailing.equalTo(self)
-            $0.bottom.equalTo(self)
+            $0.top.equalTo(setBookingTimeButton.snp.bottom)
+            $0.leading.equalToSuperview()
+            $0.trailing.equalToSuperview()
+            $0.bottom.equalToSuperview()
         })
     }
 }

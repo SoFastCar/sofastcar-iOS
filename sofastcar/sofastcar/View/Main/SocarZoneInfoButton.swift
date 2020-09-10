@@ -29,19 +29,20 @@ class SocarZoneInfoButton: UIButton {
     
     private func setupUI() {
         
-        socarZoneNameLabel.backgroundColor = .systemYellow
         socarZoneNameLabel.font = .systemFont(ofSize: 20, weight: .semibold)
+        socarZoneNameLabel.textColor = CommonUI.mainDark
         self.addSubview(socarZoneNameLabel)
         
-        socarZoneGroundLevelLabel.layer.cornerRadius = 5
+        socarZoneGroundLevelLabel.layer.cornerRadius = 3
         socarZoneGroundLevelLabel.clipsToBounds = true
-        socarZoneGroundLevelLabel.backgroundColor = .lightGray
+        socarZoneGroundLevelLabel.backgroundColor = .systemGray6
         socarZoneGroundLevelLabel.textAlignment = .center
         socarZoneGroundLevelLabel.font = .systemFont(ofSize: 13, weight: .regular)
+        socarZoneGroundLevelLabel.textColor = .lightGray
         self.addSubview(socarZoneGroundLevelLabel)
         
-        socarZoneDiscripitionLabel.backgroundColor = .systemRed
-        socarZoneDiscripitionLabel.font = .systemFont(ofSize: 15, weight: .thin)
+        socarZoneDiscripitionLabel.font = .systemFont(ofSize: 14, weight: .regular)
+        socarZoneDiscripitionLabel.textColor = .gray
         self.addSubview(socarZoneDiscripitionLabel)
         
         socarZoneImageView.contentMode = .scaleToFill
@@ -53,7 +54,6 @@ class SocarZoneInfoButton: UIButton {
             $0.translatesAutoresizingMaskIntoConstraints = false
         })
         socarZoneNameLabel.snp.makeConstraints({
-//            $0.top.equalTo(self).offset(20)
             $0.centerY.equalTo(self).offset(-15)
             $0.leading.equalTo(self).offset(20)
         })
@@ -69,7 +69,6 @@ class SocarZoneInfoButton: UIButton {
             $0.leading.equalTo(socarZoneGroundLevelLabel.snp.trailing).offset(10)
         })
         socarZoneImageView.snp.makeConstraints({
-//            $0.top.equalTo(self).offset(20)
             $0.centerY.equalTo(self)
             $0.trailing.equalTo(self).offset(-20)
             $0.width.equalTo(65)

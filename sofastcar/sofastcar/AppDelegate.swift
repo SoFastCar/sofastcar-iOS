@@ -27,6 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     window = UIWindow(frame: UIScreen.main.bounds)
     window?.rootViewController = mainVC
     window?.makeKeyAndVisible()
+    window?.overrideUserInterfaceStyle = .light // add woobin: dark mode off
     return true
   }
 

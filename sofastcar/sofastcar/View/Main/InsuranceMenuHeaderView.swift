@@ -30,17 +30,14 @@ class InsuranceMenuHeaderView: UIView {
         self.backgroundColor = .systemYellow
         
         titleLabel.text = "차량손해면책 상품 선택"
-//        titleLabel.attributedText = NSAttributedString(string: "차량손해면책 상품 선택", attributes: [NSAttributedString.Key.kern: 0.5])
         titleLabel.font = UIFont.systemFont(ofSize: 25, weight: .semibold)
         
         self.addSubview(titleLabel)
         
         discriptionLabel.text = "사고 시, 회원님이 부담할 최대한도 금액 보장 상품입니다."
-//        discriptionLabel.font = .preferredFont(forTextStyle: .body)
         discriptionLabel.font = UIFont.systemFont(ofSize: 13, weight: .regular)
         discriptionLabel.textColor = .darkGray
         self.addSubview(discriptionLabel)
-        
         
         questionMarkButton.setImage(questionMarkImage, for: .normal)
         questionMarkButton.tintColor = .black

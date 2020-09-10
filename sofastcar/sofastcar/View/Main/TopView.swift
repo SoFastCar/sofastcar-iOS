@@ -36,10 +36,11 @@ class TopView: UIView {
         shadowContainer.clipsToBounds = true
         self.addSubview(shadowContainer)
         
-        sideBarButton.backgroundColor = .systemGreen
+        sideBarButton.backgroundColor = .white
         sideBarButton.setImage(UIImage(systemName: "text.justify"), for: .normal)
         
         sideBarButton.setContentCompressionResistancePriority(UILayoutPriority(751), for: .horizontal)
+        sideBarButton.tintColor = CommonUI.mainDark
         stackView.addArrangedSubview(sideBarButton)
         
         searchButton.backgroundColor = .white

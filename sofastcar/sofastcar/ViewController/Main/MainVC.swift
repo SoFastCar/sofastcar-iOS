@@ -52,8 +52,14 @@ class MainVC: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        print(#function)
+//        setupUI()
+        print("3")
         if searchVCDismissFlag {
             UIView.animate(withDuration: 0.5, animations: {
+                self.whiteView.alpha = 0
+                self.topView.alpha = 1
+                self.searchView.alpha = 0
                 self.topView.snp.updateConstraints({
                     $0.top.equalTo(self.safeArea).offset(8)
                     $0.leading.equalTo(self.safeArea).offset(10)
@@ -67,9 +73,6 @@ class MainVC: UIViewController {
                     $0.height.equalTo(52)
                 })
                 self.view.layoutIfNeeded()
-                self.topView.alpha = 1
-                self.searchView.alpha = 0
-                self.whiteView.alpha = 0
             })
         } else {
             
@@ -131,11 +134,11 @@ class MainVC: UIViewController {
         topView.searchButton.addTarget(self, action: #selector(didTapSearchButton(_:)), for: .touchUpInside)
     }
     
-    // MARK: - Selector
     @objc func didTapZoneInfo(_ sender: UIButton) {
         
     }
     
+    // MARK: - Selector(Insurance Item)
     @objc func didTapInsuranceItem(_ sender: InsuranceMenuItemButton) {
         switch sender.tag {
         case 0:
@@ -164,37 +167,39 @@ class MainVC: UIViewController {
         }
     }
     
+    // MARK: - Selector(Search Button)
     @objc func didTapSearchButton(_ sender: UIButton) {
         
         // animate
-        UIView.animate(withDuration: 0.5, animations: {
+        UIView.animate(withDuration: 3, animations: {
             self.topView.snp.updateConstraints({
                 $0.top.equalTo(self.safeArea.snp.top).offset(0)
                 $0.leading.equalTo(self.safeArea.snp.leading).offset(0)
                 $0.trailing.equalTo(self.safeArea.snp.trailing).offset(0)
                 $0.height.equalTo(60)
             })
-            self.searchView.snp.updateConstraints({
-                $0.top.equalTo(self.safeArea.snp.top).offset(0)
-                $0.leading.equalTo(self.safeArea.snp.leading).offset(0)
-                $0.trailing.equalTo(self.safeArea.snp.trailing).offset(0)
-                $0.height.equalTo(60)
-            })
+//            self.searchView.snp.updateConstraints({
+//                $0.top.equalTo(self.safeArea.snp.top).offset(0)
+//                $0.leading.equalTo(self.safeArea.snp.leading).offset(0)
+//                $0.trailing.equalTo(self.safeArea.snp.trailing).offset(0)
+//                $0.height.equalTo(60)
+//            })
             self.view.layoutIfNeeded()
-            self.topView.alpha = 0
-            self.searchView.alpha = 1
+//            self.topView.alpha = 0
+//            self.searchView.alpha = 1
             self.whiteView.alpha = 1
         })
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
             let searchVC = SearchVC()
-            searchVC.modalPresentationStyle = .fullScreen
+            searchVC.modalPresentationStyle = .overFullScreen
             searchVC.modalTransitionStyle = .crossDissolve
             self.searchVCDismissFlag = false
             self.present(searchVC, animated: true)
-        })
+//        })
         
     }
     
+    // MARK: - Selector(Pan)
     @objc func didPan(_ pan: UIPanGestureRecognizer) {
         let topY = view.frame.height * 0.09
         let centerY = view.frame.height / 2
@@ -351,7 +356,7 @@ class MainVC: UIViewController {
         carListView.socarZoneInfoButton.addTarget(self, action: #selector(didTapZoneInfo(_:)), for: .touchUpInside)
         carListView.carListTableView.delegate = self
         carListView.carListTableView.dataSource = self
-        carListView.carListTableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        carListView.carListTableView.register(CarListTableViewCell.self, forCellReuseIdentifier: CarListTableViewCell.identifier)
         carListView.frame = CGRect(x: 0, y: view.frame.height, width: view.frame.width, height: view.frame.height)
         panGesture.delegate = self
         carListView.addGestureRecognizer(panGesture)
@@ -499,8 +504,13 @@ extension MainVC: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel?.text = "\(indexPath.row)"
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: CarListTableViewCell.identifier, for: indexPath) as? CarListTableViewCell else { return UITableViewCell() }
+        let date1 = Date()
+        let date2 = Date(timeInterval: 36000, since: date1)
+        cell.selectionStyle = .none
+        cell.separatorInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
+        cell.configurationCarInfo(carImage: "SampleCar", carName: "더뉴아반떼", carPrice: 25000, availableDiscount: true)
+        cell.configurationTimeInfo(startTime: date1, finishTime: date2)
         return cell
     }
 
@@ -508,11 +518,10 @@ extension MainVC: UITableViewDataSource {
 
 extension MainVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        80
+        120
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        print(indexPath.row)
         if indexPath.row == 0 {
             carListOnTopFlag = true
         } else {
@@ -530,7 +539,6 @@ extension MainVC: UITableViewDelegate {
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         print(#function)
     }
-    
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         insuranceMenuViewFlag = true

@@ -22,6 +22,7 @@
 		BCC8161925066CE000BD0BC3 /* NMFData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC8161825066CE000BD0BC3 /* NMFData.swift */; };
 		BCC8161B25067E3300BD0BC3 /* SearchResultTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC8161A25067E3300BD0BC3 /* SearchResultTableViewCell.swift */; };
 		BCC8161D2506855300BD0BC3 /* SocarZoneData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC8161C2506855300BD0BC3 /* SocarZoneData.swift */; };
+		BCEE1A842509BB6300AF0B62 /* SetBookingTimeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCEE1A832509BB6300AF0B62 /* SetBookingTimeButton.swift */; };
 		BCF849362508D1DC00215B0C /* AxaButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCF849352508D1DC00215B0C /* AxaButton.swift */; };
 		C728C85024F7E35100063005 /* SignUpUserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C728C84F24F7E35100063005 /* SignUpUserData.swift */; };
 		C72A913824F5E15B005D464F /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72A913724F5E15B005D464F /* Extension.swift */; };
@@ -95,6 +96,7 @@
 		BCC8161825066CE000BD0BC3 /* NMFData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NMFData.swift; sourceTree = "<group>"; };
 		BCC8161A25067E3300BD0BC3 /* SearchResultTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SearchResultTableViewCell.swift; path = "/Users/woobincheon/Documents/fcios11/06-Code/finalProject/sofastcar-iOS/sofastcar/sofastcar/View/Main/SearchResultTableViewCell.swift"; sourceTree = "<absolute>"; };
 		BCC8161C2506855300BD0BC3 /* SocarZoneData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SocarZoneData.swift; path = sofastcar/Model/Main/SocarZoneData.swift; sourceTree = SOURCE_ROOT; };
+		BCEE1A832509BB6300AF0B62 /* SetBookingTimeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetBookingTimeButton.swift; sourceTree = "<group>"; };
 		BCF849352508D1DC00215B0C /* AxaButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AxaButton.swift; sourceTree = "<group>"; };
 		C728C84F24F7E35100063005 /* SignUpUserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpUserData.swift; sourceTree = "<group>"; };
 		C72A913724F5E15B005D464F /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
@@ -272,6 +274,7 @@
 				BCC8161A25067E3300BD0BC3 /* SearchResultTableViewCell.swift */,
 				BC64AE8C24F8010B0019703A /* CarListView.swift */,
 				BC64AE5A24F646350019703A /* CarListTableViewCell.swift */,
+				BCEE1A832509BB6300AF0B62 /* SetBookingTimeButton.swift */,
 				BC25C9F32507609A00382B9C /* SocarZoneInfoButton.swift */,
 				BC25C9F92507A93500382B9C /* InsuranceMenuView.swift */,
 				BC25C9FD2507AA7A00382B9C /* InsuranceMenuHeaderView.swift */,
@@ -585,6 +588,7 @@
 				C769C83624FDF03C00DC8226 /* SocarPassVC.swift in Sources */,
 				C79A0B502501231C0061F078 /* ReservationConfirmTableVC.swift in Sources */,
 				BCC8161D2506855300BD0BC3 /* SocarZoneData.swift in Sources */,
+				BCEE1A842509BB6300AF0B62 /* SetBookingTimeButton.swift in Sources */,
 				C769C83424FDD99300DC8226 /* CheckDriverLicenseView.swift in Sources */,
 				C769C82B24FDB35600DC8226 /* DriverLicenseEnrollinitVC.swift in Sources */,
 				C72A913A24F5E32A005D464F /* SingUpInitVC.swift in Sources */,

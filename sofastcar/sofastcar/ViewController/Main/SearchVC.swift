@@ -14,6 +14,7 @@ class SearchVC: UIViewController {
     let searchView = SearchView()
     let socarZoneData = SocarZoneData()
     lazy var safeArea = self.view.safeAreaLayoutGuide
+    var tempCnt = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,8 +26,20 @@ class SearchVC: UIViewController {
     // MARK: - Selector
     @objc func didTapBackButton(_ sender: UIButton) {
         guard let presentingVC = self.presentingViewController as? MainVC else { return }
+        print("1")
         presentingVC.searchVCDismissFlag = true
-        presentingVC.dismiss(animated: true, completion: nil)
+        UIView.animate(withDuration: 3, animations: {
+            self.searchView.alpha = 0
+            presentingVC.whiteView.alpha = 0
+            
+            presentingVC.topView.snp.updateConstraints({
+                $0.top.equalTo(presentingVC.safeArea.snp.top).offset(8)
+                $0.leading.equalTo(presentingVC.safeArea.snp.leading).offset(10)
+                $0.trailing.equalTo(presentingVC.safeArea.snp.trailing).offset(-10)
+                $0.height.equalTo(52)
+            })
+        })
+        presentingVC.dismiss(animated: true, completion: {print("2")})
     }
     
     // MARK: - Setup UI
@@ -64,12 +77,38 @@ class SearchVC: UIViewController {
 // MARK: - Extension
 extension SearchVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        20
+        if tempCnt == 0 {
+            let noDataView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: tableView.bounds.size.height))
+            let noDataLabel = UILabel()
+            noDataLabel.text = "검색한 기록이 없습니다."
+            noDataLabel.textColor = UIColor.systemGray2
+            noDataView.addSubview(noDataLabel)
+            tableView.backgroundView = noDataView
+            tableView.separatorStyle = .none
+            noDataLabel.translatesAutoresizingMaskIntoConstraints = false
+            noDataLabel.snp.makeConstraints({
+                $0.centerX.equalToSuperview()
+                $0.centerY.equalToSuperview().dividedBy(3)
+            })
+        } else {
+            
+        }
+        return tempCnt
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: SearchResultTableViewCell.identifier, for: indexPath) as? SearchResultTableViewCell else { return UITableViewCell() }
-        cell.setupConfiguration(symbol: socarZoneData.symbols.randomElement() ?? "flame.fill", placeName: socarZoneData.name.randomElement() ?? "이름 없음", placeAddr: socarZoneData.addr.randomElement() ?? "주소 없음", distanceFromMe: socarZoneData.distance.randomElement() ?? 0)
+        cell.separatorInset = UIEdgeInsets(top: 20, left: 10, bottom: 0, right: 20)
+//        if tempCnt == 0 {
+//            let noDataLabel: UILabel  = UILabel(frame: CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: tableView.bounds.size.height))
+//            noDataLabel.text          = "No data available"
+//            noDataLabel.textColor     = UIColor.black
+//            noDataLabel.textAlignment = .center
+//            tableView.backgroundView  = noDataLabel
+//            tableView.separatorStyle  = .none
+//        } else {
+        cell.setupConfiguration(placeName: socarZoneData.name.randomElement() ?? "이름 없음", placeAddr: socarZoneData.addr.randomElement() ?? "주소 없음", distanceFromMe: socarZoneData.distance.randomElement() ?? 0)
+//        }
         
         return cell
     }    
@@ -82,5 +121,27 @@ extension SearchVC: UITableViewDelegate {
 }
 
 extension SearchVC: UITextFieldDelegate {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        
+    }
+    
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        print(#function)
+        
+        if textField.text?.isEmpty ?? false {
+            print("empty")
+            tempCnt = 0
+            searchView.searchResultTableView.reloadData()
+            
+        } else {
+            print("Not empty")
+            tempCnt = 20
+            searchView.searchResultTableView.reloadData()
+        }
+    }
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        print(#function)
+        return true
+    }
     
 }
