@@ -10,6 +10,17 @@ import UIKit
 
 class VehicleTakePictureVC: UIViewController {
   
+  lazy var leftNavigationButton: UIBarButtonItem = {
+    let barButtonItem = UIBarButtonItem(
+      image: UIImage(systemName: CommonUI.SFSymbolKey.leftArrow.rawValue),
+      style: .plain,
+      target: self,
+      action: #selector(didTapButton(_:))
+    )
+    barButtonItem.tintColor = CommonUI.mainDark
+    
+    return barButtonItem
+  }()
   
   // MARK: - LifeCycle
   override func viewDidLoad() {
@@ -25,6 +36,23 @@ class VehicleTakePictureVC: UIViewController {
   }
   
   fileprivate func setNavigation() {
+    let navBar = self.navigationController?.navigationBar
+    navBar?.prefersLargeTitles = true
+    navBar?.backgroundColor = .white
+    navBar?.barTintColor = UIColor.white
     
+    self.navigationItem.leftBarButtonItem = self.leftNavigationButton
+    self.title = "외관 촬영"
+  }
+  
+  // MARK: - Action
+  
+  @objc func didTapButton(_ sender: UIButton) {
+    switch sender {
+    case leftNavigationButton:
+      dismiss(animated: false, completion: nil)
+    default:
+      break
+    }
   }
 }

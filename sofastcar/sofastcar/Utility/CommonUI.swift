@@ -48,5 +48,6 @@ class CommonUI {
     case `return` = "goforward"
     case close = "xmark"
     case questionMark = "questionmark.circle"
+    case leftArrow = "arrow.left"
   }
 }
