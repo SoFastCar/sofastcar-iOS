@@ -35,15 +35,6 @@ class VehicleCheckView: UIScrollView {
     
     return view
   }()
-//
-//  fileprivate let vehicleCheckStartTitleLabel: UILabel = {
-//    let label = UILabel()
-//    label.text = "차량 확인하기"
-//    label.font = UIFont.preferredFont(forTextStyle: .title1)
-//    label.textColor = CommonUI.mainDark
-//
-//    return label
-//  }()
   
   fileprivate let vehicleCheckStartDescriptionTitleLabel: UILabel = {
     let label = UILabel()
@@ -339,7 +330,7 @@ class VehicleCheckView: UIScrollView {
 
 // MARK: - UICollectionViewDataSource
 
-extension VehicleCheckView: UICollectionViewDataSource {
+extension VehicleCheckView: UICollectionViewDataSource, UICollectionViewDelegate {
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     tagArray.count
   }
@@ -351,6 +342,7 @@ extension VehicleCheckView: UICollectionViewDataSource {
     
     return cell
   }
+  
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout
@@ -361,9 +353,15 @@ extension VehicleCheckView: UICollectionViewDelegateFlowLayout {
     return CGSize(width: charCount * 10 + 30, height: 35)
   }
   
-  func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
-    print(indexPath.row)
-    // cell touch action code
+  func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
+    guard let cell = collectionView.cellForItem(at: indexPath) as? TagCollectionViewCell else { return }
+    if cell.backgroundColor == .clear{
+      cell.backgroundColor = CommonUI.mainBlue
+      cell.tagLabel.textColor = .white
+    } else {
+      cell.backgroundColor = .clear
+      cell.tagLabel.textColor = CommonUI.mainDark
+    }
   }
 }
 
