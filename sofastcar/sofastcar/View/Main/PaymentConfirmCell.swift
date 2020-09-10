@@ -408,17 +408,17 @@ class PaymentConfirmCell: UITableViewCell {
     guard let cellType = sectionTitleLabel.text else { return }
     switch cellType {
     case MyPaymentCellType.detailCostCell.rawValue:
-      delegate?.tabChangeCouponButton(forCell: self)
+      delegate?.tapChangeCouponButton(forCell: self)
     case MyPaymentCellType.paymentCardCell.rawValue:
-      delegate?.tabChangePaymentCardButton(forCell: self)
+      delegate?.tapChangePaymentCardButton(forCell: self)
     case MyPaymentCellType.warningBeforeReservationCell.rawValue:
-      delegate?.tabWarningBeforeConfirmButton(forCell: self)
+      delegate?.tapWarningBeforeConfirmButton(forCell: self)
     default:
       break
     }
   }
   
   @objc func tabAgreeButton(_ sender: TouButton) {
-    delegate?.tabAgreeButton(forCell: self, tapedButton: sender)
+    delegate?.tapAgreeButton(forCell: self, tapedButton: sender)
   }
 }
