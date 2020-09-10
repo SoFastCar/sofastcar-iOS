@@ -19,6 +19,12 @@ class CommonUI {
     blue: 46 / 255,
     alpha: 1
   )
+  static let grayColor: UIColor = UIColor(
+    red: 242 / 255,
+    green: 242 / 255,
+    blue: 242 / 255,
+    alpha: 1
+  )
   
   // Login VC
   static let userInputMenusHeight: CGFloat = 50 // 텍스트 필드 높이
@@ -38,5 +44,7 @@ class CommonUI {
     case unlock = "lock.open"
     case horn = "speaker.1"
     case `return` = "goforward"
+    case close = "xmark"
+    case questionMark = "questionmark.circle"
   }
 }
