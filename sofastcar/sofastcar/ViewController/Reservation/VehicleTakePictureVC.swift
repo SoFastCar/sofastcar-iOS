@@ -32,6 +32,7 @@ class VehicleTakePictureVC: UIViewController {
   // MARK: - UI
   
   fileprivate func setUI() {
+    self.view.backgroundColor = .white
     setNavigation()
   }
   

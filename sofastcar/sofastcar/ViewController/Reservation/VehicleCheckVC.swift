@@ -36,6 +36,7 @@ class VehicleCheckVC: UIViewController {
   // MARK: - UI
   
   fileprivate func setUI() {
+    vehicleCheckView.customDelegate = self
     self.view.backgroundColor = CommonUI.grayColor
     
     setNavigation()
@@ -58,10 +59,35 @@ class VehicleCheckVC: UIViewController {
   
   // MARK: - Action
   
+  fileprivate func setAction() {
+    vehicleCheckView.vehicleCheckStartButton.addTarget(self, action: #selector(didTapButton(_:)), for: .touchUpInside)
+  }
+  
   @objc func didTapButton(_ sender: UIButton) {
+    print(sender)
     switch sender {
     case leftNavigationButton:
       dismiss(animated: false, completion: nil)
+    case vehicleCheckView.vehicleCheckStartButton:
+      print("")
+      let vehicleTakePictureVC = VehicleTakePictureVC()
+      let navigationController = UINavigationController(rootViewController: vehicleTakePictureVC)
+      navigationController.modalPresentationStyle = .fullScreen
+      self.present(vehicleTakePictureVC, animated: false)
+    default:
+      break
+    }
+  }
+}
+
+extension VehicleCheckVC: VehicleCheckViewDelegate {
+  func buttonAction(_ sender: UIButton) {
+    switch sender {
+    case vehicleCheckView.vehicleCheckStartButton:
+      let vehicleTakePictureVC = VehicleTakePictureVC()
+      let navigationController = UINavigationController(rootViewController: vehicleTakePictureVC)
+      navigationController.modalPresentationStyle = .fullScreen
+      self.present(navigationController, animated: false, completion: nil)
     default:
       break
     }
