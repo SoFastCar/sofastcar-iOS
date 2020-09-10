@@ -43,7 +43,7 @@ class VehicleCheckVC: UIViewController {
       view.addSubview($0)
     }
     
-    hideKeyboard()
+  hideKeyboard()
   }
   
   fileprivate func setNavigation() {
