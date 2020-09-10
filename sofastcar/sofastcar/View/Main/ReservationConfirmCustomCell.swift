@@ -57,7 +57,7 @@ class ReservationConfirmCustomCell: UITableViewCell {
     label.textColor = .gray
     return label
   }()
-  
+  // MARK: - Using Socar Zone UI
   let useingSocarZoneImageView: UIImageView = {
     let imageView = UIImageView()
     imageView.image = UIImage(named: "mSNormalBlue")
@@ -201,7 +201,6 @@ class ReservationConfirmCustomCell: UITableViewCell {
       $0.centerY.equalTo(returnLabel.snp.centerY)
       $0.trailing.equalTo(guide)
     }
-    
   }
   
   private func businessCellUI() {
