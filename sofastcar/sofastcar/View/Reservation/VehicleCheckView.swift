@@ -35,15 +35,15 @@ class VehicleCheckView: UIScrollView {
     
     return view
   }()
-  
-  fileprivate let vehicleCheckStartTitleLabel: UILabel = {
-    let label = UILabel()
-    label.text = "차량 확인하기"
-    label.font = UIFont.preferredFont(forTextStyle: .title1)
-    label.textColor = CommonUI.mainDark
-    
-    return label
-  }()
+//
+//  fileprivate let vehicleCheckStartTitleLabel: UILabel = {
+//    let label = UILabel()
+//    label.text = "차량 확인하기"
+//    label.font = UIFont.preferredFont(forTextStyle: .title1)
+//    label.textColor = CommonUI.mainDark
+//
+//    return label
+//  }()
   
   fileprivate let vehicleCheckStartDescriptionTitleLabel: UILabel = {
     let label = UILabel()
@@ -219,7 +219,7 @@ class VehicleCheckView: UIScrollView {
     vehicleCheckStartView.snp.makeConstraints {
       $0.top.equalTo(guid)
       $0.leading.trailing.equalTo(guid)
-      $0.height.equalTo(320)
+      $0.height.equalTo(270)
     }
     vehicleCheckStartConstraints()
     
@@ -236,7 +236,6 @@ class VehicleCheckView: UIScrollView {
     let guid = vehicleCheckStartView.safeAreaLayoutGuide
     
     [
-      vehicleCheckStartTitleLabel,
       vehicleCheckStartDescriptionTitleLabel,
       vehicleCheckStartDescriptionLabel,
       vehicleCheckStartSubDescriptionLabel,
@@ -246,18 +245,13 @@ class VehicleCheckView: UIScrollView {
         vehicleCheckStartView.addSubview($0)
     }
     
-    vehicleCheckStartTitleLabel.snp.makeConstraints {
+    vehicleCheckStartDescriptionTitleLabel.snp.makeConstraints {
       $0.top.equalTo(guid).offset(10)
       $0.leading.equalTo(guid).offset(20)
     }
     
-    vehicleCheckStartDescriptionTitleLabel.snp.makeConstraints {
-      $0.top.equalTo(vehicleCheckStartTitleLabel.snp.bottom).offset(40)
-      $0.leading.equalTo(guid).offset(20)
-    }
-    
     vehicleCheckStartDescriptionLabel.snp.makeConstraints {
-      $0.top.equalTo(vehicleCheckStartDescriptionTitleLabel.snp.bottom).offset(20)
+      $0.top.equalTo(vehicleCheckStartDescriptionTitleLabel.snp.bottom).offset(40)
       $0.leading.equalTo(guid).offset(20)
       $0.trailing.equalTo(guid).offset(-20)
     }

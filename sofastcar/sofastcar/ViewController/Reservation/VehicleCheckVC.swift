@@ -42,15 +42,18 @@ class VehicleCheckVC: UIViewController {
     [vehicleCheckView].forEach {
       view.addSubview($0)
     }
+    
+    hideKeyboard()
   }
   
   fileprivate func setNavigation() {
     let navBar = self.navigationController?.navigationBar
-    self.navigationItem.leftBarButtonItem = self.leftNavigationButton
-    
-    navBar?.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
-    navBar?.shadowImage = UIImage()
+    navBar?.prefersLargeTitles = true
     navBar?.backgroundColor = .white
+    navBar?.barTintColor = UIColor.white
+    
+    self.navigationItem.leftBarButtonItem = self.leftNavigationButton
+    self.title = "차량 확인하기"
   }
   
   // MARK: - Action
