@@ -15,6 +15,8 @@ class ReservationRentalInfoCell: UITableViewCell {
   let padding: CGFloat = 10
   let carFeatureTagArray = ["휘발류", "에어백", "후방감지센서", "블랙박스", "네비게이션"]
   
+  weak var delegate: ReservationRentalInfoCellDelegate?
+  
   let sectionTitleLabel: UILabel = {
     let label = UILabel()
     label.text = "차량손해면책 상품"
@@ -28,7 +30,7 @@ class ReservationRentalInfoCell: UITableViewCell {
     button.setTitle("변경하기", for: .normal)
     button.setTitleColor(.gray, for: .normal)
     button.titleLabel?.font = .systemFont(ofSize: CommonUI.contentsTextFontSize)
-//    button.addTarget(self, action: #selector(tapChangeOptionButton), for: .touchUpInside)
+    button.addTarget(self, action: #selector(tapChangeOptionButton), for: .touchUpInside)
     return button
   }()
   
@@ -53,7 +55,7 @@ class ReservationRentalInfoCell: UITableViewCell {
     button.setTitle("자세히", for: .normal)
     button.setTitleColor(.gray, for: .normal)
     button.titleLabel?.font = .systemFont(ofSize: CommonUI.contentsTextFontSize)
-    //    button.addTarget(self, action: #selector(tabShowSocarZoneWebViewButton), for: .touchUpInside)
+    button.addTarget(self, action: #selector(tabShowDetailViewButton), for: .touchUpInside)
     return button
   }()
   
@@ -69,10 +71,11 @@ class ReservationRentalInfoCell: UITableViewCell {
     return textView
   }()
   
-  let questionImageButton: UIButton = {
+  lazy var questionImageButton: UIButton = {
     let button = UIButton()
     button.setImage(UIImage(systemName: "questionmark.circle"), for: .normal)
     button.imageView?.tintColor = .darkGray
+    button.addTarget(self, action: #selector(tabShowDetailViewButton), for: .touchUpInside)
     return button
   }()
   // MARK: - CarInfo CollectionView
@@ -117,12 +120,13 @@ class ReservationRentalInfoCell: UITableViewCell {
     return label
   }()
   // MARK: - Cancel Button UI
-  let cancelButton: UIButton = {
+  lazy var cancelButton: UIButton = {
     let button = UIButton()
     button.setTitle("예약 취소하기", for: .normal)
     button.titleLabel?.font = .systemFont(ofSize: CommonUI.titleTextFontSize)
     button.backgroundColor = .white
     button.setTitleColor(.gray, for: .normal)
+    button.addTarget(self, action: #selector(tapReservationCancelButton), for: .touchUpInside)
     return button
   }()
   
@@ -430,5 +434,21 @@ extension ReservationRentalInfoCell: UICollectionViewDataSource, UICollectionVie
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
     let charCount = carFeatureTagArray[indexPath.item].count
     return CGSize(width: charCount*10+20, height: 25)
+  }
+}
+
+// MARK: - Button Action
+extension ReservationRentalInfoCell {
+  @objc func tapReservationCancelButton() {
+    delegate?.tapReservationCancelButton(forCell: self)
+  }
+  
+  @objc func tapChangeOptionButton() {
+    delegate?.tapChangeUsingTimeButton(forCell: self)
+  }
+  
+  @objc func tabShowDetailViewButton() {
+    guard let currnetSectionTitle = sectionTitleLabel.text else { return }
+    delegate?.tapDetailButton(forCell: self, sectionTitle: currnetSectionTitle)
   }
 }

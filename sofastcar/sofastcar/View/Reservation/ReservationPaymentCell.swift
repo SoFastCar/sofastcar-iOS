@@ -22,11 +22,11 @@ class ReservationPaymentCell: UITableViewCell {
   }
   // MARK: - configure
   func configureCell(cellType: PaymentCellType) {
-    switch cellType {
-    case <#pattern#>:
-      <#code#>
-    default:
-      <#code#>
-    }
+//    switch cellType {
+//    case <#pattern#>:
+//      <#code#>
+//    default:
+//      <#code#>
+//    }
   }
 }

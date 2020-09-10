@@ -125,19 +125,19 @@ class PaymentConfirmTableVC: UITableViewController {
 }
 
 extension PaymentConfirmTableVC: PaymentConfirmCellDelegate {
-  func tabChangeCouponButton(forCell: PaymentConfirmCell) {
+  func tapChangeCouponButton(forCell: PaymentConfirmCell) {
     print("tabChangeCouponButton")
   }
   
-  func tabChangePaymentCardButton(forCell: PaymentConfirmCell) {
+  func tapChangePaymentCardButton(forCell: PaymentConfirmCell) {
     print("tabChangePaymentCardButton")
   }
   
-  func tabWarningBeforeConfirmButton(forCell: PaymentConfirmCell) {
+  func tapWarningBeforeConfirmButton(forCell: PaymentConfirmCell) {
     print("tabWarningBeforeConfirmButton")
   }
   
-  func tabAgreeButton(forCell: PaymentConfirmCell, tapedButton: TouButton) {
+  func tapAgreeButton(forCell: PaymentConfirmCell, tapedButton: TouButton) {
     let allagreeButton = forCell.customAuthAllAgreeButton
     tapedButton.isSelected.toggle()
     if tapedButton == allagreeButton {

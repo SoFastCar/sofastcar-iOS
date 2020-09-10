@@ -109,6 +109,7 @@ class ReservationDetailTableVC: UITableViewController {
     case .rentalInfo:
       let cell = ReservationRentalInfoCell(style: .default, reuseIdentifier: ReservationRentalInfoCell.identifier)
       cell.configureCell(cellType: rentalTypeTitleArray[indexPath.section])
+      cell.delegate = self
       if rentalTypeTitleArray[indexPath.section] == .usingTime {
         guard let reservationStatus = customTableHeaderView?.reservationStatueLabel.isSelected else { fatalError() }
         cell.changeOptionButton.isHidden = reservationStatus
@@ -148,5 +149,18 @@ class ReservationDetailTableVC: UITableViewController {
       $0.leading.equalTo(view.segmentControll).offset(9+setIndex*83)
     }
   }
+}
+
+extension ReservationDetailTableVC: ReservationRentalInfoCellDelegate {
+  func tapChangeUsingTimeButton(forCell cell: ReservationRentalInfoCell) {
+    print("tabChangeUsingTimeButton")
+  }
   
+  func tapReservationCancelButton(forCell cell: ReservationRentalInfoCell) {
+    print("tabReservationCancelButton")
+  }
+  
+  func tapDetailButton(forCell cell: ReservationRentalInfoCell, sectionTitle: String) {
+    print("tabDetailButton", sectionTitle)
+  }
 }

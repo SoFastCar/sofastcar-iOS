@@ -255,13 +255,13 @@ class ReservationConfirmCustomCell: UITableViewCell {
   @objc func tapChangeOptionButton() {
     guard let menuTitle = sectionTitleLabel.text else { return print("aa") }
     if menuTitle == MyTalbleViewCellType.insuranceCell.rawValue {
-      delegate?.tabChangeInsuranceButton(forCell: self)
+      delegate?.tapChangeInsuranceButton(forCell: self)
     } else {
-      delegate?.tabChangeUsingTime(forCell: self)
+      delegate?.tapChangeUsingTime(forCell: self)
     }
   }
   
   @objc func tabShowSocarZoneWebViewButton() {
-    delegate?.tabSocarZoneDetailButton(forCell: self)
+    delegate?.tapSocarZoneDetailButton(forCell: self)
   }
 }
