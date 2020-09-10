@@ -28,7 +28,7 @@ class VehicleCheckVC: UIViewController {
   // MARK: - LifeCycle
   
   override func viewDidLoad() {
-    //    super.viewDidLoad()
+    super.viewDidLoad()
     
     setUI()
   }
