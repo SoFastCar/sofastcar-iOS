@@ -10,6 +10,8 @@
 		1226A60FC1A80A06F7DAB1AE /* Pods_sofastcar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC793DBC933237B89DC3FEED /* Pods_sofastcar.framework */; };
 		7E8473D82507BD6B0007962F /* VehicleCheckVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8473D72507BD6B0007962F /* VehicleCheckVC.swift */; };
 		7E8473DA2507C59D0007962F /* VehicleCheckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8473D92507C59D0007962F /* VehicleCheckView.swift */; };
+		7E8473E225088E830007962F /* TagCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8473E125088E830007962F /* TagCollectionViewCell.swift */; };
+		7E8473E42509AB420007962F /* LeftAlignedCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8473E32509AB420007962F /* LeftAlignedCollectionViewFlowLayout.swift */; };
 		7EAA8F6824FFBB510049D514 /* ReservationDashboardVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EAA8F6724FFBB510049D514 /* ReservationDashboardVC.swift */; };
 		7EF41FC32500AB3A0030752A /* ReservationStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF41FC22500AB3A0030752A /* ReservationStateView.swift */; };
 		7EF41FC62501F6D90030752A /* CarKeyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF41FC52501F6D90030752A /* CarKeyView.swift */; };
@@ -80,6 +82,8 @@
 		385247949553C4B863A7F4DF /* Pods-sofastcar.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sofastcar.debug.xcconfig"; path = "Target Support Files/Pods-sofastcar/Pods-sofastcar.debug.xcconfig"; sourceTree = "<group>"; };
 		7E8473D72507BD6B0007962F /* VehicleCheckVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehicleCheckVC.swift; sourceTree = "<group>"; };
 		7E8473D92507C59D0007962F /* VehicleCheckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehicleCheckView.swift; sourceTree = "<group>"; };
+		7E8473E125088E830007962F /* TagCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCollectionViewCell.swift; sourceTree = "<group>"; };
+		7E8473E32509AB420007962F /* LeftAlignedCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeftAlignedCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		7EAA8F6724FFBB510049D514 /* ReservationDashboardVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationDashboardVC.swift; sourceTree = "<group>"; };
 		7EF41FC22500AB3A0030752A /* ReservationStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationStateView.swift; sourceTree = "<group>"; };
 		7EF41FC52501F6D90030752A /* CarKeyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarKeyView.swift; sourceTree = "<group>"; };
@@ -176,6 +180,8 @@
 				7EF41FC22500AB3A0030752A /* ReservationStateView.swift */,
 				7EF41FC52501F6D90030752A /* CarKeyView.swift */,
 				7E8473D92507C59D0007962F /* VehicleCheckView.swift */,
+				7E8473E125088E830007962F /* TagCollectionViewCell.swift */,
+				7E8473E32509AB420007962F /* LeftAlignedCollectionViewFlowLayout.swift */,
 			);
 			path = Reservation;
 			sourceTree = "<group>";
@@ -595,6 +601,7 @@
 				C7D66D1824FB868A00679B99 /* LoginUserInputTextField.swift in Sources */,
 				C769C81124FCA9FB00DC8226 /* SingUpCompleteVC.swift in Sources */,
 				C7EA08FA24EFF29C001A7ED4 /* MainVC.swift in Sources */,
+				7E8473E225088E830007962F /* TagCollectionViewCell.swift in Sources */,
 				C7EA08F624EFF29C001A7ED4 /* AppDelegate.swift in Sources */,
 				BC64AE5B24F646350019703A /* CarListTableViewCell.swift in Sources */,
 				BCE8A9B82503B75C00E7BC21 /* SearchResultTableVC.swift in Sources */,
@@ -602,6 +609,7 @@
 				BC64AE5F24F64FF40019703A /* CarListTableViewHeader.swift in Sources */,
 				BC64AE8D24F8010B0019703A /* CarListView.swift in Sources */,
 				C769C83224FDD97F00DC8226 /* CheckDriverLicenseVC.swift in Sources */,
+				7E8473E42509AB420007962F /* LeftAlignedCollectionViewFlowLayout.swift in Sources */,
 				C769C83A24FE5E5100DC8226 /* LoginView.swift in Sources */,
 				C76B2A6524F7A7BB004E4CBD /* UserAuthScrollView.swift in Sources */,
 				C769C83824FE5E3700DC8226 /* LoginVC.swift in Sources */,

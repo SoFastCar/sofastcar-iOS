@@ -10,6 +10,18 @@ import UIKit
 import SnapKit
 
 class VehicleCheckView: UIScrollView {
+  
+  var tagArray = [
+    "동물털",
+    "음식물",
+    "흙,먼지,모래",
+    "담배 냄새",
+    "악취, 쓰레기",
+    "끈적임,오염",
+    "타인 물품",
+    "창문 얼룩"
+  ]
+  
   fileprivate let contentView: UIView = {
     let view = UIView()
     view.backgroundColor = CommonUI.grayColor
@@ -109,7 +121,40 @@ class VehicleCheckView: UIScrollView {
     return label
   }()
   
+  fileprivate let layout = LeftAlignedTagCollectionViewFlowLayout()
+  fileprivate lazy var tagCollectionView: UICollectionView = {
+    let collectionView = UICollectionView(frame: .infinite, collectionViewLayout: layout)
+    collectionView.register(TagCollectionViewCell.self, forCellWithReuseIdentifier: TagCollectionViewCell.identifier)
+    collectionView.backgroundColor = .clear
+    
+    return collectionView
+  }()
   
+  fileprivate let uncomfortableTextView: UITextView = {
+    let textView = UITextView()
+    textView.layer.borderWidth = 1
+    textView.layer.borderColor = UIColor.black.withAlphaComponent(0.1).cgColor
+    textView.text = "불편사항이 태그에 없나요? 메모로 남겨주세요."
+    textView.font = UIFont.preferredFont(forTextStyle: .title3)
+    textView.textColor = CommonUI.mainDark.withAlphaComponent(0.6)
+    textView.textContainerInset = UIEdgeInsets(
+      top: 15,
+      left: 15,
+      bottom: 15,
+      right: 15
+    )
+    
+    return textView
+  }()
+  
+  fileprivate let vehicleCheckTagSubmitButton: UIButton = {
+    let button = UIButton()
+    button.setTitle("문제가 없습니다", for: .normal)
+    button.backgroundColor = CommonUI.mainBlue
+    button.addTarget(self, action: #selector(didTapButton(_:)), for: .touchUpInside)
+    
+    return button
+  }()
   
   // MARK: - LifeCycle
   override init(frame: CGRect) {
@@ -125,6 +170,12 @@ class VehicleCheckView: UIScrollView {
   // MARK: - UI
   
   fileprivate func setUI() {
+    tagCollectionView.dataSource = self
+    tagCollectionView.delegate = self
+    tagCollectionView.allowsMultipleSelection = true
+    layout.minimumLineSpacing = 8
+    layout.scrollDirection = .vertical
+    uncomfortableTextView.delegate = self
     
     setScrollView()
     setConstraints()
@@ -140,7 +191,7 @@ class VehicleCheckView: UIScrollView {
     )
     self.addSubview(contentView)
     
-    var heightPadding: CGFloat = 0
+    var heightPadding: CGFloat = 50
     if UIScreen.main.bounds.height < 670 {
       heightPadding = UIScreen.main.bounds.height * 0.2
     }
@@ -176,7 +227,7 @@ class VehicleCheckView: UIScrollView {
     vehicleCheckTagView.snp.makeConstraints {
       $0.top.equalTo(vehicleCheckStartView.snp.bottom).offset(10)
       $0.leading.trailing.equalTo(guid)
-      $0.height.equalTo(500)
+      $0.height.equalTo(1000)
     }
     vehicleCheckTagConstraints()
   }
@@ -191,7 +242,7 @@ class VehicleCheckView: UIScrollView {
       vehicleCheckStartSubDescriptionLabel,
       vehicleCheckStartSubDescriptionButton,
       vehicleCheckStartButton
-    ].forEach {
+      ].forEach {
         vehicleCheckStartView.addSubview($0)
     }
     
@@ -235,9 +286,12 @@ class VehicleCheckView: UIScrollView {
     
     [
       vehicleCheckTagDescriptionTitleLabel,
-      vehicleCheckTagDescriptionLabel
-    ].forEach {
-      vehicleCheckTagView.addSubview($0)
+      vehicleCheckTagDescriptionLabel,
+      tagCollectionView,
+      uncomfortableTextView,
+      vehicleCheckTagSubmitButton
+      ].forEach {
+        vehicleCheckTagView.addSubview($0)
     }
     
     vehicleCheckTagDescriptionTitleLabel.snp.makeConstraints {
@@ -250,6 +304,27 @@ class VehicleCheckView: UIScrollView {
       $0.leading.equalTo(guid).offset(20)
       $0.trailing.equalTo(guid).offset(-20)
     }
+    
+    tagCollectionView.snp.makeConstraints {
+      $0.top.equalTo(vehicleCheckTagDescriptionLabel.snp.bottom).offset(20)
+      $0.leading.equalTo(guid).offset(20)
+      $0.trailing.equalTo(guid).offset(-20)
+      $0.height.equalTo(150)
+    }
+    
+    uncomfortableTextView.snp.makeConstraints {
+      $0.top.equalTo(tagCollectionView.snp.bottom).offset(20)
+      $0.leading.equalTo(guid).offset(20)
+      $0.trailing.equalTo(guid).offset(-20)
+      $0.height.equalTo(100)
+    }
+    
+    vehicleCheckTagSubmitButton.snp.makeConstraints {
+      $0.top.equalTo(uncomfortableTextView.snp.bottom).offset(20)
+      $0.leading.equalTo(guid).offset(20)
+      $0.trailing.equalTo(guid).offset(-20)
+      $0.height.equalTo(60)
+    }
   }
   
   // MARK: - Action
@@ -260,8 +335,76 @@ class VehicleCheckView: UIScrollView {
       print("vehicleCheckStartSubDescriptionButton button press")
     case vehicleCheckStartButton:
       print("vehicleCheckStartButton button press")
+    case vehicleCheckTagSubmitButton:
+      print("vehicleCheckTagSubmitButton button press")
     default:
       break
+    }
+  }
+}
+
+// MARK: - UICollectionViewDataSource
+
+extension VehicleCheckView: UICollectionViewDataSource {
+  func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    tagArray.count
+  }
+  
+  func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TagCollectionViewCell.identifier, for: indexPath) as? TagCollectionViewCell else { fatalError() }
+    
+    cell.tagString = tagArray[indexPath.row]
+    
+    return cell
+  }
+}
+
+// MARK: - UICollectionViewDelegateFlowLayout
+
+extension VehicleCheckView: UICollectionViewDelegateFlowLayout {
+  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    let charCount = tagArray[indexPath.item].count
+    return CGSize(width: charCount * 10 + 30, height: 35)
+  }
+  
+  func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
+    print(indexPath.row)
+    // cell touch action code
+  }
+}
+
+// MARK: - UITextViewDelegate
+
+extension VehicleCheckView: UITextViewDelegate {
+  // 편집이 시작될때
+  func textViewDidBeginEditing(_ textView: UITextView) {
+    textViewSetupView()
+  }
+  
+  // 편집이 종료될때
+  func textViewDidEndEditing(_ textView: UITextView) {
+    if textView.text == "" {
+      textViewSetupView()
+    }
+  }
+  
+  // 텍스트가 입력될때
+  func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+    // 개행시 최초 응답자 제거
+    if text == "\n" {
+      textView.resignFirstResponder()
+    }
+    return true
+  }
+  
+  fileprivate func textViewSetupView() {
+    if uncomfortableTextView.text == "불편사항이 태그에 없나요? 메모로 남겨주세요." {
+      uncomfortableTextView.text = ""
+      uncomfortableTextView.textColor = UIColor.black
+      
+    } else if uncomfortableTextView.text == "" {
+      uncomfortableTextView.text = "불편사항이 태그에 없나요? 메모로 남겨주세요."
+      uncomfortableTextView.textColor = UIColor.lightGray
     }
   }
 }
