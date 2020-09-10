@@ -182,7 +182,7 @@ class VehicleCheckView: UIScrollView {
     )
     self.addSubview(contentView)
     
-    var heightPadding: CGFloat = 50
+    var heightPadding: CGFloat = 0
     if UIScreen.main.bounds.height < 670 {
       heightPadding = UIScreen.main.bounds.height * 0.2
     }
@@ -355,7 +355,7 @@ extension VehicleCheckView: UICollectionViewDelegateFlowLayout {
   
   func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
     guard let cell = collectionView.cellForItem(at: indexPath) as? TagCollectionViewCell else { return }
-    if cell.backgroundColor == .clear{
+    if cell.backgroundColor == .clear {
       cell.backgroundColor = CommonUI.mainBlue
       cell.tagLabel.textColor = .white
     } else {
@@ -371,12 +371,24 @@ extension VehicleCheckView: UITextViewDelegate {
   // 편집이 시작될때
   func textViewDidBeginEditing(_ textView: UITextView) {
     textViewSetupView()
+    self.setContentOffset(
+      CGPoint(
+        x: 0.0,
+        y: 370.0
+      ), animated: true
+    )
   }
   
   // 편집이 종료될때
   func textViewDidEndEditing(_ textView: UITextView) {
     if textView.text == "" {
       textViewSetupView()
+      self.setContentOffset(
+        CGPoint(
+          x: 0.0,
+          y: 0.0
+        ), animated: true
+      )
     }
   }
   
