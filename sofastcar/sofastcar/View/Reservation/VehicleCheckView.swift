@@ -36,15 +36,6 @@ class VehicleCheckView: UIScrollView {
     return view
   }()
   
-  fileprivate let vehicleCheckStartTitleLabel: UILabel = {
-    let label = UILabel()
-    label.text = "차량 확인하기"
-    label.font = UIFont.preferredFont(forTextStyle: .title1)
-    label.textColor = CommonUI.mainDark
-    
-    return label
-  }()
-  
   fileprivate let vehicleCheckStartDescriptionTitleLabel: UILabel = {
     let label = UILabel()
     label.text = "운행 전 외관 촬영"
@@ -191,7 +182,7 @@ class VehicleCheckView: UIScrollView {
     )
     self.addSubview(contentView)
     
-    var heightPadding: CGFloat = 50
+    var heightPadding: CGFloat = 0
     if UIScreen.main.bounds.height < 670 {
       heightPadding = UIScreen.main.bounds.height * 0.2
     }
@@ -219,7 +210,7 @@ class VehicleCheckView: UIScrollView {
     vehicleCheckStartView.snp.makeConstraints {
       $0.top.equalTo(guid)
       $0.leading.trailing.equalTo(guid)
-      $0.height.equalTo(320)
+      $0.height.equalTo(270)
     }
     vehicleCheckStartConstraints()
     
@@ -236,7 +227,6 @@ class VehicleCheckView: UIScrollView {
     let guid = vehicleCheckStartView.safeAreaLayoutGuide
     
     [
-      vehicleCheckStartTitleLabel,
       vehicleCheckStartDescriptionTitleLabel,
       vehicleCheckStartDescriptionLabel,
       vehicleCheckStartSubDescriptionLabel,
@@ -246,18 +236,13 @@ class VehicleCheckView: UIScrollView {
         vehicleCheckStartView.addSubview($0)
     }
     
-    vehicleCheckStartTitleLabel.snp.makeConstraints {
+    vehicleCheckStartDescriptionTitleLabel.snp.makeConstraints {
       $0.top.equalTo(guid).offset(10)
       $0.leading.equalTo(guid).offset(20)
     }
     
-    vehicleCheckStartDescriptionTitleLabel.snp.makeConstraints {
-      $0.top.equalTo(vehicleCheckStartTitleLabel.snp.bottom).offset(40)
-      $0.leading.equalTo(guid).offset(20)
-    }
-    
     vehicleCheckStartDescriptionLabel.snp.makeConstraints {
-      $0.top.equalTo(vehicleCheckStartDescriptionTitleLabel.snp.bottom).offset(20)
+      $0.top.equalTo(vehicleCheckStartDescriptionTitleLabel.snp.bottom).offset(40)
       $0.leading.equalTo(guid).offset(20)
       $0.trailing.equalTo(guid).offset(-20)
     }
@@ -345,7 +330,7 @@ class VehicleCheckView: UIScrollView {
 
 // MARK: - UICollectionViewDataSource
 
-extension VehicleCheckView: UICollectionViewDataSource {
+extension VehicleCheckView: UICollectionViewDataSource, UICollectionViewDelegate {
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     tagArray.count
   }
@@ -357,6 +342,7 @@ extension VehicleCheckView: UICollectionViewDataSource {
     
     return cell
   }
+  
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout
@@ -367,9 +353,15 @@ extension VehicleCheckView: UICollectionViewDelegateFlowLayout {
     return CGSize(width: charCount * 10 + 30, height: 35)
   }
   
-  func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
-    print(indexPath.row)
-    // cell touch action code
+  func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
+    guard let cell = collectionView.cellForItem(at: indexPath) as? TagCollectionViewCell else { return }
+    if cell.backgroundColor == .clear {
+      cell.backgroundColor = CommonUI.mainBlue
+      cell.tagLabel.textColor = .white
+    } else {
+      cell.backgroundColor = .clear
+      cell.tagLabel.textColor = CommonUI.mainDark
+    }
   }
 }
 
@@ -379,12 +371,24 @@ extension VehicleCheckView: UITextViewDelegate {
   // 편집이 시작될때
   func textViewDidBeginEditing(_ textView: UITextView) {
     textViewSetupView()
+    self.setContentOffset(
+      CGPoint(
+        x: 0.0,
+        y: 370.0
+      ), animated: true
+    )
   }
   
   // 편집이 종료될때
   func textViewDidEndEditing(_ textView: UITextView) {
     if textView.text == "" {
       textViewSetupView()
+      self.setContentOffset(
+        CGPoint(
+          x: 0.0,
+          y: 0.0
+        ), animated: true
+      )
     }
   }
   
