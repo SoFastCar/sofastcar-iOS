@@ -37,6 +37,14 @@ class VehicleTakePictureView: UIScrollView {
     return tableView
   }()
   
+  fileprivate let vehicleCheckStartButton: UIButton = {
+    let button = UIButton()
+    button.setTitle("총 n장 전송하기", for: .normal)
+    button.backgroundColor = CommonUI.mainBlue
+    
+    return button
+  }()
+  
   // MARK: - LifeCycle
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -85,7 +93,7 @@ class VehicleTakePictureView: UIScrollView {
   fileprivate func setConstraints() {
     let guid = contentView.safeAreaLayoutGuide
     
-    [vehicleTakePicturDescriptionLabel, vehicleTakePicturTableView].forEach {
+    [vehicleTakePicturDescriptionLabel, vehicleTakePicturTableView, vehicleCheckStartButton].forEach {
       contentView.addSubview($0)
     }
     
@@ -99,7 +107,14 @@ class VehicleTakePictureView: UIScrollView {
       $0.top.equalTo(vehicleTakePicturDescriptionLabel.snp.bottom).offset(20)
       $0.leading.equalTo(guid).offset(20)
       $0.trailing.equalTo(guid).offset(-20)
-      $0.height.equalTo(800)
+      $0.height.equalTo(500)
+    }
+    
+    vehicleCheckStartButton.snp.makeConstraints {
+      $0.top.equalTo(vehicleTakePicturTableView.snp.bottom)
+      $0.leading.equalTo(guid).offset(20)
+      $0.trailing.equalTo(guid).offset(-20)
+      $0.height.equalTo(60)
     }
   }
 }
