@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   func application(_ application: UIApplication,
                    didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
     
-    let mainVC = ReservationDetailTableVC(isReservationEnd: false) // ReservationConfirmTableVC
+    let mainVC = ReservationDetailTableVC(isReservationEnd: true) // ReservationConfirmTableVC
     let navigationController = UINavigationController(rootViewController: mainVC)
     
     let backButtonImage = UIImage(systemName: "arrow.left")

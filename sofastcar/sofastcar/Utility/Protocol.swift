@@ -26,3 +26,9 @@ protocol ReservationRentalInfoCellDelegate: class {
   func tapReservationCancelButton(forCell cell: ReservationRentalInfoCell)
   func tapDetailButton(forCell cell: ReservationRentalInfoCell, sectionTitle: String)
 }
+
+protocol ReservationPaymentCellDelegte: class {
+  func tapCompleteNotPaidCostButton(forCell cell: ReservationPaymentCell)
+  func tapSendEmailButton(forCell cell: ReservationPaymentCell)
+  func tapShowReceiptButton(forCell cell: ReservationPaymentCell)
+}

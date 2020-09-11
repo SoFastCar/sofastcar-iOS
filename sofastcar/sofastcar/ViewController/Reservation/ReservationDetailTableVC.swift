@@ -36,7 +36,7 @@ enum EtcCellType: String {
   case usingPdfDownLoad = "이용내역서(pdf) 다운로드"
   case washingCarHistory = "세차 기록 보기"
   case contectCustomerCenter = "이 예약 고객센터 문의하기"
-  case blank = "빈칸"
+  case blank = ""
 }
 
 class ReservationDetailTableVC: UITableViewController {
@@ -46,11 +46,13 @@ class ReservationDetailTableVC: UITableViewController {
   var paymentTypeTitleArray: [PaymentCellType] = [.blank, .serviceTotalCost, .beforeCost, .afterCost]
   var etcTypeTitleArray: [EtcCellType] = [.blank, .usingPdfDownLoad, .washingCarHistory, .contectCustomerCenter]
   var showTableViewIndex: DetailTableViewType = .rentalInfo
+  var isReservationEnd: Bool = false
   
   // MARK: - Life Cycle
   init(isReservationEnd: Bool) {
     super.init(style: .grouped)
     customTableHeaderView = ReservationDetailHeader(frame: .zero, isReservationEnd: isReservationEnd)
+    self.isReservationEnd = isReservationEnd
   }
   
   required init?(coder: NSCoder) {
@@ -59,7 +61,6 @@ class ReservationDetailTableVC: UITableViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    
     configureNavigation()
     configureTableView()
     configureTableViewSegController()
@@ -117,15 +118,28 @@ class ReservationDetailTableVC: UITableViewController {
       return cell
     case .paymentInfo:
       let cell = ReservationPaymentCell(style: .default, reuseIdentifier: ReservationPaymentCell.identifier)
+      cell.isReservationEnd = isReservationEnd
+      cell.delegate = self
       cell.configureCell(cellType: paymentTypeTitleArray[indexPath.section])
       return cell
     case .etcInfo:
-      let cell = UITableViewCell(style: .default, reuseIdentifier: "cell")
+      let cell = UITableViewCell(style: .value1, reuseIdentifier: "cell")
+      cell.textLabel?.text = etcTypeTitleArray[indexPath.section].rawValue
+      if etcTypeTitleArray[indexPath.section] != .blank {
+        cell.detailTextLabel?.text = ">"
+      }
+      [cell.textLabel, cell.detailTextLabel].forEach {
+        $0?.font = .systemFont(ofSize: CommonUI.titleTextFontSize)
+        $0?.textColor = .darkGray
+      }
       return cell
     }
   }
   
   override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    if showTableViewIndex == .etcInfo {
+      return indexPath.section == 0 ? 0 : 70
+    }
     if indexPath.section == 0 {
       return CGFloat(0)
     }
@@ -162,5 +176,19 @@ extension ReservationDetailTableVC: ReservationRentalInfoCellDelegate {
   
   func tapDetailButton(forCell cell: ReservationRentalInfoCell, sectionTitle: String) {
     print("tabDetailButton", sectionTitle)
+  }
+}
+
+extension ReservationDetailTableVC: ReservationPaymentCellDelegte {
+  func tapCompleteNotPaidCostButton(forCell cell: ReservationPaymentCell) {
+    print("tapCompleteNotPaidCostButton")
+  }
+  
+  func tapSendEmailButton(forCell cell: ReservationPaymentCell) {
+    print("tapSendMailButton")
+  }
+  
+  func tapShowReceiptButton(forCell cell: ReservationPaymentCell) {
+    print("tapShowReceiptButton")
   }
 }
