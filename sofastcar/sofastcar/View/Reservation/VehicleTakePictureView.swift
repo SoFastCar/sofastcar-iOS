@@ -13,7 +13,7 @@ class VehicleTakePictureView: UIScrollView {
 
   fileprivate let contentView: UIView = {
     let view = UIView()
-    view.backgroundColor = .cyan
+    view.backgroundColor = .clear
     
     return view
   }()
@@ -26,6 +26,15 @@ class VehicleTakePictureView: UIScrollView {
     label.numberOfLines = .max
     
     return label
+  }()
+  
+  fileprivate lazy var vehicleTakePicturTableView: UITableView = {
+    let tableView = UITableView()
+    tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+    tableView.dataSource = self
+    tableView.separatorStyle = .none
+    
+    return tableView
   }()
   
   // MARK: - LifeCycle
@@ -76,7 +85,7 @@ class VehicleTakePictureView: UIScrollView {
   fileprivate func setConstraints() {
     let guid = contentView.safeAreaLayoutGuide
     
-    [vehicleTakePicturDescriptionLabel].forEach {
+    [vehicleTakePicturDescriptionLabel, vehicleTakePicturTableView].forEach {
       contentView.addSubview($0)
     }
     
@@ -85,5 +94,27 @@ class VehicleTakePictureView: UIScrollView {
       $0.leading.equalTo(guid).offset(20)
       $0.trailing.equalTo(guid).offset(-20)
     }
+    
+    vehicleTakePicturTableView.snp.makeConstraints {
+      $0.top.equalTo(vehicleTakePicturDescriptionLabel.snp.bottom).offset(20)
+      $0.leading.equalTo(guid).offset(20)
+      $0.trailing.equalTo(guid).offset(-20)
+      $0.height.equalTo(800)
+    }
+  }
+}
+
+// MARK: - UITableViewDataSource
+
+extension VehicleTakePictureView: UITableViewDataSource {
+  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    return 6
+  }
+  
+  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+    cell.backgroundColor = .black
+    
+    return cell
   }
 }
