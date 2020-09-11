@@ -18,6 +18,16 @@ class VehicleTakePictureView: UIScrollView {
     return view
   }()
   
+  fileprivate let vehicleTakePicturDescriptionLabel: UILabel = {
+    let label = UILabel()
+    label.text = "차량의 여섯 면을 가이드에 맞춰 촬영해주세요.\n사진 전송 후에는 수정할 수 없습니다."
+    label.font = UIFont.preferredFont(forTextStyle: .callout)
+    label.textColor = CommonUI.mainDark
+    label.numberOfLines = .max
+    
+    return label
+  }()
+  
   // MARK: - LifeCycle
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -66,8 +76,14 @@ class VehicleTakePictureView: UIScrollView {
   fileprivate func setConstraints() {
     let guid = contentView.safeAreaLayoutGuide
     
-    [].forEach {
+    [vehicleTakePicturDescriptionLabel].forEach {
       contentView.addSubview($0)
+    }
+    
+    vehicleTakePicturDescriptionLabel.snp.makeConstraints {
+      $0.top.equalTo(guid)
+      $0.leading.equalTo(guid).offset(20)
+      $0.trailing.equalTo(guid).offset(-20)
     }
   }
 }
