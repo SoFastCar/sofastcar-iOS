@@ -41,7 +41,6 @@ class CarListTableViewCell: UITableViewCell {
     }
     
     private func setupUI() {
-        contentView.layoutMargins = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
         numberFormatter.numberStyle = .decimal
         
         dateFormatter.dateStyle = .short
@@ -85,7 +84,7 @@ class CarListTableViewCell: UITableViewCell {
         })
         carImageView.snp.makeConstraints({
             $0.centerY.equalToSuperview().offset(-15)
-            $0.leading.equalToSuperview().offset(0)
+            $0.leading.equalToSuperview()
             $0.width.equalTo(70)
             $0.height.equalTo(55)
         })
@@ -103,8 +102,8 @@ class CarListTableViewCell: UITableViewCell {
         })
         availableTimeSlotView.snp.makeConstraints({
             $0.centerY.equalToSuperview().offset(30)
-            $0.leading.equalToSuperview().offset(0)
-            $0.trailing.equalToSuperview().offset(-20)
+            $0.leading.equalToSuperview()
+            $0.trailing.equalToSuperview()
             $0.height.equalTo(4)
         })
         timeSlotUnitView.snp.makeConstraints({
@@ -115,8 +114,8 @@ class CarListTableViewCell: UITableViewCell {
         })
         dateStackView.snp.makeConstraints({
             $0.top.equalTo(availableTimeSlotView.snp.bottom).offset(5)
-            $0.leading.equalToSuperview().offset(0)
-            $0.trailing.equalToSuperview().offset(0)
+            $0.leading.equalToSuperview()
+            $0.trailing.equalToSuperview()
             $0.height.equalTo(10)
         })
     }

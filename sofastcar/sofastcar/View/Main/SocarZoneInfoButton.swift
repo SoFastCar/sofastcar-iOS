@@ -37,7 +37,7 @@ class SocarZoneInfoButton: UIButton {
         socarZoneGroundLevelLabel.clipsToBounds = true
         socarZoneGroundLevelLabel.backgroundColor = .systemGray6
         socarZoneGroundLevelLabel.textAlignment = .center
-        socarZoneGroundLevelLabel.font = .systemFont(ofSize: 13, weight: .regular)
+        socarZoneGroundLevelLabel.font = .systemFont(ofSize: 12, weight: .regular)
         socarZoneGroundLevelLabel.textColor = .lightGray
         self.addSubview(socarZoneGroundLevelLabel)
         

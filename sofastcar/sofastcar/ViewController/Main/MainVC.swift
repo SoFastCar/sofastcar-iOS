@@ -23,6 +23,7 @@ class MainVC: UIViewController {
     var carListOnTopFlag = false
     var searchVCDismissFlag = false
     var insuranceMenuViewFlag = false
+    var bookingButtonDownFlag = false
     
     // Naver Map Framework
     let marker = NMFMarker()
@@ -39,6 +40,7 @@ class MainVC: UIViewController {
     lazy var panGesture = UIPanGestureRecognizer(target: self, action: #selector(didPan(_:)))
     lazy var visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
     lazy var visualEffectView2 = UIVisualEffectView(effect: UIBlurEffect(style: .dark)) 
+    let setBookingTimeButton = SetBookingTimeButton(on: .mainVC)
     
     // MARK: - View Life Cycle        
     override func viewDidLoad() {
@@ -52,58 +54,16 @@ class MainVC: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        print(#function)
-//        setupUI()
-        print("3")
-        if searchVCDismissFlag {
-            UIView.animate(withDuration: 0.5, animations: {
-                self.whiteView.alpha = 0
-                self.topView.alpha = 1
-                self.searchView.alpha = 0
-                self.topView.snp.updateConstraints({
-                    $0.top.equalTo(self.safeArea).offset(8)
-                    $0.leading.equalTo(self.safeArea).offset(10)
-                    $0.trailing.equalTo(self.safeArea).offset(-10)
-                    $0.height.equalTo(52)
-                })
-                self.searchView.snp.updateConstraints({
-                    $0.top.equalTo(self.safeArea).offset(8)
-                    $0.leading.equalTo(self.safeArea).offset(10)
-                    $0.trailing.equalTo(self.safeArea).offset(-10)
-                    $0.height.equalTo(52)
-                })
-                self.view.layoutIfNeeded()
-            })
-        } else {
-            
-        }
+        
+        UIView.animate(withDuration: 0.5, animations: {
+            self.setBookingTimeButton.frame.origin.y = self.view.frame.height - self.setBookingTimeButton.frame.height
+        })
+        
     }
     
     // MARK: - Touch Methods
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
-//        print("1")
-//        if !topAreaFlag,
-//            markerTapFlag {
-//            print("2")
-//            if insuranceMenuViewFlag {
-//                print("3")
-//                UIView.animate(withDuration: 0.3, animations: {
-//                    self.visualEffectView2.alpha = 0
-//                    self.insuranceMenuView.frame.origin.y = self.view.frame.height
-//                })
-//                insuranceMenuViewFlag.toggle()
-//            } else {
-//                print("4")
-//                UIView.animate(withDuration: 0.3, animations: {
-//                    self.carListView.frame.origin.y = self.view.frame.height * 0.82
-//                })
-//            }
-//            
-//        } else {
-//            print("5")
-//            
-//        }
         if insuranceMenuViewFlag {
             UIView.animate(withDuration: 0.3, animations: {
                 self.visualEffectView2.alpha = 0
@@ -171,32 +131,48 @@ class MainVC: UIViewController {
     @objc func didTapSearchButton(_ sender: UIButton) {
         
         // animate
-        UIView.animate(withDuration: 3, animations: {
+        UIView.animate(withDuration: 0.5, animations: {
             self.topView.snp.updateConstraints({
                 $0.top.equalTo(self.safeArea.snp.top).offset(0)
                 $0.leading.equalTo(self.safeArea.snp.leading).offset(0)
                 $0.trailing.equalTo(self.safeArea.snp.trailing).offset(0)
                 $0.height.equalTo(60)
             })
-//            self.searchView.snp.updateConstraints({
-//                $0.top.equalTo(self.safeArea.snp.top).offset(0)
-//                $0.leading.equalTo(self.safeArea.snp.leading).offset(0)
-//                $0.trailing.equalTo(self.safeArea.snp.trailing).offset(0)
-//                $0.height.equalTo(60)
-//            })
+            self.searchView.snp.updateConstraints({
+                $0.top.equalTo(self.safeArea.snp.top).offset(0)
+                $0.leading.equalTo(self.safeArea.snp.leading).offset(0)
+                $0.trailing.equalTo(self.safeArea.snp.trailing).offset(0)
+                $0.height.equalTo(60)
+            })
             self.view.layoutIfNeeded()
-//            self.topView.alpha = 0
-//            self.searchView.alpha = 1
+            self.topView.alpha = 0
+            self.searchView.alpha = 1
             self.whiteView.alpha = 1
         })
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
             let searchVC = SearchVC()
             searchVC.modalPresentationStyle = .overFullScreen
             searchVC.modalTransitionStyle = .crossDissolve
             self.searchVCDismissFlag = false
             self.present(searchVC, animated: true)
+        })
+    }
+    
+    // MARK: - Selector(Booking Time Button)
+    @objc func didTapBookingTime(_ sender: SetBookingTimeButton) {
+        let presentedVC = BookingTimeVC()
+        presentedVC.modalPresentationStyle = .automatic
+        present(presentedVC, animated: true)
+//        bookingButtonDownFlag.toggle()
+//        if bookingButtonDownFlag {
+//        UIView.animate(withDuration: 0.5, animations: {
+//            sender.backgroundColor = .lightGray
 //        })
-        
+//        } else {
+//            UIView.animate(withDuration: 0.5, animations: {
+//                sender.backgroundColor = .white
+//            })
+//        }
     }
     
     // MARK: - Selector(Pan)
@@ -296,7 +272,6 @@ class MainVC: UIViewController {
         let southWestCoord = naverMapView.mapView.projection.latlng(from: CGPoint(x: 0, y: 0))
         let northEastCoord = naverMapView.mapView.projection.latlng(from: CGPoint(x: view.frame.width, y: view.frame.height))
         let bounds = NMGLatLngBounds(southWest: southWestCoord, northEast: northEastCoord)
-        print(bounds)
         
         naverMapView.mapView.moveCamera(NMFCameraUpdate(position: defaultCamPosition))
         marker.position = defaultMarkerPosition
@@ -313,6 +288,7 @@ class MainVC: UIViewController {
                 self.callPositionMarker.mapView = nil
                 // Car List 팝업 by View
                 UIView.animate(withDuration: 0.5, animations: {
+                    self.setBookingTimeButton.frame.origin.y = self.view.frame.height
                     self.carListView.frame.origin.y = self.view.center.y
                     self.naverMapView.mapView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: self.view.center.y, right: 0)
                     self.topView.alpha = 0
@@ -354,10 +330,12 @@ class MainVC: UIViewController {
         view.addSubview(topView)
         
         carListView.socarZoneInfoButton.addTarget(self, action: #selector(didTapZoneInfo(_:)), for: .touchUpInside)
+        carListView.setBookingTimeButton.addTarget(self, action: #selector(didTapBookingTime(_:)), for: .touchUpInside)
         carListView.carListTableView.delegate = self
         carListView.carListTableView.dataSource = self
         carListView.carListTableView.register(CarListTableViewCell.self, forCellReuseIdentifier: CarListTableViewCell.identifier)
         carListView.frame = CGRect(x: 0, y: view.frame.height, width: view.frame.width, height: view.frame.height)
+        carListView.layer.cornerRadius = 10
         panGesture.delegate = self
         carListView.addGestureRecognizer(panGesture)
         view.addSubview(carListView)
@@ -375,6 +353,13 @@ class MainVC: UIViewController {
         
         insuranceMenuView.frame = CGRect(x: 0, y: view.frame.height, width: view.frame.width, height: view.frame.height / 2 + 50 )
         view.addSubview(insuranceMenuView)
+        
+        setBookingTimeButton.addTarget(self, action: #selector(didTapBookingTime(_:)), for: .touchUpInside)
+        setBookingTimeButton.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        setBookingTimeButton.layer.cornerRadius = 8
+        setBookingTimeButton.layer.shadowOpacity = 0.1
+        setBookingTimeButton.frame = CGRect(x: view.frame.width * 0.03, y: view.frame.height, width: view.frame.width * 0.94, height: view.frame.height * 0.16)
+        view.addSubview(setBookingTimeButton)
     }
     
     // MARK: - Setup Constraint
@@ -403,6 +388,7 @@ extension MainVC: NMFMapViewTouchDelegate {
         UIView.animate(withDuration: 0.3, animations: {
             self.topView.alpha = 1
             self.carListView.frame.origin.y = self.view.frame.height
+            self.setBookingTimeButton.frame.origin.y = self.view.frame.height - self.setBookingTimeButton.frame.height
             self.naverMapView.mapView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
             self.callPositionMarker.position = mapView.cameraPosition.target
             self.callPositionMarker.mapView = mapView
@@ -414,13 +400,14 @@ extension MainVC: NMFMapViewTouchDelegate {
 extension MainVC: NMFMapViewCameraDelegate {
     func mapView(_ mapView: NMFMapView, cameraDidChangeByReason reason: Int, animated: Bool) {
         let camPosition = mapView.cameraPosition.target
-        let meterPerPixel = mapView.projection.metersPerPixel(atLatitude: mapView.cameraPosition.target.lat, zoom: mapView.cameraPosition.zoom)
-//        print(meterPerPixel, mapView.cameraPosition.zoom)
         
-        let southWestCoord = naverMapView.mapView.projection.latlng(from: CGPoint(x: 0, y: 0))
-        let northEastCoord = naverMapView.mapView.projection.latlng(from: CGPoint(x: view.frame.width, y: view.frame.height))
+        let meterPerPixel = mapView.projection.metersPerPixel(atLatitude: mapView.cameraPosition.target.lat, zoom: mapView.cameraPosition.zoom)
+        
+        let southWestCoord = naverMapView.mapView.projection.latlng(from: CGPoint(x: view.frame.width, y: 0))
+        let northEastCoord = naverMapView.mapView.projection.latlng(from: CGPoint(x: 0, y: view.frame.height))
         let bounds = NMGLatLngBounds(southWest: southWestCoord, northEast: northEastCoord)
-        print(bounds)
+        
+        print("축적도: \(meterPerPixel), 북동 위경도: \(southWestCoord), 남서 위경도: \(northEastCoord)")
         
         callPositionMarker.position = camPosition
         topView.searchButton.setTitle("Geocoding", for: .normal)
@@ -448,11 +435,9 @@ extension MainVC: UIGestureRecognizerDelegate {
         print(#function)
         if topAreaFlag,
             !carListOnTopFlag {
-            print("1")
             carListView.carListTableView.isScrollEnabled = true
             return true
         } else {
-            print("2")
             carListView.carListTableView.isScrollEnabled = false
             return true
         }
@@ -519,6 +504,9 @@ extension MainVC: UITableViewDataSource {
 extension MainVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         120
+    }
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return (UIScreen.main.bounds.height / 2) * 0.15
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {

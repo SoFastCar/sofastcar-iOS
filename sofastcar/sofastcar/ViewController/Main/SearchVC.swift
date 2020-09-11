@@ -26,11 +26,8 @@ class SearchVC: UIViewController {
     // MARK: - Selector
     @objc func didTapBackButton(_ sender: UIButton) {
         guard let presentingVC = self.presentingViewController as? MainVC else { return }
-        print("1")
         presentingVC.searchVCDismissFlag = true
-        UIView.animate(withDuration: 3, animations: {
-            self.searchView.alpha = 0
-            presentingVC.whiteView.alpha = 0
+        UIView.animate(withDuration: 0.5, animations: {
             
             presentingVC.topView.snp.updateConstraints({
                 $0.top.equalTo(presentingVC.safeArea.snp.top).offset(8)
@@ -38,8 +35,21 @@ class SearchVC: UIViewController {
                 $0.trailing.equalTo(presentingVC.safeArea.snp.trailing).offset(-10)
                 $0.height.equalTo(52)
             })
+            presentingVC.searchView.snp.updateConstraints({
+                $0.top.equalTo(presentingVC.safeArea.snp.top).offset(8)
+                $0.leading.equalTo(presentingVC.safeArea.snp.leading).offset(0)
+                $0.trailing.equalTo(presentingVC.safeArea.snp.trailing).offset(0)
+                $0.height.equalTo(52)
+            })
+            self.searchView.alpha = 0
+            self.view.backgroundColor = .clear
+            presentingVC.whiteView.alpha = 0
+            presentingVC.topView.alpha = 1
+            presentingVC.searchView.alpha = 0
+            presentingVC.view.layoutIfNeeded()
         })
-        presentingVC.dismiss(animated: true, completion: {print("2")})
+            presentingVC.dismiss(animated: true)
+        
     }
     
     // MARK: - Setup UI
@@ -129,12 +139,10 @@ extension SearchVC: UITextFieldDelegate {
         print(#function)
         
         if textField.text?.isEmpty ?? false {
-            print("empty")
             tempCnt = 0
             searchView.searchResultTableView.reloadData()
             
         } else {
-            print("Not empty")
             tempCnt = 20
             searchView.searchResultTableView.reloadData()
         }
