@@ -7,8 +7,11 @@
 //
 
 import UIKit
+import SnapKit
 
 class VehicleTakePictureVC: UIViewController {
+  
+  let vehicleTakePictureView = VehicleTakePictureView()
   
   lazy var leftNavigationButton: UIBarButtonItem = {
     let barButtonItem = UIBarButtonItem(
@@ -34,6 +37,10 @@ class VehicleTakePictureVC: UIViewController {
   fileprivate func setUI() {
     self.view.backgroundColor = .white
     setNavigation()
+    
+    [vehicleTakePictureView].forEach {
+      view.addSubview($0)
+    }
   }
   
   fileprivate func setNavigation() {
