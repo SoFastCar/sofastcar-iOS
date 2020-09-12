@@ -79,9 +79,9 @@ class ReservationDetailTableVC: UITableViewController {
     tableView.sectionHeaderHeight = 10
     tableView.sectionFooterHeight = 0
     tableView.separatorStyle = .none
-    tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
     tableView.register(ReservationRentalInfoCell.self, forCellReuseIdentifier: ReservationRentalInfoCell.identifier)
     tableView.register(ReservationPaymentCell.self, forCellReuseIdentifier: ReservationPaymentCell.identifier)
+    tableView.register(ReservationEtcCell.self, forCellReuseIdentifier: ReservationEtcCell.identifier)
   }
   
   private  func configureTableViewSegController() {
@@ -123,14 +123,11 @@ class ReservationDetailTableVC: UITableViewController {
       cell.configureCell(cellType: paymentTypeTitleArray[indexPath.section])
       return cell
     case .etcInfo:
-      let cell = UITableViewCell(style: .value1, reuseIdentifier: "cell")
-      cell.textLabel?.text = etcTypeTitleArray[indexPath.section].rawValue
-      if etcTypeTitleArray[indexPath.section] != .blank {
-        cell.detailTextLabel?.text = ">"
-      }
-      [cell.textLabel, cell.detailTextLabel].forEach {
-        $0?.font = .systemFont(ofSize: CommonUI.titleTextFontSize)
-        $0?.textColor = .darkGray
+      let cell = ReservationEtcCell(style: .subtitle, reuseIdentifier: ReservationEtcCell.identifier)
+      cell.buttonNameLabel.text = etcTypeTitleArray[indexPath.section].rawValue
+      cell.delegate = self
+      if etcTypeTitleArray[indexPath.section] == .blank {
+        cell.rightSideImage.image = UIImage()
       }
       return cell
     }
@@ -138,7 +135,7 @@ class ReservationDetailTableVC: UITableViewController {
   
   override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
     if showTableViewIndex == .etcInfo {
-      return indexPath.section == 0 ? 0 : 70
+      return indexPath.section == 0 ? 0 : 65
     }
     if indexPath.section == 0 {
       return CGFloat(0)
@@ -165,6 +162,7 @@ class ReservationDetailTableVC: UITableViewController {
   }
 }
 
+// MARK: - RentalInfoCell Button Action
 extension ReservationDetailTableVC: ReservationRentalInfoCellDelegate {
   func tapChangeUsingTimeButton(forCell cell: ReservationRentalInfoCell) {
     print("tabChangeUsingTimeButton")
@@ -179,6 +177,7 @@ extension ReservationDetailTableVC: ReservationRentalInfoCellDelegate {
   }
 }
 
+// MARK: - PaymentCell Button Action
 extension ReservationDetailTableVC: ReservationPaymentCellDelegte {
   func tapCompleteNotPaidCostButton(forCell cell: ReservationPaymentCell) {
     print("tapCompleteNotPaidCostButton")
@@ -190,5 +189,20 @@ extension ReservationDetailTableVC: ReservationPaymentCellDelegte {
   
   func tapShowReceiptButton(forCell cell: ReservationPaymentCell) {
     print("tapShowReceiptButton")
+  }
+}
+
+// MARK: - EtcCell Button Action
+extension ReservationDetailTableVC: ReservationEtcCellDelegate {
+  func tapDownLoadReceipforPDF(forCell cell: ReservationEtcCell) {
+    print("tapDownLoadReceipforPDF")
+  }
+  
+  func tapShowWashingHistory(forCell cell: ReservationEtcCell) {
+    print("tapShowWashingHistory")
+  }
+  
+  func tapContectCustomerCenter(forCell cell: ReservationEtcCell) {
+    print("tapContectCustomerCenter")
   }
 }

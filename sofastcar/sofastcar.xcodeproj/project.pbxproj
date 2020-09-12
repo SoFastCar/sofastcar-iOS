@@ -73,6 +73,7 @@
 		C7F2E6352505FE8E0004EBF9 /* UserDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F2E6342505FE8E0004EBF9 /* UserDefault.swift */; };
 		C7F2E63A250647ED0004EBF9 /* Insurance.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F2E639250647ED0004EBF9 /* Insurance.swift */; };
 		C7F2E63C2507133B0004EBF9 /* Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F2E63B2507133B0004EBF9 /* Protocol.swift */; };
+		C7FED69B250C729C00778923 /* ReservationEtcCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FED69A250C729C00778923 /* ReservationEtcCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -152,6 +153,7 @@
 		C7F2E6342505FE8E0004EBF9 /* UserDefault.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefault.swift; sourceTree = "<group>"; };
 		C7F2E639250647ED0004EBF9 /* Insurance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Insurance.swift; sourceTree = "<group>"; };
 		C7F2E63B2507133B0004EBF9 /* Protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocol.swift; sourceTree = "<group>"; };
+		C7FED69A250C729C00778923 /* ReservationEtcCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationEtcCell.swift; sourceTree = "<group>"; };
 		F696BB68DE39C7A6CB2DD8B1 /* Pods-sofastcar.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sofastcar.release.xcconfig"; path = "Target Support Files/Pods-sofastcar/Pods-sofastcar.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -198,6 +200,7 @@
 				C7CA53ED2509AF2F008DA68C /* ReservationDetailHeader.swift */,
 				C7CA53F12509DB1E008DA68C /* ReservationRentalInfoCell.swift */,
 				C7CA53F3250A01F8008DA68C /* ReservationPaymentCell.swift */,
+				C7FED69A250C729C00778923 /* ReservationEtcCell.swift */,
 			);
 			path = Reservation;
 			sourceTree = "<group>";
@@ -632,6 +635,7 @@
 				C72A913824F5E15B005D464F /* Extension.swift in Sources */,
 				C72A914424F67D9F005D464F /* TouView.swift in Sources */,
 				C769C82924FD0A1200DC8226 /* CardEnrollView.swift in Sources */,
+				C7FED69B250C729C00778923 /* ReservationEtcCell.swift in Sources */,
 				C76B2A6324F7A799004E4CBD /* UserAuthVC.swift in Sources */,
 				7EF41FC62501F6D90030752A /* CarKeyView.swift in Sources */,
 				C7BD348C24F54A5700089F0D /* InitVC.swift in Sources */,

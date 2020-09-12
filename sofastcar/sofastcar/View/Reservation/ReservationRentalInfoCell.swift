@@ -387,7 +387,7 @@ class ReservationRentalInfoCell: UITableViewCell {
       $0.height.equalTo(60)
     }
   }
-  
+  // MARK: - For Cell Line
   private func configureContentViewTopBottomLayer() {
     configureContentViewTopLayer()
     configureContentViewBottomLayer()

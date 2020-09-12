@@ -32,3 +32,9 @@ protocol ReservationPaymentCellDelegte: class {
   func tapSendEmailButton(forCell cell: ReservationPaymentCell)
   func tapShowReceiptButton(forCell cell: ReservationPaymentCell)
 }
+
+protocol ReservationEtcCellDelegate: class {
+  func tapDownLoadReceipforPDF(forCell cell: ReservationEtcCell)
+  func tapShowWashingHistory(forCell cell: ReservationEtcCell)
+  func tapContectCustomerCenter(forCell cell: ReservationEtcCell)
+}
