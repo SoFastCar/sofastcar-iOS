@@ -58,6 +58,10 @@
 		C7A9C920250848A6006CA543 /* PaymentConfirmTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A9C91F250848A6006CA543 /* PaymentConfirmTableVC.swift */; };
 		C7A9C9222508510B006CA543 /* PaymentConfirmCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A9C9212508510B006CA543 /* PaymentConfirmCell.swift */; };
 		C7BD348C24F54A5700089F0D /* InitVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BD348B24F54A5700089F0D /* InitVC.swift */; };
+		C7CA53EC2509AA3F008DA68C /* ReservationDetailTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CA53EB2509AA3F008DA68C /* ReservationDetailTableVC.swift */; };
+		C7CA53EE2509AF2F008DA68C /* ReservationDetailHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CA53ED2509AF2F008DA68C /* ReservationDetailHeader.swift */; };
+		C7CA53F22509DB1E008DA68C /* ReservationRentalInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CA53F12509DB1E008DA68C /* ReservationRentalInfoCell.swift */; };
+		C7CA53F4250A01F8008DA68C /* ReservationPaymentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CA53F3250A01F8008DA68C /* ReservationPaymentCell.swift */; };
 		C7D66D1224FA925000679B99 /* DefualtUserInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D66D1124FA925000679B99 /* DefualtUserInfoVC.swift */; };
 		C7D66D1424FA930100679B99 /* DefaultUserInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D66D1324FA930100679B99 /* DefaultUserInfoView.swift */; };
 		C7D66D1624FB76D900679B99 /* CompleteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D66D1524FB76D900679B99 /* CompleteButton.swift */; };
@@ -72,6 +76,7 @@
 		C7F2E6352505FE8E0004EBF9 /* UserDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F2E6342505FE8E0004EBF9 /* UserDefault.swift */; };
 		C7F2E63A250647ED0004EBF9 /* Insurance.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F2E639250647ED0004EBF9 /* Insurance.swift */; };
 		C7F2E63C2507133B0004EBF9 /* Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F2E63B2507133B0004EBF9 /* Protocol.swift */; };
+		C7FED69B250C729C00778923 /* ReservationEtcCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FED69A250C729C00778923 /* ReservationEtcCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -136,6 +141,10 @@
 		C7A9C91F250848A6006CA543 /* PaymentConfirmTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentConfirmTableVC.swift; sourceTree = "<group>"; };
 		C7A9C9212508510B006CA543 /* PaymentConfirmCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentConfirmCell.swift; sourceTree = "<group>"; };
 		C7BD348B24F54A5700089F0D /* InitVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitVC.swift; sourceTree = "<group>"; tabWidth = 3; };
+		C7CA53EB2509AA3F008DA68C /* ReservationDetailTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationDetailTableVC.swift; sourceTree = "<group>"; };
+		C7CA53ED2509AF2F008DA68C /* ReservationDetailHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationDetailHeader.swift; sourceTree = "<group>"; };
+		C7CA53F12509DB1E008DA68C /* ReservationRentalInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationRentalInfoCell.swift; sourceTree = "<group>"; };
+		C7CA53F3250A01F8008DA68C /* ReservationPaymentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationPaymentCell.swift; sourceTree = "<group>"; };
 		C7D66D1124FA925000679B99 /* DefualtUserInfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefualtUserInfoVC.swift; sourceTree = "<group>"; };
 		C7D66D1324FA930100679B99 /* DefaultUserInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultUserInfoView.swift; sourceTree = "<group>"; };
 		C7D66D1524FB76D900679B99 /* CompleteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompleteButton.swift; sourceTree = "<group>"; };
@@ -150,6 +159,7 @@
 		C7F2E6342505FE8E0004EBF9 /* UserDefault.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefault.swift; sourceTree = "<group>"; };
 		C7F2E639250647ED0004EBF9 /* Insurance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Insurance.swift; sourceTree = "<group>"; };
 		C7F2E63B2507133B0004EBF9 /* Protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocol.swift; sourceTree = "<group>"; };
+		C7FED69A250C729C00778923 /* ReservationEtcCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationEtcCell.swift; sourceTree = "<group>"; };
 		F696BB68DE39C7A6CB2DD8B1 /* Pods-sofastcar.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sofastcar.release.xcconfig"; path = "Target Support Files/Pods-sofastcar/Pods-sofastcar.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -182,6 +192,8 @@
 			isa = PBXGroup;
 			children = (
 				7EAA8F6724FFBB510049D514 /* ReservationDashboardVC.swift */,
+				7E8473D5250729550007962F /* CarKeyVC.swift */,
+				C7CA53EB2509AA3F008DA68C /* ReservationDetailTableVC.swift */,
 				7E8473D72507BD6B0007962F /* VehicleCheckVC.swift */,
 			);
 			path = Reservation;
@@ -192,6 +204,10 @@
 			children = (
 				7EF41FC22500AB3A0030752A /* ReservationStateView.swift */,
 				7EF41FC52501F6D90030752A /* CarKeyView.swift */,
+				C7CA53ED2509AF2F008DA68C /* ReservationDetailHeader.swift */,
+				C7CA53F12509DB1E008DA68C /* ReservationRentalInfoCell.swift */,
+				C7CA53F3250A01F8008DA68C /* ReservationPaymentCell.swift */,
+				C7FED69A250C729C00778923 /* ReservationEtcCell.swift */,
 				7E8473D92507C59D0007962F /* VehicleCheckView.swift */,
 				7E8473E125088E830007962F /* TagCollectionViewCell.swift */,
 				7E8473E32509AB420007962F /* LeftAlignedTagCollectionViewFlowLayout.swift */,
@@ -623,18 +639,21 @@
 				C79A0B502501231C0061F078 /* ReservationConfirmTableVC.swift in Sources */,
 				7E8473D82507BD6B0007962F /* VehicleCheckVC.swift in Sources */,
 				C769C83424FDD99300DC8226 /* CheckDriverLicenseView.swift in Sources */,
+				C7CA53EE2509AF2F008DA68C /* ReservationDetailHeader.swift in Sources */,
 				C769C82B24FDB35600DC8226 /* DriverLicenseEnrollinitVC.swift in Sources */,
 				C72A913A24F5E32A005D464F /* SingUpInitVC.swift in Sources */,
 				BC80F8BA2502382D0044C36D /* SearchView.swift in Sources */,
 				C72A913824F5E15B005D464F /* Extension.swift in Sources */,
 				C72A914424F67D9F005D464F /* TouView.swift in Sources */,
 				C769C82924FD0A1200DC8226 /* CardEnrollView.swift in Sources */,
+				C7FED69B250C729C00778923 /* ReservationEtcCell.swift in Sources */,
 				C76B2A6324F7A799004E4CBD /* UserAuthVC.swift in Sources */,
 				7EF41FC62501F6D90030752A /* CarKeyView.swift in Sources */,
 				C7BD348C24F54A5700089F0D /* InitVC.swift in Sources */,
 				C769C82E24FDB69B00DC8226 /* DriverLicenseEnrollinitView.swift in Sources */,
 				BC80F8B82502280F0044C36D /* SearchVC.swift in Sources */,
 				C79A0B5B2504656B0061F078 /* PhoneAuthResponse.swift in Sources */,
+				C7CA53F4250A01F8008DA68C /* ReservationPaymentCell.swift in Sources */,
 				C72A913F24F60CD9005D464F /* TouVC.swift in Sources */,
 				C769C82724FD09CE00DC8226 /* CardEnrollVC.swift in Sources */,
 				C769C82524FCDEFC00DC8226 /* CommonUI.swift in Sources */,
@@ -652,6 +671,7 @@
 				BC64AE5B24F646350019703A /* CarListTableViewCell.swift in Sources */,
 				BCE8A9B82503B75C00E7BC21 /* SearchResultTableVC.swift in Sources */,
 				C79A0B542501D3B30061F078 /* ReservationConfirmCustomCell.swift in Sources */,
+				C7CA53F22509DB1E008DA68C /* ReservationRentalInfoCell.swift in Sources */,
 				BC64AE5F24F64FF40019703A /* CarListTableViewHeader.swift in Sources */,
 				BC64AE8D24F8010B0019703A /* CarListView.swift in Sources */,
 				C769C83224FDD97F00DC8226 /* CheckDriverLicenseVC.swift in Sources */,
@@ -661,6 +681,7 @@
 				C769C83824FE5E3700DC8226 /* LoginVC.swift in Sources */,
 				7E8473DA2507C59D0007962F /* VehicleCheckView.swift in Sources */,
 				7EAA8F6824FFBB510049D514 /* ReservationDashboardVC.swift in Sources */,
+				C7CA53EC2509AA3F008DA68C /* ReservationDetailTableVC.swift in Sources */,
 				C7F2E63A250647ED0004EBF9 /* Insurance.swift in Sources */,
 				C7A9C920250848A6006CA543 /* PaymentConfirmTableVC.swift in Sources */,
 				C7F2E63C2507133B0004EBF9 /* Protocol.swift in Sources */,
@@ -854,7 +875,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = X6LA4P7TFP;
+				DEVELOPMENT_TEAM = 52ZXCPY3WQ;
 				INFOPLIST_FILE = sofastcar/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
