@@ -11,7 +11,6 @@ import SnapKit
 
 class TopView: UIView {
     
-//    var shadowLayout: CAShapeLayer!
     let shadowContainer = UIView()
     let stackView = UIStackView()
     let sideBarButton = UIButton()
@@ -19,7 +18,6 @@ class TopView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
         setupUI()
         setupConstraint()
     }
@@ -27,22 +25,6 @@ class TopView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-//    override func layoutSubviews() {
-//        super.layoutSubviews()
-//        if shadowLayout == nil {
-//            shadowLayout = CAShapeLayer()
-//            shadowLayout.path = UIBezierPath(roundedRect: bounds, cornerRadius: 20).cgPath
-//            shadowLayout.fillColor = UIColor.black.cgColor
-//            shadowLayout.shadowColor = UIColor.black.cgColor
-//            shadowLayout.shadowOffset = CGSize(width: 0, height: 1)
-//            shadowLayout.shadowPath = shadowLayout.path
-//            shadowLayout.shadowOpacity = 0.5
-//            shadowLayout.shadowRadius = 3
-//            
-//            layer.insertSublayer(shadowLayout, at: 0)
-//        }
-//    }
     
     private func setupUI() {
         layer.shadowColor = UIColor.black.cgColor
@@ -55,11 +37,10 @@ class TopView: UIView {
         self.addSubview(shadowContainer)
         
         sideBarButton.backgroundColor = .white
-        sideBarButton.setImage(UIImage(named: "icons8-menu-rounded-50"), for: .normal)
-//        sideBarButton.setImage(UIImage(systemName: "flame"), for: .normal)
-//        sideBarButton.setContentHuggingPriority(UILayoutPriority(251), for: .horizontal)
+        sideBarButton.setImage(UIImage(systemName: "text.justify"), for: .normal)
         
         sideBarButton.setContentCompressionResistancePriority(UILayoutPriority(751), for: .horizontal)
+        sideBarButton.tintColor = CommonUI.mainDark
         stackView.addArrangedSubview(sideBarButton)
         
         searchButton.backgroundColor = .white
@@ -72,7 +53,6 @@ class TopView: UIView {
         stackView.axis = .horizontal
         stackView.distribution = .fillProportionally
         shadowContainer.addSubview(stackView)
-//        self.addSubview(stackView)
     }
     
     private func setupConstraint() {

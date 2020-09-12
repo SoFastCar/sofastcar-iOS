@@ -16,8 +16,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   func application(_ application: UIApplication,
                    didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
     
-    let mainVC = ReservationDashboardVC() // ReservationConfirmTableVC
-    let navigationController = UINavigationController(rootViewController: mainVC)
+    let mainVC = MainVC()
+    let navigationController = UINavigationController(rootViewController: ReservationDashboardVC())
     
     let backButtonImage = UIImage(systemName: "arrow.left")
     navigationController.navigationBar.backIndicatorImage = backButtonImage
@@ -27,6 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     window = UIWindow(frame: UIScreen.main.bounds)
     window?.rootViewController = navigationController
     window?.makeKeyAndVisible()
+    window?.overrideUserInterfaceStyle = .light // add woobin: dark mode off
     return true
   }
   
