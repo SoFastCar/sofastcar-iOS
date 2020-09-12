@@ -18,7 +18,7 @@ class TagCollectionViewCell: UICollectionViewCell {
     }
   }
   
-  fileprivate let tagLabel: UILabel = {
+  let tagLabel: UILabel = {
     let label = UILabel()
     label.font = UIFont.preferredFont(forTextStyle: .body)
     label.textColor = CommonUI.mainDark
@@ -38,6 +38,7 @@ class TagCollectionViewCell: UICollectionViewCell {
   // MARK: - Layout
   
   fileprivate func setUI() {
+    self.backgroundColor = .clear
     self.layer.borderWidth = 1
     self.layer.borderColor = UIColor.black.withAlphaComponent(0.1).cgColor
     
