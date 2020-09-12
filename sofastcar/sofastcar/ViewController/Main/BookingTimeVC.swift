@@ -40,35 +40,62 @@ class BookingTimeVC: UIViewController {
     @objc func didTapTimeButton(_ sender: RentReturnTimeButton) {
         switch sender.tag {
         case 0:
+        self.bookingTimeView.returnDatePicker.isHidden = false
+        self.bookingTimeView.rentDatePicker.alpha = 1
             UIView.animate(withDuration: 0.5, animations: {
-                self.bookingTimeView.rentDatePicker.alpha = 1
-                self.bookingTimeView.divider2.snp.makeConstraints({
-                    $0.top.equalTo(self.bookingTimeView.rentDatePicker.snp.bottom)
-                    $0.leading.equalToSuperview()
-                    $0.trailing.equalToSuperview()
-                    $0.height.equalTo(1)
-                })
-                self.bookingTimeView.returnTimeButton.snp.makeConstraints({
-                    $0.top.equalTo(self.bookingTimeView.divider2.snp.bottom)
-                    $0.leading.equalToSuperview().offset(20)
-                    $0.trailing.equalToSuperview().offset(-20)
-                    $0.height.equalToSuperview().dividedBy(10)
-                })
-                self.bookingTimeView.returnDatePicker.snp.makeConstraints({
-                    $0.top.equalTo(self.bookingTimeView.returnTimeButton.snp.bottom)
-                    $0.centerX.equalToSuperview()
-                })
+
+                if self.bookingTimeView.rentDatePicker.isHidden {
+                    self.bookingTimeView.rentDatePicker.isHidden.toggle()
+//                    self.bookingTimeView.returnDatePicker.isHidden.toggle()
+//                    self.bookingTimeView.returnDatePicker.alpha = 0
+                } else {
+                    self.bookingTimeView.rentDatePicker.isHidden.toggle()
+//                    self.bookingTimeView.returnDatePicker.isHidden.toggle()
+//                    self.bookingTimeView.returnDatePicker.alpha = 0
+                }
                 self.view.layoutIfNeeded()
             })
+//            self.bookingTimeView.tapRentButtonFlag = !self.bookingTimeView.tapRentButtonFlag
+//            if self.bookingTimeView.tapRentButtonFlag {
+//                UIView.animate(withDuration: 0.5, animations: {
+//                    self.bookingTimeView.rentStackView.snp.updateConstraints({
+//                        $0.top.equalTo(self.bookingTimeView.bookingTimeLabel.snp.bottom).offset(20)
+//                        $0.leading.equalToSuperview()
+//                        $0.trailing.equalToSuperview()
+//                        $0.height.equalTo(self.bookingTimeView.rentTimeButton).offset(100)
+//                    })
+//                    self.view.layoutIfNeeded()
+//                })
+//                
+//            } else {
+//                UIView.animate(withDuration: 0.5, animations: {
+//                    self.bookingTimeView.rentStackView.snp.updateConstraints({
+//                        $0.top.equalTo(self.bookingTimeView.bookingTimeLabel.snp.bottom).offset(20)
+//                        $0.leading.equalToSuperview()
+//                        $0.trailing.equalToSuperview()
+//                        $0.height.equalTo(self.bookingTimeView.rentTimeButton)
+//                    })
+//                    self.view.layoutIfNeeded()
+//                })
+//            }
             
         case 1:
+            UIView.animate(withDuration: 0.5, animations: {
+                if self.bookingTimeView.returnDatePicker.isHidden {
+                    self.bookingTimeView.returnDatePicker.isHidden.toggle()
+                    self.bookingTimeView.returnDatePicker.alpha = 1
+                } else {
+                    self.bookingTimeView.returnDatePicker.isHidden.toggle()
+                    self.bookingTimeView.returnDatePicker.alpha = 0
+                }
+                self.view.layoutIfNeeded()
+            })
 //            bookingTimeView.returnTimeButton.snp.makeConstraints({
 //                $0.top.equalTo(divider2.snp.bottom)
 //                $0.leading.equalToSuperview().offset(20)
 //                $0.trailing.equalToSuperview().offset(-20)
 //                $0.height.equalToSuperview().dividedBy(10)
 //            })
-            break
         default:
             break
         }
