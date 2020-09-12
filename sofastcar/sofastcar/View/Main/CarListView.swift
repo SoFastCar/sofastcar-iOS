@@ -10,11 +10,18 @@ import UIKit
 
 class CarListView: UIView {
     
+    let socarZoneData = SocarZoneData()
+    
+    var decoView = UIView()
+    var decoBar = UIView()
     let parkingLotInfoButton = UIButton()
-    let setDateButton = UIButton()
+    let socarZoneInfoButton = SocarZoneInfoButton()
+    let setBookingTimeButton = SetBookingTimeButton(on: .carList)
     let stackView = UIStackView()
     let carListTableView = UITableView()
-
+    let divider1 = UIView()
+    let divider2 = UIView()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -27,21 +34,31 @@ class CarListView: UIView {
     }
     
     private func setupUI() {
-        parkingLotInfoButton.setTitle("주차장 정보", for: .normal)
-        parkingLotInfoButton.backgroundColor = .systemRed
-        stackView.addArrangedSubview(parkingLotInfoButton)
+        self.backgroundColor = .systemBackground
+        self.layer.shadowOpacity = 0.3
         
-        setDateButton.setTitle("예약일 변경", for: .normal)
-        setDateButton.backgroundColor = .systemBlue
-        stackView.addArrangedSubview(setDateButton)
+        decoBar.backgroundColor = .systemGray6
+        decoBar.layer.cornerRadius = 2
+        decoView.addSubview(decoBar)
+        decoView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        decoView.layer.cornerRadius = 5
+        decoView.clipsToBounds = true
+        self.addSubview(decoView)
         
-        stackView.axis = .vertical
-        stackView.distribution = .fillEqually
-        self.addSubview(stackView)
+        divider1.backgroundColor = .systemGray6
+        self.addSubview(divider1)
         
-        // to be moved to MainVC
-//        carListTableView.delegate = self
-//        carListTableView.dataSource = self
+        socarZoneInfoButton.configuration(socarZoneData.name.randomElement() ?? "이름 없음", socarZoneData.groundLevel.randomElement() ?? "모름", socarZoneData.discription.randomElement() ?? "설명 없음", socarZoneData.imageName.randomElement() ?? "사진 없음")
+        self.addSubview(socarZoneInfoButton)
+        
+        divider1.backgroundColor = .systemGray6
+        self.addSubview(divider1)
+        
+        self.addSubview(setBookingTimeButton)
+        
+        divider2.backgroundColor = .systemGray6
+        self.addSubview(divider2)
+        
         carListTableView.bounces = false
         
         let visualEffectView = UIVisualEffectView()
@@ -52,36 +69,52 @@ class CarListView: UIView {
     }
     
     private func setupConstraint() {
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.snp.makeConstraints({
-            $0.top.equalTo(self)
-            $0.leading.equalTo(self)
-            $0.trailing.equalTo(self)
+        [socarZoneInfoButton, setBookingTimeButton, carListTableView, decoBar, decoView, divider1, divider2].forEach({
+            $0.translatesAutoresizingMaskIntoConstraints = false
         })
-        carListTableView.translatesAutoresizingMaskIntoConstraints = false
+        
+        decoView.snp.makeConstraints({
+            $0.top.equalToSuperview()
+            $0.leading.equalToSuperview()
+            $0.trailing.equalToSuperview()
+            $0.height.equalTo(20)
+        })
+        decoBar.snp.makeConstraints({
+            $0.centerY.equalToSuperview()
+            $0.centerX.equalToSuperview()
+            $0.width.equalTo(30)
+            $0.height.equalTo(3)
+        })
+        socarZoneInfoButton.snp.makeConstraints({
+            $0.top.equalTo(decoView.snp.bottom)
+            $0.leading.equalToSuperview()
+            $0.trailing.equalToSuperview()
+            $0.height.equalTo((UIScreen.main.bounds.height / 2) * 0.25)
+        })
+        divider1.snp.makeConstraints({
+            $0.top.equalTo(socarZoneInfoButton.snp.bottom)
+            $0.leading.equalToSuperview().offset(20)
+            $0.trailing.equalToSuperview().offset(-20)
+            $0.height.equalTo(1)
+        })
+        setBookingTimeButton.snp.makeConstraints({
+            $0.top.equalTo(divider1.snp.bottom)
+            $0.leading.equalToSuperview().offset(-1)
+            $0.trailing.equalToSuperview().offset(1)
+            $0.height.equalTo((UIScreen.main.bounds.height / 2) * 0.15)
+        })
+        divider2.snp.makeConstraints({
+            $0.top.equalTo(setBookingTimeButton.snp.bottom)
+            $0.leading.equalToSuperview().offset(20)
+            $0.trailing.equalToSuperview().offset(-20)
+            $0.height.equalTo(1)
+        })
+        
         carListTableView.snp.makeConstraints({
-            $0.top.equalTo(stackView.snp.bottom)
-            $0.leading.equalTo(self)
-            $0.trailing.equalTo(self)
-            $0.bottom.equalTo(self)
+            $0.top.equalTo(divider2.snp.bottom)
+            $0.leading.equalToSuperview()
+            $0.trailing.equalToSuperview()
+            $0.bottom.equalToSuperview()
         })
     }
 }
-
-// to be moved to MainVC
-//extension CarListView: UITableViewDataSource {
-//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        30
-//    }
-//    
-//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        return UITableViewCell()
-//    }
-//
-//}
-//
-//extension CarListView: UITableViewDelegate {
-//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        80
-//    }
-//}
