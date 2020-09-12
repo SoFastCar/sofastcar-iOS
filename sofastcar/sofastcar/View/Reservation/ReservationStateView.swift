@@ -204,7 +204,7 @@ class ReservationStateView: UIScrollView {
     return view
   }()
   // reservation
-  fileprivate let vehiclePictureViewButton: UIView = {
+  let vehiclePictureViewButton: UIView = {
     let view = UIView()
     view.backgroundColor = CommonUI.mainBlue
     view.layer.cornerRadius = 5
@@ -298,7 +298,6 @@ class ReservationStateView: UIScrollView {
   
   // MARK: - UI
   fileprivate func setUI() {
-    self.layer.cornerRadius = 5
     self.contentSize = CGSize(width: self.frame.width, height: contentView.frame.height)
     
     setConstraints()
@@ -306,9 +305,12 @@ class ReservationStateView: UIScrollView {
   
   fileprivate func setConstraints() {
     let guid = contentView.safeAreaLayoutGuide
-    self.frame = CGRect(x: 0, y: 0,
-                        width: UIScreen.main.bounds.width,
-                        height: UIScreen.main.bounds.height)
+    self.frame = CGRect(
+      x: 0,
+      y: 0,
+      width: UIScreen.main.bounds.width,
+      height: UIScreen.main.bounds.height
+    )
     self.addSubview(contentView)
     
     var heightPadding: CGFloat = 0
@@ -318,7 +320,6 @@ class ReservationStateView: UIScrollView {
     
     self.contentSize = .init(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height+heightPadding-44)
     contentView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height+heightPadding-144)
-    contentView.layoutMargins = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
     
     [reservationCarImage, numberPlateLabel, carInfomationButton, carInfoAndOilStackView, reservationTimeStackView, reservationProgressView, reservationCommentLabel, reservationStateView].forEach {
       contentView.addSubview($0)
@@ -366,6 +367,7 @@ class ReservationStateView: UIScrollView {
       $0.top.equalTo(reservationCommentLabel.snp.bottom).offset(20)
       $0.leading.equalTo(guid).offset(20)
       $0.trailing.equalTo(guid).offset(-20)
+      $0.height.equalTo(240)
     }
     
     [vehiclePictureViewButton, reservationPlaceWrapView].forEach {
@@ -377,7 +379,7 @@ class ReservationStateView: UIScrollView {
       $0.top.equalTo(reservationCommentLabel.snp.bottom).offset(20)
       $0.leading.equalTo(guid).offset(20)
       $0.trailing.equalTo(guid).offset(-20)
-      $0.height.equalTo(110)
+      $0.height.equalTo(120)
     }
     
     [reservationStateLabel, reservationStateSubLabel, reservationStatsWarningIcon, reservationStateMessageLabel].forEach {
@@ -432,6 +434,7 @@ class ReservationStateView: UIScrollView {
       $0.leading.equalTo(reservationPlaceStateSubLabel.snp.trailing).offset(40)
     }
   }
+  
   // MARK: - Action
   
   @objc func didTapButton(_ sender: UIButton) {
