@@ -75,6 +75,20 @@ extension UINavigationController {
   
 }
 
+<<<<<<< HEAD
+// MARK: - Hide Keyboard
+
+extension UIViewController {
+  func hideKeyboard() {
+    let tap: UITapGestureRecognizer = UITapGestureRecognizer(
+      target: self,
+      action: #selector(UIViewController.dismissKeyboard))
+    view.addGestureRecognizer(tap)
+  }
+  @objc func dismissKeyboard() {
+    view.endEditing(true)
+  }
+}
 //extension CALayer {
 //    enum ViewSide {
 //        case top, left, right, bottom
@@ -140,4 +154,5 @@ extension UIViewController {
   @objc func dismissKeyboard() {
     view.endEditing(true)
   }
+>>>>>>> newDevelop
 }

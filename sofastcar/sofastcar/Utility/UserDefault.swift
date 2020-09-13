@@ -17,4 +17,8 @@ extension UserDefaults {
     guard let userAuthKey = UserDefaults.standard.value(forKey: "UserAuthToken") as? String else { return nil }
     return userAuthKey
   }
+  
+  static func resetUserAuthTocken() {
+    UserDefaults.standard.set(nil, forKey: "UserAuthToken")
+  }
 }

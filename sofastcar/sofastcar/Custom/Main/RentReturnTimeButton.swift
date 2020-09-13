@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 public enum TimeType {
     case rentT
     case returnT
@@ -79,6 +78,4 @@ class RentReturnTimeButton: UIButton {
     func setupTime(with time: String) {
         titleLabel?.text = time
     }
-    
-    
 }
