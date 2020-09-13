@@ -55,7 +55,7 @@ class LoginVC: UIViewController {
     guard let userid = myView.emailTextField.text else { return }
     guard let userPassword = myView.passwordTextField.text else { return }
     
-    let url = URL(string: "https://sofastcar.moorekwon.xyz/api-jwt-auth/")!
+    let url = URL(string: "https://sofastcar.moorekwon.xyz/api-jwt-auth")!
     
     let userLoginAuthPatameters = [
       "email": userid,
