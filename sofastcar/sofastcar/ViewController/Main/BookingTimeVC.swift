@@ -21,8 +21,6 @@ class BookingTimeVC: UIViewController {
     private func setupUI() {
         bookingTimeView.rentTimeButton.addTarget(self, action: #selector(didTapTimeButton(_:)), for: .touchUpInside)
         bookingTimeView.returnTimeButton.addTarget(self, action: #selector(didTapTimeButton(_:)), for: .touchUpInside)
-        
-        
         bookingTimeView.dismissButton.addTarget(self, action: #selector(tapDismiss(_:)), for: .touchUpInside)
         view.addSubview(bookingTimeView)
     }
@@ -40,23 +38,6 @@ class BookingTimeVC: UIViewController {
     @objc func didTapTimeButton(_ sender: RentReturnTimeButton) {
         switch sender.tag {
         case 0:
-//            UIView.animate(withDuration: 0.5, animations: {
-//                self.bookingTimeView.rentDatePicker.snp.updateConstraints({
-//                    $0.height.equalTo(100)
-//                })
-//                self.view.layoutIfNeeded()
-//            })
-//        self.bookingTimeView.returnDatePicker.isHidden = false
-//        self.bookingTimeView.rentDatePicker.alpha = 1
-//            UIView.animate(withDuration: 0.5, animations: {
-//
-//                if self.bookingTimeView.rentDatePicker.isHidden {
-//                    self.bookingTimeView.rentDatePicker.isHidden.toggle()
-//                } else {
-//                    self.bookingTimeView.rentDatePicker.isHidden.toggle()
-//                }
-//                self.view.layoutIfNeeded()
-//            })
             self.bookingTimeView.tapRentButtonFlag = !self.bookingTimeView.tapRentButtonFlag
             if self.bookingTimeView.tapRentButtonFlag {
                 UIView.animate(withDuration: 0.5, animations: {

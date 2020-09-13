@@ -269,9 +269,9 @@ class MainVC: UIViewController {
 //        let northEast = NMGLatLng(lat: 44.35, lng: 132)
 //        let bounds = NMGLatLngBounds(southWest: southWest, northEast: northEast)
         
-        let southWestCoord = naverMapView.mapView.projection.latlng(from: CGPoint(x: 0, y: 0))
-        let northEastCoord = naverMapView.mapView.projection.latlng(from: CGPoint(x: view.frame.width, y: view.frame.height))
-        let bounds = NMGLatLngBounds(southWest: southWestCoord, northEast: northEastCoord)
+//        let southWestCoord = naverMapView.mapView.projection.latlng(from: CGPoint(x: 0, y: 0))
+//        let northEastCoord = naverMapView.mapView.projection.latlng(from: CGPoint(x: view.frame.width, y: view.frame.height))
+//        let bounds = NMGLatLngBounds(southWest: southWestCoord, northEast: northEastCoord)
         
         naverMapView.mapView.moveCamera(NMFCameraUpdate(position: defaultCamPosition))
         marker.position = defaultMarkerPosition
@@ -403,11 +403,10 @@ extension MainVC: NMFMapViewCameraDelegate {
         
         let meterPerPixel = mapView.projection.metersPerPixel(atLatitude: mapView.cameraPosition.target.lat, zoom: mapView.cameraPosition.zoom)
         
-        let southWestCoord = naverMapView.mapView.projection.latlng(from: CGPoint(x: view.frame.width, y: 0))
-        let northEastCoord = naverMapView.mapView.projection.latlng(from: CGPoint(x: 0, y: view.frame.height))
-        let bounds = NMGLatLngBounds(southWest: southWestCoord, northEast: northEastCoord)
-        
-        print("축적도: \(meterPerPixel), 북동 위경도: \(southWestCoord), 남서 위경도: \(northEastCoord)")
+//        let southWestCoord = naverMapView.mapView.projection.latlng(from: CGPoint(x: view.frame.width, y: 0))
+//        let northEastCoord = naverMapView.mapView.projection.latlng(from: CGPoint(x: 0, y: view.frame.height))
+//        let bounds = NMGLatLngBounds(southWest: southWestCoord, northEast: northEastCoord)
+//        print("축적도: \(meterPerPixel), 북동 위경도: \(southWestCoord), 남서 위경도: \(northEastCoord), 바운즈: \(bounds)")
         
         callPositionMarker.position = camPosition
         topView.searchButton.setTitle("Geocoding", for: .normal)
@@ -442,10 +441,8 @@ extension MainVC: UIGestureRecognizerDelegate {
             return true
         }
     }
-//    
 //    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
 //        print(#function)
-////        return false
 //        if topAreaFlag,
 //        !carListOnTopFlag {
 //            print("3")

@@ -25,11 +25,11 @@
 		BC80F8B82502280F0044C36D /* SearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC80F8B72502280F0044C36D /* SearchVC.swift */; };
 		BC80F8BA2502382D0044C36D /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC80F8B92502382D0044C36D /* SearchView.swift */; };
 		BC889688250B980400201499 /* RentReturnTimeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC889687250B980400201499 /* RentReturnTimeButton.swift */; };
+		BCBD006D250DF535000B02E3 /* SearchResultTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCBD006C250DF535000B02E3 /* SearchResultTableViewCell.swift */; };
 		BCC05F6E250DE5CD009B8805 /* CarListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC05F6D250DE5CD009B8805 /* CarListView.swift */; };
 		BCC05F70250DE5E6009B8805 /* CarListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC05F6F250DE5E6009B8805 /* CarListTableViewCell.swift */; };
 		BCC816162505FAB500BD0BC3 /* TopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC816152505FAB500BD0BC3 /* TopView.swift */; };
 		BCC8161925066CE000BD0BC3 /* NMFData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC8161825066CE000BD0BC3 /* NMFData.swift */; };
-		BCC8161B25067E3300BD0BC3 /* SearchResultTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC8161A25067E3300BD0BC3 /* SearchResultTableViewCell.swift */; };
 		BCC8161D2506855300BD0BC3 /* SocarZoneData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC8161C2506855300BD0BC3 /* SocarZoneData.swift */; };
 		BCEE1A842509BB6300AF0B62 /* SetBookingTimeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCEE1A832509BB6300AF0B62 /* SetBookingTimeButton.swift */; };
 		BCF849362508D1DC00215B0C /* AxaButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCF849352508D1DC00215B0C /* AxaButton.swift */; };
@@ -65,7 +65,6 @@
 		C79A0B57250224F80061F078 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = C79A0B56250224F80061F078 /* Alamofire */; };
 		C79A0B5B2504656B0061F078 /* PhoneAuthResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C79A0B5A2504656B0061F078 /* PhoneAuthResponse.swift */; };
 		C7A454AE24FA0C9900FA08B7 /* SelectPopupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A454AD24FA0C9900FA08B7 /* SelectPopupVC.swift */; };
-		C7A9C91E2507B314006CA543 /* TopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A9C91D2507B314006CA543 /* TopView.swift */; };
 		C7A9C920250848A6006CA543 /* PaymentConfirmTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A9C91F250848A6006CA543 /* PaymentConfirmTableVC.swift */; };
 		C7A9C9222508510B006CA543 /* PaymentConfirmCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A9C9212508510B006CA543 /* PaymentConfirmCell.swift */; };
 		C7BD348C24F54A5700089F0D /* InitVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BD348B24F54A5700089F0D /* InitVC.swift */; };
@@ -121,11 +120,11 @@
 		BC80F8B72502280F0044C36D /* SearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVC.swift; sourceTree = "<group>"; };
 		BC80F8B92502382D0044C36D /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SearchView.swift; path = sofastcar/View/Main/SearchView.swift; sourceTree = SOURCE_ROOT; };
 		BC889687250B980400201499 /* RentReturnTimeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RentReturnTimeButton.swift; sourceTree = "<group>"; };
+		BCBD006C250DF535000B02E3 /* SearchResultTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultTableViewCell.swift; sourceTree = "<group>"; };
 		BCC05F6D250DE5CD009B8805 /* CarListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CarListView.swift; path = sofastcar/View/Main/CarListView.swift; sourceTree = SOURCE_ROOT; };
 		BCC05F6F250DE5E6009B8805 /* CarListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarListTableViewCell.swift; sourceTree = "<group>"; };
 		BCC816152505FAB500BD0BC3 /* TopView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopView.swift; sourceTree = "<group>"; };
 		BCC8161825066CE000BD0BC3 /* NMFData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NMFData.swift; sourceTree = "<group>"; };
-		BCC8161A25067E3300BD0BC3 /* SearchResultTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SearchResultTableViewCell.swift; path = "/Users/woobincheon/Documents/fcios11/06-Code/finalProject/sofastcar-iOS/sofastcar/sofastcar/View/Main/SearchResultTableViewCell.swift"; sourceTree = "<absolute>"; };
 		BCC8161C2506855300BD0BC3 /* SocarZoneData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SocarZoneData.swift; path = sofastcar/Model/Main/SocarZoneData.swift; sourceTree = SOURCE_ROOT; };
 		BCEE1A832509BB6300AF0B62 /* SetBookingTimeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetBookingTimeButton.swift; sourceTree = "<group>"; };
 		BCF849352508D1DC00215B0C /* AxaButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AxaButton.swift; sourceTree = "<group>"; };
@@ -159,7 +158,6 @@
 		C79A0B532501D3B30061F078 /* ReservationConfirmCustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationConfirmCustomCell.swift; sourceTree = "<group>"; };
 		C79A0B5A2504656B0061F078 /* PhoneAuthResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneAuthResponse.swift; sourceTree = "<group>"; };
 		C7A454AD24FA0C9900FA08B7 /* SelectPopupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectPopupVC.swift; sourceTree = "<group>"; };
-		C7A9C91D2507B314006CA543 /* TopView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopView.swift; sourceTree = "<group>"; };
 		C7A9C91F250848A6006CA543 /* PaymentConfirmTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentConfirmTableVC.swift; sourceTree = "<group>"; };
 		C7A9C9212508510B006CA543 /* PaymentConfirmCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentConfirmCell.swift; sourceTree = "<group>"; };
 		C7BD348B24F54A5700089F0D /* InitVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitVC.swift; sourceTree = "<group>"; tabWidth = 3; };
@@ -307,6 +305,11 @@
 			isa = PBXGroup;
 			children = (
 				7E8473E62509FBD00007962F /* LeftAlignedCollectionViewFlowLayout.swift */,
+				BC25C9F32507609A00382B9C /* SocarZoneInfoButton.swift */,
+				BCEE1A832509BB6300AF0B62 /* SetBookingTimeButton.swift */,
+				BC889687250B980400201499 /* RentReturnTimeButton.swift */,
+				BCF849352508D1DC00215B0C /* AxaButton.swift */,
+				BC25C9FB2507AA1500382B9C /* InsuranceMenuItemButton.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -344,19 +347,13 @@
 			isa = PBXGroup;
 			children = (
 				BC80F8B92502382D0044C36D /* SearchView.swift */,
+				BCBD006C250DF535000B02E3 /* SearchResultTableViewCell.swift */,
 				BCC816152505FAB500BD0BC3 /* TopView.swift */,
-				BCC8161A25067E3300BD0BC3 /* SearchResultTableViewCell.swift */,
-				BCEE1A832509BB6300AF0B62 /* SetBookingTimeButton.swift */,
 				BC30586F250B650300CC2DFC /* BookingTimeView.swift */,
-				BC889687250B980400201499 /* RentReturnTimeButton.swift */,
 				BCC05F6D250DE5CD009B8805 /* CarListView.swift */,
 				BCC05F6F250DE5E6009B8805 /* CarListTableViewCell.swift */,
-				BC25C9F32507609A00382B9C /* SocarZoneInfoButton.swift */,
 				BC25C9F92507A93500382B9C /* InsuranceMenuView.swift */,
 				BC25C9FD2507AA7A00382B9C /* InsuranceMenuHeaderView.swift */,
-				BC25C9FB2507AA1500382B9C /* InsuranceMenuItemButton.swift */,
-				BCF849352508D1DC00215B0C /* AxaButton.swift */,
-				C7A9C91D2507B314006CA543 /* TopView.swift */,
 				C7592015250773A700778849 /* ReservationConfirmCVCell.swift */,
 				C7A9C9212508510B006CA543 /* PaymentConfirmCell.swift */,
 			);
@@ -696,7 +693,6 @@
 				C7BD348C24F54A5700089F0D /* InitVC.swift in Sources */,
 				C769C82E24FDB69B00DC8226 /* DriverLicenseEnrollinitView.swift in Sources */,
 				BC305872250B967500CC2DFC /* BookingTimeVC.swift in Sources */,
-				BCC8161B25067E3300BD0BC3 /* SearchResultTableViewCell.swift in Sources */,
 				BC80F8B82502280F0044C36D /* SearchVC.swift in Sources */,
 				C79A0B5B2504656B0061F078 /* PhoneAuthResponse.swift in Sources */,
 				C7CA53F4250A01F8008DA68C /* ReservationPaymentCell.swift in Sources */,
@@ -705,7 +701,6 @@
 				BCC8161925066CE000BD0BC3 /* NMFData.swift in Sources */,
 				C769C82724FD09CE00DC8226 /* CardEnrollVC.swift in Sources */,
 				C769C82524FCDEFC00DC8226 /* CommonUI.swift in Sources */,
-				C7A9C91E2507B314006CA543 /* TopView.swift in Sources */,
 				C7A9C9222508510B006CA543 /* PaymentConfirmCell.swift in Sources */,
 				C79A0B522501274F0061F078 /* ReservationConfirmTableHeaderView.swift in Sources */,
 				C7D66D1624FB76D900679B99 /* CompleteButton.swift in Sources */,
@@ -729,6 +724,7 @@
 				7E8473E42509AB420007962F /* LeftAlignedTagCollectionViewFlowLayout.swift in Sources */,
 				C769C83A24FE5E5100DC8226 /* LoginView.swift in Sources */,
 				C76B2A6524F7A7BB004E4CBD /* UserAuthScrollView.swift in Sources */,
+				BCBD006D250DF535000B02E3 /* SearchResultTableViewCell.swift in Sources */,
 				C769C83824FE5E3700DC8226 /* LoginVC.swift in Sources */,
 				7E8473DA2507C59D0007962F /* VehicleCheckView.swift in Sources */,
 				7EAA8F6824FFBB510049D514 /* ReservationDashboardVC.swift in Sources */,
