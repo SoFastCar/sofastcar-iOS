@@ -16,6 +16,7 @@
 		7EAA8F6824FFBB510049D514 /* ReservationDashboardVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EAA8F6724FFBB510049D514 /* ReservationDashboardVC.swift */; };
 		7EF41FC32500AB3A0030752A /* ReservationStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF41FC22500AB3A0030752A /* ReservationStateView.swift */; };
 		7EF41FC62501F6D90030752A /* CarKeyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF41FC52501F6D90030752A /* CarKeyView.swift */; };
+		BC3F2E9A250E49B3003E2C44 /* EndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3F2E99250E49B3003E2C44 /* EndPoint.swift */; };
 		BC4F3A05250E01B400B7E1E7 /* SearchResultTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4F39FE250E01B300B7E1E7 /* SearchResultTableViewCell.swift */; };
 		BC4F3A06250E01B400B7E1E7 /* CarListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4F39FF250E01B300B7E1E7 /* CarListView.swift */; };
 		BC4F3A07250E01B400B7E1E7 /* CarListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4F3A00250E01B300B7E1E7 /* CarListTableViewCell.swift */; };
@@ -112,6 +113,7 @@
 		7EF41FC22500AB3A0030752A /* ReservationStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationStateView.swift; sourceTree = "<group>"; };
 		7EF41FC52501F6D90030752A /* CarKeyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarKeyView.swift; sourceTree = "<group>"; };
 		7EFAC68625063594005E47C8 /* TopView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopView.swift; sourceTree = "<group>"; };
+		BC3F2E99250E49B3003E2C44 /* EndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndPoint.swift; sourceTree = "<group>"; };
 		BC4F39FE250E01B300B7E1E7 /* SearchResultTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResultTableViewCell.swift; sourceTree = "<group>"; };
 		BC4F39FF250E01B300B7E1E7 /* CarListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarListView.swift; sourceTree = "<group>"; };
 		BC4F3A00250E01B300B7E1E7 /* CarListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarListTableViewCell.swift; sourceTree = "<group>"; };
@@ -249,6 +251,7 @@
 				C769C82424FCDEFC00DC8226 /* CommonUI.swift */,
 				C7F2E6342505FE8E0004EBF9 /* UserDefault.swift */,
 				C7F2E63B2507133B0004EBF9 /* Protocol.swift */,
+				BC3F2E99250E49B3003E2C44 /* EndPoint.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -330,9 +333,9 @@
 		C79A0B4D250122B40061F078 /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				BC4F3A0D250E01D000B7E1E7 /* BookingTimeVC.swift */,
 				BC4F3A0C250E01D000B7E1E7 /* MainVC.swift */,
 				BC4F3A0E250E01D000B7E1E7 /* SearchVC.swift */,
+				BC4F3A0D250E01D000B7E1E7 /* BookingTimeVC.swift */,
 				C7A9C91F250848A6006CA543 /* PaymentConfirmTableVC.swift */,
 			);
 			path = Main;
@@ -734,6 +737,7 @@
 				BC4F3A1B250E01FE00B7E1E7 /* SetBookingTimeButton.swift in Sources */,
 				BC4F3A09250E01B400B7E1E7 /* BookingTimeView.swift in Sources */,
 				7EF41FC32500AB3A0030752A /* ReservationStateView.swift in Sources */,
+				BC3F2E9A250E49B3003E2C44 /* EndPoint.swift in Sources */,
 				BC4F3A29250E029B00B7E1E7 /* CarKeyViewController.swift in Sources */,
 				BC4F3A08250E01B400B7E1E7 /* InsuranceMenuView.swift in Sources */,
 				C7592016250773A700778849 /* ReservationConfirmCVCell.swift in Sources */,

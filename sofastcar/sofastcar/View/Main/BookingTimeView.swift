@@ -24,6 +24,8 @@ class BookingTimeView: UIView {
     let divider2 = UIView()
     let rentStackView = UIStackView()
     let returnStackView = UIStackView()
+//    let rentContentView = UIView()
+//    let returnContentView = UIView()
     let dayUnitButton = UIButton()
     let hourUnitButton = UIButton()
     let thirtyMinUnitButton = UIButton()
@@ -53,9 +55,12 @@ class BookingTimeView: UIView {
         
         divider1.backgroundColor = .systemGray6
         rentStackView.addArrangedSubview(divider1)
+//        rentContentView.addSubview(divider1)
         
         rentTimeButton.tag = 0
         rentStackView.addArrangedSubview(rentTimeButton)
+//        rentContentView.addSubview(rentTimeButton)
+        
         
         [rentDatePicker, returnDatePicker].forEach({
             $0.datePickerMode = .dateAndTime
@@ -63,36 +68,45 @@ class BookingTimeView: UIView {
             $0.minuteInterval = 10
         })
         rentStackView.addArrangedSubview(rentDatePicker)
+//        rentContentView.addSubview(rentDatePicker)
         
         rentStackView.axis = .vertical
-        rentStackView.distribution = .fillProportionally
+        rentStackView.distribution = .fill
         self.addSubview(rentStackView)
+//        self.addSubview(rentContentView)
         
         divider2.backgroundColor = .systemGray6
         returnStackView.addArrangedSubview(divider2)
+//        returnContentView.addSubview(divider2)
         
         returnTimeButton.tag = 1
         returnTimeButton.backgroundColor = .white
         returnStackView.addArrangedSubview(returnTimeButton)
+//        returnContentView.addSubview(returnTimeButton)
         
         dayUnitButton.setTitle("+1일", for: .normal)
         hourUnitButton.setTitle("+1시간", for: .normal)
         thirtyMinUnitButton.setTitle("+30분", for: .normal)
         [dayUnitButton, hourUnitButton, thirtyMinUnitButton].forEach({
             timeUnitStackView.addArrangedSubview($0)
-//            $0.titleLabel?.font = .systemFont(ofSize: 10, weight: .regular)
-//            $0.titleLabel?.textColor = .lightGray
+            $0.layer.borderWidth = 1
+            $0.layer.borderColor = UIColor.lightGray.cgColor
+            $0.titleLabel?.font = .systemFont(ofSize: 15, weight: .regular)
+            $0.setTitleColor(CommonUI.mainDark, for: .normal)
         })
         timeUnitStackView.axis = .horizontal
-        timeUnitStackView.distribution = .fillEqually
+        timeUnitStackView.distribution = .equalSpacing
         returnStackView.addArrangedSubview(timeUnitStackView)
+//        returnContentView.addSubview(timeUnitStackView)
         
         returnDatePicker.backgroundColor = .white
         returnStackView.addArrangedSubview(returnDatePicker)
+//        returnContentView.addSubview(returnDatePicker)
         
         returnStackView.axis = .vertical
-        returnStackView.distribution = .fillProportionally
+        returnStackView.distribution = .fill
         self.addSubview(returnStackView)
+//        self.addSubview(returnContentView)
         
         confirmButton.setTitle("확인", for: .normal)
         confirmButton.titleLabel?.textColor = .white
@@ -102,7 +116,7 @@ class BookingTimeView: UIView {
     
     private func setupConstraint() {
         [dismissButton, titleLabel, bookingTimeLabel, rentTimeButton, returnTimeButton,
-            rentDatePicker, returnDatePicker, confirmButton, divider1, divider2, rentStackView, returnStackView, timeUnitStackView].forEach({
+            rentDatePicker, returnDatePicker, confirmButton, divider1, divider2, rentStackView, returnStackView, /*rentContentView, returnContentView,*/ timeUnitStackView].forEach({
                 $0.translatesAutoresizingMaskIntoConstraints = false
             })
         dismissButton.snp.makeConstraints({
@@ -132,13 +146,19 @@ class BookingTimeView: UIView {
         rentDatePicker.snp.makeConstraints({
             $0.top.equalTo(rentTimeButton.snp.bottom)
             $0.centerX.equalToSuperview()
-            $0.height.equalTo(0)
+            $0.height.equalTo(100)
         })
         rentStackView.snp.makeConstraints({
             $0.top.equalTo(bookingTimeLabel.snp.bottom).offset(20)
             $0.leading.equalToSuperview()
             $0.trailing.equalToSuperview()
         })
+//        rentContentView.snp.makeConstraints({
+//            $0.top.equalTo(bookingTimeLabel.snp.bottom).offset(20)
+//            $0.leading.equalToSuperview()
+//            $0.trailing.equalToSuperview()
+//            $0.height.equalTo(161)
+//        })
         divider2.snp.makeConstraints({
             $0.top.equalToSuperview()
             $0.leading.equalToSuperview()
@@ -153,7 +173,8 @@ class BookingTimeView: UIView {
         })
         timeUnitStackView.snp.makeConstraints({
             $0.top.equalTo(returnTimeButton.snp.bottom).offset(20)
-            $0.leading.equalToSuperview().offset(100)
+            $0.trailing.equalToSuperview().offset(-40)
+            $0.width.equalTo(50)
         })
         returnDatePicker.snp.makeConstraints({
             $0.top.equalTo(timeUnitStackView.snp.bottom).offset(20)
@@ -165,6 +186,11 @@ class BookingTimeView: UIView {
             $0.leading.equalToSuperview()
             $0.trailing.equalToSuperview()
         })
+//        returnContentView.snp.makeConstraints({
+//            $0.top.equalTo(rentContentView.snp.bottom)
+//            $0.leading.equalToSuperview()
+//            $0.trailing.equalToSuperview()
+//        })
         confirmButton.snp.makeConstraints({
             $0.leading.equalToSuperview()
             $0.trailing.equalToSuperview()

@@ -31,7 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     navigationController.navigationBar.topItem?.title = ""
 
     window = UIWindow(frame: UIScreen.main.bounds)
-    window?.rootViewController = navigationController
+    window?.rootViewController = rootView
     window?.makeKeyAndVisible()
     window?.overrideUserInterfaceStyle = .light // add woobin: dark mode off
     return true

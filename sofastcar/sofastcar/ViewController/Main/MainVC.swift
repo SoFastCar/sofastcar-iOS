@@ -9,6 +9,7 @@
 // 네이버맵 인증 키 10nhse2dsn(우빈), xexx2450ca(광수)
 
 import UIKit
+import Foundation
 import NMapsMap
 
 public let defaultCamPosition = NMFCameraPosition(NMGLatLng(lat: 37.549303, lng: 127.057221),
@@ -41,6 +42,7 @@ class MainVC: UIViewController {
     lazy var visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
     lazy var visualEffectView2 = UIVisualEffectView(effect: UIBlurEffect(style: .dark)) 
     let setBookingTimeButton = SetBookingTimeButton(on: .mainVC)
+    let backCircleButton = UIButton()
     
     // MARK: - View Life Cycle        
     override func viewDidLoad() {
@@ -50,6 +52,7 @@ class MainVC: UIViewController {
         setupConstraint()
         setupMarkers()
         activateSearchView()
+        networking()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -59,6 +62,64 @@ class MainVC: UIViewController {
             self.setBookingTimeButton.frame.origin.y = self.view.frame.height - self.setBookingTimeButton.frame.height
         })
         
+    }
+    // MARK: - Network
+    func networking() {
+        
+        
+        // 특정 쏘카 존
+        guard let url = URL(string: "https://sofastcar.moorekwon.xyz/carzones/240") else {
+            return print("URL error")
+        }
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue("JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxMiwidXNlcm5hbWUiOiJnaG9zdEBleGFtcGxlLmNvbSIsImV4cCI6MTYwMDE2ODc1NywiZW1haWwiOiJnaG9zdEBleGFtcGxlLmNvbSIsIm9yaWdfaWF0IjoxNTk5NTYzOTU3fQ.zjJwe8Dx-NP1pQygSEevvAjLD39dqQm2cU-HDq5vHcw", forHTTPHeaderField: "Authorization")
+        
+        let task = URLSession.shared.dataTask(with: request) {(data, response, error) in
+            guard error == nil else { return print("error: \(error!.localizedDescription)")}
+            guard let responseCode = response as? HTTPURLResponse,
+                (200...400).contains(responseCode.statusCode) else { return print("response: \(response)") }
+            print(responseCode.statusCode)
+            guard let responseData = data else { return print("No data")}
+            print(responseData)
+            let jsonDecoder = JSONDecoder()
+            do {
+                let decodedData = try jsonDecoder.decode(SocarZoneData.self, from: responseData)
+                print(decodedData)
+                
+            } catch {
+                print("docode error")
+            }
+        }
+        task.resume()
+        
+        // 반경 쏘카 존
+        guard let url2 = URL(string: "https://sofastcar.moorekwon.xyz/carzones/list_by_distance?lat=37.54&lon=127.04&distance=1") else {
+            return print("URL2 error")
+        }
+        var request2 = URLRequest(url: url2)
+        request2.httpMethod = "GET"
+        request2.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request2.addValue("JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxMiwidXNlcm5hbWUiOiJnaG9zdEBleGFtcGxlLmNvbSIsImV4cCI6MTYwMDE2ODc1NywiZW1haWwiOiJnaG9zdEBleGFtcGxlLmNvbSIsIm9yaWdfaWF0IjoxNTk5NTYzOTU3fQ.zjJwe8Dx-NP1pQygSEevvAjLD39dqQm2cU-HDq5vHcw", forHTTPHeaderField: "Authorization")
+        
+        let task2 = URLSession.shared.dataTask(with: request2) {(data, response, error) in
+            guard error == nil else { return print("error2: \(error!.localizedDescription)")}
+            guard let responseCode = response as? HTTPURLResponse,
+                (200...400).contains(responseCode.statusCode) else { return print("response2: \(response)") }
+            print("response2: \(responseCode.statusCode)")
+            guard let responseData = data else { return print("No data")}
+            print("data2: \(responseData)")
+            let jsonDecoder = JSONDecoder()
+            do {
+                let decodedData = try jsonDecoder.decode([SocarZoneData2].self, from: responseData)
+                print(decodedData)
+                
+            } catch {
+                print("docode2 error")
+            }
+        }
+        task2.resume()
     }
     
     // MARK: - Touch Methods
@@ -175,6 +236,19 @@ class MainVC: UIViewController {
 //        }
     }
     
+    // MARK: - Selector(Circle Back Button)
+    @objc func didTapCircleBack(_ sender: UIButton) {
+        UIView.animate(withDuration: 0.5, animations: {
+            self.topView.alpha = 1
+            self.backCircleButton.isHidden = true
+            self.carListView.frame.origin.y = self.view.frame.height
+            self.setBookingTimeButton.frame.origin.y = self.view.frame.height - self.setBookingTimeButton.frame.height
+            self.naverMapView.mapView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+            self.callPositionMarker.position = self.naverMapView.mapView.cameraPosition.target
+            self.callPositionMarker.mapView = self.naverMapView.mapView
+        })
+    }
+    
     // MARK: - Selector(Pan)
     @objc func didPan(_ pan: UIPanGestureRecognizer) {
         let topY = view.frame.height * 0.09
@@ -286,12 +360,20 @@ class MainVC: UIViewController {
             if let marker = overlay as? NMFMarker {
                 marker.iconImage = NMFOverlayImage(name: "mSNormalBlue")
                 self.callPositionMarker.mapView = nil
+                // Socar Zone Info Update
+                self.carListView.socarZoneInfoButton.configuration(["한국집","삼성집"].randomElement() ?? "아무집", ["지하","지상"].randomElement() ?? "공중", ["조용함","시끄러움"].randomElement() ?? "후...", ["서초역-2","무악재역-1"].randomElement() ?? "사진없음")
                 // Car List 팝업 by View
-                UIView.animate(withDuration: 0.5, animations: {
-                    self.setBookingTimeButton.frame.origin.y = self.view.frame.height
-                    self.carListView.frame.origin.y = self.view.center.y
-                    self.naverMapView.mapView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: self.view.center.y, right: 0)
-                    self.topView.alpha = 0
+                UIView.animateKeyframes(withDuration: 1, delay: 0, animations: {
+                    UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.5, animations: {
+                        self.setBookingTimeButton.frame.origin.y = self.view.frame.height
+                        self.carListView.frame.origin.y = self.view.center.y
+                        self.naverMapView.mapView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: self.view.center.y, right: 0)
+                        self.topView.alpha = 0
+                        self.backCircleButton.isHidden = false
+                    })
+                    UIView.addKeyframe(withRelativeStartTime: 0.5, relativeDuration: 1, animations: {
+                        self.carListView.frame.origin.y = self.view.center.y
+                    })
                 })
                 // NMF Content Inset 이용
 //                self.naverMapView.mapView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: self.view.center.y, right: 0)
@@ -360,6 +442,15 @@ class MainVC: UIViewController {
         setBookingTimeButton.layer.shadowOpacity = 0.1
         setBookingTimeButton.frame = CGRect(x: view.frame.width * 0.03, y: view.frame.height, width: view.frame.width * 0.94, height: view.frame.height * 0.16)
         view.addSubview(setBookingTimeButton)
+        
+        backCircleButton.layer.cornerRadius = 26
+        backCircleButton.layer.shadowOpacity = 0.2
+        backCircleButton.backgroundColor = .white
+        backCircleButton.setImage(UIImage(systemName: "arrow.left", withConfiguration: backCircleButton.symbolConfiguration(pointSize: 17, weight: .regular)), for: .normal)
+        backCircleButton.addTarget(self, action: #selector(didTapCircleBack(_:)), for: .touchUpInside)
+        backCircleButton.tintColor = CommonUI.mainDark
+        backCircleButton.isHidden = true
+        view.addSubview(backCircleButton)
     }
     
     // MARK: - Setup Constraint
@@ -378,6 +469,14 @@ class MainVC: UIViewController {
             $0.trailing.equalTo(self.safeArea).offset(-10)
             $0.height.equalTo(52)
         })
+        
+        backCircleButton.translatesAutoresizingMaskIntoConstraints = false
+        backCircleButton.snp.makeConstraints({
+            $0.centerY.equalTo(topView)
+            $0.leading.equalTo(self.safeArea).offset(10)
+            $0.width.equalTo(52)
+            $0.height.equalTo(52)
+        })
     }
 }
 
@@ -387,6 +486,7 @@ extension MainVC: NMFMapViewTouchDelegate {
         print("didTapMap")
         UIView.animate(withDuration: 0.3, animations: {
             self.topView.alpha = 1
+            self.backCircleButton.isHidden = true
             self.carListView.frame.origin.y = self.view.frame.height
             self.setBookingTimeButton.frame.origin.y = self.view.frame.height - self.setBookingTimeButton.frame.height
             self.naverMapView.mapView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
@@ -400,9 +500,13 @@ extension MainVC: NMFMapViewTouchDelegate {
 extension MainVC: NMFMapViewCameraDelegate {
     func mapView(_ mapView: NMFMapView, cameraDidChangeByReason reason: Int, animated: Bool) {
         let camPosition = mapView.cameraPosition.target
+        let viewHeight = view.frame.height
         
         let meterPerPixel = mapView.projection.metersPerPixel(atLatitude: mapView.cameraPosition.target.lat, zoom: mapView.cameraPosition.zoom)
-        
+        print("lat: \(mapView.cameraPosition.target.lat), zoom: \(mapView.cameraPosition.zoom), mpp: \(meterPerPixel)")
+        let asdf = CGFloat(meterPerPixel)
+        print(viewHeight * asdf)
+//        print(viewHeight * CGFloat(meterPerPixel / 1000))
 //        let southWestCoord = naverMapView.mapView.projection.latlng(from: CGPoint(x: view.frame.width, y: 0))
 //        let northEastCoord = naverMapView.mapView.projection.latlng(from: CGPoint(x: 0, y: view.frame.height))
 //        let bounds = NMGLatLngBounds(southWest: southWestCoord, northEast: northEastCoord)
@@ -491,8 +595,9 @@ extension MainVC: UITableViewDataSource {
         let date2 = Date(timeInterval: 36000, since: date1)
         cell.selectionStyle = .none
         cell.separatorInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
-        cell.configurationCarInfo(carImage: "SampleCar", carName: "더뉴아반떼", carPrice: 25000, availableDiscount: true)
-        cell.configurationTimeInfo(startTime: date1, finishTime: date2)
+        
+        cell.carInfoConfiguration(carImage: "SampleCar", carName: "더뉴아반떼", carPrice: 25000, availableDiscount: true)
+        cell.timeInfoConfiguration(startTime: date1, finishTime: date2)
         return cell
     }
 

@@ -10,7 +10,7 @@ import UIKit
 
 class SocarZoneInfoButton: UIButton {
 
-    var socarZoneData = SocarZoneData()
+//    var socarZoneData = SocarZoneData()
     var socarZoneNameLabel = UILabel()
     var socarZoneGroundLevelLabel = UILabel()
     var socarZoneDiscripitionLabel = UILabel()

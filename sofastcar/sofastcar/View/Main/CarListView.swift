@@ -10,7 +10,7 @@ import UIKit
 
 class CarListView: UIView {
     
-    let socarZoneData = SocarZoneData()
+//    let socarZoneData = SocarZoneData()
     
     var decoView = UIView()
     var decoBar = UIView()
@@ -48,7 +48,7 @@ class CarListView: UIView {
         divider1.backgroundColor = .systemGray6
         self.addSubview(divider1)
         
-        socarZoneInfoButton.configuration(socarZoneData.name.randomElement() ?? "이름 없음", socarZoneData.groundLevel.randomElement() ?? "모름", socarZoneData.discription.randomElement() ?? "설명 없음", socarZoneData.imageName.randomElement() ?? "사진 없음")
+//        socarZoneInfoButton.configuration(socarZoneData.name.randomElement() ?? "이름 없음", socarZoneData.groundLevel.randomElement() ?? "모름", socarZoneData.discription.randomElement() ?? "설명 없음", socarZoneData.imageName.randomElement() ?? "사진 없음")
         self.addSubview(socarZoneInfoButton)
         
         divider1.backgroundColor = .systemGray6

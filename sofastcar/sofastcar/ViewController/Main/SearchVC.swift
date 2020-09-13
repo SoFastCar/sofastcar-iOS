@@ -12,7 +12,7 @@ import SnapKit
 class SearchVC: UIViewController {
     
     let searchView = SearchView()
-    let socarZoneData = SocarZoneData()
+//    let socarZoneData = SocarZoneData()
     lazy var safeArea = self.view.safeAreaLayoutGuide
     var tempCnt = 0
     
@@ -117,7 +117,7 @@ extension SearchVC: UITableViewDataSource {
 //            tableView.backgroundView  = noDataLabel
 //            tableView.separatorStyle  = .none
 //        } else {
-        cell.setupConfiguration(placeName: socarZoneData.name.randomElement() ?? "이름 없음", placeAddr: socarZoneData.addr.randomElement() ?? "주소 없음", distanceFromMe: socarZoneData.distance.randomElement() ?? 0)
+//        cell.setupConfiguration(placeName: socarZoneData.name.randomElement() ?? "이름 없음", placeAddr: socarZoneData.addr.randomElement() ?? "주소 없음", distanceFromMe: socarZoneData.distance.randomElement() ?? 0)
 //        }
         
         return cell
