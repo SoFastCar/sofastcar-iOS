@@ -75,7 +75,6 @@ extension UINavigationController {
   
 }
 
-<<<<<<< HEAD
 // MARK: - Hide Keyboard
 
 extension UIViewController {
@@ -141,18 +140,4 @@ extension UIView {
     func symbolConfiguration(pointSize bySize: CGFloat, weight byWeight: UIImage.SymbolWeight) -> UIImage.SymbolConfiguration {
         return UIImage.SymbolConfiguration(pointSize: bySize, weight: byWeight)
     }
-}
-// MARK: - Hide Keyboard
-
-extension UIViewController {
-  func hideKeyboard() {
-    let tap: UITapGestureRecognizer = UITapGestureRecognizer(
-      target: self,
-      action: #selector(UIViewController.dismissKeyboard))
-    view.addGestureRecognizer(tap)
-  }
-  @objc func dismissKeyboard() {
-    view.endEditing(true)
-  }
->>>>>>> newDevelop
 }
