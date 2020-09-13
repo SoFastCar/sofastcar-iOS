@@ -50,6 +50,7 @@ class RentReturnTimeButton: UIButton {
         self.addSubview(timeLabel)
         
         symbolImageView.image = UIImage(systemName: "chevron.down", withConfiguration: self.symbolConfiguration(pointSize: 15, weight: .regular))
+        symbolImageView.tintColor = CommonUI.mainDark
         self.addSubview(symbolImageView)
     }
     
@@ -60,17 +61,17 @@ class RentReturnTimeButton: UIButton {
         
         timeTypeLabel.snp.makeConstraints({
             $0.centerY.equalToSuperview()
-            $0.leading.equalToSuperview().offset(20)
+            $0.leading.equalToSuperview().offset(10)
         })
         
         timeLabel.snp.makeConstraints({
             $0.centerY.equalToSuperview()
-            $0.trailing.equalTo(symbolImageView.snp.leading)
+            $0.trailing.equalTo(symbolImageView.snp.leading).offset(-15)
         })
         
         symbolImageView.snp.makeConstraints({
             $0.centerY.equalToSuperview()
-            $0.trailing.equalToSuperview().offset(-20)
+            $0.trailing.equalToSuperview().offset(-10)
         })
     }
     
