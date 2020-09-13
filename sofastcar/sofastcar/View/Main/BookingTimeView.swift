@@ -61,12 +61,11 @@ class BookingTimeView: UIView {
 //        rentView.addSubview(rentTimeButton)
         
         [rentDatePicker, returnDatePicker].forEach({
-            $0.alpha = 0
-            $0.isHidden = true
+//            $0.alpha = 0
+//            $0.isHidden = true
             $0.datePickerMode = .dateAndTime
             $0.locale = Locale(identifier: "ko-KR")
             $0.minuteInterval = 10
-            $0.datePickerStyle = UIDatePickerStyle(rawValue: 0)
 //            self.addSubview($0)
         })
         rentStackView.addArrangedSubview(rentDatePicker)
@@ -74,10 +73,10 @@ class BookingTimeView: UIView {
         
         rentStackView.axis = .vertical
         rentStackView.distribution = .fillProportionally
-        rentView.addSubview(rentStackView)
+        self.addSubview(rentStackView)
+//        rentView.addSubview(rentStackView)
         
-        rentView.backgroundColor = .white
-        self.addSubview(rentView)
+//        rentView.backgroundColor = .white
 //        self.addSubview(rentView)
         
         divider2.backgroundColor = .systemGray6
@@ -95,25 +94,26 @@ class BookingTimeView: UIView {
         returnStackView.backgroundColor = .black
         returnStackView.axis = .vertical
         returnStackView.distribution = .fillProportionally
-        returnView.addSubview(returnStackView)
+        self.addSubview(returnStackView)
+//        returnView.addSubview(returnStackView)
         
-        returnView.backgroundColor = .white
-        self.addSubview(returnView)
+//        returnView.backgroundColor = .white
+//        self.addSubview(returnView)
         
         confirmButton.setTitle("확인", for: .normal)
         confirmButton.titleLabel?.textColor = .white
         confirmButton.backgroundColor = CommonUI.mainBlue
         self.addSubview(confirmButton)
         
-        testView.backgroundColor = .white
-        self.addSubview(testView)
+//        testView.backgroundColor = .white
+//        self.addSubview(testView)
         
     }
     
     private func setupConstraint() {
         print("1")
         [dismissButton, titleLabel, bookingTimeLabel, rentTimeButton, returnTimeButton,
-            rentDatePicker, returnDatePicker, confirmButton, divider1, divider2, rentStackView, returnStackView, rentView, returnView, testView].forEach({
+            rentDatePicker, returnDatePicker, confirmButton, divider1, divider2, rentStackView, returnStackView, /*rentView, returnView, testView*/].forEach({
                 $0.translatesAutoresizingMaskIntoConstraints = false
             })
         dismissButton.snp.makeConstraints({
@@ -143,21 +143,23 @@ class BookingTimeView: UIView {
         rentDatePicker.snp.makeConstraints({
             $0.top.equalTo(rentTimeButton.snp.bottom)
             $0.centerX.equalToSuperview()
-            $0.height.equalTo(100)
+            $0.height.equalTo(0)
         })
         rentStackView.snp.makeConstraints({
-            $0.top.equalToSuperview()
-            $0.leading.equalToSuperview()
-            $0.trailing.equalToSuperview()
-            $0.bottom.equalToSuperview()
-//            $0.height.equalTo(rentTimeButton)
-        })
-        rentView.snp.makeConstraints({
             $0.top.equalTo(bookingTimeLabel.snp.bottom).offset(20)
             $0.leading.equalToSuperview()
             $0.trailing.equalToSuperview()
-            //            $0.height.equalTo(returnTimeButton)
+//            $0.top.equalToSuperview()
+//            $0.leading.equalToSuperview()
+//            $0.trailing.equalToSuperview()
+//            $0.bottom.equalToSuperview()
         })
+//        rentView.snp.makeConstraints({
+//            $0.top.equalTo(bookingTimeLabel.snp.bottom).offset(20)
+//            $0.leading.equalToSuperview()
+//            $0.trailing.equalToSuperview()
+//            //            $0.height.equalTo(returnTimeButton)
+//        })
         divider2.snp.makeConstraints({
             $0.top.equalToSuperview()
             $0.leading.equalToSuperview()
@@ -173,28 +175,30 @@ class BookingTimeView: UIView {
         returnDatePicker.snp.makeConstraints({
             $0.top.equalTo(returnTimeButton.snp.bottom)
             $0.centerX.equalToSuperview()
-            $0.height.equalTo(100)
+            $0.height.equalTo(0)
         })
         returnStackView.snp.makeConstraints({
-            $0.top.equalToSuperview()
-            $0.leading.equalToSuperview()
-            $0.trailing.equalToSuperview()
-            $0.bottom.equalToSuperview()
-//            $0.height.equalTo(returnTimeButton)
-        })
-        returnView.snp.makeConstraints({
             $0.top.equalTo(rentView.snp.bottom)
             $0.leading.equalToSuperview()
             $0.trailing.equalToSuperview()
-            //            $0.height.equalTo(returnTimeButton)
+//            $0.top.equalToSuperview()
+//            $0.leading.equalToSuperview()
+//            $0.trailing.equalToSuperview()
+//            $0.bottom.equalToSuperview()
         })
+//        returnView.snp.makeConstraints({
+//            $0.top.equalTo(rentView.snp.bottom)
+//            $0.leading.equalToSuperview()
+//            $0.trailing.equalToSuperview()
+//            //            $0.height.equalTo(returnTimeButton)
+//        })
         
-        testView.snp.makeConstraints({
-            $0.top.equalTo(returnTimeButton.snp.bottom)
-            $0.leading.equalToSuperview()
-            $0.trailing.equalToSuperview()
-            $0.bottom.equalTo(confirmButton.snp.top)
-        })
+//        testView.snp.makeConstraints({
+//            $0.top.equalTo(returnTimeButton.snp.bottom)
+//            $0.leading.equalToSuperview()
+//            $0.trailing.equalToSuperview()
+//            $0.bottom.equalTo(confirmButton.snp.top)
+//        })
         confirmButton.snp.makeConstraints({
             $0.leading.equalToSuperview()
             $0.trailing.equalToSuperview()
