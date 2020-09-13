@@ -78,8 +78,6 @@ class SetBookingTimeButton: UIButton {
             chevronSymbolImageView.tintColor = CommonUI.mainDark
             self.addSubview(chevronSymbolImageView)
         }
-        
-        
     }
     
     override func layoutSubviews() {

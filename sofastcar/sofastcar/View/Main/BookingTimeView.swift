@@ -66,7 +66,7 @@ class BookingTimeView: UIView {
             $0.datePickerMode = .dateAndTime
             $0.locale = Locale(identifier: "ko-KR")
             $0.minuteInterval = 10
-            $0.datePickerStyle = UIDatePickerStyle(rawValue: 0)
+//          $0.datePickerStyle = UIDatePickerStyle(rawValue: 0) 
 //            self.addSubview($0)
         })
         rentStackView.addArrangedSubview(rentDatePicker)

@@ -127,6 +127,7 @@ extension UIView {
     func symbolConfiguration(pointSize bySize: CGFloat, weight byWeight: UIImage.SymbolWeight) -> UIImage.SymbolConfiguration {
         return UIImage.SymbolConfiguration(pointSize: bySize, weight: byWeight)
     }
+}
 // MARK: - Hide Keyboard
 
 extension UIViewController {

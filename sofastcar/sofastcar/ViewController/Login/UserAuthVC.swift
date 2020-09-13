@@ -227,7 +227,7 @@ class UserAuthVC: UIViewController {
       "check_auth_number": "\(inputAuthCode)"
     ]
     
-    let url = URL(string: "https://sofastcar.moorekwon.xyz/phone_auth/\(responseKey)/check_auth_number/")!
+    let url = URL(string: "https://sofastcar.moorekwon.xyz/phone_auth/\(responseKey)/check_auth_number")!
     var request = URLRequest(url: url)
     do {
       let jsonData = try JSONSerialization.data(withJSONObject: jsonValue, options: .prettyPrinted)
@@ -280,7 +280,7 @@ class UserAuthVC: UIViewController {
       "registration_id": "\(userBirthDay)\(userGender)"
     ]
   
-    let url = URL(string: "https://sofastcar.moorekwon.xyz/phone_auth/")!
+    let url = URL(string: "https://sofastcar.moorekwon.xyz/phone_auth")!
     var request = URLRequest(url: url)
     
     do {
@@ -302,6 +302,7 @@ class UserAuthVC: UIViewController {
       guard let header = response as? HTTPURLResponse,
         (200..<300) ~= header.statusCode,
         let responseData = data else {
+          print(response as? HTTPURLResponse)
           self.errorAlertControllerPresent(.serverSideError)
           self.stopAactivityIndicator()
           return

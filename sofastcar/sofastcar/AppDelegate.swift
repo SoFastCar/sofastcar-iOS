@@ -17,7 +17,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                    didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
     
     var rootView: UIViewController = UIViewController()
-    if let userToken = UserDefaults.getUserAuthTocken() {
+//    UserDefaults.resetUserAuthTocken()
+    if UserDefaults.getUserAuthTocken() != nil {
       rootView = MainVC()
     } else {
       rootView = InitVC()
