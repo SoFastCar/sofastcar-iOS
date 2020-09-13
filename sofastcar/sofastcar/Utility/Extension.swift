@@ -34,6 +34,14 @@ extension NSAttributedString {
     fullString.append(NSAttributedString(attachment: imageAttachment))
     return fullString
   }
+  
+  static func attributedStringWithLienSpacing(text: String, font: UIFont) -> NSAttributedString {
+    let pragrapphStyle = NSMutableParagraphStyle()
+    pragrapphStyle.lineSpacing = 0.25 * (font.lineHeight)
+    let attributes = [NSAttributedString.Key.font: font as Any,
+                      NSAttributedString.Key.paragraphStyle: pragrapphStyle]
+    return NSAttributedString(string: text, attributes: attributes)
+  }
 }
 // MARK: - UITextField
 // textField내 왼쪽 padding 넣기
@@ -119,4 +127,16 @@ extension UIView {
     func symbolConfiguration(pointSize bySize: CGFloat, weight byWeight: UIImage.SymbolWeight) -> UIImage.SymbolConfiguration {
         return UIImage.SymbolConfiguration(pointSize: bySize, weight: byWeight)
     }
+// MARK: - Hide Keyboard
+
+extension UIViewController {
+  func hideKeyboard() {
+    let tap: UITapGestureRecognizer = UITapGestureRecognizer(
+      target: self,
+      action: #selector(UIViewController.dismissKeyboard))
+    view.addGestureRecognizer(tap)
+  }
+  @objc func dismissKeyboard() {
+    view.endEditing(true)
+  }
 }

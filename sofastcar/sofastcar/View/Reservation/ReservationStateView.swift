@@ -10,8 +10,8 @@ import UIKit
 import SnapKit
 
 class ReservationStateView: UIScrollView {
-  // MARK: - Attribute
   
+  // MARK: - Attribute
   lazy var leftNavigationButton: UIBarButtonItem = {
     let barButtonItem = UIBarButtonItem(
       image: UIImage(systemName: CommonUI.SFSymbolKey.hamburger.rawValue),
@@ -34,6 +34,12 @@ class ReservationStateView: UIScrollView {
     barButtonItem.tintColor = UIColor.white.withAlphaComponent(0.55)
     
     return barButtonItem
+  }()
+  
+  fileprivate let contentView: UIView = {
+    let view = UIView()
+    
+    return view
   }()
   
   fileprivate let reservationCarImage: UIImageView = {
@@ -198,7 +204,7 @@ class ReservationStateView: UIScrollView {
     return view
   }()
   // reservation
-  fileprivate let vehiclePictureViewButton: UIView = {
+  let vehiclePictureViewButton: UIView = {
     let view = UIView()
     view.backgroundColor = CommonUI.mainBlue
     view.layer.cornerRadius = 5
@@ -292,24 +298,37 @@ class ReservationStateView: UIScrollView {
   
   // MARK: - UI
   fileprivate func setUI() {
-    self.backgroundColor = CommonUI.mainBlue
-//    self.layoutMargins = UIEdgeInsets(top: 30, left: 20, bottom: 30, right: 20)
-    self.layer.cornerRadius = 5
+    self.contentSize = CGSize(width: self.frame.width, height: contentView.frame.height)
     
     setConstraints()
   }
   
   fileprivate func setConstraints() {
-    let guid = self.safeAreaLayoutGuide
+    let guid = contentView.safeAreaLayoutGuide
+    self.frame = CGRect(
+      x: 0,
+      y: 0,
+      width: UIScreen.main.bounds.width,
+      height: UIScreen.main.bounds.height
+    )
+    self.addSubview(contentView)
+    
+    var heightPadding: CGFloat = 0
+    if UIScreen.main.bounds.height < 670 { // se, Se2...
+      heightPadding = UIScreen.main.bounds.height * 0.2
+    }
+    
+    self.contentSize = .init(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height+heightPadding-44)
+    contentView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height+heightPadding-144)
     
     [reservationCarImage, numberPlateLabel, carInfomationButton, carInfoAndOilStackView, reservationTimeStackView, reservationProgressView, reservationCommentLabel, reservationStateView].forEach {
-      self.addSubview($0)
+      contentView.addSubview($0)
     }
     
     reservationCarImage.snp.makeConstraints {
       $0.top.equalTo(guid).offset(40)
       $0.centerX.equalTo(guid)
-      $0.height.equalTo(150)
+      $0.height.equalTo(130)
     }
     
     numberPlateLabel.snp.makeConstraints {
@@ -348,6 +367,7 @@ class ReservationStateView: UIScrollView {
       $0.top.equalTo(reservationCommentLabel.snp.bottom).offset(20)
       $0.leading.equalTo(guid).offset(20)
       $0.trailing.equalTo(guid).offset(-20)
+      $0.height.equalTo(240)
     }
     
     [vehiclePictureViewButton, reservationPlaceWrapView].forEach {
@@ -359,7 +379,7 @@ class ReservationStateView: UIScrollView {
       $0.top.equalTo(reservationCommentLabel.snp.bottom).offset(20)
       $0.leading.equalTo(guid).offset(20)
       $0.trailing.equalTo(guid).offset(-20)
-      $0.height.equalTo(110)
+      $0.height.equalTo(120)
     }
     
     [reservationStateLabel, reservationStateSubLabel, reservationStatsWarningIcon, reservationStateMessageLabel].forEach {
@@ -413,13 +433,9 @@ class ReservationStateView: UIScrollView {
       $0.top.equalTo(reservationPlaceWrapView.snp.top).offset(30)
       $0.leading.equalTo(reservationPlaceStateSubLabel.snp.trailing).offset(40)
     }
-    // end reservationPlaceWrapView
   }
   
   // MARK: - Action
-//  override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-//    print("did tap reservationStateView")
-//  }
   
   @objc func didTapButton(_ sender: UIButton) {
     switch sender {

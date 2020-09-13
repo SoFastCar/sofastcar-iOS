@@ -57,11 +57,12 @@ class SingUpCompleteVC: UIViewController {
   
   lazy var marketingAgreeTextView: UITextView = {
     let textView = UITextView()
-    textView.text = """
+    let text = """
     (주)쏘카
     회원님이 \(Date())에 요청하신 마케팅 정보 수신동의는 ~~~~ 처리 되었습니다.
     """
-    textView.font = .systemFont(ofSize: 13)
+    let font = UIFont.systemFont(ofSize: 13)
+    textView.attributedText = NSAttributedString.attributedStringWithLienSpacing(text: text, font: font)
     return textView
   }()
   
@@ -119,7 +120,7 @@ class SingUpCompleteVC: UIViewController {
     marketingAgreeTextView.snp.makeConstraints {
       $0.top.equalTo(sepView.snp.bottom).offset(10)
       $0.leading.trailing.equalTo(guide)
-      $0.height.equalTo(100)
+      $0.height.equalTo(110)
     }
     
     okButton.snp.makeConstraints {
