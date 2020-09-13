@@ -24,7 +24,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     let navigationController = UINavigationController(rootViewController: rootView)
-    
     let backButtonImage = UIImage(systemName: "arrow.left")
     navigationController.navigationBar.backIndicatorImage = backButtonImage
     navigationController.navigationBar.backIndicatorTransitionMaskImage = backButtonImage
@@ -33,6 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     window = UIWindow(frame: UIScreen.main.bounds)
     window?.rootViewController = navigationController
     window?.makeKeyAndVisible()
+    window?.overrideUserInterfaceStyle = .light // add woobin: dark mode off
     return true
   }
   

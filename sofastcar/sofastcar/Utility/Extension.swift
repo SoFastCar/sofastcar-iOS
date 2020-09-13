@@ -75,6 +75,58 @@ extension UINavigationController {
   
 }
 
+//extension CALayer {
+//    enum ViewSide {
+//        case top, left, right, bottom
+//    }
+//    
+//    func addBorder(toSide side: ViewSide, withColor color: CGColor, andThickness thickness: CGFloat) {
+//        let border = CALayer()
+//        border.backgroundColor = color
+//        
+//        switch side {
+//        case .top:
+//            border.frame = CGRect(x: frame.minX, y: frame.minY, width: frame.width, height: thickness)
+//        case .left:
+//            border.frame = CGRect(x: frame.minX, y: frame.minY, width: thickness, height: frame.height)
+//        case .right:
+//            border.frame = CGRect(x: frame.maxX, y: frame.minY, width: thickness, height: frame.height)
+//        case .bottom:
+//            border.frame = CGRect(x: frame.minX, y: frame.maxY, width: frame.width, height: thickness)
+//        default:
+//            break
+//        }
+//        
+//        self.addSublayer(border)
+//    }
+//}
+
+extension UIView {
+    enum ViewSide {
+        case top, left, right, bottom
+    }
+    
+    func addBorder(toSide side: ViewSide, withColor color: CGColor, andThickness thickness: CGFloat) {
+        let border = CALayer()
+        border.backgroundColor = color
+        
+        switch side {
+        case .top:
+            border.frame = CGRect(x: frame.minX, y: frame.minY, width: frame.width, height: thickness)
+        case .left:
+            border.frame = CGRect(x: frame.minX, y: frame.minY, width: thickness, height: frame.height)
+        case .right:
+            border.frame = CGRect(x: frame.maxX, y: frame.minY, width: thickness, height: frame.height)
+        case .bottom:
+            border.frame = CGRect(x: frame.minX, y: frame.maxY, width: frame.width, height: thickness)
+        }
+        
+        self.layer.addSublayer(border)
+    }
+    
+    func symbolConfiguration(pointSize bySize: CGFloat, weight byWeight: UIImage.SymbolWeight) -> UIImage.SymbolConfiguration {
+        return UIImage.SymbolConfiguration(pointSize: bySize, weight: byWeight)
+    }
 // MARK: - Hide Keyboard
 
 extension UIViewController {
