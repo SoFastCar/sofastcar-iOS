@@ -303,6 +303,7 @@ class UserAuthVC: UIViewController {
         (200..<300) ~= header.statusCode,
         let responseData = data else {
           self.errorAlertControllerPresent(.serverSideError)
+          self.stopAactivityIndicator()
           return
       }
       self.showUserAuthcodeInputTextField()
@@ -317,9 +318,9 @@ class UserAuthVC: UIViewController {
   }
   
   private func errorAlertControllerPresent(_ errorKind: AuthError) {
-    let alertCtroller = UIAlertController(title: "오류", message: errorKind.rawValue, preferredStyle: .alert)
-    alertCtroller.addAction(UIAlertAction(title: "확인", style: .cancel, handler: nil))
     DispatchQueue.main.async {
+      let alertCtroller = UIAlertController(title: "오류", message: errorKind.rawValue, preferredStyle: .alert)
+      alertCtroller.addAction(UIAlertAction(title: "확인", style: .cancel, handler: nil))
       self.present(alertCtroller, animated: true, completion: nil)
     }
   }
