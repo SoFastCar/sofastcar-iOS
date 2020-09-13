@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                    didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
     
     var rootView: UIViewController = UIViewController()
-//    UserDefaults.resetUserAuthTocken()
+//    UserDefaults.resetUserAuthTocken() // 로그아웃필요할때 사용
     if UserDefaults.getUserAuthTocken() != nil {
       rootView = MainVC()
     } else {
@@ -31,7 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     navigationController.navigationBar.topItem?.title = ""
 
     window = UIWindow(frame: UIScreen.main.bounds)
-    window?.rootViewController = mainVC
+    window?.rootViewController = navigationController
     window?.makeKeyAndVisible()
     window?.overrideUserInterfaceStyle = .light // add woobin: dark mode off
     return true
