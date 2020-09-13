@@ -12,7 +12,6 @@ import SnapKit
 class SearchView: UIView {
     
     let backButton = UIButton()
-//    let stackView = UIStackView()
     let shadowContainer = UIView()
     let searchController = UISearchController(searchResultsController: nil)
     let searchTextField = UITextField()
@@ -39,12 +38,6 @@ class SearchView: UIView {
         backButton.setImage(UIImage(systemName: "arrow.left", withConfiguration: self.symbolConfiguration(pointSize: 20, weight: .regular)), for: .normal)
         backButton.tintColor = CommonUI.mainDark
         shadowContainer.addSubview(backButton)
-//        stackView.addArrangedSubview(backButton)
-        
-        searchResultTableView.layer.shadowColor = UIColor.black.cgColor
-        searchResultTableView.layer.shadowOffset = CGSize(width: 0, height: 1)
-        searchResultTableView.layer.shadowOpacity = 0.5
-        self.addSubview(searchResultTableView)
         
         searchTextField.backgroundColor = .white
         searchTextField.clearButtonMode = .whileEditing
@@ -54,27 +47,18 @@ class SearchView: UIView {
         searchTextField.tintColor = .systemGray
         searchTextField.borderStyle = .none
         shadowContainer.addSubview(searchTextField)
-//        stackView.addArrangedSubview(searchTextField)
         
-//        stackView.axis = .horizontal
-//        stackView.distribution = .fillProportionally
-//        shadowContainer.addSubview(stackView)
-//        shadowContainer.clipsToBounds = true
         shadowContainer.backgroundColor = .white
-        
         self.addSubview(shadowContainer)
+        
+        searchResultTableView.layer.shadowColor = UIColor.black.cgColor
+        searchResultTableView.layer.shadowOffset = CGSize(width: 0, height: 1)
+        searchResultTableView.layer.shadowOpacity = 0.5
+        self.addSubview(searchResultTableView)
     }
     
     // MARK: - Setup Constraint
     private func setupConstraint() {
-//        stackView.translatesAutoresizingMaskIntoConstraints = false
-//        stackView.snp.makeConstraints({
-//            $0.top.equalToSuperview()
-//            $0.leading.equalToSuperview()
-//            $0.trailing.equalToSuperview()
-//            $0.height.equalToSuperview()
-//        })
-        
         backButton.translatesAutoresizingMaskIntoConstraints = false
         backButton.snp.makeConstraints({
             $0.top.equalToSuperview()
@@ -101,9 +85,9 @@ class SearchView: UIView {
         searchResultTableView.translatesAutoresizingMaskIntoConstraints = false
         searchResultTableView.snp.makeConstraints({
             $0.top.equalTo(shadowContainer.snp.bottom)
-            $0.leading.equalTo(self)
-            $0.trailing.equalTo(self)
-            $0.bottom.equalTo(self)
+            $0.leading.equalToSuperview()
+            $0.trailing.equalToSuperview()
+            $0.bottom.equalToSuperview()
         })
     }
     

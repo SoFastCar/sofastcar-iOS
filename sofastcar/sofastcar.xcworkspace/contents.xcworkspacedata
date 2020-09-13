@@ -2,9 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:/Users/woobincheon/Documents/fcios11/06-Code/finalProject/sofastcar-iOS/sofastcar/sofastcar/View/Main/SearchResultTableViewCell.swift">
-   </FileRef>
-   <FileRef
       location = "group:sofastcar.xcodeproj">
    </FileRef>
    <FileRef
