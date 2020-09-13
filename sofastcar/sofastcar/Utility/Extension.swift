@@ -75,7 +75,6 @@ extension UINavigationController {
   
 }
 
-<<<<<<< HEAD
 // MARK: - Hide Keyboard
 
 extension UIViewController {
@@ -89,31 +88,6 @@ extension UIViewController {
     view.endEditing(true)
   }
 }
-//extension CALayer {
-//    enum ViewSide {
-//        case top, left, right, bottom
-//    }
-//    
-//    func addBorder(toSide side: ViewSide, withColor color: CGColor, andThickness thickness: CGFloat) {
-//        let border = CALayer()
-//        border.backgroundColor = color
-//        
-//        switch side {
-//        case .top:
-//            border.frame = CGRect(x: frame.minX, y: frame.minY, width: frame.width, height: thickness)
-//        case .left:
-//            border.frame = CGRect(x: frame.minX, y: frame.minY, width: thickness, height: frame.height)
-//        case .right:
-//            border.frame = CGRect(x: frame.maxX, y: frame.minY, width: thickness, height: frame.height)
-//        case .bottom:
-//            border.frame = CGRect(x: frame.minX, y: frame.maxY, width: frame.width, height: thickness)
-//        default:
-//            break
-//        }
-//        
-//        self.addSublayer(border)
-//    }
-//}
 
 extension UIView {
     enum ViewSide {
@@ -141,18 +115,4 @@ extension UIView {
     func symbolConfiguration(pointSize bySize: CGFloat, weight byWeight: UIImage.SymbolWeight) -> UIImage.SymbolConfiguration {
         return UIImage.SymbolConfiguration(pointSize: bySize, weight: byWeight)
     }
-}
-// MARK: - Hide Keyboard
-
-extension UIViewController {
-  func hideKeyboard() {
-    let tap: UITapGestureRecognizer = UITapGestureRecognizer(
-      target: self,
-      action: #selector(UIViewController.dismissKeyboard))
-    view.addGestureRecognizer(tap)
-  }
-  @objc func dismissKeyboard() {
-    view.endEditing(true)
-  }
->>>>>>> newDevelop
 }
