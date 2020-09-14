@@ -12,7 +12,13 @@ import SnapKit
 class VehicleTakePictureVC: UIViewController {
   
   let layout = UICollectionViewFlowLayout()
-  lazy var vehicleTakePictureView = VehicleTakePictureView(frame: .zero, collectionViewLayout: layout)
+  lazy var vehicleTakePictureView: UICollectionView = {
+    let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+    collectionView.backgroundColor = .white
+    collectionView.register(VehicleTakePictureViewCell.self, forCellWithReuseIdentifier: VehicleTakePictureViewCell.identifier)
+    
+    return collectionView
+  }()
   
   lazy var leftNavigationButton: UIBarButtonItem = {
     let barButtonItem = UIBarButtonItem(
@@ -43,6 +49,10 @@ class VehicleTakePictureVC: UIViewController {
     [vehicleTakePictureView].forEach {
       view.addSubview($0)
     }
+    
+    vehicleTakePictureView.snp.makeConstraints {
+      $0.edges.equalToSuperview()
+    }
   }
   
   fileprivate func setNavigation() {
@@ -58,6 +68,12 @@ class VehicleTakePictureVC: UIViewController {
   fileprivate func setCollectionView() {
     vehicleTakePictureView.dataSource = self
     vehicleTakePictureView.delegate = self
+    setFlowLayout()
+  }
+  
+  fileprivate func setFlowLayout() {
+    layout.scrollDirection = .vertical
+    layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
   }
   
   // MARK: - Action
@@ -76,17 +92,25 @@ class VehicleTakePictureVC: UIViewController {
 
 extension VehicleTakePictureVC: UICollectionViewDataSource {
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    <#code#>
+    return 6
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    <#code#>
+    guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: VehicleTakePictureViewCell.identifier, for: indexPath) as? VehicleTakePictureViewCell else { fatalError() }
+    
+    return cell
   }
 }
 
 // MARK: - UICollectionViewDelegate
 
 extension VehicleTakePictureVC: UICollectionViewDelegate {
-  
 }
 
+// MARK: - UICollectionViewDelegateFlowLayout
+
+extension VehicleTakePictureVC: UICollectionViewDelegateFlowLayout {
+  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    return .init(width: view.frame.width, height: 300)
+  }
+}
