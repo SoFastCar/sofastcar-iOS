@@ -11,6 +11,7 @@
 		7E434D2F250F17A900D0D1AA /* VehicleTakePictureViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E434D2E250F17A900D0D1AA /* VehicleTakePictureViewCell.swift */; };
 		7E434D31250F1FBA00D0D1AA /* VehicleTakePictureViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E434D30250F1FBA00D0D1AA /* VehicleTakePictureViewHeader.swift */; };
 		7E434D33250F228200D0D1AA /* VehicleTakePictureViewFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E434D32250F228200D0D1AA /* VehicleTakePictureViewFooter.swift */; };
+		7E434D35250F436800D0D1AA /* MenuCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E434D34250F436800D0D1AA /* MenuCollectionViewCell.swift */; };
 		7E8473D82507BD6B0007962F /* VehicleCheckVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8473D72507BD6B0007962F /* VehicleCheckVC.swift */; };
 		7E8473DA2507C59D0007962F /* VehicleCheckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8473D92507C59D0007962F /* VehicleCheckView.swift */; };
 		7E8473E225088E830007962F /* TagCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8473E125088E830007962F /* TagCollectionViewCell.swift */; };
@@ -93,6 +94,7 @@
 		7E434D2E250F17A900D0D1AA /* VehicleTakePictureViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehicleTakePictureViewCell.swift; sourceTree = "<group>"; };
 		7E434D30250F1FBA00D0D1AA /* VehicleTakePictureViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehicleTakePictureViewHeader.swift; sourceTree = "<group>"; };
 		7E434D32250F228200D0D1AA /* VehicleTakePictureViewFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehicleTakePictureViewFooter.swift; sourceTree = "<group>"; };
+		7E434D34250F436800D0D1AA /* MenuCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuCollectionViewCell.swift; sourceTree = "<group>"; };
 		7E8473D72507BD6B0007962F /* VehicleCheckVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehicleCheckVC.swift; sourceTree = "<group>"; };
 		7E8473D92507C59D0007962F /* VehicleCheckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehicleCheckView.swift; sourceTree = "<group>"; };
 		7E8473E125088E830007962F /* TagCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -207,6 +209,7 @@
 				7E434D2E250F17A900D0D1AA /* VehicleTakePictureViewCell.swift */,
 				7E434D30250F1FBA00D0D1AA /* VehicleTakePictureViewHeader.swift */,
 				7E434D32250F228200D0D1AA /* VehicleTakePictureViewFooter.swift */,
+				7E434D34250F436800D0D1AA /* MenuCollectionViewCell.swift */,
 			);
 			path = Reservation;
 			sourceTree = "<group>";
@@ -675,6 +678,7 @@
 				C769C83A24FE5E5100DC8226 /* LoginView.swift in Sources */,
 				C76B2A6524F7A7BB004E4CBD /* UserAuthScrollView.swift in Sources */,
 				C769C83824FE5E3700DC8226 /* LoginVC.swift in Sources */,
+				7E434D35250F436800D0D1AA /* MenuCollectionViewCell.swift in Sources */,
 				7E8473DA2507C59D0007962F /* VehicleCheckView.swift in Sources */,
 				7EAA8F6824FFBB510049D514 /* ReservationDashboardVC.swift in Sources */,
 				C7F2E63A250647ED0004EBF9 /* Insurance.swift in Sources */,

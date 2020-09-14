@@ -12,15 +12,14 @@ import SnapKit
 class VehicleTakePictureViewHeader: UICollectionReusableView {
   
   static let identifier = "VehicleTakePictureViewHeader"
-  fileprivate let cellIdentifier = "menuBar"
   
-  fileprivate lazy var menuBar: UICollectionView = {
+  fileprivate lazy var menuCollectionView: UICollectionView = {
     let layout = UICollectionViewFlowLayout()
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
     collectionView.backgroundColor = .clear
     collectionView.dataSource = self
     collectionView.delegate = self
-    collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: cellIdentifier)
+    collectionView.register(MenuCollectionViewCell.self, forCellWithReuseIdentifier: MenuCollectionViewCell.identifier)
     
     return collectionView
   }()
@@ -42,11 +41,11 @@ class VehicleTakePictureViewHeader: UICollectionReusableView {
   private func setUI() {
     self.backgroundColor = .cyan
     
-    [menuBar].forEach {
+    [menuCollectionView].forEach {
       self.addSubview($0)
     }
     
-    menuBar.snp.makeConstraints {
+    menuCollectionView.snp.makeConstraints {
       $0.edges.equalToSuperview()
     }
   }
@@ -60,7 +59,7 @@ extension VehicleTakePictureViewHeader: UICollectionViewDataSource {
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath)
+    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MenuCollectionViewCell.identifier, for: indexPath)
  
     cell.backgroundColor = .magenta
     
@@ -68,8 +67,14 @@ extension VehicleTakePictureViewHeader: UICollectionViewDataSource {
   }
 }
 
-// MARK: - UICollectionViewDelegate
+// MARK: - UICollectionViewDelegateFlowLayout
 
-extension VehicleTakePictureViewHeader: UICollectionViewDelegate {
+extension VehicleTakePictureViewHeader: UICollectionViewDelegateFlowLayout {
+  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    return .init(width: self.frame.width / 6.0, height: self.frame.height)
+  }
   
+  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+    return 0
+  }
 }
