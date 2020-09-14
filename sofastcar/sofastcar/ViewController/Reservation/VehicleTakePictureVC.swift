@@ -25,6 +25,15 @@ class VehicleTakePictureVC: UIViewController {
     return barButtonItem
   }()
   
+  let vehicleCheckStartButton: UIButton = {
+    let button = UIButton()
+    button.setTitle("총 n장 전송하기", for: .normal)
+    button.backgroundColor = CommonUI.mainBlue
+    button.addTarget(self, action: #selector(buttonAction(_:)), for: .touchUpInside)
+    
+    return button
+  }()
+  
   // MARK: - LifeCycle
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -47,6 +56,17 @@ class VehicleTakePictureVC: UIViewController {
     vehicleTakePictureView.snp.makeConstraints {
       $0.top.trailing.bottom.leading.equalTo(guid)
     }
+    
+    [vehicleCheckStartButton].forEach {
+      self.view.addSubview($0)
+    }
+    
+    vehicleCheckStartButton.frame = CGRect(
+      x: 0,
+      y: UIScreen.main.bounds.maxY - 80,
+      width: UIScreen.main.bounds.width,
+      height: 60
+    )
   }
   
   fileprivate func setNavigation() {
@@ -68,5 +88,9 @@ class VehicleTakePictureVC: UIViewController {
     default:
       break
     }
+  }
+  
+  @objc func buttonAction(_ sender: UIButton) {
+    print("\(sender) button press")
   }
 }

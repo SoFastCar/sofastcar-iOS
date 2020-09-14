@@ -107,7 +107,10 @@ class VehicleTakePictureView: UIScrollView {
       width: UIScreen.main.bounds.width,
       height: UIScreen.main.bounds.height
     )
-    self.addSubview(contentView)
+    
+    [contentView].forEach {
+      self.addSubview($0)
+    }
     
     var heightPadding: CGFloat = 1200
     if UIScreen.main.bounds.height < 670 {
@@ -118,6 +121,7 @@ class VehicleTakePictureView: UIScrollView {
       width: UIScreen.main.bounds.width,
       height: UIScreen.main.bounds.height + heightPadding - 44
     )
+    
     contentView.frame = CGRect(
       x: 0,
       y: 0,
@@ -179,5 +183,11 @@ class VehicleTakePictureView: UIScrollView {
       $0.leading.trailing.equalToSuperview()
       $0.height.equalTo(275)
     }
+  }
+  
+  // MARK: - Action
+  
+  @objc func buttonAction(_ sender: UIButton) {
+    print("\(sender) button press")
   }
 }
