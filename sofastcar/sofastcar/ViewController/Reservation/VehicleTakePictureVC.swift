@@ -76,6 +76,7 @@ class VehicleTakePictureVC: UIViewController {
   fileprivate func setFlowLayout() {
     layout.scrollDirection = .vertical
     layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+    layout.sectionHeadersPinToVisibleBounds = true
   }
   
   // MARK: - Action
