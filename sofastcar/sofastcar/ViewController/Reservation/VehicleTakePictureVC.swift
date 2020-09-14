@@ -16,6 +16,7 @@ class VehicleTakePictureVC: UIViewController {
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
     collectionView.backgroundColor = .white
     collectionView.register(VehicleTakePictureViewCell.self, forCellWithReuseIdentifier: VehicleTakePictureViewCell.identifier)
+    collectionView.register(<#T##viewClass: AnyClass?##AnyClass?#>, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: <#T##String#>)
     
     return collectionView
   }()
