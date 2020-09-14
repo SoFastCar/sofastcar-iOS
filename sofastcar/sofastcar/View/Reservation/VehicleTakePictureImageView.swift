@@ -8,9 +8,7 @@
 
 import UIKit
 
-class VehicleTakePictureViewFooter: UICollectionReusableView {
-  
-  static let identifier = "VehicleTakePictureViewFooter"
+class VehicleTakePictureImageView: UIView {
   
   // MARK: - LifeCycle
   
