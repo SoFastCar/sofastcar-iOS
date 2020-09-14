@@ -66,8 +66,7 @@ class VehicleTakePictureImageView: UIView {
     
     vehicleImageView.snp.makeConstraints {
       $0.top.equalTo(vehiclePositionLabel.snp.bottom)
-      $0.leading.trailing.equalToSuperview()
-      $0.height.equalTo(200)
+      $0.leading.bottom.trailing.equalToSuperview()
     }
   }
 }
