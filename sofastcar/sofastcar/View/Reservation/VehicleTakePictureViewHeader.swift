@@ -13,7 +13,7 @@ class VehicleTakePictureViewHeader: UICollectionReusableView {
   
   static let identifier = "VehicleTakePictureViewHeader"
   
-  let vehicleOption = [
+  fileprivate let vehicleOption = [
     "전면",
     "보조석앞면",
     "보조석뒷면",

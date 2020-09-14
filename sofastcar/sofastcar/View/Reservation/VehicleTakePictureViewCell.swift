@@ -12,6 +12,15 @@ class VehicleTakePictureViewCell: UICollectionViewCell {
   
   static let identifier = "VehicleTakePictureViewCell"
   
+  let vehiclePositionLabel: UILabel = {
+    let label = UILabel()
+    label.text = "전면"
+    label.font = UIFont.preferredFont(forTextStyle: .title3)
+    label.textColor = CommonUI.mainDark
+    
+    return label
+  }()
+  
   let vehicleImageView: UIImageView = {
     let imageView = UIImageView()
     imageView.image = UIImage(named: "전면")
@@ -36,12 +45,18 @@ class VehicleTakePictureViewCell: UICollectionViewCell {
   // MARK: - Layout
   
   private func setUI() {
-    [vehicleImageView].forEach {
+    [vehiclePositionLabel, vehicleImageView].forEach {
       self.addSubview($0)
     }
     
+    vehiclePositionLabel.snp.makeConstraints {
+      $0.top.equalToSuperview().offset(20)
+      $0.leading.trailing.equalToSuperview().offset(20)
+    }
+    
     vehicleImageView.snp.makeConstraints {
-      $0.edges.equalToSuperview()
+      $0.top.equalTo(vehiclePositionLabel.snp.bottom)
+      $0.leading.trailing.equalToSuperview()
     }
   }
 }
