@@ -14,9 +14,9 @@ class VehicleTakePictureVC: UIViewController {
   let layout = UICollectionViewFlowLayout()
   lazy var vehicleTakePictureView: UICollectionView = {
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-    collectionView.backgroundColor = .white
+    collectionView.backgroundColor = .clear
     collectionView.register(VehicleTakePictureViewCell.self, forCellWithReuseIdentifier: VehicleTakePictureViewCell.identifier)
-    collectionView.register(<#T##viewClass: AnyClass?##AnyClass?#>, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: <#T##String#>)
+    collectionView.register(VehicleTakePictureViewHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: VehicleTakePictureViewHeader.identifier)
     
     return collectionView
   }()
@@ -101,6 +101,12 @@ extension VehicleTakePictureVC: UICollectionViewDataSource {
     
     return cell
   }
+  
+  func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+    let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: VehicleTakePictureViewHeader.identifier, for: indexPath)
+    
+    return header
+  }
 }
 
 // MARK: - UICollectionViewDelegate
@@ -113,5 +119,9 @@ extension VehicleTakePictureVC: UICollectionViewDelegate {
 extension VehicleTakePictureVC: UICollectionViewDelegateFlowLayout {
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
     return .init(width: view.frame.width, height: 300)
+  }
+  
+  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+    return .init(width: view.frame.width, height: 150)
   }
 }
