@@ -17,6 +17,7 @@ class VehicleTakePictureVC: UIViewController {
     collectionView.backgroundColor = .clear
     collectionView.register(VehicleTakePictureViewCell.self, forCellWithReuseIdentifier: VehicleTakePictureViewCell.identifier)
     collectionView.register(VehicleTakePictureViewHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: VehicleTakePictureViewHeader.identifier)
+    collectionView.register(VehicleTakePictureViewFooter.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: VehicleTakePictureViewFooter.identifier)
     
     return collectionView
   }()
@@ -103,7 +104,13 @@ extension VehicleTakePictureVC: UICollectionViewDataSource {
   }
   
   func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-    let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: VehicleTakePictureViewHeader.identifier, for: indexPath)
+    if kind == UICollectionView.elementKindSectionFooter {
+      let footer = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: VehicleTakePictureViewFooter.identifier, for: indexPath)
+      
+      return footer
+    }
+    
+    let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: VehicleTakePictureViewHeader.identifier, for: indexPath)
     
     return header
   }
@@ -122,6 +129,10 @@ extension VehicleTakePictureVC: UICollectionViewDelegateFlowLayout {
   }
   
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+    return .init(width: view.frame.width, height: 150)
+  }
+  
+  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
     return .init(width: view.frame.width, height: 150)
   }
 }
