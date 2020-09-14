@@ -11,8 +11,18 @@ import SnapKit
 
 class VehicleTakePictureVC: UIViewController {
   
-  let layout = UICollectionViewFlowLayout()
-  lazy var vehicleTakePictureView: UICollectionView = {
+    fileprivate let descriptionLabel: UILabel = {
+    let label = UILabel()
+    label.text = "차량의 여섯 면을 가이드에 맞춰 촬영해주세요.\n사진 전송 후에는 수정할 수 없습니다."
+    label.font = UIFont.preferredFont(forTextStyle: .callout)
+    label.textColor = CommonUI.mainDark
+    label.numberOfLines = .max
+    
+    return label
+  }()
+  
+  fileprivate let layout = UICollectionViewFlowLayout()
+  fileprivate lazy var vehicleTakePictureView: UICollectionView = {
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
     collectionView.backgroundColor = .clear
     collectionView.register(VehicleTakePictureViewCell.self, forCellWithReuseIdentifier: VehicleTakePictureViewCell.identifier)
@@ -22,7 +32,7 @@ class VehicleTakePictureVC: UIViewController {
     return collectionView
   }()
   
-  lazy var leftNavigationButton: UIBarButtonItem = {
+  fileprivate lazy var leftNavigationButton: UIBarButtonItem = {
     let barButtonItem = UIBarButtonItem(
       image: UIImage(systemName: CommonUI.SFSymbolKey.leftArrow.rawValue),
       style: .plain,
@@ -44,16 +54,24 @@ class VehicleTakePictureVC: UIViewController {
   // MARK: - UI
   
   fileprivate func setUI() {
+    let guid = view.safeAreaLayoutGuide
+    
     self.view.backgroundColor = .white
     setNavigation()
     setCollectionView()
     
-    [vehicleTakePictureView].forEach {
+    [descriptionLabel, vehicleTakePictureView].forEach {
       view.addSubview($0)
     }
     
+    descriptionLabel.snp.makeConstraints {
+      $0.top.equalTo(guid).offset(10)
+      $0.leading.equalTo(guid).offset(20)
+    }
+    
     vehicleTakePictureView.snp.makeConstraints {
-      $0.edges.equalToSuperview()
+      $0.top.equalTo(descriptionLabel.snp.bottom).offset(20)
+      $0.trailing.bottom.leading.equalTo(guid)
     }
   }
   
