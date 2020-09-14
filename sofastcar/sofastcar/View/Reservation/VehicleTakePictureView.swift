@@ -26,6 +26,12 @@ class VehicleTakePictureView: UIScrollView {
     return label
   }()
   
+  fileprivate let vehicleTakePictureMenuView: VehicleTakePictureMenuView = {
+    let view = VehicleTakePictureMenuView()
+    
+    return view
+  }()
+  
   // MARK: - LifeCycle
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -75,13 +81,19 @@ class VehicleTakePictureView: UIScrollView {
   fileprivate func setConstraints() {
 //    let guid = contentView.safeAreaLayoutGuide
     
-    [descriptionLabel].forEach {
+    [descriptionLabel, vehicleTakePictureMenuView].forEach {
       contentView.addSubview($0)
     }
     
     descriptionLabel.snp.makeConstraints {
       $0.top.equalToSuperview()
       $0.leading.trailing.equalToSuperview().offset(20)
+    }
+    
+    vehicleTakePictureMenuView.snp.makeConstraints {
+      $0.top.equalTo(descriptionLabel.snp.bottom).offset(20)
+      $0.leading.trailing.equalToSuperview()
+      $0.height.equalTo(60)
     }
   }
 }

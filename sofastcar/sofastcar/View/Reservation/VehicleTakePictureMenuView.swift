@@ -9,7 +9,7 @@
 import UIKit
 import SnapKit
 
-class VehicleTakePictureViewHeader: UICollectionReusableView {
+class VehicleTakePictureMenuView: UIView {
   
   static let identifier = "VehicleTakePictureViewHeader"
   
@@ -62,7 +62,7 @@ class VehicleTakePictureViewHeader: UICollectionReusableView {
 
 // MARK: - UICollectionViewDataSource
 
-extension VehicleTakePictureViewHeader: UICollectionViewDataSource {
+extension VehicleTakePictureMenuView: UICollectionViewDataSource {
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     return 6
   }
@@ -78,7 +78,7 @@ extension VehicleTakePictureViewHeader: UICollectionViewDataSource {
 
 // MARK: - UICollectionViewDelegateFlowLayout
 
-extension VehicleTakePictureViewHeader: UICollectionViewDelegateFlowLayout {
+extension VehicleTakePictureMenuView: UICollectionViewDelegateFlowLayout {
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
     return .init(width: self.frame.width / 6.0, height: self.frame.height)
   }
