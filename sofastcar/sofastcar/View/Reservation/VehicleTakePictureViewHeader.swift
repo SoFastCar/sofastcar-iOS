@@ -13,6 +13,15 @@ class VehicleTakePictureViewHeader: UICollectionReusableView {
   
   static let identifier = "VehicleTakePictureViewHeader"
   
+  let vehicleOption = [
+    "전면",
+    "보조석앞면",
+    "보조석뒷면",
+    "후면",
+    "운전석뒷면",
+    "운전석앞면"
+  ]
+  
   fileprivate lazy var menuCollectionView: UICollectionView = {
     let layout = UICollectionViewFlowLayout()
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -39,7 +48,7 @@ class VehicleTakePictureViewHeader: UICollectionReusableView {
   // MARK: - Layout
   
   private func setUI() {
-    self.backgroundColor = .cyan
+    self.backgroundColor = .white
     
     [menuCollectionView].forEach {
       self.addSubview($0)
@@ -59,9 +68,9 @@ extension VehicleTakePictureViewHeader: UICollectionViewDataSource {
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MenuCollectionViewCell.identifier, for: indexPath)
- 
-    cell.backgroundColor = .magenta
+    guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MenuCollectionViewCell.identifier, for: indexPath) as? MenuCollectionViewCell else { fatalError() }
+    
+    cell.vehicleImageView.image = UIImage(named: vehicleOption[indexPath.item])
     
     return cell
   }

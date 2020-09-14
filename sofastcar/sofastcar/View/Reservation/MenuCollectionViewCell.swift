@@ -7,10 +7,20 @@
 //
 
 import UIKit
+import SnapKit
 
 class MenuCollectionViewCell: UICollectionViewCell {
   
   static let identifier = "MenuCollectionViewCell"
+  
+  let vehicleImageView: UIImageView = {
+    let imageView = UIImageView()
+    imageView.image = UIImage(named: "전면")
+    imageView.contentMode = .scaleAspectFit
+    imageView.alpha = 0.5
+    
+    return imageView
+  }()
   
   // MARK: - LifeCycle
   
@@ -27,6 +37,12 @@ class MenuCollectionViewCell: UICollectionViewCell {
   // MARK: - Layout
   
   private func setUI() {
+    [vehicleImageView].forEach {
+      self.addSubview($0)
+    }
     
+    vehicleImageView.snp.makeConstraints {
+      $0.edges.equalToSuperview()
+    }
   }
 }
