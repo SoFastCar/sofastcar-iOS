@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1226A60FC1A80A06F7DAB1AE /* Pods_sofastcar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC793DBC933237B89DC3FEED /* Pods_sofastcar.framework */; };
+		7E434D2D250CC94400D0D1AA /* VehicleTakePicturMenuBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E434D2C250CC94400D0D1AA /* VehicleTakePicturMenuBarView.swift */; };
 		7E8473D82507BD6B0007962F /* VehicleCheckVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8473D72507BD6B0007962F /* VehicleCheckVC.swift */; };
 		7E8473DA2507C59D0007962F /* VehicleCheckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8473D92507C59D0007962F /* VehicleCheckView.swift */; };
 		7E8473E225088E830007962F /* TagCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8473E125088E830007962F /* TagCollectionViewCell.swift */; };
@@ -88,6 +89,7 @@
 
 /* Begin PBXFileReference section */
 		385247949553C4B863A7F4DF /* Pods-sofastcar.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sofastcar.debug.xcconfig"; path = "Target Support Files/Pods-sofastcar/Pods-sofastcar.debug.xcconfig"; sourceTree = "<group>"; };
+		7E434D2C250CC94400D0D1AA /* VehicleTakePicturMenuBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehicleTakePicturMenuBarView.swift; sourceTree = "<group>"; };
 		7E8473D72507BD6B0007962F /* VehicleCheckVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehicleCheckVC.swift; sourceTree = "<group>"; };
 		7E8473D92507C59D0007962F /* VehicleCheckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehicleCheckView.swift; sourceTree = "<group>"; };
 		7E8473E125088E830007962F /* TagCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -201,6 +203,7 @@
 				7E8473E125088E830007962F /* TagCollectionViewCell.swift */,
 				7E8473E32509AB420007962F /* LeftAlignedTagCollectionViewFlowLayout.swift */,
 				7E8473EA250B166A0007962F /* VehicleTakePictureView.swift */,
+				7E434D2C250CC94400D0D1AA /* VehicleTakePicturMenuBarView.swift */,
 			);
 			path = Reservation;
 			sourceTree = "<group>";
@@ -644,6 +647,7 @@
 				C72A913F24F60CD9005D464F /* TouVC.swift in Sources */,
 				C769C82724FD09CE00DC8226 /* CardEnrollVC.swift in Sources */,
 				C769C82524FCDEFC00DC8226 /* CommonUI.swift in Sources */,
+				7E434D2D250CC94400D0D1AA /* VehicleTakePicturMenuBarView.swift in Sources */,
 				C7A9C91E2507B314006CA543 /* TopView.swift in Sources */,
 				C7A9C9222508510B006CA543 /* PaymentConfirmCell.swift in Sources */,
 				C79A0B522501274F0061F078 /* ReservationConfirmTableHeaderView.swift in Sources */,

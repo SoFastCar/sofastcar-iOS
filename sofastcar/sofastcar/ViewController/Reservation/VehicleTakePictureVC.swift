@@ -11,7 +11,8 @@ import SnapKit
 
 class VehicleTakePictureVC: UIViewController {
   
-  let vehicleTakePictureView = VehicleTakePictureView()
+  let layout = UICollectionViewFlowLayout()
+  lazy var vehicleTakePictureView = VehicleTakePictureView(frame: .zero, collectionViewLayout: layout)
   
   lazy var leftNavigationButton: UIBarButtonItem = {
     let barButtonItem = UIBarButtonItem(
@@ -37,6 +38,7 @@ class VehicleTakePictureVC: UIViewController {
   fileprivate func setUI() {
     self.view.backgroundColor = .white
     setNavigation()
+    setCollectionView()
     
     [vehicleTakePictureView].forEach {
       view.addSubview($0)
@@ -53,6 +55,11 @@ class VehicleTakePictureVC: UIViewController {
     self.title = "외관 촬영"
   }
   
+  fileprivate func setCollectionView() {
+    vehicleTakePictureView.dataSource = self
+    vehicleTakePictureView.delegate = self
+  }
+  
   // MARK: - Action
   
   @objc func didTapButton(_ sender: UIButton) {
@@ -64,3 +71,22 @@ class VehicleTakePictureVC: UIViewController {
     }
   }
 }
+
+// MARK: - UICollectionViewDataSource
+
+extension VehicleTakePictureVC: UICollectionViewDataSource {
+  func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    <#code#>
+  }
+  
+  func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    <#code#>
+  }
+}
+
+// MARK: - UICollectionViewDelegate
+
+extension VehicleTakePictureVC: UICollectionViewDelegate {
+  
+}
+
