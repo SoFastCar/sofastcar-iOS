@@ -11,7 +11,7 @@ import SnapKit
 
 class VehicleTakePictureVC: UIViewController {
   
-    fileprivate let descriptionLabel: UILabel = {
+  fileprivate let descriptionLabel: UILabel = {
     let label = UILabel()
     label.text = "차량의 여섯 면을 가이드에 맞춰 촬영해주세요.\n사진 전송 후에는 수정할 수 없습니다."
     label.font = UIFont.preferredFont(forTextStyle: .callout)
@@ -113,7 +113,7 @@ class VehicleTakePictureVC: UIViewController {
 
 extension VehicleTakePictureVC: UICollectionViewDataSource {
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return 6
+    return 7
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -148,7 +148,7 @@ extension VehicleTakePictureVC: UICollectionViewDelegateFlowLayout {
   }
   
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-    return .init(width: view.frame.width, height: 150)
+    return .init(width: view.frame.width, height: 60)
   }
   
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
