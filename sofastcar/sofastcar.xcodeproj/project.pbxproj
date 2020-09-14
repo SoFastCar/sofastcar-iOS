@@ -39,6 +39,11 @@
 		BC4F3A25250E028A00B7E1E7 /* TosVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4F3A24250E028A00B7E1E7 /* TosVC.swift */; };
 		BC4F3A28250E029B00B7E1E7 /* ReservationConfirmTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4F3A26250E029B00B7E1E7 /* ReservationConfirmTableVC.swift */; };
 		BC4F3A29250E029B00B7E1E7 /* CarKeyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4F3A27250E029B00B7E1E7 /* CarKeyViewController.swift */; };
+		BC91B62E250F571100B76398 /* CallZoneData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC91B62D250F571100B76398 /* CallZoneData.swift */; };
+		BC91B630250FA6F200B76398 /* SocarZoneProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC91B62F250FA6F200B76398 /* SocarZoneProvider.swift */; };
+		BC91B636250FA7A200B76398 /* ServiceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC91B635250FA7A200B76398 /* ServiceError.swift */; };
+		BC91B638250FA7C600B76398 /* SocaZoneProvidable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC91B637250FA7C600B76398 /* SocaZoneProvidable.swift */; };
+		BC91B63A250FA91D00B76398 /* SocarZoneDataList.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC91B639250FA91D00B76398 /* SocarZoneDataList.swift */; };
 		C728C85024F7E35100063005 /* SignUpUserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C728C84F24F7E35100063005 /* SignUpUserData.swift */; };
 		C72A913824F5E15B005D464F /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72A913724F5E15B005D464F /* Extension.swift */; };
 		C72A913A24F5E32A005D464F /* SingUpInitVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72A913924F5E32A005D464F /* SingUpInitVC.swift */; };
@@ -137,6 +142,11 @@
 		BC4F3A26250E029B00B7E1E7 /* ReservationConfirmTableVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReservationConfirmTableVC.swift; sourceTree = "<group>"; };
 		BC4F3A27250E029B00B7E1E7 /* CarKeyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarKeyViewController.swift; sourceTree = "<group>"; };
 		BC793DBC933237B89DC3FEED /* Pods_sofastcar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_sofastcar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BC91B62D250F571100B76398 /* CallZoneData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallZoneData.swift; sourceTree = "<group>"; };
+		BC91B62F250FA6F200B76398 /* SocarZoneProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocarZoneProvider.swift; sourceTree = "<group>"; };
+		BC91B635250FA7A200B76398 /* ServiceError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceError.swift; sourceTree = "<group>"; };
+		BC91B637250FA7C600B76398 /* SocaZoneProvidable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SocaZoneProvidable.swift; path = "/Users/woobincheon/Documents/fcios11/06-Code/finalProject/sofastcar-iOS/sofastcar/sofastcar/Utility/SocaZoneProvidable.swift"; sourceTree = "<absolute>"; };
+		BC91B639250FA91D00B76398 /* SocarZoneDataList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SocarZoneDataList.swift; path = sofastcar/Model/Main/SocarZoneDataList.swift; sourceTree = SOURCE_ROOT; };
 		C728C84F24F7E35100063005 /* SignUpUserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpUserData.swift; sourceTree = "<group>"; };
 		C72A913724F5E15B005D464F /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		C72A913924F5E32A005D464F /* SingUpInitVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingUpInitVC.swift; sourceTree = "<group>"; };
@@ -252,6 +262,9 @@
 				C7F2E6342505FE8E0004EBF9 /* UserDefault.swift */,
 				C7F2E63B2507133B0004EBF9 /* Protocol.swift */,
 				BC3F2E99250E49B3003E2C44 /* EndPoint.swift */,
+				BC91B62F250FA6F200B76398 /* SocarZoneProvider.swift */,
+				BC91B637250FA7C600B76398 /* SocaZoneProvidable.swift */,
+				BC91B635250FA7A200B76398 /* ServiceError.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -337,6 +350,7 @@
 				BC4F3A0E250E01D000B7E1E7 /* SearchVC.swift */,
 				BC4F3A0D250E01D000B7E1E7 /* BookingTimeVC.swift */,
 				C7A9C91F250848A6006CA543 /* PaymentConfirmTableVC.swift */,
+				BC91B62D250F571100B76398 /* CallZoneData.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -451,6 +465,7 @@
 				BC4F3A12250E01EB00B7E1E7 /* NMFData.swift */,
 				BC4F3A13250E01EB00B7E1E7 /* SocarZoneData.swift */,
 				C7F2E639250647ED0004EBF9 /* Insurance.swift */,
+				BC91B639250FA91D00B76398 /* SocarZoneDataList.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -670,6 +685,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BC91B63A250FA91D00B76398 /* SocarZoneDataList.swift in Sources */,
 				C769C82324FCDEA100DC8226 /* CardEnrollinitVC.swift in Sources */,
 				BC4F3A05250E01B400B7E1E7 /* SearchResultTableViewCell.swift in Sources */,
 				BC4F3A07250E01B400B7E1E7 /* CarListTableViewCell.swift in Sources */,
@@ -681,6 +697,7 @@
 				C769C83424FDD99300DC8226 /* CheckDriverLicenseView.swift in Sources */,
 				C7CA53EE2509AF2F008DA68C /* ReservationDetailHeader.swift in Sources */,
 				C769C82B24FDB35600DC8226 /* DriverLicenseEnrollinitVC.swift in Sources */,
+				BC91B636250FA7A200B76398 /* ServiceError.swift in Sources */,
 				BC4F3A11250E01D000B7E1E7 /* SearchVC.swift in Sources */,
 				C72A913A24F5E32A005D464F /* SingUpInitVC.swift in Sources */,
 				C72A913824F5E15B005D464F /* Extension.swift in Sources */,
@@ -693,6 +710,7 @@
 				C76B2A6324F7A799004E4CBD /* UserAuthVC.swift in Sources */,
 				BC4F3A25250E028A00B7E1E7 /* TosVC.swift in Sources */,
 				BC4F3A22250E024F00B7E1E7 /* ReservationConfirmTableHeaderView.swift in Sources */,
+				BC91B638250FA7C600B76398 /* SocaZoneProvidable.swift in Sources */,
 				7EF41FC62501F6D90030752A /* CarKeyView.swift in Sources */,
 				C7BD348C24F54A5700089F0D /* InitVC.swift in Sources */,
 				C769C82E24FDB69B00DC8226 /* DriverLicenseEnrollinitView.swift in Sources */,
@@ -709,6 +727,7 @@
 				C7D66D1424FA930100679B99 /* DefaultUserInfoView.swift in Sources */,
 				C7D66D1824FB868A00679B99 /* LoginUserInputTextField.swift in Sources */,
 				C769C81124FCA9FB00DC8226 /* SingUpCompleteVC.swift in Sources */,
+				BC91B62E250F571100B76398 /* CallZoneData.swift in Sources */,
 				BC4F3A28250E029B00B7E1E7 /* ReservationConfirmTableVC.swift in Sources */,
 				7E8473E225088E830007962F /* TagCollectionViewCell.swift in Sources */,
 				C7EA08F624EFF29C001A7ED4 /* AppDelegate.swift in Sources */,
@@ -723,6 +742,7 @@
 				C76B2A6524F7A7BB004E4CBD /* UserAuthScrollView.swift in Sources */,
 				C769C83824FE5E3700DC8226 /* LoginVC.swift in Sources */,
 				7E8473DA2507C59D0007962F /* VehicleCheckView.swift in Sources */,
+				BC91B630250FA6F200B76398 /* SocarZoneProvider.swift in Sources */,
 				7EAA8F6824FFBB510049D514 /* ReservationDashboardVC.swift in Sources */,
 				C7CA53EC2509AA3F008DA68C /* ReservationDetailTableVC.swift in Sources */,
 				BC4F3A14250E01EB00B7E1E7 /* NMFData.swift in Sources */,

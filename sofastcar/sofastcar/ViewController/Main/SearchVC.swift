@@ -41,6 +41,12 @@ class SearchVC: UIViewController {
                 $0.trailing.equalTo(presentingVC.safeArea.snp.trailing).offset(0)
                 $0.height.equalTo(52)
             })
+            
+            presentingVC.searchView.shadowContainer.translatesAutoresizingMaskIntoConstraints = false
+            presentingVC.searchView.shadowContainer.snp.updateConstraints({
+                $0.height.equalTo(52)
+            })
+            
             self.searchView.alpha = 0
             self.view.backgroundColor = .clear
             presentingVC.whiteView.alpha = 0
@@ -76,6 +82,14 @@ class SearchVC: UIViewController {
             $0.leading.equalTo(self.safeArea)
             $0.trailing.equalTo(self.safeArea)
             $0.bottom.equalTo(self.safeArea)
+        })
+        
+        searchView.shadowContainer.translatesAutoresizingMaskIntoConstraints = false
+        searchView.shadowContainer.snp.makeConstraints({
+            $0.top.equalToSuperview()
+            $0.leading.equalToSuperview()
+            $0.trailing.equalToSuperview()
+            $0.height.equalTo(60)
         })
     }
     

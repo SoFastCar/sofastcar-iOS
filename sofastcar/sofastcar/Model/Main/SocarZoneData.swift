@@ -69,35 +69,20 @@ struct SocarZoneData: Decodable {
     }
 }
 
-//{
-//  "id": 255,
-//  "zone_id": "SN0000014",
-//  "name": "강변건영아파트 101동",
-//  "address": "서울 성동구 성수동1가 710 강변 건영아파트 101동 지하2층 44~46번 구역",
-//  "region": "seoul",
-//  "latitude": 37.540323,
-//  "longitude": 127.042847,
-//  "sub_info": "강변건영아파트",
-//  "detail_info": "지하 2층 44~46번 구역",
-//  "type": "지하",
-//  "operating_time": "24시간"
-//},
-
 struct SocarZoneData2: Decodable {
     let id: Int
-    let zoneId: String
     let name: String
     let address: String
     let region: String
     let lat: Double
     let lng: Double
+    let image: String?
     let subInfo: String
     let detailInfo: String
     let type: String
     let operTime: String
     
     enum CodingKeys: String, CodingKey {
-        case zoneId = "zone_id"
         case lat = "latitude"
         case lng = "longitude"
         case subInfo = "sub_info"
@@ -107,6 +92,7 @@ struct SocarZoneData2: Decodable {
         case name
         case address
         case region
+        case image
         case type
     }
 }

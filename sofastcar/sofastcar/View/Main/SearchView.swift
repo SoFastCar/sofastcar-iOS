@@ -79,7 +79,7 @@ class SearchView: UIView {
             $0.top.equalToSuperview()
             $0.leading.equalToSuperview()
             $0.trailing.equalToSuperview()
-            $0.height.equalTo(60)
+//            $0.height.equalTo(60)
         })
         
         searchResultTableView.translatesAutoresizingMaskIntoConstraints = false
