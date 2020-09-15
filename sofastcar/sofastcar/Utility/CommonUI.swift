@@ -49,4 +49,6 @@ class CommonUI {
     case close = "xmark"
     case questionMark = "questionmark.circle"
   }
+  
+  static let locale = NSLocale(localeIdentifier: "ko_KO")
 }

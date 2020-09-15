@@ -38,3 +38,9 @@ protocol ReservationEtcCellDelegate: class {
   func tapShowWashingHistory(forCell cell: ReservationEtcCell)
   func tapContectCustomerCenter(forCell cell: ReservationEtcCell)
 }
+
+protocol BookingTimeCellDelegate: class {
+  func tapAddDayButton(forCell cell: BookingTimeCell)
+  func tapAddHalfHourButton(forCell cell: BookingTimeCell)
+  func tapAddHourButton(forCell cell: BookingTimeCell)
+}

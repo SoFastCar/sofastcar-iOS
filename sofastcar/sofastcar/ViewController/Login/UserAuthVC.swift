@@ -302,7 +302,6 @@ class UserAuthVC: UIViewController {
       guard let header = response as? HTTPURLResponse,
         (200..<300) ~= header.statusCode,
         let responseData = data else {
-          print(response as? HTTPURLResponse)
           self.errorAlertControllerPresent(.serverSideError)
           self.stopAactivityIndicator()
           return
