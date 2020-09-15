@@ -117,6 +117,8 @@ extension UIView {
     }
 }
 
+// MARK: - BoldFont
+
 extension UIFont {
   func withTraits(traits: UIFontDescriptor.SymbolicTraits) -> UIFont {
         let descriptor = fontDescriptor.withSymbolicTraits(traits)
