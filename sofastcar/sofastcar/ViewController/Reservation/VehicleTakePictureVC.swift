@@ -30,6 +30,8 @@ class VehicleTakePictureVC: UIViewController {
     button.setTitle("총 n장 전송하기", for: .normal)
     button.backgroundColor = CommonUI.mainBlue
     button.addTarget(self, action: #selector(buttonAction(_:)), for: .touchUpInside)
+    button.contentHorizontalAlignment = .center
+    button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0)
     
     return button
   }()
@@ -65,7 +67,7 @@ class VehicleTakePictureVC: UIViewController {
       x: 0,
       y: UIScreen.main.bounds.maxY - 80,
       width: UIScreen.main.bounds.width,
-      height: 60
+      height: 80
     )
   }
   

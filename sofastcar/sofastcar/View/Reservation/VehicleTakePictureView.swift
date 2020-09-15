@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class VehicleTakePictureView: UIScrollView {
   
@@ -100,6 +101,7 @@ class VehicleTakePictureView: UIScrollView {
   }
 
   fileprivate func setScrollView() {
+    self.delegate = self
     
     self.frame = CGRect(
       x: 0,
@@ -189,5 +191,17 @@ class VehicleTakePictureView: UIScrollView {
   
   @objc func buttonAction(_ sender: UIButton) {
     print("\(sender) button press")
+  }
+}
+
+// MARK: - UIScrollViewDelegate
+
+extension VehicleTakePictureView: UIScrollViewDelegate {
+  func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    let offset = scrollView.contentOffset.y
+    print("🧘🏻", offset)
+    if offset > 55 {
+      print("asdfasdfasd")
+    }
   }
 }
