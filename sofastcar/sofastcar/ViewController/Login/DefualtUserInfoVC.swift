@@ -127,6 +127,7 @@ class DefualtUserInfoVC: UIViewController {
     AF.request(url, method: .post,
                parameters: sendUSerSignUpData)
       .responseJSON { response in
+        print(response)
         if response.response?.statusCode == 201 {
           self.presentSignUpCompleteVC()
         } else {
