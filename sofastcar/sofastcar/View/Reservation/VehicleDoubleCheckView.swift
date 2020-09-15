@@ -14,7 +14,7 @@ class VehicleDoubleCheckView: UIView {
   fileprivate let titleLabel: UILabel = {
     let label = UILabel()
     label.text = "차량 확인 중에\n혹시 아래와 같은\n파손 흔적을 발견했나요? "
-    label.font = UIFont.preferredFont(forTextStyle: .largeTitle)
+    label.font = UIFont.preferredFont(forTextStyle: .largeTitle).bold()
     label.textColor = CommonUI.mainDark
     label.numberOfLines = .max
     
