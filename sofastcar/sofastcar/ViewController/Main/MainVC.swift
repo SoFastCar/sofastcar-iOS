@@ -47,6 +47,9 @@ class MainVC: UIViewController {
     let backCircleButton = UIButton()
     
     var socarZoneDataList: [SocarZoneData2] = []
+    // side bar Presenting
+    var presentTransition: UIViewControllerAnimatedTransitioning?
+    var dismissTransition: UIViewControllerAnimatedTransitioning?
     
     // MARK: - View Life Cycle        
     override func viewDidLoad() {
@@ -124,6 +127,7 @@ class MainVC: UIViewController {
     
     private func activateSearchView() {
         topView.searchButton.addTarget(self, action: #selector(didTapSearchButton(_:)), for: .touchUpInside)
+        topView.sideBarButton.addTarget(self, action: #selector(didTapSideBarButton(_:)), for: .touchUpInside)
     }
     
     @objc func didTapZoneInfo(_ sender: UIButton) {
@@ -197,6 +201,12 @@ class MainVC: UIViewController {
             self.searchVCDismissFlag = false
             self.present(searchVC, animated: true)
         })
+    }
+  
+    @objc func didTapSideBarButton(_ sender: UIButton) {
+      let sideBarVC = SideBarVC()
+      sideBarVC.modalPresentationStyle = .overFullScreen
+      presentDetail(sideBarVC)
     }
     
     // MARK: - Selector(Booking Time Button)

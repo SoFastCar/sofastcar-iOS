@@ -95,6 +95,8 @@
 		C7F2E63A250647ED0004EBF9 /* Insurance.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F2E639250647ED0004EBF9 /* Insurance.swift */; };
 		C7F2E63C2507133B0004EBF9 /* Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F2E63B2507133B0004EBF9 /* Protocol.swift */; };
 		C7F5B54225106A1800AE0054 /* SocaZoneProvidable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F5B54125106A1800AE0054 /* SocaZoneProvidable.swift */; };
+		C7F5B5442510BC7900AE0054 /* NMapAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F5B5432510BC7900AE0054 /* NMapAddress.swift */; };
+		C7F5B5462510D72600AE0054 /* SideBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F5B5452510D72600AE0054 /* SideBarVC.swift */; };
 		C7FED69B250C729C00778923 /* ReservationEtcCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FED69A250C729C00778923 /* ReservationEtcCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -197,6 +199,8 @@
 		C7F2E639250647ED0004EBF9 /* Insurance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Insurance.swift; sourceTree = "<group>"; };
 		C7F2E63B2507133B0004EBF9 /* Protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocol.swift; sourceTree = "<group>"; };
 		C7F5B54125106A1800AE0054 /* SocaZoneProvidable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocaZoneProvidable.swift; sourceTree = "<group>"; };
+		C7F5B5432510BC7900AE0054 /* NMapAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NMapAddress.swift; sourceTree = "<group>"; };
+		C7F5B5452510D72600AE0054 /* SideBarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBarVC.swift; sourceTree = "<group>"; };
 		C7FED69A250C729C00778923 /* ReservationEtcCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationEtcCell.swift; sourceTree = "<group>"; };
 		F696BB68DE39C7A6CB2DD8B1 /* Pods-sofastcar.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sofastcar.release.xcconfig"; path = "Target Support Files/Pods-sofastcar/Pods-sofastcar.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -354,6 +358,7 @@
 				BC4F3A0D250E01D000B7E1E7 /* BookingTimeVC.swift */,
 				C7A9C91F250848A6006CA543 /* PaymentConfirmTableVC.swift */,
 				BC91B62D250F571100B76398 /* CallZoneData.swift */,
+				C7F5B5452510D72600AE0054 /* SideBarVC.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -469,6 +474,7 @@
 				BC4F3A13250E01EB00B7E1E7 /* SocarZoneData.swift */,
 				C7F2E639250647ED0004EBF9 /* Insurance.swift */,
 				BC91B639250FA91D00B76398 /* SocarZoneDataList.swift */,
+				C7F5B5432510BC7900AE0054 /* NMapAddress.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -704,6 +710,7 @@
 				BC4F3A11250E01D000B7E1E7 /* SearchVC.swift in Sources */,
 				C72A913A24F5E32A005D464F /* SingUpInitVC.swift in Sources */,
 				C72A913824F5E15B005D464F /* Extension.swift in Sources */,
+				C7F5B5442510BC7900AE0054 /* NMapAddress.swift in Sources */,
 				BC4F3A10250E01D000B7E1E7 /* BookingTimeVC.swift in Sources */,
 				C72A914424F67D9F005D464F /* TouView.swift in Sources */,
 				BC4F3A0F250E01D000B7E1E7 /* MainVC.swift in Sources */,
@@ -734,6 +741,7 @@
 				BC91B62E250F571100B76398 /* CallZoneData.swift in Sources */,
 				BC4F3A28250E029B00B7E1E7 /* ReservationConfirmTableVC.swift in Sources */,
 				7E8473E225088E830007962F /* TagCollectionViewCell.swift in Sources */,
+				C7F5B5462510D72600AE0054 /* SideBarVC.swift in Sources */,
 				C7EA08F624EFF29C001A7ED4 /* AppDelegate.swift in Sources */,
 				BC4F3A1F250E01FE00B7E1E7 /* InsuranceMenuItemButton.swift in Sources */,
 				BC4F3A0A250E01B400B7E1E7 /* InsuranceMenuHeaderView.swift in Sources */,
