@@ -120,14 +120,14 @@ class CarListTableViewCell: UITableViewCell {
         })
     }
     
-    func configurationCarInfo(carImage image: String, carName name: String, carPrice price: Int, availableDiscount discount: Bool) {
+    func carInfoConfiguration(carImage image: String, carName name: String, carPrice price: Int, availableDiscount discount: Bool) {
         carImageView.image = UIImage(named: image)
         carNameLabel.text = name
         carPriceLabel.text = numberFormatter.string(from: NSNumber(value: price))
         discountSignLabel.text = discount ? "할인가" : ""
     }
     
-    func configurationTimeInfo(startTime sTime: Date, finishTime fTime: Date) {
+    func timeInfoConfiguration(startTime sTime: Date, finishTime fTime: Date) {
         firstDateLabel.text = dateFormatter.string(from: sTime)
         lastDateLabel.text = dateFormatter.string(from: fTime)
         middleDateLabel.text = "12:00"

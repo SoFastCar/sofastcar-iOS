@@ -11,11 +11,13 @@
 import UIKit
 import NMapsMap
 
-public let defaultCamPosition = NMFCameraPosition(NMGLatLng(lat: 37.549303, lng: 127.057221),
-                                                  zoom: 14, tilt: 0, heading: 0)
+public let defaultCamPosition = NMFCameraPosition(NMGLatLng(lat: 37.545303, lng: 127.057221),
+                                                  zoom: 16, tilt: 0, heading: 0)
 public let defaultMarkerPosition = NMGLatLng(lat: 37.545303, lng: 127.057221)
 
 class MainVC: UIViewController {
+    
+    var socarZoneProvider: SocarZoneProvidable!
     
     // Flags
     var topAreaFlag = false
@@ -26,7 +28,8 @@ class MainVC: UIViewController {
     var bookingButtonDownFlag = false
     
     // Naver Map Framework
-    let marker = NMFMarker()
+//    let marker = NMFMarker()
+    lazy var markers: [NMFMarker] = []
     let naverMapView = NMFNaverMapView()
     lazy var callPositionMarker = NMFMarker(position: defaultMarkerPosition, iconImage: NMF_MARKER_IMAGE_YELLOW)
     
@@ -41,6 +44,9 @@ class MainVC: UIViewController {
     lazy var visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
     lazy var visualEffectView2 = UIVisualEffectView(effect: UIBlurEffect(style: .dark)) 
     let setBookingTimeButton = SetBookingTimeButton(on: .mainVC)
+    let backCircleButton = UIButton()
+    
+    var socarZoneDataList: [SocarZoneData2] = []
     
     // MARK: - View Life Cycle        
     override func viewDidLoad() {
@@ -48,8 +54,9 @@ class MainVC: UIViewController {
         setupNM()
         setupUI()
         setupConstraint()
-        setupMarkers()
+//        setupMarkers()
         activateSearchView()
+        networking()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -59,6 +66,30 @@ class MainVC: UIViewController {
             self.setBookingTimeButton.frame.origin.y = self.view.frame.height - self.setBookingTimeButton.frame.height
         })
         
+    }
+    // MARK: - Network
+    func networking() {
+         
+    }
+    
+    func nmfGeocoding() {
+//        guard let url = URL(string: "https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode?query=분당구 불정로 6&coordinate=127.1054328,37.3595963") else {
+//            return print("Geocoding URL Error")
+//        }
+//        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
+//            guard error == nil else { return print(error?.localizedDescription)}
+//            guard let responseCode = response as? HTTPURLResponse,
+//                (200...400).contains(responseCode.statusCode) else { return print(response)}
+//            guard let responseData = data else { return print("No data")}
+//            
+////            do {
+////                let decodedData = try JSONDecoder().decode(<#T##type: Decodable.Protocol##Decodable.Protocol#>, from: <#T##Data#>)
+////            } catch {
+////                
+////            }
+//        }
+//        task.resume()
+//        
     }
     
     // MARK: - Touch Methods
@@ -75,6 +106,7 @@ class MainVC: UIViewController {
                 markerTapFlag {
                 UIView.animate(withDuration: 0.3, animations: {
                     self.carListView.frame.origin.y = self.view.frame.height * 0.82
+                    self.naverMapView.mapView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: self.view.frame.height - self.view.frame.height * 0.82, right: 0)
                 })
             } else {
                 // do nothing
@@ -144,6 +176,15 @@ class MainVC: UIViewController {
                 $0.trailing.equalTo(self.safeArea.snp.trailing).offset(0)
                 $0.height.equalTo(60)
             })
+            
+            self.searchView.shadowContainer.translatesAutoresizingMaskIntoConstraints = false
+            self.searchView.shadowContainer.snp.updateConstraints({
+                $0.height.equalTo(60)
+            })
+            
+            self.setBookingTimeButton.frame = CGRect(x: self.view.frame.width * 0.03, y: self.view.frame.height,
+                                                     width: self.view.frame.width * 0.94, height: self.view.frame.height * 0.16)
+            
             self.view.layoutIfNeeded()
             self.topView.alpha = 0
             self.searchView.alpha = 1
@@ -163,16 +204,20 @@ class MainVC: UIViewController {
         let presentedVC = BookingTimeVC()
         presentedVC.modalPresentationStyle = .automatic
         present(presentedVC, animated: true)
-//        bookingButtonDownFlag.toggle()
-//        if bookingButtonDownFlag {
-//        UIView.animate(withDuration: 0.5, animations: {
-//            sender.backgroundColor = .lightGray
-//        })
-//        } else {
-//            UIView.animate(withDuration: 0.5, animations: {
-//                sender.backgroundColor = .white
-//            })
-//        }
+    }
+    
+    // MARK: - Selector(Circle Back Button)
+    @objc func didTapCircleBack(_ sender: UIButton) {
+        UIView.animate(withDuration: 0.5, animations: {
+            self.topView.alpha = 1
+            self.backCircleButton.isHidden = true
+            self.carListView.frame.origin.y = self.view.frame.height
+            self.setBookingTimeButton.frame.origin.y = self.view.frame.height - self.setBookingTimeButton.frame.height
+            self.naverMapView.mapView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+            self.callPositionMarker.position = self.naverMapView.mapView.cameraPosition.target
+            self.callPositionMarker.mapView = self.naverMapView.mapView
+        })
+        markerTapFlag = false
     }
     
     // MARK: - Selector(Pan)
@@ -274,43 +319,57 @@ class MainVC: UIViewController {
 //        let bounds = NMGLatLngBounds(southWest: southWestCoord, northEast: northEastCoord)
         
         naverMapView.mapView.moveCamera(NMFCameraUpdate(position: defaultCamPosition))
-        marker.position = defaultMarkerPosition
-        marker.mapView = naverMapView.mapView
         callPositionMarker.mapView = naverMapView.mapView
     }
     
     // MARK: - SetupMarkers
-    private func setupMarkers() {
-        marker.touchHandler = { (overlay) in
-            self.markerTapFlag = true
-            if let marker = overlay as? NMFMarker {
-                marker.iconImage = NMFOverlayImage(name: "mSNormalBlue")
-                self.callPositionMarker.mapView = nil
-                // Car List 팝업 by View
-                UIView.animate(withDuration: 0.5, animations: {
-                    self.setBookingTimeButton.frame.origin.y = self.view.frame.height
-                    self.carListView.frame.origin.y = self.view.center.y
-                    self.naverMapView.mapView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: self.view.center.y, right: 0)
-                    self.topView.alpha = 0
-                })
-                // NMF Content Inset 이용
-//                self.naverMapView.mapView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: self.view.center.y, right: 0)
-                
-                // 지도 좌표로 카메라 위치 이동
-//                let selectedMarkerPosition = defaultMarkerPosition - NMGLatLng(lat: 5300, lng: 0)
-                let camUpdate = NMFCameraUpdate(position: NMFCameraPosition(defaultMarkerPosition, zoom: 14))
-//                let camUpdate = NMFCameraUpdate(position: NMFCameraPosition(NMGLatLng(lat: 37.540003, lng: 127.057221), zoom: 14))
-                // 뷰 좌표로 카메라 위치 이동
-                //                let camUpdateParams = NMFCameraUpdateParams()
-                //                camUpdateParams.scroll(by: CGPoint(x: .zero, y: -1 * (self.view.bounds.height / 4)))
-                //                let camUpdate = NMFCameraUpdate(params: camUpdateParams)
-                
-                camUpdate.animation = .fly
-                camUpdate.animationDuration = 0.5
-                self.naverMapView.mapView.moveCamera(camUpdate)
-            }
-            return true
+    private func setupMarkers(zoneData data: [SocarZoneData2]?) {
+        guard data?.count != 0 else { fatalError()}
+        for index in 0...((data?.count ?? 1) - 1) {
+            markers.append(NMFMarker(position: NMGLatLng(lat: data?[index].lat ?? 0, lng: data?[index].lng ?? 0)))
+            markers[index].touchHandler = { (overlay) in
+                        self.markerTapFlag = true
+                        if let marker = overlay as? NMFMarker {
+                            marker.iconImage = NMFOverlayImage(name: "mSNormalBlue")
+                            self.callPositionMarker.mapView = nil
+                            // Socar Zone Info Update
+                            self.carListView.socarZoneInfoButton.configuration(data?[index].name ?? "", data?[index].type ?? "", 
+                                                                               data?[index].subInfo ?? "", data?[index].image ?? "")
+                            // Car List 팝업 by View
+                            UIView.animateKeyframes(withDuration: 1, delay: 0, animations: {
+                                UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.5, animations: {
+                                    self.setBookingTimeButton.frame.origin.y = self.view.frame.height
+                                    self.carListView.frame.origin.y = self.view.center.y
+                                    self.naverMapView.mapView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: self.view.center.y, right: 0)
+                                    self.topView.alpha = 0
+                                    self.backCircleButton.isHidden = false
+                                })
+                                UIView.addKeyframe(withRelativeStartTime: 0.5, relativeDuration: 1, animations: {
+                                    self.carListView.frame.origin.y = self.view.center.y
+                                })
+                            })
+                            // NMF Content Inset 이용
+            //                self.naverMapView.mapView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: self.view.center.y, right: 0)
+                            
+                            // 지도 좌표로 카메라 위치 이동
+            //                let selectedMarkerPosition = defaultMarkerPosition - NMGLatLng(lat: 5300, lng: 0)
+                            let camUpdate = NMFCameraUpdate(position: NMFCameraPosition(marker.position, zoom: 16))
+            //                let camUpdate = NMFCameraUpdate(position: NMFCameraPosition(NMGLatLng(lat: 37.540003, lng: 127.057221), zoom: 14))
+                            // 뷰 좌표로 카메라 위치 이동
+                            //                let camUpdateParams = NMFCameraUpdateParams()
+                            //                camUpdateParams.scroll(by: CGPoint(x: .zero, y: -1 * (self.view.bounds.height / 4)))
+                            //                let camUpdate = NMFCameraUpdate(params: camUpdateParams)
+                            
+                            camUpdate.animation = .fly
+                            camUpdate.animationDuration = 0.5
+                            self.naverMapView.mapView.moveCamera(camUpdate)
+                        }
+                        return true
+                    }
+                    print("makers[\(index)].position.lat = \(markers[index].position.lat)")
+                    markers[index].mapView = naverMapView.mapView
         }
+//        callPositionMarker.mapView = naverMapView.mapView
     }
     
     // MARK: - SetupUI
@@ -319,6 +378,15 @@ class MainVC: UIViewController {
         whiteView.backgroundColor = .white
         whiteView.alpha = 0
         view.addSubview(whiteView)
+        
+        backCircleButton.layer.cornerRadius = 26
+        backCircleButton.layer.shadowOpacity = 0.2
+        backCircleButton.backgroundColor = .white
+        backCircleButton.setImage(UIImage(systemName: "arrow.left", withConfiguration: backCircleButton.symbolConfiguration(pointSize: 17, weight: .regular)), for: .normal)
+        backCircleButton.addTarget(self, action: #selector(didTapCircleBack(_:)), for: .touchUpInside)
+        backCircleButton.tintColor = CommonUI.mainDark
+        backCircleButton.isHidden = true
+        view.addSubview(backCircleButton)
         
         visualEffectView.frame = view.frame
         visualEffectView.alpha = 0
@@ -371,11 +439,28 @@ class MainVC: UIViewController {
             $0.trailing.equalTo(self.safeArea).offset(-10)
             $0.height.equalTo(52)
         })
+        
+        searchView.shadowContainer.translatesAutoresizingMaskIntoConstraints = false
+        searchView.shadowContainer.snp.makeConstraints({
+            $0.top.equalToSuperview()
+            $0.leading.equalToSuperview()
+            $0.trailing.equalToSuperview()
+            $0.height.equalTo(52)
+        })
+        
         topView.translatesAutoresizingMaskIntoConstraints = false
         topView.snp.makeConstraints({
             $0.top.equalTo(self.safeArea).offset(8)
             $0.leading.equalTo(self.safeArea).offset(10)
             $0.trailing.equalTo(self.safeArea).offset(-10)
+            $0.height.equalTo(52)
+        })
+        
+        backCircleButton.translatesAutoresizingMaskIntoConstraints = false
+        backCircleButton.snp.makeConstraints({
+            $0.centerY.equalTo(topView)
+            $0.leading.equalTo(self.safeArea).offset(10)
+            $0.width.equalTo(52)
             $0.height.equalTo(52)
         })
     }
@@ -387,6 +472,7 @@ extension MainVC: NMFMapViewTouchDelegate {
         print("didTapMap")
         UIView.animate(withDuration: 0.3, animations: {
             self.topView.alpha = 1
+            self.backCircleButton.isHidden = true
             self.carListView.frame.origin.y = self.view.frame.height
             self.setBookingTimeButton.frame.origin.y = self.view.frame.height - self.setBookingTimeButton.frame.height
             self.naverMapView.mapView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
@@ -400,16 +486,49 @@ extension MainVC: NMFMapViewTouchDelegate {
 extension MainVC: NMFMapViewCameraDelegate {
     func mapView(_ mapView: NMFMapView, cameraDidChangeByReason reason: Int, animated: Bool) {
         let camPosition = mapView.cameraPosition.target
-        
-        let meterPerPixel = mapView.projection.metersPerPixel(atLatitude: mapView.cameraPosition.target.lat, zoom: mapView.cameraPosition.zoom)
-        
-//        let southWestCoord = naverMapView.mapView.projection.latlng(from: CGPoint(x: view.frame.width, y: 0))
-//        let northEastCoord = naverMapView.mapView.projection.latlng(from: CGPoint(x: 0, y: view.frame.height))
-//        let bounds = NMGLatLngBounds(southWest: southWestCoord, northEast: northEastCoord)
-//        print("축적도: \(meterPerPixel), 북동 위경도: \(southWestCoord), 남서 위경도: \(northEastCoord), 바운즈: \(bounds)")
-        
         callPositionMarker.position = camPosition
         topView.searchButton.setTitle("Geocoding", for: .normal)
+    }
+    
+    func mapViewCameraIdle(_ mapView: NMFMapView) {
+        let camPosition = mapView.cameraPosition.target
+        let camZoom = mapView.cameraPosition.zoom
+        let meterPerPixel = mapView.projection.metersPerPixel(atLatitude: camPosition.lat, zoom: camZoom)
+        
+        // 반경 쏘카존
+        let endPoint = EndPoint(path: .distance, query: [.lat: "\(camPosition.lat)", .lon: "\(camPosition.lng)", .distance: "\(meterPerPixel)"])
+    
+        // 레퍼런스
+        socarZoneProvider.fetchSocarZoneData(endpoint: endPoint, completionHandler: { [weak self] (result: Result<[SocarZoneData2], ServiceError>) in
+            switch result {
+            case .success(let value): 
+                self?.socarZoneDataList = value; print("쏘카존 데이터 가져오기 성공")
+                self?.setupMarkers(zoneData: self?.socarZoneDataList)
+            case .failure(let error): print("기상 예보 가져오기 실패. \(error)")
+            }
+        })
+        
+        // 내꺼
+//        var request2 = URLRequest(url: url2)
+//        request2.httpMethod = "GET"
+//        request2.setValue("application/json", forHTTPHeaderField: "Content-Type")
+//        request2.addValue("JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxMiwidXNlcm5hbWUiOiJnaG9zdEBleGFtcGxlLmNvbSIsImV4cCI6MTYwMDE2ODc1NywiZW1haWwiOiJnaG9zdEBleGFtcGxlLmNvbSIsIm9yaWdfaWF0IjoxNTk5NTYzOTU3fQ.zjJwe8Dx-NP1pQygSEevvAjLD39dqQm2cU-HDq5vHcw", forHTTPHeaderField: "Authorization")
+//        
+//        let task2 = URLSession.shared.dataTask(with: request2) {(data, response, error) in
+//            guard error == nil else { return print("error2: \(error!.localizedDescription)")}
+//            guard let responseCode = response as? HTTPURLResponse,
+//                (200...400).contains(responseCode.statusCode) else { return print("response2: \(response ?? URLResponse())") }
+//            guard let responseData = data else { return print("No data")}
+//            
+//            let jsonDecoder = JSONDecoder()
+//            do {
+//                let decodedData = try jsonDecoder.decode([SocarZoneData2].self, from: responseData)
+//                self.socarZoneDataList = decodedData
+//            } catch {
+//                print("docode2 error")
+//            }
+//        }
+//        task2.resume()
     }
 }
 
@@ -491,8 +610,9 @@ extension MainVC: UITableViewDataSource {
         let date2 = Date(timeInterval: 36000, since: date1)
         cell.selectionStyle = .none
         cell.separatorInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
-        cell.configurationCarInfo(carImage: "SampleCar", carName: "더뉴아반떼", carPrice: 25000, availableDiscount: true)
-        cell.configurationTimeInfo(startTime: date1, finishTime: date2)
+        
+        cell.carInfoConfiguration(carImage: "SampleCar", carName: "더뉴아반떼", carPrice: 25000, availableDiscount: true)
+        cell.timeInfoConfiguration(startTime: date1, finishTime: date2)
         return cell
     }
 

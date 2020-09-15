@@ -7,10 +7,11 @@
 //
 
 import UIKit
+import Kingfisher
 
 class SocarZoneInfoButton: UIButton {
 
-    var socarZoneData = SocarZoneData()
+//    var socarZoneData = SocarZoneData()
     var socarZoneNameLabel = UILabel()
     var socarZoneGroundLevelLabel = UILabel()
     var socarZoneDiscripitionLabel = UILabel()
@@ -81,6 +82,8 @@ class SocarZoneInfoButton: UIButton {
         socarZoneGroundLevelLabel.text = level
         socarZoneDiscripitionLabel.text = discription
         socarZoneImageView.image = UIImage(named: image)
+        let url = URL(string: image)
+        socarZoneImageView.kf.setImage(with: url)
     }
     
 }
