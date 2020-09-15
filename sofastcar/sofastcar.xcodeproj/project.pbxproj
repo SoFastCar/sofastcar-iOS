@@ -42,7 +42,6 @@
 		BC91B62E250F571100B76398 /* CallZoneData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC91B62D250F571100B76398 /* CallZoneData.swift */; };
 		BC91B630250FA6F200B76398 /* SocarZoneProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC91B62F250FA6F200B76398 /* SocarZoneProvider.swift */; };
 		BC91B636250FA7A200B76398 /* ServiceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC91B635250FA7A200B76398 /* ServiceError.swift */; };
-		BC91B638250FA7C600B76398 /* SocaZoneProvidable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC91B637250FA7C600B76398 /* SocaZoneProvidable.swift */; };
 		BC91B63A250FA91D00B76398 /* SocarZoneDataList.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC91B639250FA91D00B76398 /* SocarZoneDataList.swift */; };
 		C728C85024F7E35100063005 /* SignUpUserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C728C84F24F7E35100063005 /* SignUpUserData.swift */; };
 		C72A913824F5E15B005D464F /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72A913724F5E15B005D464F /* Extension.swift */; };
@@ -95,6 +94,7 @@
 		C7F2E6352505FE8E0004EBF9 /* UserDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F2E6342505FE8E0004EBF9 /* UserDefault.swift */; };
 		C7F2E63A250647ED0004EBF9 /* Insurance.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F2E639250647ED0004EBF9 /* Insurance.swift */; };
 		C7F2E63C2507133B0004EBF9 /* Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F2E63B2507133B0004EBF9 /* Protocol.swift */; };
+		C7F5B54225106A1800AE0054 /* SocaZoneProvidable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F5B54125106A1800AE0054 /* SocaZoneProvidable.swift */; };
 		C7FED69B250C729C00778923 /* ReservationEtcCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FED69A250C729C00778923 /* ReservationEtcCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -146,7 +146,6 @@
 		BC91B62D250F571100B76398 /* CallZoneData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallZoneData.swift; sourceTree = "<group>"; };
 		BC91B62F250FA6F200B76398 /* SocarZoneProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocarZoneProvider.swift; sourceTree = "<group>"; };
 		BC91B635250FA7A200B76398 /* ServiceError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceError.swift; sourceTree = "<group>"; };
-		BC91B637250FA7C600B76398 /* SocaZoneProvidable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SocaZoneProvidable.swift; path = "/Users/woobincheon/Documents/fcios11/06-Code/finalProject/sofastcar-iOS/sofastcar/sofastcar/Utility/SocaZoneProvidable.swift"; sourceTree = "<absolute>"; };
 		BC91B639250FA91D00B76398 /* SocarZoneDataList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SocarZoneDataList.swift; path = sofastcar/Model/Main/SocarZoneDataList.swift; sourceTree = SOURCE_ROOT; };
 		C728C84F24F7E35100063005 /* SignUpUserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpUserData.swift; sourceTree = "<group>"; };
 		C72A913724F5E15B005D464F /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
@@ -197,6 +196,7 @@
 		C7F2E6342505FE8E0004EBF9 /* UserDefault.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefault.swift; sourceTree = "<group>"; };
 		C7F2E639250647ED0004EBF9 /* Insurance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Insurance.swift; sourceTree = "<group>"; };
 		C7F2E63B2507133B0004EBF9 /* Protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocol.swift; sourceTree = "<group>"; };
+		C7F5B54125106A1800AE0054 /* SocaZoneProvidable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocaZoneProvidable.swift; sourceTree = "<group>"; };
 		C7FED69A250C729C00778923 /* ReservationEtcCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationEtcCell.swift; sourceTree = "<group>"; };
 		F696BB68DE39C7A6CB2DD8B1 /* Pods-sofastcar.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sofastcar.release.xcconfig"; path = "Target Support Files/Pods-sofastcar/Pods-sofastcar.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -265,7 +265,7 @@
 				C7F2E63B2507133B0004EBF9 /* Protocol.swift */,
 				BC3F2E99250E49B3003E2C44 /* EndPoint.swift */,
 				BC91B62F250FA6F200B76398 /* SocarZoneProvider.swift */,
-				BC91B637250FA7C600B76398 /* SocaZoneProvidable.swift */,
+				C7F5B54125106A1800AE0054 /* SocaZoneProvidable.swift */,
 				BC91B635250FA7A200B76398 /* ServiceError.swift */,
 				C78071A72510413700EF214C /* Time.swift */,
 			);
@@ -714,10 +714,10 @@
 				C76B2A6324F7A799004E4CBD /* UserAuthVC.swift in Sources */,
 				BC4F3A25250E028A00B7E1E7 /* TosVC.swift in Sources */,
 				BC4F3A22250E024F00B7E1E7 /* ReservationConfirmTableHeaderView.swift in Sources */,
-				BC91B638250FA7C600B76398 /* SocaZoneProvidable.swift in Sources */,
 				7EF41FC62501F6D90030752A /* CarKeyView.swift in Sources */,
 				C7BD348C24F54A5700089F0D /* InitVC.swift in Sources */,
 				C769C82E24FDB69B00DC8226 /* DriverLicenseEnrollinitView.swift in Sources */,
+				C7F5B54225106A1800AE0054 /* SocaZoneProvidable.swift in Sources */,
 				C79A0B5B2504656B0061F078 /* PhoneAuthResponse.swift in Sources */,
 				C7CA53F4250A01F8008DA68C /* ReservationPaymentCell.swift in Sources */,
 				BC4F3A1E250E01FE00B7E1E7 /* RentReturnTimeButton.swift in Sources */,
@@ -950,7 +950,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = W5DN7MBP3R;
+				DEVELOPMENT_TEAM = 52ZXCPY3WQ;
 				INFOPLIST_FILE = sofastcar/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (

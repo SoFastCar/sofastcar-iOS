@@ -19,13 +19,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var rootView: UIViewController = UIViewController()
 //    UserDefaults.resetUserAuthTocken() // 로그아웃필요할때 사용
     if UserDefaults.getUserAuthTocken() != nil {
-        rootView = MainVC()
+      let mainVC = MainVC()
+      mainVC.socarZoneProvider = SocarZoneProvider()
+      rootView = mainVC
     } else {
-        rootView = InitVC()
+      rootView = InitVC()
     }
-    
-    var mainVC = MainVC()
-    mainVC.socarZoneProvider = SocarZoneProvider()
     
     let navigationController = UINavigationController(rootViewController: rootView)
     let backButtonImage = UIImage(systemName: "arrow.left")
@@ -34,7 +33,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     navigationController.navigationBar.topItem?.title = ""
     
     window = UIWindow(frame: UIScreen.main.bounds)
-    window?.rootViewController = mainVC
+    window?.rootViewController = rootView
     window?.makeKeyAndVisible()
     window?.overrideUserInterfaceStyle = .light // add woobin: dark mode off
     return true

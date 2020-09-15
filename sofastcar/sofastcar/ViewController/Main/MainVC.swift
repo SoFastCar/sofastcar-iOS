@@ -203,6 +203,8 @@ class MainVC: UIViewController {
     @objc func didTapBookingTime(_ sender: SetBookingTimeButton) {
         let presentedVC = BookingTimeVC()
         presentedVC.modalPresentationStyle = .automatic
+        presentedVC.startDate = sender.startTime
+        presentedVC.endDate = sender.endTime
         present(presentedVC, animated: true)
     }
     
