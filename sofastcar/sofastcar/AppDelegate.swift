@@ -24,7 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         rootView = InitVC()
     }
     
-    var mainVC = MainVC()
+    let mainVC = MainVC()
     mainVC.socarZoneProvider = SocarZoneProvider()
     
     let navigationController = UINavigationController(rootViewController: rootView)
