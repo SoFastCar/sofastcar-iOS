@@ -24,8 +24,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         rootView = InitVC()
     }
     
-    let mainVC = MainVC()
-    mainVC.socarZoneProvider = SocarZoneProvider()
+    let mainVC = UINavigationController(rootViewController: ReservationDashboardVC())
+//    mainVC.socarZoneProvider = SocarZoneProvider()
     
     let navigationController = UINavigationController(rootViewController: rootView)
     let backButtonImage = UIImage(systemName: "arrow.left")
