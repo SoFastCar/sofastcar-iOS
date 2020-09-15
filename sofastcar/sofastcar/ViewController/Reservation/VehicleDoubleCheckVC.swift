@@ -7,8 +7,11 @@
 //
 
 import UIKit
+import SnapKit
 
 class VehicleDoubleCheckVC: UIViewController {
+  
+  fileprivate let vehicleDoubleCheckView = VehicleDoubleCheckView()
   
     // MARK: - LifeCycle
   
@@ -21,11 +24,15 @@ class VehicleDoubleCheckVC: UIViewController {
   // MARK: - UI
   
   fileprivate func setUI() {
-    self.view.backgroundColor = .magenta
+    view.backgroundColor = .white
+    let guid = view.safeAreaLayoutGuide
     
-    [].forEach {
+    [vehicleDoubleCheckView].forEach {
       view.addSubview($0)
     }
+    
+    vehicleDoubleCheckView.snp.makeConstraints {
+      $0.edges.equalTo(guid)
+    }
   }
-  
 }
