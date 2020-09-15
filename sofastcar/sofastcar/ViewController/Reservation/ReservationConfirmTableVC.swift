@@ -152,15 +152,15 @@ class ReservationConfirmTableVC: UITableViewController {
 }
 
 extension ReservationConfirmTableVC: ResrvationConfirmCellDelegate {
-  func tabChangeInsuranceButton(forCell: ReservationConfirmCustomCell) {
+  func tapChangeInsuranceButton(forCell: ReservationConfirmCustomCell) {
     print("tabChangeInsuranceButton")
   }
   
-  func tabChangeUsingTime(forCell: ReservationConfirmCustomCell) {
+  func tapChangeUsingTime(forCell: ReservationConfirmCustomCell) {
     print("tabChangeUsingTime")
   }
   
-  func tabSocarZoneDetailButton(forCell: ReservationConfirmCustomCell) {
+  func tapSocarZoneDetailButton(forCell: ReservationConfirmCustomCell) {
     print("tabSocarZoneDetailButton")
   }
 }

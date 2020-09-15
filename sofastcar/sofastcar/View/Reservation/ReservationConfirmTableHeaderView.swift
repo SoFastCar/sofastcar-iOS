@@ -176,13 +176,10 @@ class ReservationConfirmTableHeaderView: UIView {
   // MARK: - Life cycle
   override init(frame: CGRect) {
     super.init(frame: frame)
-    
     backgroundColor = .white
-    
     self.layoutMargins = UIEdgeInsets(top: 30, left: 20, bottom: 30, right: 20)
     let guide = self.layoutMarginsGuide
     configureCollectionView()
-    
     configureCarDetailInfoUI(guide)
     configureBurumLabel(guide)
     configureCarImageUI(guide)
