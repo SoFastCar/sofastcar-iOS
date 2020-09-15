@@ -22,6 +22,18 @@ class MenuCollectionViewCell: UICollectionViewCell {
     return imageView
   }()
   
+  override var isHighlighted: Bool {
+    didSet {
+      vehicleImageView.alpha = isHighlighted ? 1 : 0.5
+    }
+  }
+  
+  override var isSelected: Bool {
+    didSet {
+      vehicleImageView.alpha = isSelected ? 1 : 0.5
+    }
+  }
+  
   // MARK: - LifeCycle
   
   override init(frame: CGRect) {

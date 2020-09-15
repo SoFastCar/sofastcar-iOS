@@ -201,7 +201,12 @@ extension VehicleTakePictureView: UIScrollViewDelegate {
     let offset = scrollView.contentOffset.y
     print("🧘🏻", offset)
     if offset > 55 {
-      print("asdfasdfasd")
+      vehicleTakePictureMenuView.frame = CGRect(
+        x: 0,
+        y: 0,
+        width: UIScreen.main.bounds.width,
+        height: 80
+      )
     }
   }
 }

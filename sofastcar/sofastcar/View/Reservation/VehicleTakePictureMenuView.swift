@@ -39,6 +39,7 @@ class VehicleTakePictureMenuView: UIView {
     super.init(frame: frame)
     
     setUI()
+    setSelect()
   }
   
   required init?(coder: NSCoder) {
@@ -57,6 +58,11 @@ class VehicleTakePictureMenuView: UIView {
     menuCollectionView.snp.makeConstraints {
       $0.edges.equalToSuperview()
     }
+  }
+  
+  fileprivate func setSelect() {
+    let selectedIndexPath = NSIndexPath(item: 0, section: 0)
+    menuCollectionView.selectItem(at: selectedIndexPath as IndexPath, animated: false, scrollPosition: [])
   }
 }
 
