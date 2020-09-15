@@ -9,7 +9,13 @@
 import UIKit
 import SnapKit
 
+protocol VehicleCheckViewDelegate: class {
+    func buttonAction(_ sender: UIButton)
+}
+
 class VehicleCheckView: UIScrollView {
+  
+  weak var customDelegate: VehicleCheckViewDelegate?
   
   var tagArray = [
     "동물털",
@@ -77,11 +83,11 @@ class VehicleCheckView: UIScrollView {
     return button
   }()
   
-  fileprivate let vehicleCheckStartButton: UIButton = {
+  let vehicleCheckStartButton: UIButton = {
     let button = UIButton()
     button.setTitle("외관 촬영 시작하기", for: .normal)
     button.backgroundColor = CommonUI.mainBlue
-    button.addTarget(self, action: #selector(didTapButton(_:)), for: .touchUpInside)
+    button.addTarget(self, action: #selector(buttonAction(_:)), for: .touchUpInside)
     
     return button
   }()
@@ -318,13 +324,15 @@ class VehicleCheckView: UIScrollView {
     switch sender {
     case vehicleCheckStartSubDescriptionButton:
       print("vehicleCheckStartSubDescriptionButton button press")
-    case vehicleCheckStartButton:
-      print("vehicleCheckStartButton button press")
     case vehicleCheckTagSubmitButton:
       print("vehicleCheckTagSubmitButton button press")
     default:
       break
     }
+  }
+  
+  @objc func buttonAction(_ sender: UIButton) {
+    customDelegate?.buttonAction(sender)
   }
 }
 
