@@ -106,7 +106,9 @@ class BookingTimeVC: UIViewController {
   }
   
   @objc private func tapCompliteButton() {
-    self.dismiss(animated: true, completion: nil)
+      guard let presentingVC = self.presentingViewController as? MainVC else { return }
+      presentingVC.setBookingTimeButton.setupTime(withSt: startDate, withEt: endDate)
+      self.dismiss(animated: true, completion: nil)
   }
   
   // MARK: - Time Handler

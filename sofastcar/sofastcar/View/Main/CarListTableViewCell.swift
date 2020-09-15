@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class CarListTableViewCell: UITableViewCell {
     let carImageView = UIImageView()
@@ -36,7 +37,6 @@ class CarListTableViewCell: UITableViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
         contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20))
     }
     
@@ -46,7 +46,7 @@ class CarListTableViewCell: UITableViewCell {
         dateFormatter.dateStyle = .short
         dateFormatter.timeStyle = .short
         
-        carImageView.contentMode = .scaleToFill
+        carImageView.contentMode = .scaleAspectFit
         contentView.addSubview(carImageView)
         
         carNameLabel.font = .systemFont(ofSize: 14, weight: .regular)
@@ -85,7 +85,7 @@ class CarListTableViewCell: UITableViewCell {
         carImageView.snp.makeConstraints({
             $0.centerY.equalToSuperview().offset(-15)
             $0.leading.equalToSuperview()
-            $0.width.equalTo(70)
+            $0.width.equalTo(100)
             $0.height.equalTo(55)
         })
         carNameLabel.snp.makeConstraints({
@@ -121,7 +121,8 @@ class CarListTableViewCell: UITableViewCell {
     }
     
     func carInfoConfiguration(carImage image: String, carName name: String, carPrice price: Int, availableDiscount discount: Bool) {
-        carImageView.image = UIImage(named: image)
+        let url = URL(string: image)
+        carImageView.kf.setImage(with: url)
         carNameLabel.text = name
         carPriceLabel.text = numberFormatter.string(from: NSNumber(value: price))
         discountSignLabel.text = discount ? "할인가" : ""

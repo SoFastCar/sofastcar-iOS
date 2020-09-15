@@ -25,7 +25,6 @@ struct EndPoint {
             let (key, value) = queryItem
             return URLQueryItem(name: key.rawValue, value: value)
         })
-//        print("endpoint components: \(components)")
         return components.url
     }
     
@@ -34,11 +33,13 @@ struct EndPoint {
 extension EndPoint {
     enum Path: String {
         case distance
+        case cars = ""
     }
     enum Querykey: String {
         case lat
         case lon
         case distance
+        case zoneId
     }
     typealias QueryItems = [Querykey: String]
 }
