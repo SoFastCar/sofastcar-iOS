@@ -9,6 +9,7 @@
 import Foundation
 
 class Time {
+  // 참고 URL: https://ownstory.tistory.com/21
   enum PresnetDateString: String {
     case castMddEHHmm = "M/dd (E) HH:mm"
     case castMddEHH = "M/dd (E) HH"
