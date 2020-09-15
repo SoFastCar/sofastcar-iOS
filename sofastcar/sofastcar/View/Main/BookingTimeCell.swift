@@ -15,27 +15,6 @@ class BookingTimeCell: UITableViewCell {
   weak var delegate: BookingTimeCellDelegate?
   var addDateButtons: [UIButton]?
   
-  let format: DateFormatter =  {
-    let format = DateFormatter()
-    format.locale = CommonUI.locale as Locale
-    format.dateFormat = "M/dd (E) HH:mm"
-    return format
-  }()
-  
-  let hourformat: DateFormatter =  {
-    let format = DateFormatter()
-    format.locale = CommonUI.locale as Locale
-    format.dateFormat = "HH"
-    return format
-  }()
-  
-  let minformat: DateFormatter =  {
-    let format = DateFormatter()
-    format.locale = CommonUI.locale as Locale
-    format.dateFormat = "mm"
-    return format
-  }()
-  
   let titleLabel: UILabel = {
     let label = UILabel()
     label.text = "로딩중입니다..."
@@ -211,12 +190,14 @@ class BookingTimeCell: UITableViewCell {
   }
   
   func updateRentTimeDatePicker(dayIndex: Int, changedTime: Date) {
-    guard let hourIndex = Int(hourformat.string(from: changedTime)) else { return }
-    guard let minCount = Int(minformat.string(from: changedTime)) else { return }
-    selectedTimeShowLabel.text = format.string(from: changedTime)
+    guard let hourIndex = Int(Time.getTimeString(type: .hourHH, date: changedTime)) else { return }
+    guard let minCount = Int(Time.getTimeString(type: .minMM, date: changedTime)) else { return }
     rentTimeDatePicker.selectRow(dayIndex, inComponent: 0, animated: true)
     rentTimeDatePicker.selectRow(hourIndex, inComponent: 1, animated: true)
     rentTimeDatePicker.selectRow(minCount/10+1, inComponent: 2, animated: true)
+    let minRowIndex = rentTimeDatePicker.selectedRow(inComponent: 2)
+    let setMinString = minRowIndex == 0 ? 00 : minRowIndex*10
+    selectedTimeShowLabel.text = "\(Time.getTimeString(type: .castMddEHH, date: changedTime.addingTimeInterval(600))):\(setMinString)"
   }
   
   @objc func tapAddDayButton() {

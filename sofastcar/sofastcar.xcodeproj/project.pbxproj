@@ -64,6 +64,7 @@
 		C769C83A24FE5E5100DC8226 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C769C83924FE5E5100DC8226 /* LoginView.swift */; };
 		C76B2A6324F7A799004E4CBD /* UserAuthVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76B2A6224F7A799004E4CBD /* UserAuthVC.swift */; };
 		C76B2A6524F7A7BB004E4CBD /* UserAuthScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76B2A6424F7A7BB004E4CBD /* UserAuthScrollView.swift */; };
+		C78071A82510413700EF214C /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = C78071A72510413700EF214C /* Time.swift */; };
 		C79A0B57250224F80061F078 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = C79A0B56250224F80061F078 /* Alamofire */; };
 		C79A0B5B2504656B0061F078 /* PhoneAuthResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C79A0B5A2504656B0061F078 /* PhoneAuthResponse.swift */; };
 		C7A454AE24FA0C9900FA08B7 /* SelectPopupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A454AD24FA0C9900FA08B7 /* SelectPopupVC.swift */; };
@@ -160,6 +161,7 @@
 		C769C83924FE5E5100DC8226 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		C76B2A6224F7A799004E4CBD /* UserAuthVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAuthVC.swift; sourceTree = "<group>"; };
 		C76B2A6424F7A7BB004E4CBD /* UserAuthScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAuthScrollView.swift; sourceTree = "<group>"; };
+		C78071A72510413700EF214C /* Time.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Time.swift; sourceTree = "<group>"; };
 		C79A0B5A2504656B0061F078 /* PhoneAuthResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneAuthResponse.swift; sourceTree = "<group>"; };
 		C7A454AD24FA0C9900FA08B7 /* SelectPopupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectPopupVC.swift; sourceTree = "<group>"; };
 		C7A9C91D2507B314006CA543 /* TopView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopView.swift; sourceTree = "<group>"; };
@@ -249,6 +251,7 @@
 				C769C82424FCDEFC00DC8226 /* CommonUI.swift */,
 				C7F2E6342505FE8E0004EBF9 /* UserDefault.swift */,
 				C7F2E63B2507133B0004EBF9 /* Protocol.swift */,
+				C78071A72510413700EF214C /* Time.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -684,6 +687,7 @@
 				BC4F3A10250E01D000B7E1E7 /* BookingTimeVC.swift in Sources */,
 				C72A914424F67D9F005D464F /* TouView.swift in Sources */,
 				BC4F3A0F250E01D000B7E1E7 /* MainVC.swift in Sources */,
+				C78071A82510413700EF214C /* Time.swift in Sources */,
 				C769C82924FD0A1200DC8226 /* CardEnrollView.swift in Sources */,
 				C7FED69B250C729C00778923 /* ReservationEtcCell.swift in Sources */,
 				BC4F3A0B250E01B400B7E1E7 /* SearchView.swift in Sources */,
