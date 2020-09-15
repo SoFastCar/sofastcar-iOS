@@ -37,6 +37,7 @@ class VehicleTakePictureView: UIScrollView {
     let view = VehicleTakePictureImageView()
     view.vehicleImageStirng = "전면"
     view.vehiclePositionString = "전면"
+    view.vehicleTakePictureButton.addTarget(self, action: #selector(didTapButton(_:)), for: .touchUpInside)
     
     return view
   }()
@@ -45,6 +46,7 @@ class VehicleTakePictureView: UIScrollView {
     let view = VehicleTakePictureImageView()
     view.vehicleImageStirng = "보조석앞면"
     view.vehiclePositionString = "보조석 앞면"
+    view.vehicleTakePictureButton.addTarget(self, action: #selector(didTapButton(_:)), for: .touchUpInside)
     
     return view
   }()
@@ -53,6 +55,7 @@ class VehicleTakePictureView: UIScrollView {
     let view = VehicleTakePictureImageView()
     view.vehicleImageStirng = "보조석뒷면"
     view.vehiclePositionString = "보조석 뒷면"
+    view.vehicleTakePictureButton.addTarget(self, action: #selector(didTapButton(_:)), for: .touchUpInside)
     
     return view
   }()
@@ -61,6 +64,7 @@ class VehicleTakePictureView: UIScrollView {
     let view = VehicleTakePictureImageView()
     view.vehicleImageStirng = "후면"
     view.vehiclePositionString = "후면"
+    view.vehicleTakePictureButton.addTarget(self, action: #selector(didTapButton(_:)), for: .touchUpInside)
     
     return view
   }()
@@ -69,6 +73,7 @@ class VehicleTakePictureView: UIScrollView {
     let view = VehicleTakePictureImageView()
     view.vehicleImageStirng = "운전석뒷면"
     view.vehiclePositionString = "운전석 뒷면"
+    view.vehicleTakePictureButton.addTarget(self, action: #selector(didTapButton(_:)), for: .touchUpInside)
     
     return view
   }()
@@ -77,6 +82,7 @@ class VehicleTakePictureView: UIScrollView {
     let view = VehicleTakePictureImageView()
     view.vehicleImageStirng = "운전석앞면"
     view.vehiclePositionString = "운전석 앞면"
+    view.vehicleTakePictureButton.addTarget(self, action: #selector(didTapButton(_:)), for: .touchUpInside)
     
     return view
   }()
@@ -99,7 +105,7 @@ class VehicleTakePictureView: UIScrollView {
     setScrollView()
     setConstraints()
   }
-
+  
   fileprivate func setScrollView() {
     self.delegate = self
     
@@ -133,7 +139,7 @@ class VehicleTakePictureView: UIScrollView {
   }
   
   fileprivate func setConstraints() {
-//    let guid = contentView.safeAreaLayoutGuide
+    //    let guid = contentView.safeAreaLayoutGuide
     
     [descriptionLabel, vehicleTakePictureMenuView, vehicleTakePictureFrontView, vehicleTakePicturePassengerFrontSeatView, vehicleTakePicturePassengerBackSeatView, vehicleTakePictureBackView, vehicleTakePictureDriveBackSeatView, vehicleTakePictureDriveFrontSeatView].forEach {
       contentView.addSubview($0)
@@ -189,7 +195,7 @@ class VehicleTakePictureView: UIScrollView {
   
   // MARK: - Action
   
-  @objc func buttonAction(_ sender: UIButton) {
+  @objc func didTapButton(_ sender: UIButton) {
     print("\(sender) button press")
   }
 }

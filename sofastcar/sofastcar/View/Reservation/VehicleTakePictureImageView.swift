@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class VehicleTakePictureImageView: UIView {
   
@@ -40,6 +41,24 @@ class VehicleTakePictureImageView: UIView {
     return imageView
   }()
   
+  let vehicleTakePictureButton: UIButton = {
+    let button = UIButton()
+    button.setImage(
+      UIImage(systemName: CommonUI.SFSymbolKey.camera.rawValue),
+      for: .normal
+    )
+    button.tintColor = .white
+    button.backgroundColor = UIColor(
+      red: 55 / 255,
+      green: 69 / 255,
+      blue: 84 / 255,
+      alpha: 1
+    )
+    button.layer.cornerRadius = 30
+    
+    return button
+  }()
+  
   // MARK: - LifeCycle
   
   override init(frame: CGRect) {
@@ -55,9 +74,11 @@ class VehicleTakePictureImageView: UIView {
   // MARK: - Layout
   
   private func setUI() {
-    [vehiclePositionLabel, vehicleImageView].forEach {
+    [vehiclePositionLabel, vehicleImageView, vehicleTakePictureButton].forEach {
       self.addSubview($0)
     }
+    
+//    vehicleImageView.addSubview(vehicleTakePictureButton)
     
     vehiclePositionLabel.snp.makeConstraints {
       $0.top.equalToSuperview().offset(20)
@@ -67,6 +88,12 @@ class VehicleTakePictureImageView: UIView {
     vehicleImageView.snp.makeConstraints {
       $0.top.equalTo(vehiclePositionLabel.snp.bottom)
       $0.leading.bottom.trailing.equalToSuperview()
+    }
+    
+    vehicleTakePictureButton.snp.makeConstraints {
+      $0.centerX.centerY.equalToSuperview()
+      $0.height.equalTo(60)
+      $0.width.equalTo(60)
     }
   }
 }

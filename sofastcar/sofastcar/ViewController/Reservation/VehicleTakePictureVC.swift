@@ -27,7 +27,7 @@ class VehicleTakePictureVC: UIViewController {
   
   let vehicleCheckStartButton: UIButton = {
     let button = UIButton()
-    button.setTitle("총 n장 전송하기", for: .normal)
+    button.setTitle("외관에 이상이 없습니다", for: .normal)
     button.backgroundColor = CommonUI.mainBlue
     button.addTarget(self, action: #selector(buttonAction(_:)), for: .touchUpInside)
     button.contentHorizontalAlignment = .center
