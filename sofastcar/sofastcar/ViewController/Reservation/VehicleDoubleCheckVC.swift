@@ -21,7 +21,7 @@ class VehicleDoubleCheckVC: UIViewController {
   // MARK: - UI
   
   fileprivate func setUI() {
-    self.view.backgroundColor = .white
+    self.view.backgroundColor = .magenta
     
     [].forEach {
       view.addSubview($0)

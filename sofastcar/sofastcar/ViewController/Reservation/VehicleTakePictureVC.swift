@@ -94,5 +94,18 @@ class VehicleTakePictureVC: UIViewController {
   
   @objc func buttonAction(_ sender: UIButton) {
     print("\(sender) button press")
+    switch sender {
+    case vehicleCheckStartButton:
+      let alert = UIAlertController(title: "확인해주세요.", message: "외관을 모두 확인하셨나요?\n사진 전송 후에는 추가하거나 수정할 수 없습니다.", preferredStyle: UIAlertController.Style.alert)
+      alert.addAction(UIAlertAction(title: "취소", style: UIAlertAction.Style.default, handler: nil))
+      alert.addAction(UIAlertAction(title: "확인", style: UIAlertAction.Style.default, handler: { _ in
+        let vehicleTakePictureVC = VehicleDoubleCheckVC()
+        vehicleTakePictureVC.modalPresentationStyle = .fullScreen
+        self.present(vehicleTakePictureVC, animated: true, completion: nil)
+      }))
+      self.present(alert, animated: true, completion: nil)
+    default:
+      break
+    }
   }
 }
