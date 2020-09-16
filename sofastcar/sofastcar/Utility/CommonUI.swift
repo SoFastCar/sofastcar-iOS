@@ -48,6 +48,8 @@ class CommonUI {
     case `return` = "goforward"
     case close = "xmark"
     case questionMark = "questionmark.circle"
+    case leftArrow = "arrow.left"
+    case camera = "camera.fill"
   }
   
   static let locale = NSLocale(localeIdentifier: "ko_KO")
