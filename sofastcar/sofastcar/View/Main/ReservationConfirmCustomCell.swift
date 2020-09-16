@@ -12,10 +12,26 @@ class ReservationConfirmCustomCell: UITableViewCell {
   // MARK: - Properties
   static let identifier = "CustomCell"
   
-  var startDate: Date?
-  var endDate: Date?
-  var insuranceInfo: Insurance?
-  var socarZone: SocarZoneData?
+  var startDate: Date? {
+    didSet {
+      configureUsingTiemCellContent()
+    }
+  }
+  var endDate: Date? {
+    didSet {
+      configureUsingTiemCellContent()
+    }
+  }
+  var insuranceInfo: Insurance? {
+    didSet {
+      configureinsuranceCellContent()
+    }
+  }
+  var socarZone: SocarZoneData? {
+    didSet {
+      configureSocarZoneInfoCellContent()
+    }
+  }
   weak var delegate: ResrvationConfirmCellDelegate?
   
   lazy var guide = contentView.layoutMarginsGuide
@@ -122,10 +138,10 @@ class ReservationConfirmCustomCell: UITableViewCell {
     switch cellType {
     case .insuranceCell:
       twoLineWithChangeButton()
-      configureinsuranceCellContent()
+//      configureinsuranceCellContent()
     case .usingTiemCell:
       twoLineWithChangeButton()
-      configureUsingTiemCellContent()
+//      configureUsingTiemCellContent()
     case .usingSocarZone:
       usingSocarZoneCellUI()
     case .business:
@@ -136,6 +152,7 @@ class ReservationConfirmCustomCell: UITableViewCell {
     }
   }
   
+  // MARK: - Cell UI configure=
   private func twoLineWithChangeButton() {
     [sectionTitleLabel, changeOptionButton, contentTitleLabel, contentLabel].forEach {
       contentView.addSubview($0)
@@ -242,11 +259,8 @@ class ReservationConfirmCustomCell: UITableViewCell {
   }
   
   private func configureUsingTiemCellContent() {
-    let timeValve = 4
-    contentTitleLabel.text = "총 \(timeValve)시간 이용"
-    contentLabel.text = "10/15 (목) 18:40 - 22:40"
     guard let startDate = startDate,
-      let endDate = endDate else { return }
+          let endDate = endDate else { return print("시간 값 없음")}
     contentTitleLabel.text = Time.getDiffTwoDateValueReturnString(start: startDate, end: endDate)
     contentLabel.text = "\(Time.getTimeString(type: .todayHHmm, date: startDate)) - \(Time.getTimeString(type: .hourHHmm, date: endDate))"
 

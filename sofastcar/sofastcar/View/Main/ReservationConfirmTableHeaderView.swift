@@ -37,7 +37,7 @@ class ReservationConfirmTableHeaderView: UIView {
     }
   }
   
-  var safetyOptions = ["경유", "에어백", "후방감지센서", "블랙박스", "강한썬텐", "컨디션최고", "∙∙∙"]
+  var safetyOptions: [String] = []
   
   let carName: UILabel = {
     let label = UILabel()

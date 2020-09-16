@@ -45,8 +45,8 @@ class LoginVC: UIViewController {
   @objc private func chekcLoginButtonEnable() {
     myView.loginButton.isEnabled = false
     myView.loginButton.backgroundColor = .systemGray4
-    guard myView.emailTextField.text?.isEmpty == false else { return print("a")}
-    guard myView.passwordTextField.text?.isEmpty == false else { return print("b")}
+    guard myView.emailTextField.text?.isEmpty == false else { return }
+    guard myView.passwordTextField.text?.isEmpty == false else { return }
     myView.loginButton.isEnabled = true
     myView.loginButton.backgroundColor = CommonUI.mainBlue
   }
@@ -55,23 +55,20 @@ class LoginVC: UIViewController {
     guard let userid = myView.emailTextField.text else { return }
     guard let userPassword = myView.passwordTextField.text else { return }
     
-    let url = URL(string: "https://sofastcar.moorekwon.xyz/api-jwt-auth")!
+    let url = URL(string: "https://sofastcar.moorekwon.xyz/api-jwt-auth/")!
     
     let userLoginAuthPatameters = [
       "email": userid,
       "password": userPassword
     ]
-    
+
     AF.request(url, method: .post, parameters: userLoginAuthPatameters)
       .responseJSON { response in
-        print(response)
         if response.response?.statusCode == 200 {
           guard let data = response.data else { return print("Data Erro") }
           if let jsonObjcet = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String: Any] {
             if let userTocken = jsonObjcet["token"] as? String {
-              print("Save Button")
               UserDefaults.saveUserAuthTocken(authToken: userTocken)
-              print(userTocken)
               let mainVC = MainVC()
               mainVC.socarZoneProvider = SocarZoneProvider()
               mainVC.modalPresentationStyle = .overFullScreen
