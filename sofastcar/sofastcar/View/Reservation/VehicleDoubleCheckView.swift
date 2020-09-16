@@ -9,7 +9,13 @@
 import UIKit
 import SnapKit
 
+protocol VehicleDoubleCheckViewDelegate: class {
+    func didTapButton(_ sender: UIButton)
+}
+
 class VehicleDoubleCheckView: UIView {
+  
+  weak var customDelegate: VehicleDoubleCheckViewDelegate?
   
   let vehicleStatusData = [
     "스크래치",
@@ -49,6 +55,28 @@ class VehicleDoubleCheckView: UIView {
     return collectionView
   }()
   
+  let vehicleDamageButton: UIButton = {
+    let button = UIButton()
+    button.setTitle("아니요, 없었어요.", for: .normal)
+    button.setTitleColor(CommonUI.mainBlue, for: .normal)
+    button.layer.borderWidth = 1
+    button.layer.borderColor = UIColor.black.withAlphaComponent(0.1).cgColor
+    button.addTarget(self, action: #selector(didTapButton(_:)), for: .touchUpInside)
+    
+    return button
+  }()
+  
+  let vehicleNoDamageButton: UIButton = {
+    let button = UIButton()
+    button.setTitle("네, 있었어요.", for: .normal)
+    button.setTitleColor(CommonUI.mainBlue, for: .normal)
+    button.layer.borderWidth = 1
+    button.layer.borderColor = UIColor.black.withAlphaComponent(0.1).cgColor
+    button.addTarget(self, action: #selector(didTapButton(_:)), for: .touchUpInside)
+    
+    return button
+  }()
+  
   // MARK: - LifeCycle
   
   override init(frame: CGRect) {
@@ -67,7 +95,7 @@ class VehicleDoubleCheckView: UIView {
     self.backgroundColor = .white
     setCollectionView()
     
-    [titleLabel, vehicleCheckCollectionView].forEach {
+    [titleLabel, vehicleCheckCollectionView, vehicleDamageButton, vehicleNoDamageButton].forEach {
       self.addSubview($0)
     }
     
@@ -82,6 +110,21 @@ class VehicleDoubleCheckView: UIView {
       $0.trailing.equalToSuperview().offset(-20)
       $0.height.equalTo(370)
     }
+    
+    vehicleDamageButton.snp.makeConstraints {
+      $0.top.equalTo(vehicleCheckCollectionView.snp.bottom)
+      $0.leading.equalToSuperview().offset(20)
+      $0.trailing.equalToSuperview().offset(-20)
+      $0.height.equalTo(60)
+    }
+    
+    vehicleNoDamageButton.snp.makeConstraints {
+      $0.top.equalTo(vehicleDamageButton.snp.bottom).offset(10)
+      $0.leading.equalToSuperview().offset(20)
+      $0.trailing.equalToSuperview().offset(-20)
+      $0.height.equalTo(60)
+    }
+    
   }
   
   fileprivate func setCollectionView() {
@@ -98,6 +141,12 @@ class VehicleDoubleCheckView: UIView {
       bottom: 0,
       right: 0
     )
+  }
+  
+  // MARK: - Action
+  
+  @objc fileprivate func didTapButton(_ sender: UIButton) {
+    customDelegate?.didTapButton(sender)
   }
 }
 

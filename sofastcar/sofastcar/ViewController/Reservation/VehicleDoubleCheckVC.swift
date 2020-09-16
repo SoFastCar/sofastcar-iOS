@@ -13,7 +13,7 @@ class VehicleDoubleCheckVC: UIViewController {
   
   fileprivate let vehicleDoubleCheckView = VehicleDoubleCheckView()
   
-    // MARK: - LifeCycle
+  // MARK: - LifeCycle
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -24,8 +24,9 @@ class VehicleDoubleCheckVC: UIViewController {
   // MARK: - UI
   
   fileprivate func setUI() {
-    view.backgroundColor = .white
     let guid = view.safeAreaLayoutGuide
+    view.backgroundColor = .white
+    vehicleDoubleCheckView.customDelegate = self
     
     [vehicleDoubleCheckView].forEach {
       view.addSubview($0)
@@ -33,6 +34,21 @@ class VehicleDoubleCheckVC: UIViewController {
     
     vehicleDoubleCheckView.snp.makeConstraints {
       $0.edges.equalTo(guid)
+    }
+  }
+}
+
+// MARK: - VehicleDoubleCheckViewDelegate
+
+extension VehicleDoubleCheckVC: VehicleDoubleCheckViewDelegate {
+  func didTapButton(_ sender: UIButton) {
+    switch sender {
+    case vehicleDoubleCheckView.vehicleDamageButton:
+      self.dismiss(animated: true, completion: nil)
+    case vehicleDoubleCheckView.vehicleNoDamageButton:
+      self.dismiss(animated: true, completion: nil)
+    default:
+      break
     }
   }
 }
