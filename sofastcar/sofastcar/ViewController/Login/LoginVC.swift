@@ -55,7 +55,7 @@ class LoginVC: UIViewController {
     guard let userid = myView.emailTextField.text else { return }
     guard let userPassword = myView.passwordTextField.text else { return }
     
-    let url = URL(string: "https://sofastcar.moorekwon.xyz/api-jwt-auth/")!
+    let url = URL(string: "https://sofastcar.moorekwon.xyz/api-jwt-auth")!
     
     let userLoginAuthPatameters = [
       "email": userid,
@@ -64,11 +64,14 @@ class LoginVC: UIViewController {
     
     AF.request(url, method: .post, parameters: userLoginAuthPatameters)
       .responseJSON { response in
+        print(response)
         if response.response?.statusCode == 200 {
-          guard let data = response.data else { return }
+          guard let data = response.data else { return print("Data Erro") }
           if let jsonObjcet = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String: Any] {
             if let userTocken = jsonObjcet["token"] as? String {
+              print("Save Button")
               UserDefaults.saveUserAuthTocken(authToken: userTocken)
+              print(userTocken)
               let mainVC = MainVC()
               mainVC.socarZoneProvider = SocarZoneProvider()
               mainVC.modalPresentationStyle = .overFullScreen
