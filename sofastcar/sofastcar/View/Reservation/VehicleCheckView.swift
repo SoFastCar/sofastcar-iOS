@@ -77,7 +77,7 @@ class VehicleCheckView: UIScrollView {
       UIImage(systemName: CommonUI.SFSymbolKey.questionMark.rawValue),
       for: .normal
     )
-    button.addTarget(self, action: #selector(didTapButton(_:)), for: .touchUpInside)
+    button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
     button.tintColor = CommonUI.mainDark
     
     return button
@@ -151,11 +151,11 @@ class VehicleCheckView: UIScrollView {
     return textView
   }()
   
-  fileprivate let vehicleCheckTagSubmitButton: UIButton = {
+  let vehicleCheckTagSubmitButton: UIButton = {
     let button = UIButton()
     button.setTitle("문제가 없습니다", for: .normal)
     button.backgroundColor = CommonUI.mainBlue
-    button.addTarget(self, action: #selector(didTapButton(_:)), for: .touchUpInside)
+    button.addTarget(self, action: #selector(buttonAction(_:)), for: .touchUpInside)
     
     return button
   }()
@@ -195,7 +195,7 @@ class VehicleCheckView: UIScrollView {
     )
     self.addSubview(contentView)
     
-    var heightPadding: CGFloat = 0
+    var heightPadding: CGFloat = 80
     if UIScreen.main.bounds.height < 670 {
       heightPadding = UIScreen.main.bounds.height * 0.2
     }
@@ -326,17 +326,6 @@ class VehicleCheckView: UIScrollView {
   }
   
   // MARK: - Action
-  
-  @objc func didTapButton(_ sender: UIButton) {
-    switch sender {
-    case vehicleCheckStartSubDescriptionButton:
-      print("vehicleCheckStartSubDescriptionButton button press")
-    case vehicleCheckTagSubmitButton:
-      print("vehicleCheckTagSubmitButton button press")
-    default:
-      break
-    }
-  }
   
   @objc func buttonAction(_ sender: UIButton) {
     customDelegate?.buttonAction(sender)

@@ -30,4 +30,13 @@ extension UserDefaults {
     let check = UserDefaults.standard.bool(forKey: "VehicleDoubleCheckVC")
     return check
   }
+  
+  static func setVehiclCheck(check: Bool) {
+    UserDefaults.standard.set(check, forKey: "VehicleCheckVC")
+  }
+  
+  static func getVehicleCheck() -> Bool {
+    let check = UserDefaults.standard.bool(forKey: "VehicleCheckVC")
+    return check
+  }
 }
