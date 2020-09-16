@@ -8,6 +8,18 @@
 
 import UIKit
 
+enum TalbleViewCellType: String {
+  case blank = ""
+  case insuranceCell = "차량손해면책 상품"
+  case usingTiemCell = "이용시간"
+  case usingSocarZone = "이용장소"
+  case business = "비지니스 예약"
+  
+  static func allcases() -> [TalbleViewCellType] {
+    return [blank, insuranceCell, usingTiemCell, usingSocarZone, business]
+  }
+}
+
 class ReservationConfirmTableVC: UITableViewController {
   // MARK: - Properties
   var socarZoneData: SocarZoneData?
@@ -26,18 +38,6 @@ class ReservationConfirmTableVC: UITableViewController {
   var isElectronicCar: Bool = false
   var isBorum: Bool = false
   let myHeaderView = ReservationConfirmTableHeaderView()
-  var sectionTitle: [TalbleViewCellType] = [.insuranceCell, .usingTiemCell, .usingSocarZone, .business]
-  enum TalbleViewCellType: String {
-    case blank = ""
-    case insuranceCell = "차량손해면책 상품"
-    case usingTiemCell = "이용시간"
-    case usingSocarZone = "이용장소"
-    case business = "비지니스 예약"
-    
-    static func allcases() -> [TalbleViewCellType] {
-      return [blank, insuranceCell, usingTiemCell, usingSocarZone, business]
-    }
-  }
   
   let reservationCostInfoButton: UIButton = {
     let button = UIButton()
@@ -175,7 +175,7 @@ class ReservationConfirmTableVC: UITableViewController {
   
   // MARK: - UITableViewDataSource
   override func numberOfSections(in tableView: UITableView) -> Int {
-    return sectionTitle.count
+    return TalbleViewCellType.allcases().count
   }
   
   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -184,9 +184,18 @@ class ReservationConfirmTableVC: UITableViewController {
   
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = ReservationConfirmCustomCell(style: .default, reuseIdentifier: ReservationConfirmCustomCell.identifier)
-    cell.confiure(cellType: sectionTitle[indexPath.section].rawValue)
+    let cellTypeArray = TalbleViewCellType.allcases()
+    cell.confiure(cellType: cellTypeArray[indexPath.section])
     cell.delegate = self
+    cell.socarZone = socarZoneData
+    cell.startDate = startDate
+    cell.endDate = endDate
+    cell.insuranceInfo = insuranceData
     return cell
+  }
+  
+  override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    return indexPath.section == 0 ? 0 : UITableView.automaticDimension
   }
 }
 
