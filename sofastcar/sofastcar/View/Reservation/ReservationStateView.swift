@@ -283,7 +283,13 @@ class ReservationStateView: UIScrollView {
     return button
   }()
   
-  // return
+  fileprivate let returnStateView: UIView = {
+    let view = UIView()
+    view.isHidden = true
+    view.backgroundColor = .cyan
+    
+    return view
+  }()
   
   // MARK: - LifeCycle
   override init(frame: CGRect) {
@@ -321,7 +327,15 @@ class ReservationStateView: UIScrollView {
     self.contentSize = .init(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height+heightPadding-44)
     contentView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height+heightPadding-144)
     
-    [reservationCarImage, numberPlateLabel, carInfomationButton, carInfoAndOilStackView, reservationTimeStackView, reservationProgressView, reservationCommentLabel, reservationStateView].forEach {
+    if UserDefaults.getVehicleCheck() == true {
+      reservationStateView.isHidden = true
+      returnStateView.isHidden = false
+    } else {
+      reservationStateView.isHidden = false
+      returnStateView.isHidden = true
+    }
+    
+    [reservationCarImage, numberPlateLabel, carInfomationButton, carInfoAndOilStackView, reservationTimeStackView, reservationProgressView, reservationCommentLabel, reservationStateView, returnStateView].forEach {
       contentView.addSubview($0)
     }
     
@@ -432,6 +446,13 @@ class ReservationStateView: UIScrollView {
     reservationPlaceButton.snp.makeConstraints {
       $0.top.equalTo(reservationPlaceWrapView.snp.top).offset(30)
       $0.leading.equalTo(reservationPlaceStateSubLabel.snp.trailing).offset(40)
+    }
+    
+    returnStateView.snp.makeConstraints {
+      $0.top.equalTo(reservationCommentLabel.snp.bottom).offset(20)
+      $0.leading.equalTo(guid).offset(20)
+      $0.trailing.equalTo(guid).offset(-20)
+      $0.height.equalTo(240)
     }
   }
   

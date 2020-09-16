@@ -10,6 +10,7 @@ import UIKit
 import SnapKit
 
 class ReservationDashboardVC: UIViewController {
+  
   let reservationStateView: ReservationStateView = {
     let scrollView = ReservationStateView()
     
@@ -26,15 +27,8 @@ class ReservationDashboardVC: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    
+    UserDefaults.setVehiclCheck(check: false)
     setUI()
-  }
-  
-  override func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(true)
-    if UserDefaults.getVehicleCheck() == true {
-      reservationStateView.layoutIfNeeded()
-    }
   }
   
   // MARK: - UI

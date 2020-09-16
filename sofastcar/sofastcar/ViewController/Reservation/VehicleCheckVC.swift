@@ -90,7 +90,13 @@ extension VehicleCheckVC: VehicleCheckViewDelegate {
       self.present(navigationController, animated: false, completion: nil)
     case vehicleCheckView.vehicleCheckTagSubmitButton:
       UserDefaults.setVehiclCheck(check: true)
-      self.view.window?.rootViewController?.dismiss(animated: false, completion: nil)
+      self.view.window?.rootViewController?.dismiss(animated: false, completion: {
+        let homeVC = UINavigationController(rootViewController: ReservationDashboardVC())
+        homeVC.modalPresentationStyle = .fullScreen
+        homeVC.modalTransitionStyle = .crossDissolve
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { fatalError() }
+        appDelegate.window?.rootViewController?.present(homeVC, animated: true, completion: nil)
+      })
     default:
       break
     }
