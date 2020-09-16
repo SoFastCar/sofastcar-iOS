@@ -51,6 +51,10 @@ class MainVC: UIViewController {
     var socarListDataList: SocarListData?
     var socarListData: [SocarListData.SocarList]?
     
+    // side bar Presenting
+    var presentTransition: UIViewControllerAnimatedTransitioning?
+    var dismissTransition: UIViewControllerAnimatedTransitioning?
+    
     // MARK: - View Life Cycle        
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -84,7 +88,6 @@ class MainVC: UIViewController {
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
         request.addValue("X-NCP-APIGW-API-KEY-ID:{10nhse2dsn}", forHTTPHeaderField: "")
-        
     }
     
     // MARK: - Touch Methods
@@ -119,6 +122,7 @@ class MainVC: UIViewController {
     
     private func activateSearchView() {
         topView.searchButton.addTarget(self, action: #selector(didTapSearchButton(_:)), for: .touchUpInside)
+        topView.sideBarButton.addTarget(self, action: #selector(didTapSideBarButton(_:)), for: .touchUpInside)
     }
     
     @objc func didTapZoneInfo(_ sender: UIButton) {
@@ -193,11 +197,21 @@ class MainVC: UIViewController {
             self.present(searchVC, animated: true)
         })
     }
+  
+    @objc func didTapSideBarButton(_ sender: UIButton) {
+      let sideBarVC = SideBarVC()
+      sideBarVC.modalPresentationStyle = .overFullScreen
+      present(sideBarVC, animated: false, completion: {
+        sideBarVC.animate()
+      })
+    }
     
     // MARK: - Selector(Booking Time Button)
     @objc func didTapBookingTime(_ sender: SetBookingTimeButton) {
         let presentedVC = BookingTimeVC()
-        presentedVC.modalPresentationStyle = .pageSheet
+        presentedVC.modalPresentationStyle = .automatic
+        presentedVC.startDate = sender.startTime
+        presentedVC.endDate = sender.endTime
         present(presentedVC, animated: true)
     }
     

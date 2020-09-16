@@ -60,8 +60,7 @@ class BookingTimeView: UIView {
         rentTimeButton.tag = 0
         rentStackView.addArrangedSubview(rentTimeButton)
 //        rentContentView.addSubview(rentTimeButton)
-        
-        
+         
         [rentDatePicker, returnDatePicker].forEach({
             $0.datePickerMode = .dateAndTime
             $0.locale = Locale(identifier: "ko-KR")

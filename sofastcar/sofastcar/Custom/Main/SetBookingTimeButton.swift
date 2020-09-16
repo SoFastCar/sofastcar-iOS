@@ -14,12 +14,13 @@ enum SetPlace {
 }
 
 class SetBookingTimeButton: UIButton {
-
+    
     let clockSymbolImageView = UIImageView()
     let setTimeLabel = UILabel()
     let timeLabel = UILabel()
     let chevronSymbolImageView = UIImageView()
-    let dateFormatter = DateFormatter()
+    var startTime: Date = Date()
+    var endTime: Date = Date()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -34,23 +35,14 @@ class SetBookingTimeButton: UIButton {
         self.init()
         setupUI(on: place)
         setupConstraint(on: place)
+        setupTime(with: "오늘 16:30")
     }
     
     private func setupUI(on place: SetPlace) {
-        
-        let now = Date()
-        let datePlus4hours = Date(timeIntervalSinceNow: 14400)
-        
-//        dateFormatter.locale = Locale(identifier: "ko-KR")
-//        dateFormatter.dateFormat = "M/dd HH:mm"
-//        dateFormatter.timeZone = TimeZone(identifier: "Asia/Seoul")
-        let expectDate = now.addingTimeInterval(600)
-        let minInt = Int(Time.getTimeString(type: .minMM, date: expectDate))!
-        let minString = minInt == 0 ? "00" : "\((minInt/10)*10)"
-        
         switch place {
         case .carList:
             let symbolConfig = UIImage.SymbolConfiguration(pointSize: 20)
+            
             self.backgroundColor = .white
             
             clockSymbolImageView.tintColor = CommonUI.mainBlue
@@ -61,12 +53,10 @@ class SetBookingTimeButton: UIButton {
             setTimeLabel.font = .systemFont(ofSize: 15, weight: .semibold)
             self.addSubview(setTimeLabel)
             
-            timeLabel.font = .systemFont(ofSize: 14, weight: .regular)
-//            timeLabel.text = "\(dateFormatter.string(from: now))"
-            timeLabel.text = "\(Time.getTimeString(type: .todayH, date: now)):\(minString)"
-            timeLabel.textColor = .lightGray
+            timeLabel.font = .systemFont(ofSize: 15, weight: .regular)
+            timeLabel.textColor = .gray
             self.addSubview(timeLabel)
-        
+            
         case .mainVC:
             let symbolConfig = UIImage.SymbolConfiguration(pointSize: 20)
             self.backgroundColor = .white
@@ -81,8 +71,6 @@ class SetBookingTimeButton: UIButton {
             self.addSubview(setTimeLabel)
             
             timeLabel.font = .systemFont(ofSize: 14, weight: .regular)
-//            timeLabel.text = "\(dateFormatter.string(from: now)) - \(dateFormatter.string(from: datePlus4hours))"
-            timeLabel.text = "\(Time.getTimeString(type: .todayH, date: now)):\(minString) - \(Time.getTimeString(type: .hourH, date: datePlus4hours)):\(minString)"
             timeLabel.textColor = .lightGray
             self.addSubview(timeLabel)
             
@@ -141,14 +129,14 @@ class SetBookingTimeButton: UIButton {
         
     }
     
-    func setupTime(withSt sTime: Date, withEt eTime: Date) {
-//        let dateFormatter = DateFormatter()
-//        dateFormatter.locale = Locale(identifier: "ko-KR")
-//        dateFormatter.dateFormat = "MM/dd HH:mm"
-//        timeLabel.text = "\(dateFormatter.string(from: sTime)) - \(dateFormatter.string(from: eTime))"
-        let expectDate = sTime.addingTimeInterval(600)
-        let minInt = Int(Time.getTimeString(type: .minMM, date: expectDate))!
-        let minString = minInt == 0 ? "00" : "\((minInt/10)*10)"
-        timeLabel.text = "\(Time.getTimeString(type: .todayH, date: sTime)):\(minString)  - \(Time.getTimeString(type: .hourH, date: eTime)):\(minString)\n"
+    func setupTime(with time: String?) {
+        let date = floor(Date().timeIntervalSince1970)
+        let restMinDate = Double(Int(date) % 600)
+        startTime = Date(timeIntervalSince1970: date-restMinDate)
+        startTime.addTimeInterval(TimeInterval(20*Time.min))
+        endTime = startTime.addingTimeInterval(TimeInterval(Time.hour*4))
+        print(Time.getTimeString(type: .castMddEHHmm, date: startTime))
+        print(Time.getTimeString(type: .castMddEHHmm, date: endTime))
+        timeLabel.text = "\(Time.getTimeString(type: .todayHHmm, date: startTime)) - \(Time.getTimeString(type: .hourHHmm, date: endTime))"
     }
 }

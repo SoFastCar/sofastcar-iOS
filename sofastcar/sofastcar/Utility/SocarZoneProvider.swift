@@ -11,7 +11,6 @@ import Foundation
 final class SocarZoneProvider: SocarZoneProvidable {
   
     private let dispatchGroup = DispatchGroup()
-    let adminTocken = "JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo3LCJ1c2VybmFtZSI6Im1lbWJlckBtZW1iZXIuY29tIiwiZXhwIjoxNjAwNzYyOTMyLCJlbWFpbCI6Im1lbWJlckBtZW1iZXIuY29tIiwib3JpZ19pYXQiOjE2MDAxNTgxMzJ9.FHIv2ZwO-3CJwvelDiwQEtHuzsyeClBI8grL3qMGwrg"
     
     func fetchSocarData<T>(
     endpoint: EndPoint,
@@ -21,7 +20,7 @@ final class SocarZoneProvider: SocarZoneProvidable {
     var request = URLRequest(url: url)
     request.httpMethod = "GET"
     request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-    request.setValue("JWT \(UserDefaults.getUserAuthTocken() ?? adminTocken)", forHTTPHeaderField: "Authorization")
+    request.addValue("JWT \(UserDefaults.getUserAuthTocken()!)", forHTTPHeaderField: "Authorization")
     dispatchGroup.enter()
     URLSession.shared.dataTask(with: request) { [weak self] (data, response, error) in
       defer { self?.dispatchGroup.leave() }

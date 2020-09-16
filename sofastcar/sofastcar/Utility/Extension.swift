@@ -61,6 +61,27 @@ extension UIViewController {
     self.navigationController?.navigationBar.backIndicatorTransitionMaskImage = backButtonImage
     self.navigationController?.navigationBar.topItem?.title = ""
   }
+  
+  func presentDetail(_ viewControllerToPresent: UIViewController) {
+    let transition = CATransition()
+    transition.duration = 0
+//    transition.type = CATransitionType.push
+    transition.subtype = CATransitionSubtype.fromLeft
+    transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
+    self.view.window!.layer.add(transition, forKey: kCATransition)
+    present(viewControllerToPresent, animated: false)
+  }
+  
+  func dismissDetail() {
+    let transition = CATransition()
+    transition.duration = 0
+//    transition.type = CATransitionType.push
+    transition.subtype = CATransitionSubtype.fromRight
+    transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
+    self.view.window!.layer.add(transition, forKey: kCATransition)
+    dismiss(animated: false)
+  }
+
 }
 
 extension UINavigationController {
@@ -114,5 +135,22 @@ extension UIView {
     
     func symbolConfiguration(pointSize bySize: CGFloat, weight byWeight: UIImage.SymbolWeight) -> UIImage.SymbolConfiguration {
         return UIImage.SymbolConfiguration(pointSize: bySize, weight: byWeight)
+    }
+}
+
+// MARK: - BoldFont
+
+extension UIFont {
+  func withTraits(traits: UIFontDescriptor.SymbolicTraits) -> UIFont {
+        let descriptor = fontDescriptor.withSymbolicTraits(traits)
+        return UIFont(descriptor: descriptor!, size: 0) //size 0 means keep the size as it is
+    }
+
+    func bold() -> UIFont {
+        return withTraits(traits: .traitBold)
+    }
+
+    func italic() -> UIFont {
+        return withTraits(traits: .traitItalic)
     }
 }

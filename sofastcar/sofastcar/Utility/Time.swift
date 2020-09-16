@@ -9,6 +9,10 @@
 import Foundation
 
 class Time {
+  static let min = 60
+  static let hour = 3600
+  static let day = 86400
+  
   // 참고 URL: https://ownstory.tistory.com/21
   enum PresnetDateString: String {
     case castMddEHHmm = "M/dd (E) HH:mm"
@@ -16,6 +20,8 @@ class Time {
     case castMMddE = "MM / dd (E)"
     case todayE = "오늘 (E)"
     case todayH = "오늘 H"
+    case todayHHmm = "오늘 HH:mm"
+    case hourHHmm = "HH:mm"
     case tomorrow = "내일 (E)"
     case hourH = "H"
     case hourHH = "HH"
