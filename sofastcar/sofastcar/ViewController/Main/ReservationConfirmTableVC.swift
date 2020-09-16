@@ -82,6 +82,11 @@ class ReservationConfirmTableVC: UITableViewController {
     configureReservationConfirmButton()
   }
   
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    tableView.reloadData()
+  }
+  
   private func configureStatusBar() {
     let statusBar =  UIView()
     let window = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
@@ -144,6 +149,7 @@ class ReservationConfirmTableVC: UITableViewController {
     socarData.safetyOpt.split(separator: ",").forEach {
       myHeaderView.safetyOptions.append(String($0))
     }
+    myHeaderView.safetyOptions.append("∙∙∙")
     myHeaderView.collectionView.reloadData()
   }
   
@@ -187,10 +193,17 @@ class ReservationConfirmTableVC: UITableViewController {
     let cellTypeArray = TalbleViewCellType.allcases()
     cell.confiure(cellType: cellTypeArray[indexPath.section])
     cell.delegate = self
-    cell.socarZone = socarZoneData
-    cell.startDate = startDate
-    cell.endDate = endDate
-    cell.insuranceInfo = insuranceData
+    switch cellTypeArray[indexPath.section] {
+    case .insuranceCell:
+      cell.insuranceInfo = insuranceData
+    case .usingSocarZone:
+      cell.socarZone = socarZoneData
+    case .usingTiemCell:
+      cell.startDate = startDate
+      cell.endDate = endDate
+    case .business, .blank:
+      break
+    }
     return cell
   }
   

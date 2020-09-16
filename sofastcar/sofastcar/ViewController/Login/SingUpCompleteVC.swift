@@ -144,12 +144,10 @@ class SingUpCompleteVC: UIViewController {
   
   // MARK: - Handler
   @objc private func tabOkButton() {
-    print("Touch Ok")
     UIView.animate(withDuration: 0.5) {
       self.passBlurView.alpha = 0
     }
     self.dismiss(animated: true) {
-      print("dismiss Ok")
       self.passPushViewFunc!()
     }
     

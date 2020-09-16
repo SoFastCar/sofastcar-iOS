@@ -57,7 +57,7 @@ class VehicleDoubleCheckView: UIView {
   
   let vehicleDamageButton: UIButton = {
     let button = UIButton()
-    button.setTitle("아니요, 없었어요.", for: .normal)
+    button.setTitle("네, 있었어요.", for: .normal)
     button.setTitleColor(CommonUI.mainBlue, for: .normal)
     button.layer.borderWidth = 1
     button.layer.borderColor = UIColor.black.withAlphaComponent(0.1).cgColor
@@ -68,7 +68,7 @@ class VehicleDoubleCheckView: UIView {
   
   let vehicleNoDamageButton: UIButton = {
     let button = UIButton()
-    button.setTitle("네, 있었어요.", for: .normal)
+    button.setTitle("아니요, 없었어요.", for: .normal)
     button.setTitleColor(CommonUI.mainBlue, for: .normal)
     button.layer.borderWidth = 1
     button.layer.borderColor = UIColor.black.withAlphaComponent(0.1).cgColor
@@ -111,15 +111,15 @@ class VehicleDoubleCheckView: UIView {
       $0.height.equalTo(370)
     }
     
-    vehicleDamageButton.snp.makeConstraints {
+    vehicleNoDamageButton.snp.makeConstraints {
       $0.top.equalTo(vehicleCheckCollectionView.snp.bottom)
       $0.leading.equalToSuperview().offset(20)
       $0.trailing.equalToSuperview().offset(-20)
       $0.height.equalTo(60)
     }
     
-    vehicleNoDamageButton.snp.makeConstraints {
-      $0.top.equalTo(vehicleDamageButton.snp.bottom).offset(10)
+    vehicleDamageButton.snp.makeConstraints {
+      $0.top.equalTo(vehicleNoDamageButton.snp.bottom).offset(10)
       $0.leading.equalToSuperview().offset(20)
       $0.trailing.equalToSuperview().offset(-20)
       $0.height.equalTo(60)
