@@ -26,7 +26,22 @@ class VehicleDoubleCheckView: UIView {
     
     return label
   }()
-
+  
+  fileprivate let layout = UICollectionViewFlowLayout()
+  fileprivate lazy var vehicleCheckCollectionView: UICollectionView = {
+    let collectionView = UICollectionView(
+      frame: .zero,
+      collectionViewLayout: layout
+    )
+    collectionView.register(
+      UICollectionViewCell.self,
+      forCellWithReuseIdentifier: "Cell"
+    )
+    collectionView.backgroundColor = .magenta
+    
+    return collectionView
+  }()
+  
   // MARK: - LifeCycle
   
   override init(frame: CGRect) {
@@ -43,8 +58,9 @@ class VehicleDoubleCheckView: UIView {
   
   fileprivate func setUI() {
     self.backgroundColor = .white
+    setCollectionView()
     
-    [titleLabel].forEach {
+    [titleLabel, vehicleCheckCollectionView].forEach {
       self.addSubview($0)
     }
     
@@ -52,5 +68,43 @@ class VehicleDoubleCheckView: UIView {
       $0.top.equalToSuperview().offset(80)
       $0.leading.equalToSuperview().offset(20)
     }
+    
+    vehicleCheckCollectionView.snp.makeConstraints {
+      $0.top.equalTo(titleLabel.snp.bottom).offset(20)
+      $0.leading.equalToSuperview().offset(20)
+      $0.trailing.equalToSuperview().offset(-20)
+      $0.height.equalTo(370)
+    }
+  }
+  
+  fileprivate func setCollectionView() {
+    vehicleCheckCollectionView.dataSource = self
+    
+    layout.scrollDirection = .vertical
+    layout.itemSize = CGSize(
+      width: UIScreen.main.bounds.width / 2.31,
+      height: UIScreen.main.bounds.width / 2.31
+    )
+    layout.sectionInset = UIEdgeInsets(
+      top: 0,
+      left: 0,
+      bottom: 0,
+      right: 0
+    )
+  }
+}
+
+// MARK: - UICollectionViewDataSource
+
+extension VehicleDoubleCheckView: UICollectionViewDataSource {
+  func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    return 4
+  }
+  
+  func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
+    cell.backgroundColor = .cyan
+    
+    return cell
   }
 }
