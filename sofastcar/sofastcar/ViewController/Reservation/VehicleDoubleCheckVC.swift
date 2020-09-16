@@ -43,9 +43,13 @@ class VehicleDoubleCheckVC: UIViewController {
 extension VehicleDoubleCheckVC: VehicleDoubleCheckViewDelegate {
   func didTapButton(_ sender: UIButton) {
     switch sender {
-    case vehicleDoubleCheckView.vehicleDamageButton:
-      self.dismiss(animated: true, completion: nil)
     case vehicleDoubleCheckView.vehicleNoDamageButton:
+      let vehicleCheckVC = VehicleCheckVC()
+      let navigationController = UINavigationController(rootViewController: vehicleCheckVC)
+      navigationController.modalPresentationStyle = .fullScreen
+      UserDefaults.setVehicleDoubleCheck(check: true)
+      self.present(navigationController, animated: false)
+    case vehicleDoubleCheckView.vehicleDamageButton:
       self.dismiss(animated: true, completion: nil)
     default:
       break
