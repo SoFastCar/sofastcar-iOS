@@ -7,10 +7,40 @@
 //
 
 import UIKit
+import SnapKit
 
 class VehicleCheckCell: UICollectionViewCell {
   
   static let identifier = "vehicleCheckCell"
+  
+  var vehicleStatusString: String? {
+    didSet {
+      vehicleStatusLabel.text = vehicleStatusString
+    }
+  }
+  
+  var vehicleStatusImageString: String? {
+    didSet {
+      vehicleStatusImageView.image = UIImage(named: vehicleStatusImageString ?? "empty")
+    }
+  }
+  
+  fileprivate let vehicleStatusLabel: UILabel = {
+    let label = UILabel()
+    label.text = "스크래치"
+    label.font = UIFont.preferredFont(forTextStyle: .callout)
+    label.textColor = CommonUI.mainDark
+    
+    return label
+  }()
+
+  fileprivate let vehicleStatusImageView: UIImageView = {
+    let imageView = UIImageView()
+    imageView.image = UIImage(named: "스크래치")
+    imageView.contentMode = .scaleAspectFit
+    
+    return imageView
+  }()
   
   // MARK: - LifeCycle
   
@@ -27,7 +57,18 @@ class VehicleCheckCell: UICollectionViewCell {
   // MARK: - Layout
   
   private func setUI() {
-    self.backgroundColor = .cyan
+    [vehicleStatusLabel, vehicleStatusImageView].forEach {
+      self.addSubview($0)
+    }
+    
+    vehicleStatusLabel.snp.makeConstraints {
+      $0.top.equalToSuperview()
+      $0.leading.equalToSuperview()
+    }
+    
+    vehicleStatusImageView.snp.makeConstraints {
+      $0.top.equalTo(vehicleStatusLabel.snp.bottom)
+      $0.leading.trailing.bottom.equalToSuperview()
+    }
   }
-
 }

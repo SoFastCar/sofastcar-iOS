@@ -11,6 +11,13 @@ import SnapKit
 
 class VehicleDoubleCheckView: UIView {
   
+  let vehicleStatusData = [
+    "스크래치",
+    "깨짐",
+    "찌그러짐",
+    "이격"
+  ]
+  
   fileprivate let titleLabel: UILabel = {
     let label = UILabel()
     label.text = "차량 확인 중에\n혹시 아래와 같은\n파손 흔적을 발견했나요? "
@@ -37,7 +44,7 @@ class VehicleDoubleCheckView: UIView {
       VehicleCheckCell.self,
       forCellWithReuseIdentifier: VehicleCheckCell.identifier
     )
-    collectionView.backgroundColor = .magenta
+    collectionView.backgroundColor = .clear
     
     return collectionView
   }()
@@ -102,7 +109,9 @@ extension VehicleDoubleCheckView: UICollectionViewDataSource {
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: VehicleCheckCell.identifier, for: indexPath)
+    guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: VehicleCheckCell.identifier, for: indexPath) as? VehicleCheckCell else { fatalError() }
+    cell.vehicleStatusString = vehicleStatusData[indexPath.item]
+    cell.vehicleStatusImageString = vehicleStatusData[indexPath.item]
     
     return cell
   }
