@@ -57,10 +57,6 @@ class MainVC: UIViewController {
     var insuranceItem = Insurance(name: "", guarantee: 0, cost: 0)
     var selectedInsItem = 0
     
-    // side bar Presenting
-    var presentTransition: UIViewControllerAnimatedTransitioning?
-    var dismissTransition: UIViewControllerAnimatedTransitioning?
-    
     // New Booking Time Data
     var newStartDate = Date()
     var newEndDate = Date()
@@ -196,9 +192,12 @@ class MainVC: UIViewController {
             break
         }
         let presentedVC = ReservationConfirmTableVC()
-        presentedVC.modalPresentationStyle = .automatic
-        present(presentedVC, animated: true)
-        
+//      presentedVC.socarZoneData = 쏘카존 데이터
+//      presentedVC.socarData = 차량 데이터
+//      presentedVC.insuranceData = 보험 데이터
+//        presentedVC.startDate = newStartDate
+//        presentedVC.endDate = newEndDate
+        present(presentedVC, animated: true, completion: nil)
     }
     
     // MARK: - Selector(Search Button)

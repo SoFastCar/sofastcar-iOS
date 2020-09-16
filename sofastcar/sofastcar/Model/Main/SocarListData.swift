@@ -29,6 +29,7 @@ struct SocarListData: Decodable {
     let previous: SocarList?
     let results: [SocarList]
 }
+
 struct SocarList: Decodable {
     let id: Double
     let number: String

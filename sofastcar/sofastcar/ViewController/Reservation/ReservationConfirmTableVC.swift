@@ -8,18 +8,36 @@
 
 import UIKit
 
+enum TalbleViewCellType: String {
+  case blank = ""
+  case insuranceCell = "차량손해면책 상품"
+  case usingTiemCell = "이용시간"
+  case usingSocarZone = "이용장소"
+  case business = "비지니스 예약"
+  
+  static func allcases() -> [TalbleViewCellType] {
+    return [blank, insuranceCell, usingTiemCell, usingSocarZone, business]
+  }
+}
+
 class ReservationConfirmTableVC: UITableViewController {
   // MARK: - Properties
-  let myHeaderView = ReservationConfirmTableHeaderView()
-  var sectionTitle: [TalbleViewCellType] = [.insuranceCell, .usingTiemCell, .usingSocarZone, .business]
-  enum TalbleViewCellType: String {
-    case insuranceCell = "차량손해면책 상품"
-    case usingTiemCell = "이용시간"
-    case usingSocarZone = "이용장소"
-    case business = "비지니스 예약"
+  var socarZoneData: SocarZoneData?
+  var insuranceData: Insurance?
+  var socarData: SocarList?
+  var startDate: Date?
+  var endDate: Date?
+  var totalPrice: Int? {
+    didSet {
+      guard let totalPrice = totalPrice else { return }
+      reservationCostInfoButton.setTitle("총 합계 \(totalPrice) 원", for: .normal)
+    }
   }
-  
-  var isEelectronicCar: Bool = false
+  var headerViewHeight: CGFloat = 650
+  var isSaveCar: Bool = false
+  var isElectronicCar: Bool = false
+  var isBorum: Bool = false
+  let myHeaderView = ReservationConfirmTableHeaderView()
   
   let reservationCostInfoButton: UIButton = {
     let button = UIButton()
@@ -58,24 +76,10 @@ class ReservationConfirmTableVC: UITableViewController {
     super.viewDidLoad()
     configureStatusBar()
     configureNavigationContoller()
+    calculateTableViewHeaderHeight()
     configureTableHeaderView()
+    configureTableHeaderViewContents()
     configureReservationConfirmButton()
-    
-    if isEelectronicCar {
-      hideElectronicCarInfoUI()
-    }
-  }
-  
-  private func hideElectronicCarInfoUI() {
-    guard let headerView = tableView.tableHeaderView as? ReservationConfirmTableHeaderView else { return }
-    [headerView.electronicCarUsingTitle, headerView.electorinicCarDrivingCostInfoTextView, headerView.showElectronicCostWebViewButton] .forEach {
-      $0.snp.updateConstraints {
-        $0.height.equalTo(0)
-      }
-    }
-    tableView.tableHeaderView?.frame = CGRect(x: 0, y: 10,
-                                              width: UIScreen.main.bounds.width,
-                                              height: 550)
   }
   
   private func configureStatusBar() {
@@ -94,18 +98,53 @@ class ReservationConfirmTableVC: UITableViewController {
     navigationController?.navigationBar.barTintColor = UIColor.white
   }
   
+  private func calculateTableViewHeaderHeight() {
+    headerViewHeight -= isSaveCar == true ? 0 : 15
+    headerViewHeight -= isElectronicCar == true ? 0 : 130
+  }
+  
   private func configureTableHeaderView() {
+    myHeaderView.isSocarSaveCar = isSaveCarCheck()
+    myHeaderView.isElecticCar = isEelctronicCar()
+    myHeaderView.isBurom = isBurom()
     tableView.allowsSelection = false
     tableView.register(ReservationConfirmCustomCell.self,
                        forCellReuseIdentifier: ReservationConfirmCustomCell.identifier)
     tableView.tableHeaderView = myHeaderView
     tableView.tableHeaderView?.frame = CGRect(x: 0, y: 10,
                                               width: UIScreen.main.bounds.width,
-                                              height: 650)
+                                              height: headerViewHeight)
     tableView.rowHeight = UITableView.automaticDimension
     tableView.estimatedRowHeight = 700
     tableView.sectionHeaderHeight = 10
     tableView.sectionFooterHeight = 0
+  }
+  
+  private func isSaveCarCheck() -> Bool {
+    // 로직 필요 true / false
+    isSaveCar = false
+    return false
+  }
+  
+  private func isEelctronicCar() -> Bool {
+    guard let feulType = socarData?.fuelType else { return false }
+    isElectronicCar = feulType == "전기" ? true : false
+    return isElectronicCar
+  }
+  
+  private func isBurom() -> Bool {
+    // 로직
+    return false
+  }
+  
+  private func configureTableHeaderViewContents() {
+    guard let socarData = socarData else { return }
+    myHeaderView.carName.text = socarData.name
+//    myHeaderView.carImage.image = UIImage(named: <#T##String#>)
+    socarData.safetyOpt.split(separator: ",").forEach {
+      myHeaderView.safetyOptions.append(String($0))
+    }
+    myHeaderView.collectionView.reloadData()
   }
   
   private func configureReservationConfirmButton() {
@@ -136,7 +175,7 @@ class ReservationConfirmTableVC: UITableViewController {
   
   // MARK: - UITableViewDataSource
   override func numberOfSections(in tableView: UITableView) -> Int {
-    return sectionTitle.count
+    return TalbleViewCellType.allcases().count
   }
   
   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -145,9 +184,18 @@ class ReservationConfirmTableVC: UITableViewController {
   
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = ReservationConfirmCustomCell(style: .default, reuseIdentifier: ReservationConfirmCustomCell.identifier)
-    cell.confiure(cellType: sectionTitle[indexPath.section].rawValue)
+    let cellTypeArray = TalbleViewCellType.allcases()
+    cell.confiure(cellType: cellTypeArray[indexPath.section])
     cell.delegate = self
+    cell.socarZone = socarZoneData
+    cell.startDate = startDate
+    cell.endDate = endDate
+    cell.insuranceInfo = insuranceData
     return cell
+  }
+  
+  override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    return indexPath.section == 0 ? 0 : UITableView.automaticDimension
   }
 }
 
