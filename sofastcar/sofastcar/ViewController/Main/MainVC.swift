@@ -47,6 +47,9 @@ class MainVC: UIViewController {
     let backCircleButton = UIButton()
     
     var socarZoneDataList: [SocarZoneData2] = []
+    // side bar Presenting
+    var presentTransition: UIViewControllerAnimatedTransitioning?
+    var dismissTransition: UIViewControllerAnimatedTransitioning?
     
     // MARK: - View Life Cycle        
     override func viewDidLoad() {
@@ -82,11 +85,11 @@ class MainVC: UIViewController {
 //                (200...400).contains(responseCode.statusCode) else { return print(response)}
 //            guard let responseData = data else { return print("No data")}
 //            
-////            do {
-////                let decodedData = try JSONDecoder().decode(<#T##type: Decodable.Protocol##Decodable.Protocol#>, from: <#T##Data#>)
-////            } catch {
-////                
-////            }
+//            do {
+//                let decodedData = try JSONDecoder().decode(<#T##type: Decodable.Protocol##Decodable.Protocol#>, from: <#T##Data#>)
+//            } catch {
+//
+//            }
 //        }
 //        task.resume()
 //        
@@ -124,6 +127,7 @@ class MainVC: UIViewController {
     
     private func activateSearchView() {
         topView.searchButton.addTarget(self, action: #selector(didTapSearchButton(_:)), for: .touchUpInside)
+        topView.sideBarButton.addTarget(self, action: #selector(didTapSideBarButton(_:)), for: .touchUpInside)
     }
     
     @objc func didTapZoneInfo(_ sender: UIButton) {
@@ -198,11 +202,21 @@ class MainVC: UIViewController {
             self.present(searchVC, animated: true)
         })
     }
+  
+    @objc func didTapSideBarButton(_ sender: UIButton) {
+      let sideBarVC = SideBarVC()
+      sideBarVC.modalPresentationStyle = .overFullScreen
+      present(sideBarVC, animated: false, completion: {
+        sideBarVC.animate()
+      })
+    }
     
     // MARK: - Selector(Booking Time Button)
     @objc func didTapBookingTime(_ sender: SetBookingTimeButton) {
         let presentedVC = BookingTimeVC()
         presentedVC.modalPresentationStyle = .automatic
+        presentedVC.startDate = sender.startTime
+        presentedVC.endDate = sender.endTime
         present(presentedVC, animated: true)
     }
     
