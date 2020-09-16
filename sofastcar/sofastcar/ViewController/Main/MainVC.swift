@@ -192,9 +192,12 @@ class MainVC: UIViewController {
             break
         }
         let presentedVC = ReservationConfirmTableVC()
-        presentedVC.modalPresentationStyle = .automatic
-        present(presentedVC, animated: true)
-        
+//      presentedVC.socarZoneData = 쏘카존 데이터
+//      presentedVC.socarData = 차량 데이터
+//      presentedVC.insuranceData = 보험 데이터
+//        presentedVC.startDate = newStartDate
+//        presentedVC.endDate = newEndDate
+        present(presentedVC, animated: true, completion: nil)
     }
     
     // MARK: - Selector(Search Button)
