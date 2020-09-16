@@ -80,6 +80,7 @@ class MainVC: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        navigationController?.isNavigationBarHidden = true
         UIView.animate(withDuration: 0.5, animations: {
             self.setBookingTimeButton.frame.origin.y = self.view.frame.height - self.setBookingTimeButton.frame.height
         })
@@ -89,12 +90,27 @@ class MainVC: UIViewController {
          
     }
     
-    // MARK: - Naver Geocoding
-    func nmfGeocoding() {
-        guard let url = URL(string: "https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode") else { fatalError() }
+    // MARK: - Naver Reverse Geocoding
+    func nmReveseGeocoding(of latlng: String) {
+//        guard let url = URL(string: "https://naveropenapi.apigw.ntruss.com/map-reversegeocode/v2/gc?request=coordsToaddr&coords=37.545303,127.057221&sourcecrs=epsg:4326&output=json&orders=legalcode,admcode") else { fatalError() }
+          guard let url = URL(string: "https://naveropenapi.apigw.ntruss.com/map-reversegeocode/v2/gc?request=coordsToaddr&coords=\(latlng)&sourcecrs=epsg:4326&output=json&orders=roadaddr") else { fatalError() }
+        print(url)
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
-        request.addValue("X-NCP-APIGW-API-KEY-ID:{10nhse2dsn}", forHTTPHeaderField: "")
+        request.addValue("10nhse2dsn", forHTTPHeaderField: "X-NCP-APIGW-API-KEY-ID")
+        request.addValue("ZgM6sLboiN7u4kNtFDj0sZeglDjEVtBW3vaLvEg7", forHTTPHeaderField: "X-NCP-APIGW-API-KEY")
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
+            guard error == nil else { return print(error?.localizedDescription)}
+            guard let responseCode = response as? HTTPURLResponse,
+                (200...300).contains(responseCode.statusCode) else { return print("에러 응답: \(response)") }
+            guard let responseData = data else { return print("Geocoding 실패") }
+            print(responseData)
+//            do {
+//                let decodedData = JSONDecoder().decode(<#T##type: Decodable.Protocol##Decodable.Protocol#>, from: <#T##Data#>)
+//            } catch {
+//                
+//            }
+        }.resume()
     }
     
     // MARK: - Touch Methods
@@ -608,6 +624,8 @@ extension MainVC: NMFMapViewTouchDelegate {
 extension MainVC: NMFMapViewCameraDelegate {
     func mapView(_ mapView: NMFMapView, cameraDidChangeByReason reason: Int, animated: Bool) {
         let camPosition = mapView.cameraPosition.target
+//        nmReveseGeocoding(of: "127.057221,37.545303") // test
+        nmReveseGeocoding(of: "\(camPosition.lng),\(camPosition.lat)")
         callPositionMarker.position = camPosition
         topView.searchButton.setTitle("Geocoding", for: .normal)
     }
