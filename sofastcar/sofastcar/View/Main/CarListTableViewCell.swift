@@ -122,7 +122,11 @@ class CarListTableViewCell: UITableViewCell {
     
     func carInfoConfiguration(carImage image: String, carName name: String, carPrice price: Int, availableDiscount discount: Bool) {
         let url = URL(string: image)
+        #if true
         carImageView.kf.setImage(with: url)
+        #else
+        carImageView.image = UIImage(named: image)
+        #endif
         carNameLabel.text = name
         carPriceLabel.text = numberFormatter.string(from: NSNumber(value: price))
         discountSignLabel.text = discount ? "할인가" : ""

@@ -36,8 +36,6 @@ class SetBookingTimeButton: UIButton {
         setupConstraint(on: place)
     }
     
-    
-    
     private func setupUI(on place: SetPlace) {
         
         let now = Date()
