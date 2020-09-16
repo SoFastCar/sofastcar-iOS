@@ -23,7 +23,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       changeUserAuthTocken()
       print(UserDefaults.getUserAuthTocken()!)
       let mainVC = MainVC()
-      mainVC.socarZoneProvider = SocarZoneProvider()
+        mainVC.socarZoneProvider = SocarZoneProvider()
+//        let navigationController = UINavigationController(rootViewController: mainVC)
+//        navigationController.isToolbarHidden = true
+//        navigationController.setNavigationBarHidden(true, animated: false)
       rootView = mainVC
     } else {
       let navigationController = UINavigationController(rootViewController: InitVC())
@@ -35,7 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     window = UIWindow(frame: UIScreen.main.bounds)
-    window?.rootViewController = ReservationConfirmTableVC()
+    window?.rootViewController = rootView
     window?.makeKeyAndVisible()
     window?.overrideUserInterfaceStyle = .light // add woobin: dark mode off
     return true

@@ -29,6 +29,9 @@ class BookingTimeVC: UIViewController {
       tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .none)
     }
   }
+    
+    var setBookingTimeMain: SetBookingTimeButton?
+    var setBookingTimeCarList: SetBookingTimeButton?
   
   enum DateComponentType: Int {
     case day = 0
@@ -103,7 +106,10 @@ class BookingTimeVC: UIViewController {
   
   @objc private func tapCompliteButton() {
       guard let presentingVC = self.presentingViewController as? MainVC else { return }
-      presentingVC.setBookingTimeButton.setupTime(with: nil)
+      presentingVC.newStartDate = startDate
+      presentingVC.newEndDate = endDate
+    setBookingTimeMain?.setupTime(isChaged: true, startTime: startDate, endTime: endDate)
+    setBookingTimeCarList?.setupTime(isChaged: true, startTime: startDate, endTime: endDate)
       self.dismiss(animated: true, completion: nil)
   }
   
