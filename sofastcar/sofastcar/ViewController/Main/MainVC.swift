@@ -49,7 +49,7 @@ class MainVC: UIViewController {
     // Socar Zone, Socar List Data
     var socarZoneDataList: [SocarZoneData] = []
     var socarListDataList: SocarListData?
-    var socarListData: [SocarListData.SocarList]?
+    var socarListData: [SocarList]?
     
     // side bar Presenting
     var presentTransition: UIViewControllerAnimatedTransitioning?

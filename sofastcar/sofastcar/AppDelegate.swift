@@ -35,7 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     window = UIWindow(frame: UIScreen.main.bounds)
-    window?.rootViewController = rootView
+    window?.rootViewController = ReservationConfirmTableVC()
     window?.makeKeyAndVisible()
     window?.overrideUserInterfaceStyle = .light // add woobin: dark mode off
     return true
