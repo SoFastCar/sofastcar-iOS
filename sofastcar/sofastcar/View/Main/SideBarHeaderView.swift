@@ -78,7 +78,7 @@ class SideBarHeaderView: UIView {
     }
     
     userIdLable.snp.makeConstraints {
-      $0.top.equalTo(userNameLable.snp.bottom).offset(10)
+      $0.top.equalTo(userNameLable.snp.bottom).offset(-5)
       $0.leading.equalTo(guide)
     }
     

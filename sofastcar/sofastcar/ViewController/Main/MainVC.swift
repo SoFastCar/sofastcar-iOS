@@ -85,11 +85,11 @@ class MainVC: UIViewController {
 //                (200...400).contains(responseCode.statusCode) else { return print(response)}
 //            guard let responseData = data else { return print("No data")}
 //            
-////            do {
-////                let decodedData = try JSONDecoder().decode(<#T##type: Decodable.Protocol##Decodable.Protocol#>, from: <#T##Data#>)
-////            } catch {
-////                
-////            }
+//            do {
+//                let decodedData = try JSONDecoder().decode(<#T##type: Decodable.Protocol##Decodable.Protocol#>, from: <#T##Data#>)
+//            } catch {
+//
+//            }
 //        }
 //        task.resume()
 //        
