@@ -19,10 +19,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var rootView: UIViewController = UIViewController()
 //    UserDefaults.resetUserAuthTocken() // 로그아웃필요할때 사용
     if UserDefaults.getUserAuthTocken() != nil {
+//      changeUserAuthTocken()
+      print(UserDefaults.getUserAuthTocken()!)
       let mainVC = MainVC()
       mainVC.socarZoneProvider = SocarZoneProvider()
       rootView = mainVC
-      changeUserAuthTocken()
     } else {
       let navigationController = UINavigationController(rootViewController: InitVC())
       let backButtonImage = UIImage(systemName: "arrow.left")
@@ -40,7 +41,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   }
   
   func changeUserAuthTocken() {
-    DispatchQueue.main.async {
+    DispatchQueue.global().sync {
       let urlString = "https://sofastcar.moorekwon.xyz/api-jwt-auth/refresh/"
       let url = URL(string: urlString)!
       guard let currnetUserAuthToken = UserDefaults.getUserAuthTocken() else { return }

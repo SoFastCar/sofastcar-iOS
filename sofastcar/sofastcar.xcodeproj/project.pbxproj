@@ -97,6 +97,7 @@
 		C7F5B54225106A1800AE0054 /* SocaZoneProvidable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F5B54125106A1800AE0054 /* SocaZoneProvidable.swift */; };
 		C7F5B5442510BC7900AE0054 /* NMapAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F5B5432510BC7900AE0054 /* NMapAddress.swift */; };
 		C7F5B5462510D72600AE0054 /* SideBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F5B5452510D72600AE0054 /* SideBarVC.swift */; };
+		C7F5B548251197F300AE0054 /* SideBarHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F5B547251197F300AE0054 /* SideBarHeaderView.swift */; };
 		C7FED69B250C729C00778923 /* ReservationEtcCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FED69A250C729C00778923 /* ReservationEtcCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -201,6 +202,7 @@
 		C7F5B54125106A1800AE0054 /* SocaZoneProvidable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocaZoneProvidable.swift; sourceTree = "<group>"; };
 		C7F5B5432510BC7900AE0054 /* NMapAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NMapAddress.swift; sourceTree = "<group>"; };
 		C7F5B5452510D72600AE0054 /* SideBarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBarVC.swift; sourceTree = "<group>"; };
+		C7F5B547251197F300AE0054 /* SideBarHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBarHeaderView.swift; sourceTree = "<group>"; };
 		C7FED69A250C729C00778923 /* ReservationEtcCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationEtcCell.swift; sourceTree = "<group>"; };
 		F696BB68DE39C7A6CB2DD8B1 /* Pods-sofastcar.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sofastcar.release.xcconfig"; path = "Target Support Files/Pods-sofastcar/Pods-sofastcar.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -376,6 +378,7 @@
 				C7A9C91D2507B314006CA543 /* TopView.swift */,
 				C7592015250773A700778849 /* ReservationConfirmCVCell.swift */,
 				C7A9C9212508510B006CA543 /* PaymentConfirmCell.swift */,
+				C7F5B547251197F300AE0054 /* SideBarHeaderView.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -726,6 +729,7 @@
 				C769C82E24FDB69B00DC8226 /* DriverLicenseEnrollinitView.swift in Sources */,
 				C7F5B54225106A1800AE0054 /* SocaZoneProvidable.swift in Sources */,
 				C79A0B5B2504656B0061F078 /* PhoneAuthResponse.swift in Sources */,
+				C7F5B548251197F300AE0054 /* SideBarHeaderView.swift in Sources */,
 				C7CA53F4250A01F8008DA68C /* ReservationPaymentCell.swift in Sources */,
 				BC4F3A1E250E01FE00B7E1E7 /* RentReturnTimeButton.swift in Sources */,
 				C72A913F24F60CD9005D464F /* TouVC.swift in Sources */,

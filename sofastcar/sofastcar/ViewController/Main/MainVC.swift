@@ -206,7 +206,9 @@ class MainVC: UIViewController {
     @objc func didTapSideBarButton(_ sender: UIButton) {
       let sideBarVC = SideBarVC()
       sideBarVC.modalPresentationStyle = .overFullScreen
-      presentDetail(sideBarVC)
+      present(sideBarVC, animated: false, completion: {
+        sideBarVC.animate()
+      })
     }
     
     // MARK: - Selector(Booking Time Button)
