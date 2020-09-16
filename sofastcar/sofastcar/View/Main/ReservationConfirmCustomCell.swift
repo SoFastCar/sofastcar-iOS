@@ -12,7 +12,26 @@ class ReservationConfirmCustomCell: UITableViewCell {
   // MARK: - Properties
   static let identifier = "CustomCell"
   
-  var insuranceInfo: Insurance?
+  var startDate: Date? {
+    didSet {
+      configureUsingTiemCellContent()
+    }
+  }
+  var endDate: Date? {
+    didSet {
+      configureUsingTiemCellContent()
+    }
+  }
+  var insuranceInfo: Insurance? {
+    didSet {
+      configureinsuranceCellContent()
+    }
+  }
+  var socarZone: SocarZoneData? {
+    didSet {
+      configureSocarZoneInfoCellContent()
+    }
+  }
   weak var delegate: ResrvationConfirmCellDelegate?
   
   lazy var guide = contentView.layoutMarginsGuide
@@ -113,26 +132,27 @@ class ReservationConfirmCustomCell: UITableViewCell {
     fatalError("init(coder:) has not been implemented")
   }
   
-  func confiure(cellType: String) {
-    sectionTitleLabel.text = cellType
+  func confiure(cellType: TalbleViewCellType) {
+    sectionTitleLabel.text = cellType.rawValue
     
     switch cellType {
-    case MyTalbleViewCellType.insuranceCell.rawValue:
+    case .insuranceCell:
       twoLineWithChangeButton()
-      configureinsuranceCellContent()
-    case MyTalbleViewCellType.usingTiemCell.rawValue:
+//      configureinsuranceCellContent()
+    case .usingTiemCell:
       twoLineWithChangeButton()
-      configureUsingTiemCellContent()
-    case MyTalbleViewCellType.usingSocarZone.rawValue:
+//      configureUsingTiemCellContent()
+    case .usingSocarZone:
       usingSocarZoneCellUI()
-    case MyTalbleViewCellType.business.rawValue:
+    case .business:
       businessCellUI()
       configureUsingBusinessCellContent()
-    default:
+    case .blank:
       break
     }
   }
   
+  // MARK: - Cell UI configure=
   private func twoLineWithChangeButton() {
     [sectionTitleLabel, changeOptionButton, contentTitleLabel, contentLabel].forEach {
       contentView.addSubview($0)
@@ -239,9 +259,16 @@ class ReservationConfirmCustomCell: UITableViewCell {
   }
   
   private func configureUsingTiemCellContent() {
-    let timeValve = 4
-    contentTitleLabel.text = "총 \(timeValve)시간 이용"
-    contentLabel.text = "10/15 (목) 18:40 - 22:40"
+    guard let startDate = startDate,
+          let endDate = endDate else { return print("시간 값 없음")}
+    contentTitleLabel.text = Time.getDiffTwoDateValueReturnString(start: startDate, end: endDate)
+    contentLabel.text = "\(Time.getTimeString(type: .todayHHmm, date: startDate)) - \(Time.getTimeString(type: .hourHHmm, date: endDate))"
+
+  }
+  
+  private func configureSocarZoneInfoCellContent() {
+    guard let socarZone = socarZone else { return }
+    usingSocarZoneLabel.text = socarZone.name
   }
   
   private func configureUsingBusinessCellContent() {

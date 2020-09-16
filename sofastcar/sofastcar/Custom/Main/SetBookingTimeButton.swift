@@ -14,11 +14,13 @@ enum SetPlace {
 }
 
 class SetBookingTimeButton: UIButton {
-
+    
     let clockSymbolImageView = UIImageView()
     let setTimeLabel = UILabel()
     let timeLabel = UILabel()
     let chevronSymbolImageView = UIImageView()
+    var startTime: Date = Date()
+    var endTime: Date = Date()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -33,14 +35,14 @@ class SetBookingTimeButton: UIButton {
         self.init()
         setupUI(on: place)
         setupConstraint(on: place)
-        setupTime(with: "오늘 16:30")
+        setupTime(isChaged: false, startTime: Date(), endTime: Date())
     }
     
     private func setupUI(on place: SetPlace) {
         switch place {
         case .carList:
             let symbolConfig = UIImage.SymbolConfiguration(pointSize: 20)
-             
+            
             self.backgroundColor = .white
             
             clockSymbolImageView.tintColor = CommonUI.mainBlue
@@ -55,8 +57,6 @@ class SetBookingTimeButton: UIButton {
             timeLabel.textColor = .gray
             self.addSubview(timeLabel)
             
-            //        self.layer.addBorder(toSide: .top, withColor: UIColor.lightGray.cgColor, andThickness: 5)
-            //        self.layer.addBorder(toSide: .bottom, withColor: UIColor.lightGray.cgColor, andThickness: 5)
         case .mainVC:
             let symbolConfig = UIImage.SymbolConfiguration(pointSize: 20)
             self.backgroundColor = .white
@@ -78,12 +78,6 @@ class SetBookingTimeButton: UIButton {
             chevronSymbolImageView.tintColor = CommonUI.mainDark
             self.addSubview(chevronSymbolImageView)
         }
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        self.addBorder(toSide: .top, withColor: UIColor.lightGray.cgColor, andThickness: 5)
-        self.addBorder(toSide: .bottom, withColor: UIColor.lightGray.cgColor, andThickness: 5)
     }
     
     private func setupConstraint(on place: SetPlace) {
@@ -135,7 +129,22 @@ class SetBookingTimeButton: UIButton {
         
     }
     
-    func setupTime(with time: String?) {
-        timeLabel.text = time ?? "설정된 시간 없음"
+    func setupTime(isChaged flag: Bool, startTime sTime: Date, endTime eTime: Date) {
+        if flag {
+            startTime = sTime
+            endTime = eTime
+            print(Time.getTimeString(type: .castMddEHHmm, date: startTime))
+            print(Time.getTimeString(type: .castMddEHHmm, date: endTime))
+            timeLabel.text = "\(Time.getTimeString(type: .todayHHmm, date: startTime)) - \(Time.getTimeString(type: .hourHHmm, date: endTime))"
+        } else {
+            let date = floor(Date().timeIntervalSince1970)
+            let restMinDate = Double(Int(date) % 600)
+            startTime = Date(timeIntervalSince1970: date-restMinDate)
+            startTime.addTimeInterval(TimeInterval(20*Time.min))
+            endTime = startTime.addingTimeInterval(TimeInterval(Time.hour*4))
+            print(Time.getTimeString(type: .castMddEHHmm, date: startTime))
+            print(Time.getTimeString(type: .castMddEHHmm, date: endTime))
+            timeLabel.text = "\(Time.getTimeString(type: .todayHHmm, date: startTime)) - \(Time.getTimeString(type: .hourHHmm, date: endTime))"
+        }
     }
 }

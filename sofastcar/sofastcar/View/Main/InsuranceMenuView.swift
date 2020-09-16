@@ -31,14 +31,13 @@ class InsuranceMenuView: UIView {
         
         self.addSubview(insuranceMenuHeaderView)
         
-        itemStackView.backgroundColor = .systemOrange
         itemStackView.axis = .vertical
         itemStackView.distribution = .fillProportionally
-        special.configuration(symbol: "circle", name: "스페셜", discription: "자기부담금 최대 5만원", price: "+ 7,750원")
+        special.configuration(symbol: "circle", name: "스페셜", guarantee: 5, cost: 7500)
         itemStackView.addArrangedSubview(special)
-        standard.configuration(symbol: "circle", name: "스탠다드", discription: "자기부담금 최대 30만원", price: "+ 5,750원")
+        standard.configuration(symbol: "circle", name: "스탠다드", guarantee: 30, cost: 7500)
         itemStackView.addArrangedSubview(standard)
-        light.configuration(symbol: "circle", name: "라이트", discription: "자기부담금 최대 70만원", price: "+ 3,750원")
+        light.configuration(symbol: "circle", name: "라이트", guarantee: 70, cost: 7500)
         itemStackView.addArrangedSubview(light)
         self.addSubview(itemStackView)
         

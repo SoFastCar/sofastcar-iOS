@@ -45,8 +45,8 @@ class LoginVC: UIViewController {
   @objc private func chekcLoginButtonEnable() {
     myView.loginButton.isEnabled = false
     myView.loginButton.backgroundColor = .systemGray4
-    guard myView.emailTextField.text?.isEmpty == false else { return print("a")}
-    guard myView.passwordTextField.text?.isEmpty == false else { return print("b")}
+    guard myView.emailTextField.text?.isEmpty == false else { return }
+    guard myView.passwordTextField.text?.isEmpty == false else { return }
     myView.loginButton.isEnabled = true
     myView.loginButton.backgroundColor = CommonUI.mainBlue
   }
@@ -61,16 +61,19 @@ class LoginVC: UIViewController {
       "email": userid,
       "password": userPassword
     ]
-    
+
     AF.request(url, method: .post, parameters: userLoginAuthPatameters)
       .responseJSON { response in
         if response.response?.statusCode == 200 {
-          guard let data = response.data else { return }
+          guard let data = response.data else { return print("Data Erro") }
           if let jsonObjcet = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String: Any] {
             if let userTocken = jsonObjcet["token"] as? String {
               UserDefaults.saveUserAuthTocken(authToken: userTocken)
               let mainVC = MainVC()
-              self.navigationController?.pushViewController(mainVC, animated: false)
+              mainVC.socarZoneProvider = SocarZoneProvider()
+              mainVC.modalPresentationStyle = .overFullScreen
+              mainVC.modalTransitionStyle = .coverVertical
+              self.present(mainVC, animated: true, completion: nil)
             }
           }
         } else {

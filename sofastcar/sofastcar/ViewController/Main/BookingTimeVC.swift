@@ -13,9 +13,6 @@ class BookingTimeVC: UIViewController {
   // MARK: - Properties
   let titleStringArray = ["대여 시각", "반납 시각"]
   let calendar = Calendar.current
-  let min = 600
-  let hour = 3600
-  let day = 86400
   var isTimeChange: Bool = false
   var isHalfHourSelected: Bool = false
   
@@ -32,6 +29,9 @@ class BookingTimeVC: UIViewController {
       tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .none)
     }
   }
+    
+    var setBookingTimeMain: SetBookingTimeButton?
+    var setBookingTimeCarList: SetBookingTimeButton?
   
   enum DateComponentType: Int {
     case day = 0
@@ -57,7 +57,6 @@ class BookingTimeVC: UIViewController {
   // MARK: - Life Cycle
   override func viewDidLoad() {
     super.viewDidLoad()
-    endDate = Date().addingTimeInterval(TimeInterval(hour*4))
     view.backgroundColor = .white
     configureTableView()
     configureLayout()
@@ -106,15 +105,21 @@ class BookingTimeVC: UIViewController {
   }
   
   @objc private func tapCompliteButton() {
-    self.dismiss(animated: true, completion: nil)
+      guard let presentingVC = self.presentingViewController as? MainVC else { return }
+      presentingVC.newStartDate = startDate
+      presentingVC.newEndDate = endDate
+    setBookingTimeMain?.setupTime(isChaged: true, startTime: startDate, endTime: endDate)
+    setBookingTimeCarList?.setupTime(isChaged: true, startTime: startDate, endTime: endDate)
+      self.dismiss(animated: true, completion: nil)
   }
   
   // MARK: - Time Handler
   private func calculateTwoTimeDayCount(fromDate: Date, toDate: Date) -> Int {
     var dayCount = 0
     let offsetComps = calendar.dateComponents([.year, .month, .day], from: fromDate, to: toDate)
-    if case let (_, _, day?) = (offsetComps.year, offsetComps.month, offsetComps.day) {
+    if case let (day?, hour?, minute?) = (offsetComps.day, offsetComps.hour, offsetComps.minute) {
       dayCount = day
+      print("\(day) \(hour) \(minute)")
     }
     return dayCount
   }
@@ -173,10 +178,9 @@ extension BookingTimeVC: UITableViewDataSource, UITableViewDelegate {
     if isTimeChange {
       cell.detailTextLabel?.text = firstCellDetailTitleCongifure()
     } else {
-      let expectDate = startDate.addingTimeInterval(600)
-      let minInt = Int(Time.getTimeString(type: .minMM, date: expectDate))!
-      let minString = minInt == 0 ? "00" : "\((minInt/10)*10)"
-      cell.detailTextLabel?.text = "\(Time.getTimeString(type: .todayH, date: startDate)):\(minString)  - \(Time.getTimeString(type: .hourH, date: endDate)):\(minString)\n"
+      print(Time.getTimeString(type: .castMddEHHmm, date: startDate))
+      print(Time.getTimeString(type: .castMddEHHmm, date: endDate))
+      cell.detailTextLabel?.text = "\(Time.getTimeString(type: .todayHHmm, date: startDate)) - \(Time.getTimeString(type: .hourHHmm, date: endDate))"
     }
     cell.detailTextLabel?.numberOfLines = 2
     cell.detailTextLabel?.textColor = .systemGray
@@ -184,26 +188,22 @@ extension BookingTimeVC: UITableViewDataSource, UITableViewDelegate {
   }
   
   private func firstCellTitleConfigure() -> String {
-    var days = calculateTwoTimeDayCount(fromDate: startDate, toDate: endDate)
-    var hour = Int(Time.getTimeString(type: .hourH, date: endDate))!
-                - Int(Time.getTimeString(type: .hourH, date: startDate))!
-    if hour < 0 {
-      hour = 24 + hour
-      days -= 1
-    }
-
     if isTimeChange == false {
       return "이용시간 설정하기"
     } else {
       var returnText = "총 "
-      if days != 0 {
-        returnText.append("\(days)일 ")
+      let offsetComps = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: startDate, to: endDate)
+      if let day = offsetComps.day,
+        day != 0 {
+        returnText.append("\(day)일 ")
       }
-      if hour != 0 {
+      if let hour = offsetComps.hour,
+        hour != 0 {
         returnText.append("\(hour)시간 ")
       }
-      if isHalfHourSelected == true {
-        returnText.append("30분 ")
+      if let minute = offsetComps.minute,
+        minute != 0 {
+        returnText.append("\(minute)분 ")
       }
       returnText.append("이용")
       return returnText
@@ -273,9 +273,9 @@ extension BookingTimeVC: UIPickerViewDelegate, UIPickerViewDataSource {
     switch component {
     case DateComponentType.day.rawValue:
       if pickerView.tag == 1 {
-        pickerLabel?.text = Time.getTimeString(type: .castMMddE, date: Date().addingTimeInterval(TimeInterval(day*row)))
+        pickerLabel?.text = Time.getTimeString(type: .castMMddE, date: Date().addingTimeInterval(TimeInterval(Time.day*row)))
       } else {
-        pickerLabel?.text = Time.getTimeString(type: .castMMddE, date: Date().addingTimeInterval(TimeInterval(day*row+4*hour)))
+        pickerLabel?.text = Time.getTimeString(type: .castMMddE, date: Date().addingTimeInterval(TimeInterval(Time.day*row+4*Time.hour)))
       }
     case DateComponentType.hour.rawValue:
       pickerLabel?.text = "\(row)"
@@ -291,11 +291,11 @@ extension BookingTimeVC: UIPickerViewDelegate, UIPickerViewDataSource {
     var changedValue: Int = 0
     switch component {
     case DateComponentType.day.rawValue:
-      changedValue = day
+      changedValue = Time.day
     case DateComponentType.hour.rawValue:
-      changedValue = hour
+      changedValue = Time.hour
     case DateComponentType.min.rawValue:
-      changedValue = min
+      changedValue = Time.min*10
     default:
       return print("Error")
     }
@@ -337,7 +337,7 @@ extension BookingTimeVC: UIPickerViewDelegate, UIPickerViewDataSource {
 // MARK: - BookingTimeCellDelegate
 extension BookingTimeVC: BookingTimeCellDelegate {
   func tapAddDayButton(forCell cell: BookingTimeCell) {
-    endDate = endDate.addingTimeInterval(TimeInterval(day))
+    endDate = endDate.addingTimeInterval(TimeInterval(Time.day))
     returnCurrnetSelectedRow[0] += 1
     cell.updateRentTimeDatePicker(dayIndex: returnCurrnetSelectedRow[0], changedTime: endDate)
     saveCurrnetSelectedRow(pickerView: cell.rentTimeDatePicker)
@@ -348,7 +348,7 @@ extension BookingTimeVC: BookingTimeCellDelegate {
     isHalfHourSelected.toggle()
     let beforeEndDate = endDate
     var dayIndex = returnCurrnetSelectedRow[0]
-    endDate = endDate.addingTimeInterval(TimeInterval(hour/2))
+    endDate = endDate.addingTimeInterval(TimeInterval(Time.hour/2))
     if Time.getTimeString(type: .dayd, date: beforeEndDate) != Time.getTimeString(type: .dayd, date: endDate) {
       dayIndex += 1
       returnCurrnetSelectedRow[0] = dayIndex
@@ -361,7 +361,7 @@ extension BookingTimeVC: BookingTimeCellDelegate {
   func tapAddHourButton(forCell cell: BookingTimeCell) {
     let beforeEndDate = endDate
     var dayIndex = returnCurrnetSelectedRow[0]
-    endDate = endDate.addingTimeInterval(TimeInterval(hour))
+    endDate = endDate.addingTimeInterval(TimeInterval(Time.hour))
     if Time.getTimeString(type: .dayd, date: beforeEndDate) != Time.getTimeString(type: .dayd, date: endDate) {
       dayIndex += 1
       returnCurrnetSelectedRow[0] = dayIndex

@@ -9,6 +9,10 @@
 import Foundation
 
 class Time {
+  static let min = 60
+  static let hour = 3600
+  static let day = 86400
+  
   // 참고 URL: https://ownstory.tistory.com/21
   enum PresnetDateString: String {
     case castMddEHHmm = "M/dd (E) HH:mm"
@@ -16,6 +20,8 @@ class Time {
     case castMMddE = "MM / dd (E)"
     case todayE = "오늘 (E)"
     case todayH = "오늘 H"
+    case todayHHmm = "오늘 HH:mm"
+    case hourHHmm = "HH:mm"
     case tomorrow = "내일 (E)"
     case hourH = "H"
     case hourHH = "HH"
@@ -28,5 +34,25 @@ class Time {
     format.locale = CommonUI.locale as Locale
     format.dateFormat = type.rawValue
     return format.string(from: date)
+  }
+  
+  static func getDiffTwoDateValueReturnString(start: Date, end: Date) -> String {
+    let calendar = Calendar.current
+    var returnText = "총 "
+    let offsetComps = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: start, to: end)
+    if let day = offsetComps.day,
+      day != 0 {
+      returnText.append("\(day)일 ")
+    }
+    if let hour = offsetComps.hour,
+      hour != 0 {
+      returnText.append("\(hour)시간 ")
+    }
+    if let minute = offsetComps.minute,
+      minute != 0 {
+      returnText.append("\(minute)분 ")
+    }
+    returnText.append("이용")
+    return returnText
   }
 }
