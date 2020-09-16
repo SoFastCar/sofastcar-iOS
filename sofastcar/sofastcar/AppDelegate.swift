@@ -19,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var rootView: UIViewController = UIViewController()
 //    UserDefaults.resetUserAuthTocken() // 로그아웃필요할때 사용
     if UserDefaults.getUserAuthTocken() != nil {
-//      changeUserAuthTocken()
+      changeUserAuthTocken()
       print(UserDefaults.getUserAuthTocken()!)
       let mainVC = MainVC()
       mainVC.socarZoneProvider = SocarZoneProvider()
@@ -65,9 +65,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         print("Response Code: \(header.statusCode)")
         
         guard let responseData = data else { return }
-        if let newUserAuthToken = try? JSONSerialization.jsonObject(with: responseData, options: []) as? String {
-          print(newUserAuthToken)
-          UserDefaults.saveUserAuthTocken(authToken: newUserAuthToken)
+        
+        if let jsonData = try? JSONSerialization.jsonObject(with: responseData, options: []) as? [String: String] {
+          if let newUserAuthToken = jsonData["token"] {
+            UserDefaults.saveUserAuthTocken(authToken: newUserAuthToken)
+            print(newUserAuthToken)
+          }
         }
       }
       task.resume()
