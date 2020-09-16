@@ -19,14 +19,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var rootView: UIViewController = UIViewController()
 //    UserDefaults.resetUserAuthTocken() // 로그아웃필요할때 사용
     if UserDefaults.getUserAuthTocken() != nil {
-
       changeUserAuthTocken()
       print(UserDefaults.getUserAuthTocken()!)
       let mainVC = MainVC()
-        mainVC.socarZoneProvider = SocarZoneProvider()
-//        let navigationController = UINavigationController(rootViewController: mainVC)
-//        navigationController.isToolbarHidden = true
-//        navigationController.setNavigationBarHidden(true, animated: false)
+      mainVC.socarZoneProvider = SocarZoneProvider()
+      let navigationController = UINavigationController(rootViewController: mainVC)
+      navigationController.isToolbarHidden = true
+      navigationController.setNavigationBarHidden(true, animated: false)
       rootView = mainVC
     } else {
       let navigationController = UINavigationController(rootViewController: InitVC())
