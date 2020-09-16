@@ -49,11 +49,21 @@ class MainVC: UIViewController {
     // Socar Zone, Socar List Data
     var socarZoneDataList: [SocarZoneData] = []
     var socarListDataList: SocarListData?
-    var socarListData: [SocarListData.SocarList]?
+    var socarListData: [SocarList]?
+    
+    // Insurance Item Data
+    var insuranceDataList: InsuranceDataList?
+    var insuranceData: [InsuranceData]?
+    var insuranceItem = Insurance(name: "", guarantee: 0, cost: 0)
+    var selectedInsItem = 0
     
     // side bar Presenting
     var presentTransition: UIViewControllerAnimatedTransitioning?
     var dismissTransition: UIViewControllerAnimatedTransitioning?
+    
+    // New Booking Time Data
+    var newStartDate = Date()
+    var newEndDate = Date()
     
     // MARK: - View Life Cycle        
     override func viewDidLoad() {
@@ -132,30 +142,63 @@ class MainVC: UIViewController {
     // MARK: - Selector(Insurance Item)
     @objc func didTapInsuranceItem(_ sender: InsuranceMenuItemButton) {
         switch sender.tag {
-        case 0:
+        // Specail
+        case 0: 
             sender.selectSymbolImageView.image = UIImage(systemName: "circle.fill", withConfiguration: sender.symbolConfig)
-            sender.itemPriceLabel.textColor = .systemBlue
+            sender.itemCostLabel.textColor = .systemBlue
             insuranceMenuView.standard.selectSymbolImageView.image = UIImage(systemName: "circle", withConfiguration: sender.symbolConfig)
-            insuranceMenuView.standard.itemPriceLabel.textColor = .gray
+            insuranceMenuView.standard.itemCostLabel.textColor = .gray
             insuranceMenuView.light.selectSymbolImageView.image = UIImage(systemName: "circle", withConfiguration: sender.symbolConfig)
-            insuranceMenuView.light.itemPriceLabel.textColor = .gray
+            insuranceMenuView.light.itemCostLabel.textColor = .gray
+            selectedInsItem = sender.tag
+//            insuranceItem.name = insuranceDataList?.items[0].name
+//            insuranceItem.guarantee = insuranceDataList?.items[0].guarantee
+//            insuranceItem.cost = insuranceDataList?.items[0].cost
+        // Standard
         case 1:
             sender.selectSymbolImageView.image = UIImage(systemName: "circle.fill", withConfiguration: sender.symbolConfig)
-            sender.itemPriceLabel.textColor = .systemBlue
+            sender.itemCostLabel.textColor = .systemBlue
             insuranceMenuView.special.selectSymbolImageView.image = UIImage(systemName: "circle", withConfiguration: sender.symbolConfig)
-            insuranceMenuView.special.itemPriceLabel.textColor = .gray
+            insuranceMenuView.special.itemCostLabel.textColor = .gray
             insuranceMenuView.light.selectSymbolImageView.image = UIImage(systemName: "circle", withConfiguration: sender.symbolConfig)
-            insuranceMenuView.light.itemPriceLabel.textColor = .gray
+            insuranceMenuView.light.itemCostLabel.textColor = .gray
+            selectedInsItem = sender.tag
+//            insuranceItem.name = insuranceDataList?.items[1].name
+//            insuranceItem.guarantee = insuranceDataList?.items[1].guarantee
+//            insuranceItem.cost = insuranceDataList?.items[1].cost
+        // Light
         case 2:
             sender.selectSymbolImageView.image = UIImage(systemName: "circle.fill", withConfiguration: sender.symbolConfig)
-            sender.itemPriceLabel.textColor = .systemBlue
+            sender.itemCostLabel.textColor = .systemBlue
             insuranceMenuView.special.selectSymbolImageView.image = UIImage(systemName: "circle", withConfiguration: sender.symbolConfig)
-            insuranceMenuView.special.itemPriceLabel.textColor = .gray
+            insuranceMenuView.special.itemCostLabel.textColor = .gray
             insuranceMenuView.standard.selectSymbolImageView.image = UIImage(systemName: "circle", withConfiguration: sender.symbolConfig)
-            insuranceMenuView.standard.itemPriceLabel.textColor = .gray
+            insuranceMenuView.standard.itemCostLabel.textColor = .gray
+            selectedInsItem = sender.tag
+//            insuranceItem.name = insuranceDataList?.items[2].name
+//            insuranceItem.guarantee = insuranceDataList?.items[2].guarantee
+//            insuranceItem.cost = insuranceDataList?.items[2].cost
         default:
             break
         }
+    }
+    
+    // MARK: - Selector(Insurance Confirm)
+    @objc func didTapInsConfirm(_ sender: UIButton) {
+        switch selectedInsItem {
+        case 0:
+            _ = insuranceData?[0]
+        case 1:
+            _ = insuranceData?[1]
+        case 2:
+            _ = insuranceData?[2]
+        default:
+            break
+        }
+        let presentedVC = ReservationConfirmTableVC()
+        presentedVC.modalPresentationStyle = .automatic
+        present(presentedVC, animated: true)
+        
     }
     
     // MARK: - Selector(Search Button)
@@ -209,6 +252,8 @@ class MainVC: UIViewController {
     // MARK: - Selector(Booking Time Button)
     @objc func didTapBookingTime(_ sender: SetBookingTimeButton) {
         let presentedVC = BookingTimeVC()
+        presentedVC.setBookingTimeMain = setBookingTimeButton
+        presentedVC.setBookingTimeCarList = carListView.setBookingTimeButton
         presentedVC.modalPresentationStyle = .automatic
         presentedVC.startDate = sender.startTime
         presentedVC.endDate = sender.endTime
@@ -467,8 +512,8 @@ class MainVC: UIViewController {
         insuranceMenuView.standard.addTarget(self, action: #selector(didTapInsuranceItem(_:)), for: .touchUpInside)
         insuranceMenuView.light.tag = 2
         insuranceMenuView.light.addTarget(self, action: #selector(didTapInsuranceItem(_:)), for: .touchUpInside)
-        
         insuranceMenuView.frame = CGRect(x: 0, y: view.frame.height, width: view.frame.width, height: view.frame.height / 2 + 50 )
+        insuranceMenuView.confirmButton.addTarget(self, action: #selector(didTapInsConfirm(_:)), for: .touchUpInside)
         view.addSubview(insuranceMenuView)
         
         setBookingTimeButton.addTarget(self, action: #selector(didTapBookingTime(_:)), for: .touchUpInside)
@@ -705,6 +750,36 @@ extension MainVC: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         insuranceMenuViewFlag = true
+        
+//        guard let testUrl = URL(string: "https://sofastcar.moorekwon.xyz/reservations/<reservation_id>/insurances/") else { return }
+//        var testRequest = URLRequest(url: testUrl)
+//        testRequest.httpMethod = "GET"
+//        testRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+//        testRequest.addValue("JWT \(UserDefaults.getUserAuthTocken() ?? "")", forHTTPHeaderField: "Authorization")
+//        let testTask = URLSession.shared.dataTask(with: testRequest) {(data, response, error) in
+//            guard error == nil else { return print("error2: \(error!.localizedDescription)")}
+//            guard let responseCode = response as? HTTPURLResponse,
+//                (200...400).contains(responseCode.statusCode) else { return print("response: \(response ?? URLResponse())") }
+//            guard let responseData = data else { return print("No data")}
+//            print(responseData)
+//            let jsonDecoder = JSONDecoder()
+//            do {
+//                let decodedData = try jsonDecoder.decode(InsuranceDataList.self, from: responseData)
+//                self.insuranceDataList = decodedData
+//                self.insuranceData = self.insuranceDataList?.items 
+//                print("면책 상품 가져오기 성공")
+//                DispatchQueue.main.async {
+//                    self.carListView.carListTableView.reloadData()
+//                }
+//            } catch {
+//                print("면책 상품 가져오기 실패")
+//            }
+//        }
+//        testTask.resume()
+        self.insuranceData = [InsuranceData(name: "스페셜", guarantee: 10, cost: 10000), InsuranceData(name: "스탠다드", guarantee: 30, cost: 30000), InsuranceData(name: "라이트", guarantee: 50, cost: 50000)]
+        insuranceMenuView.special.configuration(symbol: "circle", name: insuranceData?[0].name ?? "불러오기 실패", guarantee: insuranceData?[0].guarantee ?? 0, cost: insuranceData?[0].cost ?? 0)
+        insuranceMenuView.standard.configuration(symbol: "circle", name: insuranceData?[1].name ?? "불러오기 실패", guarantee: insuranceData?[1].guarantee ?? 0, cost: insuranceData?[1].cost ?? 0)
+        insuranceMenuView.light.configuration(symbol: "circle", name: insuranceData?[2].name ?? "불러오기 실패", guarantee: insuranceData?[2].guarantee ?? 0, cost: insuranceData?[2].cost ?? 0)
         UIView.animate(withDuration: 0.5, animations: {
             self.insuranceMenuView.frame.origin.y = (self.view.frame.height / 2 ) - 50
             self.visualEffectView2.alpha = 1

@@ -44,6 +44,7 @@
 		BC91B630250FA6F200B76398 /* SocarZoneProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC91B62F250FA6F200B76398 /* SocarZoneProvider.swift */; };
 		BC91B636250FA7A200B76398 /* ServiceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC91B635250FA7A200B76398 /* ServiceError.swift */; };
 		BC91B63A250FA91D00B76398 /* SocarZoneDataList.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC91B639250FA91D00B76398 /* SocarZoneDataList.swift */; };
+		BCDFBCDC2511E523002E4789 /* InsuranceData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCDFBCDB2511E523002E4789 /* InsuranceData.swift */; };
 		C728C85024F7E35100063005 /* SignUpUserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C728C84F24F7E35100063005 /* SignUpUserData.swift */; };
 		C72A913824F5E15B005D464F /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72A913724F5E15B005D464F /* Extension.swift */; };
 		C72A913A24F5E32A005D464F /* SingUpInitVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72A913924F5E32A005D464F /* SingUpInitVC.swift */; };
@@ -162,6 +163,7 @@
 		BC91B62F250FA6F200B76398 /* SocarZoneProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocarZoneProvider.swift; sourceTree = "<group>"; };
 		BC91B635250FA7A200B76398 /* ServiceError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceError.swift; sourceTree = "<group>"; };
 		BC91B639250FA91D00B76398 /* SocarZoneDataList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SocarZoneDataList.swift; path = sofastcar/Model/Main/SocarZoneDataList.swift; sourceTree = SOURCE_ROOT; };
+		BCDFBCDB2511E523002E4789 /* InsuranceData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsuranceData.swift; sourceTree = "<group>"; };
 		C728C84F24F7E35100063005 /* SignUpUserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpUserData.swift; sourceTree = "<group>"; };
 		C72A913724F5E15B005D464F /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		C72A913924F5E32A005D464F /* SingUpInitVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingUpInitVC.swift; sourceTree = "<group>"; };
@@ -509,6 +511,7 @@
 				BC4F3A13250E01EB00B7E1E7 /* SocarZoneData.swift */,
 				BC56AE3325107FC10044E995 /* SocarListData.swift */,
 				C7F2E639250647ED0004EBF9 /* Insurance.swift */,
+				BCDFBCDB2511E523002E4789 /* InsuranceData.swift */,
 				BC91B639250FA91D00B76398 /* SocarZoneDataList.swift */,
 				C7F5B5432510BC7900AE0054 /* NMapAddress.swift */,
 			);
@@ -758,6 +761,7 @@
 				BC4F3A0B250E01B400B7E1E7 /* SearchView.swift in Sources */,
 				C76B2A6324F7A799004E4CBD /* UserAuthVC.swift in Sources */,
 				BC4F3A25250E028A00B7E1E7 /* TosVC.swift in Sources */,
+				BCDFBCDC2511E523002E4789 /* InsuranceData.swift in Sources */,
 				BC4F3A22250E024F00B7E1E7 /* ReservationConfirmTableHeaderView.swift in Sources */,
 				7EF41FC62501F6D90030752A /* CarKeyView.swift in Sources */,
 				C7BD348C24F54A5700089F0D /* InitVC.swift in Sources */,
@@ -1006,7 +1010,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 52ZXCPY3WQ;
+				DEVELOPMENT_TEAM = W5DN7MBP3R;
 				INFOPLIST_FILE = sofastcar/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (

@@ -28,38 +28,37 @@ struct SocarListData: Decodable {
     let next: SocarList?
     let previous: SocarList?
     let results: [SocarList]
+}
+struct SocarList: Decodable {
+    let id: Double
+    let number: String
+    let name: String
+    let zone: Double
+    let image: String
+    let manufacturer: String
+    let fuelType: String
+    let typeOfVehicle: String
+    let shiftType: String
+    let ridingCapa: Double
+    let isEvent: Bool
+    let manualPage: String
+    let safetyOpt: String
+    let convenienceOpt: String
     
-    struct SocarList: Decodable {
-        let id: Double
-        let number: String
-        let name: String
-        let zone: Double
-        let image: String
-        let manufacturer: String
-        let fuelType: String
-        let typeOfVehicle: String
-        let shiftType: String
-        let ridingCapa: Double
-        let isEvent: Bool
-        let manualPage: String
-        let safetyOpt: String
-        let convenienceOpt: String
-        
-        enum CodingKeys: String, CodingKey {
-            case fuelType = "fuel_type"
-            case typeOfVehicle = "type_of_vehicle"
-            case shiftType = "shift_type"
-            case ridingCapa = "riding_capacity"
-            case isEvent = "is_event_model"
-            case manualPage = "manual_page"
-            case safetyOpt = "safety_option"
-            case convenienceOpt = "convenience_option"
-            case id
-            case number
-            case name
-            case zone
-            case image
-            case manufacturer
-        }
+    enum CodingKeys: String, CodingKey {
+        case fuelType = "fuel_type"
+        case typeOfVehicle = "type_of_vehicle"
+        case shiftType = "shift_type"
+        case ridingCapa = "riding_capacity"
+        case isEvent = "is_event_model"
+        case manualPage = "manual_page"
+        case safetyOpt = "safety_option"
+        case convenienceOpt = "convenience_option"
+        case id
+        case number
+        case name
+        case zone
+        case image
+        case manufacturer
     }
 }
