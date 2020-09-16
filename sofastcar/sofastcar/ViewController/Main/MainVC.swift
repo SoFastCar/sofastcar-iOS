@@ -48,16 +48,15 @@ class MainVC: UIViewController {
     
     // Socar Zone, Socar List Data
     var socarZoneDataList: [SocarZoneData] = []
-    var selectedSocarZone: SocarZoneData
+    var selectedSocarZone: SocarZoneData?
     var socarListDataList: SocarListData?
     var socarListData: [SocarList]?
-    var selectedSocar: Socar
+    var selectedSocar: SocarList?
     
     // Insurance Item Data
     var insuranceDataList: InsuranceDataList?
     var insuranceData: [InsuranceData]?
-    var insuranceItem = Insurance(name: "", guarantee: 0, cost: 0)
-    var selectedInsItem = 0
+    var selectedInsurance = Insurance(name: "", guarantee: 0, cost: 0)
     
     // New Booking Time Data
     var newStartDate = Date()
@@ -148,10 +147,9 @@ class MainVC: UIViewController {
             insuranceMenuView.standard.itemCostLabel.textColor = .gray
             insuranceMenuView.light.selectSymbolImageView.image = UIImage(systemName: "circle", withConfiguration: sender.symbolConfig)
             insuranceMenuView.light.itemCostLabel.textColor = .gray
-            selectedInsItem = sender.tag
-//            insuranceItem.name = insuranceDataList?.items[0].name
-//            insuranceItem.guarantee = insuranceDataList?.items[0].guarantee
-//            insuranceItem.cost = insuranceDataList?.items[0].cost
+            selectedInsurance.name = insuranceData?[0].name
+            selectedInsurance.guarantee = insuranceData?[0].guarantee
+            selectedInsurance.cost = insuranceData?[0].cost
         // Standard
         case 1:
             sender.selectSymbolImageView.image = UIImage(systemName: "circle.fill", withConfiguration: sender.symbolConfig)
@@ -160,10 +158,9 @@ class MainVC: UIViewController {
             insuranceMenuView.special.itemCostLabel.textColor = .gray
             insuranceMenuView.light.selectSymbolImageView.image = UIImage(systemName: "circle", withConfiguration: sender.symbolConfig)
             insuranceMenuView.light.itemCostLabel.textColor = .gray
-            selectedInsItem = sender.tag
-//            insuranceItem.name = insuranceDataList?.items[1].name
-//            insuranceItem.guarantee = insuranceDataList?.items[1].guarantee
-//            insuranceItem.cost = insuranceDataList?.items[1].cost
+            selectedInsurance.name = insuranceData?[1].name
+            selectedInsurance.guarantee = insuranceData?[1].guarantee
+            selectedInsurance.cost = insuranceData?[1].cost
         // Light
         case 2:
             sender.selectSymbolImageView.image = UIImage(systemName: "circle.fill", withConfiguration: sender.symbolConfig)
@@ -172,10 +169,9 @@ class MainVC: UIViewController {
             insuranceMenuView.special.itemCostLabel.textColor = .gray
             insuranceMenuView.standard.selectSymbolImageView.image = UIImage(systemName: "circle", withConfiguration: sender.symbolConfig)
             insuranceMenuView.standard.itemCostLabel.textColor = .gray
-            selectedInsItem = sender.tag
-//            insuranceItem.name = insuranceDataList?.items[2].name
-//            insuranceItem.guarantee = insuranceDataList?.items[2].guarantee
-//            insuranceItem.cost = insuranceDataList?.items[2].cost
+            selectedInsurance.name = insuranceData?[2].name
+            selectedInsurance.guarantee = insuranceData?[2].guarantee
+            selectedInsurance.cost = insuranceData?[2].cost
         default:
             break
         }
@@ -183,22 +179,12 @@ class MainVC: UIViewController {
     
     // MARK: - Selector(Insurance Confirm)
     @objc func didTapInsConfirm(_ sender: UIButton) {
-        switch selectedInsItem {
-        case 0:
-            _ = insuranceData?[0]
-        case 1:
-            _ = insuranceData?[1]
-        case 2:
-            _ = insuranceData?[2]
-        default:
-            break
-        }
         let presentedVC = ReservationConfirmTableVC()
-//      presentedVC.socarZoneData = 쏘카존 데이터
-//      presentedVC.socarData = 차량 데이터
-//      presentedVC.insuranceData = 보험 데이터
-//        presentedVC.startDate = newStartDate
-//        presentedVC.endDate = newEndDate
+        presentedVC.socarZoneData = selectedSocarZone // 쏘카존 데이터
+        presentedVC.socarData = selectedSocar // 차량 데이터
+        presentedVC.insuranceData = selectedInsurance // 보험 데이터
+        presentedVC.startDate = newStartDate // 시작 시간
+        presentedVC.endDate = newEndDate // 종료 시간
         present(presentedVC, animated: true, completion: nil)
     }
     
@@ -366,25 +352,29 @@ class MainVC: UIViewController {
         naverMapView.showLocationButton = false
         naverMapView.showScaleBar = true
         naverMapView.mapView.moveCamera(NMFCameraUpdate(position: defaultCamPosition))
+        callPositionMarker.iconImage = NMFOverlayImage(name: "callPointMarker1")
         callPositionMarker.mapView = naverMapView.mapView
     }
     
     // MARK: - SetupMarkers
     private func setupMarkers(zoneData data: [SocarZoneData]?) -> Bool {
         #if true
+        let zoneMarkerIcon = UIImage(named: "socarZoneMarker")
+//        print(zoneMarkerIcon?.size)
+        
         guard data?.count != 0 else { fatalError()}
         markers.removeAll()
         for index in 0...((data?.count ?? 1) - 1) {
             markers.append(NMFMarker(position: NMGLatLng(lat: data?[index].lat ?? 0, lng: data?[index].lng ?? 0)))
+            markers[index].iconImage = NMFOverlayImage(name: "socarZoneMarker")
             markers[index].mapView = naverMapView.mapView
             markers[index].touchHandler = { (overlay) in
                 self.markerTapFlag = true
-                
                 if let marker = overlay as? NMFMarker {
-                    marker.iconImage = NMFOverlayImage(name: "mSNormalBlue")
+                    marker.iconImage = NMFOverlayImage(name: "socarRentMarker")
                     self.callPositionMarker.mapView = nil
                     // Socar Zone Info Update
-                    
+                    self.selectedSocarZone = data?[index]
                     self.carListView.socarZoneInfoButton.configuration(data?[index].name ?? "", data?[index].type ?? "", 
                                                                        data?[index].subInfo ?? "", data?[index].image ?? "")
                     // Socar List Info Update
@@ -427,7 +417,9 @@ class MainVC: UIViewController {
                             self.carListView.frame.origin.y = self.view.center.y
                         })
                     })
-                    let camUpdate = NMFCameraUpdate(position: NMFCameraPosition(marker.position, zoom: 16))
+                    
+                    let spotLigtPosition = NMFCameraPosition(NMGLatLng(lat: marker.position.lat + 0.0005, lng: marker.position.lng), zoom: 16)
+                    let camUpdate = NMFCameraUpdate(position: spotLigtPosition)
                     camUpdate.animation = .fly
                     camUpdate.animationDuration = 0.5
                     self.naverMapView.mapView.moveCamera(camUpdate)
@@ -435,6 +427,7 @@ class MainVC: UIViewController {
                 return true
             }
         }
+        
         #else
         testMarker.position = NMGLatLng(lat: defaultMarkerPosition.lat, lng: defaultMarkerPosition.lng)
         testMarker.mapView = naverMapView.mapView
@@ -471,6 +464,12 @@ class MainVC: UIViewController {
     
     // MARK: - SetupUI
     private func setupUI() {
+        let date = floor(Date().timeIntervalSince1970)
+        let restMinDate = Double(Int(date) % 600)
+        newStartDate = Date(timeIntervalSince1970: date-restMinDate)
+        newStartDate.addTimeInterval(TimeInterval(20*Time.min))
+        newEndDate = newStartDate.addingTimeInterval(TimeInterval(Time.hour*4))
+        
         whiteView.frame = view.frame
         whiteView.backgroundColor = .white
         whiteView.alpha = 0
@@ -779,6 +778,7 @@ extension MainVC: UITableViewDelegate {
 //            }
 //        }
 //        testTask.resume()
+        self.selectedSocar = socarListData?[indexPath.row]
         self.insuranceData = [InsuranceData(name: "스페셜", guarantee: 10, cost: 10000), InsuranceData(name: "스탠다드", guarantee: 30, cost: 30000), InsuranceData(name: "라이트", guarantee: 50, cost: 50000)]
         insuranceMenuView.special.configuration(symbol: "circle", name: insuranceData?[0].name ?? "불러오기 실패", guarantee: insuranceData?[0].guarantee ?? 0, cost: insuranceData?[0].cost ?? 0)
         insuranceMenuView.standard.configuration(symbol: "circle", name: insuranceData?[1].name ?? "불러오기 실패", guarantee: insuranceData?[1].guarantee ?? 0, cost: insuranceData?[1].cost ?? 0)
