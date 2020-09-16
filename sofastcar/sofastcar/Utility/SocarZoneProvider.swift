@@ -10,9 +10,9 @@ import Foundation
 
 final class SocarZoneProvider: SocarZoneProvidable {
   
-  private let dispatchGroup = DispatchGroup()
-  
-  func fetchSocarZoneData<T>(
+    private let dispatchGroup = DispatchGroup()
+    
+    func fetchSocarData<T>(
     endpoint: EndPoint,
     completionHandler: @escaping (Result<T, ServiceError>) -> Void
   ) where T: Decodable {

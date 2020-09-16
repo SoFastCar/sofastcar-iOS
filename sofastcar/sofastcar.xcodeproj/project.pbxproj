@@ -39,6 +39,7 @@
 		BC4F3A25250E028A00B7E1E7 /* TosVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4F3A24250E028A00B7E1E7 /* TosVC.swift */; };
 		BC4F3A28250E029B00B7E1E7 /* ReservationConfirmTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4F3A26250E029B00B7E1E7 /* ReservationConfirmTableVC.swift */; };
 		BC4F3A29250E029B00B7E1E7 /* CarKeyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4F3A27250E029B00B7E1E7 /* CarKeyViewController.swift */; };
+		BC56AE3425107FC10044E995 /* SocarListData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC56AE3325107FC10044E995 /* SocarListData.swift */; };
 		BC91B62E250F571100B76398 /* CallZoneData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC91B62D250F571100B76398 /* CallZoneData.swift */; };
 		BC91B630250FA6F200B76398 /* SocarZoneProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC91B62F250FA6F200B76398 /* SocarZoneProvider.swift */; };
 		BC91B636250FA7A200B76398 /* ServiceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC91B635250FA7A200B76398 /* ServiceError.swift */; };
@@ -155,6 +156,7 @@
 		BC4F3A24250E028A00B7E1E7 /* TosVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TosVC.swift; sourceTree = "<group>"; };
 		BC4F3A26250E029B00B7E1E7 /* ReservationConfirmTableVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReservationConfirmTableVC.swift; sourceTree = "<group>"; };
 		BC4F3A27250E029B00B7E1E7 /* CarKeyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarKeyViewController.swift; sourceTree = "<group>"; };
+		BC56AE3325107FC10044E995 /* SocarListData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocarListData.swift; sourceTree = "<group>"; };
 		BC793DBC933237B89DC3FEED /* Pods_sofastcar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_sofastcar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC91B62D250F571100B76398 /* CallZoneData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallZoneData.swift; sourceTree = "<group>"; };
 		BC91B62F250FA6F200B76398 /* SocarZoneProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocarZoneProvider.swift; sourceTree = "<group>"; };
@@ -505,6 +507,7 @@
 			children = (
 				BC4F3A12250E01EB00B7E1E7 /* NMFData.swift */,
 				BC4F3A13250E01EB00B7E1E7 /* SocarZoneData.swift */,
+				BC56AE3325107FC10044E995 /* SocarListData.swift */,
 				C7F2E639250647ED0004EBF9 /* Insurance.swift */,
 				BC91B639250FA91D00B76398 /* SocarZoneDataList.swift */,
 				C7F5B5432510BC7900AE0054 /* NMapAddress.swift */,
@@ -786,6 +789,7 @@
 				BC4F3A1F250E01FE00B7E1E7 /* InsuranceMenuItemButton.swift in Sources */,
 				BC4F3A0A250E01B400B7E1E7 /* InsuranceMenuHeaderView.swift in Sources */,
 				C7CA53F22509DB1E008DA68C /* ReservationRentalInfoCell.swift in Sources */,
+				BC56AE3425107FC10044E995 /* SocarListData.swift in Sources */,
 				C7CEF7482511BFBE00C063B0 /* VehicleDoubleCheckView.swift in Sources */,
 				C769C83224FDD97F00DC8226 /* CheckDriverLicenseVC.swift in Sources */,
 				7E8473E42509AB420007962F /* LeftAlignedTagCollectionViewFlowLayout.swift in Sources */,
@@ -846,7 +850,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 52ZXCPY3WQ;
+				DEVELOPMENT_TEAM = W5DN7MBP3R;
 				INFOPLIST_FILE = sofastcarUITests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -866,7 +870,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 52ZXCPY3WQ;
+				DEVELOPMENT_TEAM = W5DN7MBP3R;
 				INFOPLIST_FILE = sofastcarUITests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
 				LD_RUNPATH_SEARCH_PATHS = (

@@ -31,7 +31,6 @@ class InsuranceMenuView: UIView {
         
         self.addSubview(insuranceMenuHeaderView)
         
-        itemStackView.backgroundColor = .systemOrange
         itemStackView.axis = .vertical
         itemStackView.distribution = .fillProportionally
         special.configuration(symbol: "circle", name: "스페셜", discription: "자기부담금 최대 5만원", price: "+ 7,750원")
