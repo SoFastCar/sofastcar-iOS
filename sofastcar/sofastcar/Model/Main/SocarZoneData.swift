@@ -43,33 +43,8 @@ import Foundation
 //  "type": "지상",
 //  "operating_time": "24시간"
 //}
-struct SocarZoneData: Decodable {
-    let id: Int
-    let name: String
-    let address: String
-    let region: String
-    let lat: Double
-    let lng: Double
-    let subInfo: String
-    let detailInfo: String
-    let type: String
-    let operTime: String
-    
-    enum CodingKeys: String, CodingKey {
-        case lat = "latitude"
-        case lng = "longitude"
-        case subInfo = "sub_info"
-        case detailInfo = "detail_info"
-        case operTime = "operating_time"
-        case id
-        case name
-        case address
-        case region
-        case type
-    }
-}
 
-struct SocarZoneData2: Decodable {
+struct SocarZoneData: Decodable {
     let id: Int
     let name: String
     let address: String

@@ -19,8 +19,6 @@ class InsuranceMenuItemButton: UIButton {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-//        setupUI()
-//        setupConstraint()
     }
     
     convenience init(isSpecial: Bool) {
@@ -34,15 +32,11 @@ class InsuranceMenuItemButton: UIButton {
     }
     
     private func setupUI(_ isSpecial: Bool) {
-        self.backgroundColor = .systemTeal
         self.addSubview(selectSymbolImageView)
-//        itemNameLabel.font = .preferredFont(forTextStyle: .title3)
         itemNameLabel.font = .systemFont(ofSize: 16, weight: .regular)
         self.addSubview(itemNameLabel)
-//        itemDiscriptionLabel.font = .preferredFont(forTextStyle: .body)
         itemDiscriptionLabel.font = .systemFont(ofSize: 14, weight: .regular)
         self.addSubview(itemDiscriptionLabel)
-//        itemPriceLabel.font = .preferredFont(forTextStyle: .title2)
         itemPriceLabel.font = .systemFont(ofSize: 17, weight: .regular)
         itemPriceLabel.textColor = .darkGray
         self.addSubview(itemPriceLabel)

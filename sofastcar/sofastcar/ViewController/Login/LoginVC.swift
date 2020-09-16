@@ -69,7 +69,10 @@ class LoginVC: UIViewController {
           if let jsonObjcet = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String: Any] {
             if let userTocken = jsonObjcet["token"] as? String {
               UserDefaults.saveUserAuthTocken(authToken: userTocken)
-              let mainVC = MainVC()
+                let mainVC = MainVC()
+                mainVC.socarZoneProvider = SocarZoneProvider()
+                mainVC.modalPresentationStyle = .overFullScreen
+                mainVC.modalTransitionStyle = .coverVertical
               self.navigationController?.pushViewController(mainVC, animated: false)
             }
           }

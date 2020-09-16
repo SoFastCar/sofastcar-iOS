@@ -27,7 +27,6 @@ class InsuranceMenuHeaderView: UIView {
     }
     
     private func setupUI() {
-        self.backgroundColor = .systemYellow
         
         titleLabel.text = "차량손해면책 상품 선택"
         titleLabel.font = UIFont.systemFont(ofSize: 25, weight: .semibold)
