@@ -85,9 +85,16 @@ class VehicleCheckView: UIScrollView {
   
   let vehicleCheckStartButton: UIButton = {
     let button = UIButton()
-    button.setTitle("외관 촬영 시작하기", for: .normal)
-    button.backgroundColor = CommonUI.mainBlue
-    button.addTarget(self, action: #selector(buttonAction(_:)), for: .touchUpInside)
+    if UserDefaults.getVehicleBoubleCheck() == true {
+      button.setTitle("완료되었습니다.", for: .normal)
+      button.setTitleColor(.gray, for: .normal)
+      button.backgroundColor = .systemGray6
+      button.isEnabled = false
+    } else {
+      button.setTitle("외관 촬영 시작하기", for: .normal)
+      button.backgroundColor = CommonUI.mainBlue
+      button.addTarget(self, action: #selector(buttonAction(_:)), for: .touchUpInside)
+    }
     
     return button
   }()
