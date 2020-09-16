@@ -34,8 +34,8 @@ class VehicleDoubleCheckView: UIView {
       collectionViewLayout: layout
     )
     collectionView.register(
-      UICollectionViewCell.self,
-      forCellWithReuseIdentifier: "Cell"
+      VehicleCheckCell.self,
+      forCellWithReuseIdentifier: VehicleCheckCell.identifier
     )
     collectionView.backgroundColor = .magenta
     
@@ -102,8 +102,7 @@ extension VehicleDoubleCheckView: UICollectionViewDataSource {
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
-    cell.backgroundColor = .cyan
+    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: VehicleCheckCell.identifier, for: indexPath)
     
     return cell
   }

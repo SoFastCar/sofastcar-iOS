@@ -15,6 +15,7 @@
 		7E5C442925108373000AFA9B /* SocaZoneProvidable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E5C442825108372000AFA9B /* SocaZoneProvidable.swift */; };
 		7E5C442B2510F11E000AFA9B /* VehicleDoubleCheckVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E5C442A2510F11E000AFA9B /* VehicleDoubleCheckVC.swift */; };
 		7E5C442D2510F668000AFA9B /* VehicleDoubleCheckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E5C442C2510F668000AFA9B /* VehicleDoubleCheckView.swift */; };
+		7E5C44302511A257000AFA9B /* VehicleCheckCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E5C442F2511A257000AFA9B /* VehicleCheckCell.swift */; };
 		7E8473D82507BD6B0007962F /* VehicleCheckVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8473D72507BD6B0007962F /* VehicleCheckVC.swift */; };
 		7E8473DA2507C59D0007962F /* VehicleCheckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8473D92507C59D0007962F /* VehicleCheckView.swift */; };
 		7E8473E225088E830007962F /* TagCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8473E125088E830007962F /* TagCollectionViewCell.swift */; };
@@ -124,6 +125,7 @@
 		7E5C442825108372000AFA9B /* SocaZoneProvidable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocaZoneProvidable.swift; sourceTree = "<group>"; };
 		7E5C442A2510F11E000AFA9B /* VehicleDoubleCheckVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehicleDoubleCheckVC.swift; sourceTree = "<group>"; };
 		7E5C442C2510F668000AFA9B /* VehicleDoubleCheckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehicleDoubleCheckView.swift; sourceTree = "<group>"; };
+		7E5C442F2511A257000AFA9B /* VehicleCheckCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehicleCheckCell.swift; sourceTree = "<group>"; };
 		7E8473D72507BD6B0007962F /* VehicleCheckVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehicleCheckVC.swift; sourceTree = "<group>"; };
 		7E8473D92507C59D0007962F /* VehicleCheckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehicleCheckView.swift; sourceTree = "<group>"; };
 		7E8473E125088E830007962F /* TagCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -273,6 +275,7 @@
 				7E434D34250F436800D0D1AA /* MenuCollectionViewCell.swift */,
 				7E434D362510224200D0D1AA /* VehicleTakePictureView.swift */,
 				7E5C442C2510F668000AFA9B /* VehicleDoubleCheckView.swift */,
+				7E5C442F2511A257000AFA9B /* VehicleCheckCell.swift */,
 			);
 			path = Reservation;
 			sourceTree = "<group>";
@@ -748,6 +751,7 @@
 				C769C82724FD09CE00DC8226 /* CardEnrollVC.swift in Sources */,
 				C769C82524FCDEFC00DC8226 /* CommonUI.swift in Sources */,
 				C7A9C91E2507B314006CA543 /* TopView.swift in Sources */,
+				7E5C44302511A257000AFA9B /* VehicleCheckCell.swift in Sources */,
 				C7A9C9222508510B006CA543 /* PaymentConfirmCell.swift in Sources */,
 				C7D66D1624FB76D900679B99 /* CompleteButton.swift in Sources */,
 				7E8473E72509FBD00007962F /* LeftAlignedCollectionViewFlowLayout.swift in Sources */,
