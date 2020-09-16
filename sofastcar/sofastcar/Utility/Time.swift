@@ -35,4 +35,24 @@ class Time {
     format.dateFormat = type.rawValue
     return format.string(from: date)
   }
+  
+  static func getDiffTwoDateValueReturnString(start: Date, end: Date) -> String {
+    let calendar = Calendar.current
+    var returnText = "총 "
+    let offsetComps = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: start, to: end)
+    if let day = offsetComps.day,
+      day != 0 {
+      returnText.append("\(day)일 ")
+    }
+    if let hour = offsetComps.hour,
+      hour != 0 {
+      returnText.append("\(hour)시간 ")
+    }
+    if let minute = offsetComps.minute,
+      minute != 0 {
+      returnText.append("\(minute)분 ")
+    }
+    returnText.append("이용")
+    return returnText
+  }
 }

@@ -19,9 +19,25 @@ class ReservationConfirmTableHeaderView: UIView {
   }
   
   var padding: CGFloat = 10
-  var isSocarSaveCar = false
+  var isSocarSaveCar = false {
+    didSet {
+      checkIsSocarSave(isSocarSaveCar)
+    }
+  }
+  var socarSaveUIList: [UIView] = []
+  var isElecticCar = false {
+    didSet {
+      checkIsElectronicCar(isElecticCar)
+    }
+  }
+  var electronicUIList: [UIView] = []
+  var isBurom: Bool = false {
+    didSet {
+      checkIsburumService(isBurom)
+    }
+  }
   
-  var collectionViewTestArray = ["경유", "에어백", "후방감지센서", "블랙박스", "강한썬텐", "컨디션최고", "∙∙∙"]
+  var safetyOptions = ["경유", "에어백", "후방감지센서", "블랙박스", "강한썬텐", "컨디션최고", "∙∙∙"]
   
   let carName: UILabel = {
     let label = UILabel()
@@ -199,24 +215,31 @@ class ReservationConfirmTableHeaderView: UIView {
   }
   
   private func configureCarDetailInfoUI(_ guide: UILayoutGuide) {
-    [carName, socarSaveInfoLabel, socarSaveInfoButton, collectionView].forEach {
+    [carName, collectionView].forEach {
       addSubview($0)
+    }
+    
+    [socarSaveInfoLabel, socarSaveInfoButton].forEach {
+      addSubview($0)
+      socarSaveUIList.append($0)
     }
     
     carName.snp.makeConstraints {
       $0.top.leading.equalTo(guide)
+      $0.height.equalTo(15)
     }
+    print(carName.snp.height)
     
     socarSaveInfoLabel.snp.makeConstraints {
       $0.top.equalTo(carName.snp.bottom).offset(padding)
       $0.leading.equalTo(guide)
-      $0.height.equalTo(carName)
+      $0.height.equalTo(15)
     }
     
     socarSaveInfoButton.snp.makeConstraints {
       $0.centerY.equalTo(socarSaveInfoLabel.snp.centerY)
       $0.trailing.equalTo(guide)
-      $0.height.equalTo(carName).multipliedBy(5)
+      $0.height.equalTo(15)
     }
     
     collectionView.snp.makeConstraints {
@@ -254,6 +277,7 @@ class ReservationConfirmTableHeaderView: UIView {
   private func configureElectronucUsingInfoUI(_ guide: UILayoutGuide) {
     [electronicCarUsingTitle, electorinicCarDrivingCostInfoTextView, showElectronicCostWebViewButton].forEach {
       addSubview($0)
+      electronicUIList.append($0)
     }
     
     electronicCarUsingTitle.snp.makeConstraints {
@@ -305,14 +329,13 @@ class ReservationConfirmTableHeaderView: UIView {
 // MARK: - CollectionView DataSource / DelegateFlowLayout
 extension ReservationConfirmTableHeaderView: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    print("aaa")
-    return collectionViewTestArray.count
+    return safetyOptions.count
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
       as? ReservationConfirmCVCell else { fatalError() }
-    cell.textLabel.text = collectionViewTestArray[indexPath.item]
+    cell.textLabel.text = safetyOptions[indexPath.item]
     return cell
   }
   
@@ -321,7 +344,32 @@ extension ReservationConfirmTableHeaderView: UICollectionViewDataSource, UIColle
   }
   
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-    let charCount = collectionViewTestArray[indexPath.item].count
+    let charCount = safetyOptions[indexPath.item].count
     return CGSize(width: charCount*10+20, height: 25)
+  }
+  
+  private func checkIsSocarSave(_ isSocarSaveCar: Bool) {
+    guard !isSocarSaveCar else { return }
+    socarSaveUIList.forEach {
+      $0.isHidden = true
+      $0.snp.updateConstraints {
+        $0.height.equalTo(0)
+      }
+    }
+  }
+  
+  private func checkIsElectronicCar(_ isElecticCar: Bool) {
+    guard !isSocarSaveCar else { return }
+    electronicUIList.forEach {
+      $0.isHidden = true
+      $0.snp.updateConstraints {
+        $0.height.equalTo(0)
+      }
+    }
+  }
+  
+  private func checkIsburumService(_ isBorum: Bool) {
+    guard !isBurom else { return }
+    burumLabel.isHidden = true
   }
 }
