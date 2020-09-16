@@ -48,8 +48,10 @@ class MainVC: UIViewController {
     
     // Socar Zone, Socar List Data
     var socarZoneDataList: [SocarZoneData] = []
+    var selectedSocarZone: SocarZoneData
     var socarListDataList: SocarListData?
     var socarListData: [SocarList]?
+    var selectedSocar: Socar
     
     // Insurance Item Data
     var insuranceDataList: InsuranceDataList?
@@ -378,10 +380,12 @@ class MainVC: UIViewController {
             markers[index].mapView = naverMapView.mapView
             markers[index].touchHandler = { (overlay) in
                 self.markerTapFlag = true
+                
                 if let marker = overlay as? NMFMarker {
                     marker.iconImage = NMFOverlayImage(name: "mSNormalBlue")
                     self.callPositionMarker.mapView = nil
                     // Socar Zone Info Update
+                    
                     self.carListView.socarZoneInfoButton.configuration(data?[index].name ?? "", data?[index].type ?? "", 
                                                                        data?[index].subInfo ?? "", data?[index].image ?? "")
                     // Socar List Info Update
