@@ -89,6 +89,7 @@ extension VehicleCheckVC: VehicleCheckViewDelegate {
       navigationController.modalPresentationStyle = .fullScreen
       self.present(navigationController, animated: false, completion: nil)
     case vehicleCheckView.vehicleCheckTagSubmitButton:
+      UserDefaults.setVehiclCheck(check: true)
       self.view.window?.rootViewController?.dismiss(animated: false, completion: nil)
     default:
       break

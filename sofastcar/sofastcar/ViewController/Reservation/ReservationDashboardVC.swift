@@ -30,6 +30,13 @@ class ReservationDashboardVC: UIViewController {
     setUI()
   }
   
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(true)
+    if UserDefaults.getVehicleCheck() == true {
+      reservationStateView.layoutIfNeeded()
+    }
+  }
+  
   // MARK: - UI
   
   fileprivate func setUI() {
