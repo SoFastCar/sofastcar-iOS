@@ -23,7 +23,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       changeUserAuthTocken()
       print(UserDefaults.getUserAuthTocken()!)
       let mainVC = MainVC()
-      mainVC.socarZoneProvider = SocarZoneProvider()
+        mainVC.socarZoneProvider = SocarZoneProvider()
+//        let navigationController = UINavigationController(rootViewController: mainVC)
+//        navigationController.isToolbarHidden = true
+//        navigationController.setNavigationBarHidden(true, animated: false)
       rootView = mainVC
     } else {
       let navigationController = UINavigationController(rootViewController: InitVC())
