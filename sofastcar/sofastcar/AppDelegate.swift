@@ -20,21 +20,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //    UserDefaults.resetUserAuthTocken() // 로그아웃필요할때 사용
         if UserDefaults.getUserAuthTocken() != nil {
             changeUserAuthTocken()
-            print(UserDefaults.getUserAuthTocken()!)
             let mainVC = MainVC()
             mainVC.socarZoneProvider = SocarZoneProvider()
-            let navigationController = UINavigationController(rootViewController: mainVC)
-            rootView = navigationController
+            rootView = mainVC
         } else {
-            let navigationController = UINavigationController(rootViewController: InitVC())
-            let backButtonImage = UIImage(systemName: "arrow.left")
-            navigationController.navigationBar.backIndicatorImage = backButtonImage
-            navigationController.navigationBar.backIndicatorTransitionMaskImage = backButtonImage
-            navigationController.navigationBar.topItem?.title = ""
-            rootView = navigationController
+            rootView = InitVC()
         }
+      
+        let navigationController = UINavigationController(rootViewController: rootView)
+        let backButtonImage = UIImage(systemName: "arrow.left")
+        navigationController.navigationBar.backIndicatorImage = backButtonImage
+        navigationController.navigationBar.backIndicatorTransitionMaskImage = backButtonImage
+        navigationController.navigationBar.topItem?.title = ""
+      
         window = UIWindow(frame: UIScreen.main.bounds)
-        window?.rootViewController = rootView
+        window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
         window?.overrideUserInterfaceStyle = .light // add woobin: dark mode off
         return true
