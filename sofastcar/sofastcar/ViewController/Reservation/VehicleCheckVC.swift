@@ -29,7 +29,7 @@ class VehicleCheckVC: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    
+    print("🏆", UserDefaults.getVehicleBoubleCheck())
     setUI()
   }
   

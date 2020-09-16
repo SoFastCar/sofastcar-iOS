@@ -47,6 +47,7 @@ extension VehicleDoubleCheckVC: VehicleDoubleCheckViewDelegate {
       let vehicleCheckVC = VehicleCheckVC()
       let navigationController = UINavigationController(rootViewController: vehicleCheckVC)
       navigationController.modalPresentationStyle = .fullScreen
+      UserDefaults.setVehicleDoubleCheck(check: true)
       self.present(navigationController, animated: false)
     case vehicleDoubleCheckView.vehicleDamageButton:
       self.dismiss(animated: true, completion: nil)

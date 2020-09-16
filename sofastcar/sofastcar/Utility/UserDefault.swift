@@ -21,4 +21,13 @@ extension UserDefaults {
   static func resetUserAuthTocken() {
     UserDefaults.standard.set(nil, forKey: "UserAuthToken")
   }
+  
+  static func setVehicleDoubleCheck(check: Bool) {
+    UserDefaults.standard.set(check, forKey: "VehicleDoubleCheckVC")
+  }
+  
+  static func getVehicleBoubleCheck() -> Bool {
+    let check = UserDefaults.standard.bool(forKey: "VehicleDoubleCheckVC")
+    return check
+  }
 }
