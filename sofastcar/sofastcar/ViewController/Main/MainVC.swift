@@ -785,7 +785,8 @@ extension MainVC: UITableViewDataSource {
         cell.selectionStyle = .none
         cell.separatorInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
         #if true
-        cell.carInfoConfiguration(carImage: socarListData?[indexPath.row].image ?? "", carName: socarListData?[indexPath.row].name ?? "", carPrice: 30000, availableDiscount: socarListData?[indexPath.row].isEvent ?? false)
+        let calculatedCarPrice = divideRendTotalTimeByHalfHour * (socarListData?[indexPath.row].carPrices.standardPrice ?? 0)
+        cell.carInfoConfiguration(carImage: socarListData?[indexPath.row].image ?? "", carName: socarListData?[indexPath.row].name ?? "", carPrice: calculatedCarPrice, availableDiscount: socarListData?[indexPath.row].isEvent ?? false)
         cell.timeInfoConfiguration(startTime: date1, finishTime: date2)
         #else
         cell.carInfoConfiguration(carImage: "SampleCar", carName: "모닝", carPrice: 30000, availableDiscount: true)
