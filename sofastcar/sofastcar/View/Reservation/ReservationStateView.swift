@@ -549,7 +549,7 @@ class ReservationStateView: UIScrollView {
       $0.top.equalTo(returnPlaceViewButton.snp.bottom)
       $0.leading.equalTo(guid).offset(20)
       $0.trailing.equalTo(guid).offset(-20)
-      $0.height.equalTo(80)
+      $0.height.equalTo(80) 
     }
     
     [returnTimeIcon].forEach {
