@@ -286,9 +286,148 @@ class ReservationStateView: UIScrollView {
   fileprivate let returnStateView: UIView = {
     let view = UIView()
     view.isHidden = true
-    view.backgroundColor = .cyan
+    view.backgroundColor = .clear
     
     return view
+  }()
+  let returnPlaceViewButton: UIView = {
+    let view = UIView()
+    view.backgroundColor = CommonUI.mainBlue
+    view.layer.cornerRadius = 5
+    //    view.isHidden = true
+    
+    return view
+  }()
+  fileprivate let returnPlaceTitleLabel: UILabel = {
+    let label = UILabel()
+    label.text = "반납 장소"
+    label.font = UIFont.preferredFont(forTextStyle: .headline)
+    label.textColor = .white
+    
+    return label
+  }()
+  fileprivate let returnPlaceLabel: UILabel = {
+    let label = UILabel()
+    label.text = "송파구 공영주차장 지상 4층"
+    label.font = UIFont.preferredFont(forTextStyle: .headline)
+    label.textColor = .white
+    
+    return label
+  }()
+  
+  fileprivate let returnTimeView: UIView = {
+    let view = UIView()
+    view.backgroundColor = .clear
+    
+    return view
+  }()
+  fileprivate let returnTimeBorderView: UIView = {
+    let view = UIView()
+    view.backgroundColor = UIColor.white.withAlphaComponent(0.2)
+    
+    return view
+  }()
+  fileprivate let returnTimeIcon: UIImageView = {
+    let imageView = UIImageView()
+    imageView.image = UIImage(systemName: CommonUI.SFSymbolKey.time.rawValue)
+    imageView.tintColor = UIColor.white.withAlphaComponent(0.55)
+    imageView.snp.makeConstraints { $0.width.height.equalTo(20) }
+    
+    return imageView
+  }()
+  fileprivate let returnTimeTitleLabel: UILabel = {
+    let label = UILabel()
+    label.text = "반납 시각"
+    label.font = UIFont.preferredFont(forTextStyle: .subheadline)
+    label.textColor = UIColor.white.withAlphaComponent(0.55)
+    
+    return label
+  }()
+  fileprivate let returnTimeLabel: UILabel = {
+    let label = UILabel()
+    label.text = "8/15 (토) 14:00"
+    label.font = UIFont.preferredFont(forTextStyle: .subheadline)
+    label.textColor = UIColor.white.withAlphaComponent(0.55)
+    
+    return label
+  }()
+  fileprivate let returnTimeDelayButton: UIButton = {
+    let button = UIButton()
+    button.setTitle("연장하기", for: .normal)
+    button.setTitleColor(UIColor.white.withAlphaComponent(0.55), for: .normal)
+    button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .subheadline)
+    button.addTarget(self, action: #selector(didTapButton(_:)), for: .touchUpInside)
+    
+    return button
+  }()
+  
+  fileprivate let fillUpUseView: UIView = {
+    let view = UIView()
+    view.backgroundColor = .clear
+    
+    return view
+  }()
+  fileprivate let fillUpUseBorderView: UIView = {
+    let view = UIView()
+    view.backgroundColor = UIColor.white.withAlphaComponent(0.2)
+    
+    return view
+  }()
+  fileprivate let fillUpUseIcon: UIImageView = {
+    let imageView = UIImageView()
+    imageView.image = UIImage(named: "GasStation")
+    imageView.contentMode = .scaleAspectFit
+    imageView.alpha = 0.55
+    imageView.snp.makeConstraints { $0.width.height.equalTo(20) }
+    
+    return imageView
+  }()
+  fileprivate let fillUpUseLabel: UILabel = {
+    let label = UILabel()
+    label.text = "주유 방법 안내"
+    label.font = UIFont.preferredFont(forTextStyle: .subheadline)
+    label.textColor = UIColor.white.withAlphaComponent(0.55)
+    
+    return label
+  }()
+  
+  fileprivate let cancelFeeView: UIView = {
+    let view = UIView()
+    view.backgroundColor = .clear
+    
+    return view
+  }()
+  fileprivate let cancelFeeBorderView: UIView = {
+    let view = UIView()
+    view.backgroundColor = UIColor.white.withAlphaComponent(0.5)
+    
+    return view
+  }()
+  fileprivate let cancelFeeIcon: UIImageView = {
+    let imageView = UIImageView()
+    imageView.image = UIImage(systemName: CommonUI.SFSymbolKey.warning.rawValue)
+    imageView.tintColor = UIColor.white.withAlphaComponent(0.55)
+    imageView.snp.makeConstraints { $0.width.height.equalTo(20) }
+    
+    return imageView
+  }()
+  fileprivate let cancelFeeLabel: UILabel = {
+    let label = UILabel()
+    label.text = "수수료 및 패널티 안내"
+    label.font = UIFont.preferredFont(forTextStyle: .subheadline)
+    label.textColor = UIColor.white.withAlphaComponent(0.55)
+    
+    return label
+  }()
+  
+  fileprivate let reservationDetail: UILabel = {
+    let label = UILabel()
+    label.text = "수수료 및 패널티 안내"
+    label.textAlignment = .center
+    label.font = UIFont.preferredFont(forTextStyle: .subheadline)
+    label.textColor = UIColor.white.withAlphaComponent(0.55)
+    
+    return label
   }()
   
   // MARK: - LifeCycle
@@ -319,7 +458,7 @@ class ReservationStateView: UIScrollView {
     )
     self.addSubview(contentView)
     
-    var heightPadding: CGFloat = 0
+    var heightPadding: CGFloat = 200
     if UIScreen.main.bounds.height < 670 { // se, Se2...
       heightPadding = UIScreen.main.bounds.height * 0.2
     }
@@ -445,7 +584,7 @@ class ReservationStateView: UIScrollView {
     
     reservationPlaceButton.snp.makeConstraints {
       $0.top.equalTo(reservationPlaceWrapView.snp.top).offset(30)
-      $0.leading.equalTo(reservationPlaceStateSubLabel.snp.trailing).offset(40)
+      $0.leading.equalTo(reservationPlaceWrapView.snp.trailing).offset(-30)
     }
     
     returnStateView.snp.makeConstraints {
@@ -453,6 +592,127 @@ class ReservationStateView: UIScrollView {
       $0.leading.equalTo(guid).offset(20)
       $0.trailing.equalTo(guid).offset(-20)
       $0.height.equalTo(240)
+    }
+    
+    [returnPlaceViewButton, returnTimeView, returnTimeBorderView, fillUpUseView, fillUpUseBorderView, cancelFeeView, cancelFeeBorderView, reservationDetail].forEach {
+      returnStateView.addSubview($0)
+    }
+    
+    returnPlaceViewButton.snp.makeConstraints {
+      $0.top.equalTo(reservationCommentLabel.snp.bottom).offset(20)
+      $0.leading.equalTo(guid).offset(20)
+      $0.trailing.equalTo(guid).offset(-20)
+      $0.height.equalTo(80)
+    }
+    
+    [returnPlaceTitleLabel, returnPlaceLabel].forEach {
+      returnPlaceViewButton.addSubview($0)
+    }
+    
+    returnPlaceTitleLabel.snp.makeConstraints {
+      $0.top.equalToSuperview().offset(30)
+      $0.leading.equalToSuperview().offset(20)
+    }
+    
+    returnPlaceLabel.snp.makeConstraints {
+      $0.top.equalToSuperview().offset(30)
+      $0.leading.equalTo(returnPlaceTitleLabel.snp.trailing).offset(20)
+    }
+    
+    returnTimeView.snp.makeConstraints {
+      $0.top.equalTo(returnPlaceViewButton.snp.bottom)
+      $0.leading.equalTo(guid).offset(20)
+      $0.trailing.equalTo(guid).offset(-20)
+      $0.height.equalTo(80)
+    }
+    
+    returnTimeBorderView.snp.makeConstraints {
+      $0.top.equalTo(returnTimeView.snp.bottom)
+      $0.leading.trailing.equalToSuperview()
+      $0.height.equalTo(0.5)
+    }
+    
+    [returnTimeIcon, returnTimeTitleLabel, returnTimeLabel, returnTimeDelayButton].forEach {
+      returnTimeView.addSubview($0)
+    }
+    
+    returnTimeIcon.snp.makeConstraints {
+      $0.centerY.equalToSuperview()
+      $0.leading.equalToSuperview().offset(15)
+    }
+    
+    returnTimeTitleLabel.snp.makeConstraints {
+      $0.centerY.equalToSuperview()
+      $0.leading.equalTo(returnTimeIcon.snp.trailing).offset(15)
+    }
+    
+    returnTimeLabel.snp.makeConstraints {
+      $0.centerY.equalToSuperview()
+      $0.leading.equalTo(returnTimeTitleLabel.snp.trailing).offset(15)
+    }
+    
+    returnTimeDelayButton.snp.makeConstraints {
+      $0.centerY.equalToSuperview()
+      $0.trailing.equalToSuperview()
+    }
+    
+    fillUpUseView.snp.makeConstraints {
+      $0.top.equalTo(returnTimeBorderView.snp.bottom)
+      $0.leading.equalTo(guid).offset(20)
+      $0.trailing.equalTo(guid).offset(-20)
+      $0.height.equalTo(80)
+    }
+    
+    fillUpUseBorderView.snp.makeConstraints {
+      $0.top.equalTo(fillUpUseView.snp.bottom)
+      $0.leading.trailing.equalToSuperview()
+      $0.height.equalTo(0.5)
+    }
+    
+    [fillUpUseIcon, fillUpUseLabel].forEach {
+      fillUpUseView.addSubview($0)
+    }
+    
+    fillUpUseIcon.snp.makeConstraints {
+      $0.centerY.equalToSuperview()
+      $0.leading.equalToSuperview().offset(15)
+    }
+    
+    fillUpUseLabel.snp.makeConstraints {
+      $0.centerY.equalToSuperview()
+      $0.leading.equalTo(fillUpUseIcon.snp.trailing).offset(15)
+    }
+    
+    cancelFeeView.snp.makeConstraints {
+      $0.top.equalTo(fillUpUseBorderView.snp.bottom)
+      $0.leading.equalTo(guid).offset(20)
+      $0.trailing.equalTo(guid).offset(-20)
+      $0.height.equalTo(80)
+    }
+    
+    cancelFeeBorderView.snp.makeConstraints {
+      $0.top.equalTo(cancelFeeView.snp.bottom)
+      $0.leading.trailing.equalToSuperview()
+      $0.height.equalTo(0.5)
+    }
+    
+    [cancelFeeIcon, cancelFeeLabel].forEach {
+      cancelFeeView.addSubview($0)
+    }
+    
+    cancelFeeIcon.snp.makeConstraints {
+      $0.centerY.equalToSuperview()
+      $0.leading.equalToSuperview().offset(15)
+    }
+    
+    cancelFeeLabel.snp.makeConstraints {
+      $0.centerY.equalToSuperview()
+      $0.leading.equalTo(cancelFeeIcon.snp.trailing).offset(15)
+    }
+    
+    reservationDetail.snp.makeConstraints {
+      $0.top.equalTo(cancelFeeBorderView.snp.bottom).offset(40)
+      $0.leading.trailing.equalToSuperview()
     }
   }
   
