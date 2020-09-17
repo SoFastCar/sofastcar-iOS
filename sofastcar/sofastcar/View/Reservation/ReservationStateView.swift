@@ -323,7 +323,7 @@ class ReservationStateView: UIScrollView {
   }()
   fileprivate let returnTimeBorderView: UIView = {
     let view = UIView()
-    view.backgroundColor = UIColor.white.withAlphaComponent(0.3)
+    view.backgroundColor = UIColor.white.withAlphaComponent(0.2)
     
     return view
   }()
@@ -359,6 +359,28 @@ class ReservationStateView: UIScrollView {
     button.addTarget(self, action: #selector(didTapButton(_:)), for: .touchUpInside)
     
     return button
+  }()
+  
+  fileprivate let fillUpUseView: UIView = {
+    let view = UIView()
+    view.backgroundColor = .clear
+    
+    return view
+  }()
+  fileprivate let fillUpUseBorderView: UIView = {
+    let view = UIView()
+    view.backgroundColor = UIColor.white.withAlphaComponent(0.2)
+    
+    return view
+  }()
+  fileprivate let fillUpUseIcon: UIImageView = {
+    let imageView = UIImageView()
+    imageView.image = UIImage(named: "GasStation")
+    imageView.contentMode = .scaleAspectFit
+    imageView.alpha = 0.55
+    imageView.snp.makeConstraints { $0.width.height.equalTo(20) }
+    
+    return imageView
   }()
   
   // MARK: - LifeCycle
@@ -525,7 +547,7 @@ class ReservationStateView: UIScrollView {
       $0.height.equalTo(240)
     }
     
-    [returnPlaceViewButton, returnTimeView, returnTimeBorderView].forEach {
+    [returnPlaceViewButton, returnTimeView, returnTimeBorderView, fillUpUseView, fillUpUseBorderView].forEach {
       returnStateView.addSubview($0)
     }
     
@@ -585,6 +607,23 @@ class ReservationStateView: UIScrollView {
     returnTimeDelayButton.snp.makeConstraints {
       $0.centerY.equalToSuperview()
       $0.trailing.equalToSuperview()
+    }
+    
+    fillUpUseView.snp.makeConstraints {
+      $0.top.equalTo(returnTimeBorderView.snp.bottom)
+      $0.leading.equalTo(guid).offset(20)
+      $0.trailing.equalTo(guid).offset(-20)
+      $0.height.equalTo(80)
+    }
+    
+    fillUpUseBorderView.snp.makeConstraints {
+      $0.top.equalTo(fillUpUseView.snp.bottom)
+      $0.leading.trailing.equalToSuperview()
+      $0.height.equalTo(0.5)
+    }
+    
+    [fillUpUseIcon].forEach {
+      fillUpUseView.addSubview($0)
     }
     
   }
