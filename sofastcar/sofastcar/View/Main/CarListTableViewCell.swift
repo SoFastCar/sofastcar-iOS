@@ -133,8 +133,8 @@ class CarListTableViewCell: UITableViewCell {
     }
     
     func timeInfoConfiguration(startTime sTime: Date, finishTime fTime: Date) {
-        firstDateLabel.text = dateFormatter.string(from: sTime)
-        lastDateLabel.text = dateFormatter.string(from: fTime)
+        firstDateLabel.text = Time.getTimeString(type: .todayHHmm, date: sTime)
+        lastDateLabel.text = Time.getTimeString(type: .hourHHmm, date: fTime)
         middleDateLabel.text = "12:00"
     }
 }

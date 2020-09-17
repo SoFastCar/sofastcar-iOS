@@ -48,6 +48,11 @@ class MainVC: UIViewController {
     let setBookingTimeButton = SetBookingTimeButton(on: .mainVC)
     let backCircleButton = UIButton()
     
+    // Sub Button
+    let carTypeFilterButton = UIButton()
+    let setMyPositionButton = UIButton()
+    let pairingButton = UIButton()
+    
     // Socar Zone, Socar List Data
     var socarZoneDataList: [SocarZoneData] = []
     var selectedSocarZone: SocarZoneData?
@@ -102,6 +107,7 @@ class MainVC: UIViewController {
         navigationController?.isNavigationBarHidden = true
         UIView.animate(withDuration: 0.5, animations: {
             self.setBookingTimeButton.frame.origin.y = self.view.frame.height - self.setBookingTimeButton.frame.height
+            self.naverMapView.mapView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: self.setBookingTimeButton.frame.height, right: 0)
         })
     }
     // MARK: - Network
@@ -140,7 +146,8 @@ class MainVC: UIViewController {
                 }
 //                print("Geocoding Result: \(self.roadAddrName) \(self.roadAddrNumber1)")
                 DispatchQueue.main.async {
-                    self.topView.searchButton.setTitle(self.admCodeArea3Name, for: .normal)
+//                    self.topView.searchButton.setTitle(self.admCodeArea3Name, for: .normal)
+                    self.topView.searchButton.addrLabel.text = self.admCodeArea3Name
                 }
             } catch {
                 print("Geocoding Decode Error")
@@ -402,7 +409,7 @@ class MainVC: UIViewController {
         naverMapView.mapView.addCameraDelegate(delegate: self)
         naverMapView.showZoomControls = false
         naverMapView.showLocationButton = false
-        naverMapView.showScaleBar = true
+        naverMapView.showScaleBar = false
         naverMapView.mapView.moveCamera(NMFCameraUpdate(position: defaultCamPosition))
         callPositionMarker.iconImage = NMFOverlayImage(name: "callPointMarker1")
         callPositionMarker.height = 80
@@ -473,11 +480,11 @@ class MainVC: UIViewController {
                             UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.5, animations: {
                                 self.setBookingTimeButton.frame.origin.y = self.view.frame.height
                                 self.carListView.frame.origin.y = self.view.center.y
-                                self.naverMapView.mapView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: self.view.center.y, right: 0)
                                 self.topView.alpha = 0
                                 self.backCircleButton.isHidden = false
                             })
                             UIView.addKeyframe(withRelativeStartTime: 0.5, relativeDuration: 1, animations: {
+                                self.naverMapView.mapView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: self.view.center.y, right: 0)
                                 self.carListView.frame.origin.y = self.view.center.y
                             })
                         })
@@ -537,6 +544,32 @@ class MainVC: UIViewController {
         newStartDate.addTimeInterval(TimeInterval(20*Time.min))
         newEndDate = newStartDate.addingTimeInterval(TimeInterval(Time.hour*4))
         
+        carTypeFilterButton.layer.cornerRadius = 22
+        carTypeFilterButton.layer.shadowOpacity = 0.2
+        carTypeFilterButton.backgroundColor = .white
+        carTypeFilterButton.setImage(UIImage(systemName: "car.fill", withConfiguration: carTypeFilterButton.symbolConfiguration(pointSize: 18, weight: .regular)), for: .normal)
+        carTypeFilterButton.tintColor = CommonUI.mainDark
+        carTypeFilterButton.isHidden = false
+        view.addSubview(carTypeFilterButton)
+        
+        setMyPositionButton.layer.cornerRadius = 22
+        setMyPositionButton.layer.shadowOpacity = 0.2
+        setMyPositionButton.backgroundColor = .white
+        setMyPositionButton.contentMode = .scaleAspectFill
+        setMyPositionButton.setImage(UIImage(named: "icons8-hunt-30"), for: .normal)
+        setMyPositionButton.tintColor = CommonUI.mainDark
+        setMyPositionButton.isHidden = false
+        view.addSubview(setMyPositionButton)
+        
+        pairingButton.layer.cornerRadius = 27
+        pairingButton.layer.shadowOpacity = 0.2
+        pairingButton.backgroundColor = .white
+        pairingButton.setImage(UIImage(systemName: "arrow.turn.down.right", withConfiguration: pairingButton.symbolConfiguration(pointSize: 17, weight: .heavy)), for: .normal)
+        pairingButton.tintColor = .systemOrange
+        pairingButton.isHidden = false
+        view.addSubview(pairingButton)
+        
+        
         whiteView.frame = view.frame
         whiteView.backgroundColor = .white
         whiteView.alpha = 0
@@ -595,7 +628,26 @@ class MainVC: UIViewController {
     
     // MARK: - Setup Constraint
     private func setupConstraint() {
-        searchView.translatesAutoresizingMaskIntoConstraints = false
+        
+        carTypeFilterButton.snp.makeConstraints({
+            $0.top.equalTo(topView.snp.bottom).offset(17)
+            $0.trailing.equalTo(self.safeArea).offset(-10)
+            $0.width.height.equalTo(44)
+        })
+        
+        setMyPositionButton.snp.makeConstraints({
+            $0.top.equalTo(carTypeFilterButton.snp.bottom).offset(10)
+            $0.trailing.equalTo(self.safeArea).offset(-10)
+            $0.width.height.equalTo(44)
+        })
+        
+        pairingButton.snp.makeConstraints({
+            $0.bottom.equalTo(setBookingTimeButton.snp.top).offset(-20)
+            $0.trailing.equalTo(self.safeArea).offset(-10)
+            $0.width.equalTo(54)
+            $0.height.equalTo(54)
+        })
+        
         searchView.snp.makeConstraints({
             $0.top.equalTo(self.safeArea).offset(8)
             $0.leading.equalTo(self.safeArea).offset(10)
@@ -603,7 +655,6 @@ class MainVC: UIViewController {
             $0.height.equalTo(52)
         })
         
-        searchView.shadowContainer.translatesAutoresizingMaskIntoConstraints = false
         searchView.shadowContainer.snp.makeConstraints({
             $0.top.equalToSuperview()
             $0.leading.equalToSuperview()
@@ -611,7 +662,6 @@ class MainVC: UIViewController {
             $0.height.equalTo(52)
         })
         
-        topView.translatesAutoresizingMaskIntoConstraints = false
         topView.snp.makeConstraints({
             $0.top.equalTo(self.safeArea).offset(8)
             $0.leading.equalTo(self.safeArea).offset(10)
@@ -619,7 +669,6 @@ class MainVC: UIViewController {
             $0.height.equalTo(52)
         })
         
-        backCircleButton.translatesAutoresizingMaskIntoConstraints = false
         backCircleButton.snp.makeConstraints({
             $0.centerY.equalTo(topView)
             $0.leading.equalTo(self.safeArea).offset(10)
@@ -665,7 +714,7 @@ extension MainVC: NMFMapViewTouchDelegate {
             self.backCircleButton.isHidden = true
             self.carListView.frame.origin.y = self.view.frame.height
             self.setBookingTimeButton.frame.origin.y = self.view.frame.height - self.setBookingTimeButton.frame.height
-            self.naverMapView.mapView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+            self.naverMapView.mapView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: self.setBookingTimeButton.frame.height, right: 0)
             self.callPositionMarker.position = mapView.cameraPosition.target
             self.callPositionMarker.mapView = mapView
         })
