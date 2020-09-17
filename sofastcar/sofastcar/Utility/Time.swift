@@ -10,8 +10,8 @@ import Foundation
 
 class Time {
   static let min = 60
-  static let hour = 3600
-  static let day = 86400
+  static let hour = min * 60
+  static let day = hour * 24
   
   // 참고 URL: https://ownstory.tistory.com/21
   enum PresnetDateString: String {

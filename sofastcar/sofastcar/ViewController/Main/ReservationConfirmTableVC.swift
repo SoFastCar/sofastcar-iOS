@@ -26,6 +26,8 @@ class ReservationConfirmTableVC: UITableViewController {
   var insuranceData: Insurance?
   var socarData: SocarList? {
     didSet {
+      guard let socarData = socarData else { return }
+      print(socarData.carPrices.standardPrice)
       isSocarSaveCar = isSaveCarCheck()
       isElectronicCar = isEelctronicCarCheck()
       isBurom = isBuromCheck()
@@ -163,7 +165,7 @@ class ReservationConfirmTableVC: UITableViewController {
   
   private func configureBlurView() {
     tableView.addSubview(blurView)
-    tableView.bringSubviewToFront(blurView)
+//    tableView.bringSubviewToFront(blurView)
     blurView.frame = CGRect(x: 0, y: -100, width: UIScreen.main.bounds.width, height: 2000)
   }
   
@@ -232,9 +234,9 @@ class ReservationConfirmTableVC: UITableViewController {
 
 extension ReservationConfirmTableVC: ResrvationConfirmCellDelegate {
   func tapChangeInsuranceButton(forCell: ReservationConfirmCustomCell) {
-    let insurancePopVc = InsurancePopVC()
-    insurancePopVc.modalPresentationStyle = .overCurrentContext
-    self.present(insurancePopVc, animated: true, completion: nil)
+    let insurancePopVC = InsurancePopVC()
+    insurancePopVC.modalPresentationStyle = .overCurrentContext
+    present(insurancePopVC, animated: true, completion: nil)
     UIView.animate(withDuration: 0.3) {
       self.blurView.alpha = 1
     }

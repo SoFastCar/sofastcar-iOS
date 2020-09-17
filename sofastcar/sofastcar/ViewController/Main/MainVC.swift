@@ -61,8 +61,18 @@ class MainVC: UIViewController {
     var selectedInsurance = Insurance(name: "", guarantee: 0, cost: 0)
     
     // New Booking Time Data
-    var newStartDate = Date()
-    var newEndDate = Date()
+    var newStartDate = Date() {
+      didSet {
+        divideRendTotalTimeByHalfHour = Int((newEndDate.timeIntervalSince1970 - newStartDate.timeIntervalSince1970))/Time.hour*2
+        print(divideRendTotalTimeByHalfHour)
+      }
+    }
+    var newEndDate = Date() {
+      didSet {
+        divideRendTotalTimeByHalfHour = Int((newEndDate.timeIntervalSince1970 - newStartDate.timeIntervalSince1970))/Time.hour*2
+      }
+    }
+    var divideRendTotalTimeByHalfHour: Int = 8
     
     // Geocoding Data
     var roadAddrName: String = ""

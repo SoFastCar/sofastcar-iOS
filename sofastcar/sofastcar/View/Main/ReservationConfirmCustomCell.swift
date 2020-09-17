@@ -262,7 +262,7 @@ class ReservationConfirmCustomCell: UITableViewCell {
     guard let startDate = startDate,
           let endDate = endDate else { return print("시간 값 없음")}
     contentTitleLabel.text = Time.getDiffTwoDateValueReturnString(start: startDate, end: endDate)
-    contentLabel.text = "\(Time.getTimeString(type: .todayHHmm, date: startDate)) - \(Time.getTimeString(type: .hourHHmm, date: endDate))"
+    contentLabel.text = Time.getStartEndTimeShowLabel(start: startDate, end: endDate)
 
   }
   
