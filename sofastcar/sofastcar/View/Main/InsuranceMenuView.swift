@@ -28,7 +28,6 @@ class InsuranceMenuView: UIView {
     
     private func setupUI() {
         self.backgroundColor = .systemBackground
-        
         self.addSubview(insuranceMenuHeaderView)
         
         itemStackView.axis = .vertical

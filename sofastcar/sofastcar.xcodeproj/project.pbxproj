@@ -73,6 +73,7 @@
 		C76B2A6324F7A799004E4CBD /* UserAuthVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76B2A6224F7A799004E4CBD /* UserAuthVC.swift */; };
 		C76B2A6524F7A7BB004E4CBD /* UserAuthScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76B2A6424F7A7BB004E4CBD /* UserAuthScrollView.swift */; };
 		C78071A82510413700EF214C /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = C78071A72510413700EF214C /* Time.swift */; };
+		C790FB1C251343BB00AF98E2 /* InsurancePopVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C790FB1B251343BB00AF98E2 /* InsurancePopVC.swift */; };
 		C79A0B57250224F80061F078 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = C79A0B56250224F80061F078 /* Alamofire */; };
 		C79A0B5B2504656B0061F078 /* PhoneAuthResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C79A0B5A2504656B0061F078 /* PhoneAuthResponse.swift */; };
 		C7A454AE24FA0C9900FA08B7 /* SelectPopupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A454AD24FA0C9900FA08B7 /* SelectPopupVC.swift */; };
@@ -193,6 +194,7 @@
 		C76B2A6224F7A799004E4CBD /* UserAuthVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAuthVC.swift; sourceTree = "<group>"; };
 		C76B2A6424F7A7BB004E4CBD /* UserAuthScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAuthScrollView.swift; sourceTree = "<group>"; };
 		C78071A72510413700EF214C /* Time.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Time.swift; sourceTree = "<group>"; };
+		C790FB1B251343BB00AF98E2 /* InsurancePopVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsurancePopVC.swift; sourceTree = "<group>"; };
 		C79A0B5A2504656B0061F078 /* PhoneAuthResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneAuthResponse.swift; sourceTree = "<group>"; };
 		C7A454AD24FA0C9900FA08B7 /* SelectPopupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectPopupVC.swift; sourceTree = "<group>"; };
 		C7A9C91D2507B314006CA543 /* TopView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopView.swift; sourceTree = "<group>"; };
@@ -347,6 +349,7 @@
 		C75451FB24F4E5DB00E13280 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				C790FB1A2513439B00AF98E2 /* Common */,
 				C7BD348724F53BDE00089F0D /* Login */,
 				C79A0B4D250122B40061F078 /* Main */,
 				7EAA8F6624FFBA300049D514 /* Reservation */,
@@ -383,6 +386,14 @@
 				C769C81A24FCCEA900DC8226 /* Info.plist */,
 			);
 			path = sofastcarUITests;
+			sourceTree = "<group>";
+		};
+		C790FB1A2513439B00AF98E2 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				C790FB1B251343BB00AF98E2 /* InsurancePopVC.swift */,
+			);
+			path = Common;
 			sourceTree = "<group>";
 		};
 		C79A0B4D250122B40061F078 /* Main */ = {
@@ -753,6 +764,7 @@
 				C769C83424FDD99300DC8226 /* CheckDriverLicenseView.swift in Sources */,
 				C7CA53EE2509AF2F008DA68C /* ReservationDetailHeader.swift in Sources */,
 				C769C82B24FDB35600DC8226 /* DriverLicenseEnrollinitVC.swift in Sources */,
+				C790FB1C251343BB00AF98E2 /* InsurancePopVC.swift in Sources */,
 				BC91B636250FA7A200B76398 /* ServiceError.swift in Sources */,
 				BC4F3A11250E01D000B7E1E7 /* SearchVC.swift in Sources */,
 				C72A913A24F5E32A005D464F /* SingUpInitVC.swift in Sources */,

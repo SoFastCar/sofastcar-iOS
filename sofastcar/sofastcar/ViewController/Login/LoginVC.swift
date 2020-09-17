@@ -71,9 +71,8 @@ class LoginVC: UIViewController {
               UserDefaults.saveUserAuthTocken(authToken: userTocken)
               let mainVC = MainVC()
               mainVC.socarZoneProvider = SocarZoneProvider()
-              mainVC.modalPresentationStyle = .overFullScreen
-              mainVC.modalTransitionStyle = .coverVertical
-              self.present(mainVC, animated: true, completion: nil)
+              let navigationController = UINavigationController(rootViewController: mainVC)
+              self.present(navigationController, animated: true, completion: nil)
             }
           }
         } else {

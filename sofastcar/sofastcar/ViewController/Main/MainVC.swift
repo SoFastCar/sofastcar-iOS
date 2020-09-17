@@ -20,7 +20,7 @@ class MainVC: UIViewController {
     var socarZoneProvider: SocarZoneProvidable!
     
     // Flags
-    var topAreaFlag = false
+    var topAreaFlag = false 
     var markerTapFlag = false
     var carListOnTopFlag = false
     var searchVCDismissFlag = false

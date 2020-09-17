@@ -30,8 +30,8 @@ class BookingTimeVC: UIViewController {
     }
   }
     
-    var setBookingTimeMain: SetBookingTimeButton?
-    var setBookingTimeCarList: SetBookingTimeButton?
+  var setBookingTimeMain: SetBookingTimeButton?
+  var setBookingTimeCarList: SetBookingTimeButton?
   
   enum DateComponentType: Int {
     case day = 0
@@ -106,23 +106,21 @@ class BookingTimeVC: UIViewController {
   
   @objc private func tapCompliteButton() {
     guard let navi = self.presentingViewController as? UINavigationController else { return }
-    guard let presentingVC = self.presentingViewController as? MainVC else { return } 
+    if let presentingVC = navi.viewControllers.last as? MainVC {
       presentingVC.newStartDate = startDate
       presentingVC.newEndDate = endDate
-    setBookingTimeMain?.setupTime(isChaged: true, startTime: startDate, endTime: endDate)
-    setBookingTimeCarList?.setupTime(isChaged: true, startTime: startDate, endTime: endDate)
-      self.dismiss(animated: true, completion: nil)
-  }
-  
-  // MARK: - Time Handler
-  private func calculateTwoTimeDayCount(fromDate: Date, toDate: Date) -> Int {
-    var dayCount = 0
-    let offsetComps = calendar.dateComponents([.year, .month, .day], from: fromDate, to: toDate)
-    if case let (day?, hour?, minute?) = (offsetComps.day, offsetComps.hour, offsetComps.minute) {
-      dayCount = day
-      print("\(day) \(hour) \(minute)")
+      setBookingTimeMain?.setupTime(isChaged: true, startTime: startDate, endTime: endDate)
+      setBookingTimeMain?.setButtonTitle(sTime: startDate, eTime: endDate)
+      setBookingTimeCarList?.setupTime(isChaged: true, startTime: startDate, endTime: endDate)
+      setBookingTimeCarList?.setButtonTitle(sTime: startDate, eTime: endDate)
     }
-    return dayCount
+    
+    if let presentingVC = navi.viewControllers.last as? ReservationConfirmTableVC {
+      presentingVC.startDate = startDate
+      presentingVC.endDate = endDate
+      presentingVC.reloadUsingTimeCell()
+    }
+    self.dismiss(animated: true, completion: nil)
   }
 }
 
@@ -177,7 +175,7 @@ extension BookingTimeVC: UITableViewDataSource, UITableViewDelegate {
     cell.textLabel?.text = firstCellTitleConfigure()
     cell.textLabel?.font = .boldSystemFont(ofSize: 20)
     if isTimeChange {
-      cell.detailTextLabel?.text = firstCellDetailTitleCongifure()
+      cell.detailTextLabel?.text = Time.getStartEndTimeShowLabel(start: startDate, end: endDate)
     } else {
       print(Time.getTimeString(type: .castMddEHHmm, date: startDate))
       print(Time.getTimeString(type: .castMddEHHmm, date: endDate))
