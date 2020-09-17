@@ -391,15 +391,15 @@ class ReservationStateView: UIScrollView {
     return label
   }()
   
-  fileprivate let CancelFeeView: UIView = {
+  fileprivate let cancelFeeView: UIView = {
     let view = UIView()
     view.backgroundColor = .clear
     
     return view
   }()
-  fileprivate let CancelFeeBorderView: UIView = {
+  fileprivate let cancelFeeBorderView: UIView = {
     let view = UIView()
-    view.backgroundColor = UIColor.white.withAlphaComponent(0.2)
+    view.backgroundColor = UIColor.white.withAlphaComponent(0.5)
     
     return view
   }()
@@ -432,7 +432,7 @@ class ReservationStateView: UIScrollView {
     )
     self.addSubview(contentView)
     
-    var heightPadding: CGFloat = 0
+    var heightPadding: CGFloat = 200
     if UIScreen.main.bounds.height < 670 { // se, Se2...
       heightPadding = UIScreen.main.bounds.height * 0.2
     }
@@ -568,7 +568,7 @@ class ReservationStateView: UIScrollView {
       $0.height.equalTo(240)
     }
     
-    [returnPlaceViewButton, returnTimeView, returnTimeBorderView, fillUpUseView, fillUpUseBorderView, CancelFeeView, CancelFeeBorderView].forEach {
+    [returnPlaceViewButton, returnTimeView, returnTimeBorderView, fillUpUseView, fillUpUseBorderView, cancelFeeView, cancelFeeBorderView].forEach {
       returnStateView.addSubview($0)
     }
     
@@ -657,6 +657,18 @@ class ReservationStateView: UIScrollView {
       $0.leading.equalTo(fillUpUseIcon.snp.trailing).offset(15)
     }
     
+    cancelFeeView.snp.makeConstraints {
+      $0.top.equalTo(fillUpUseBorderView.snp.bottom)
+      $0.leading.equalTo(guid).offset(20)
+      $0.trailing.equalTo(guid).offset(-20)
+      $0.height.equalTo(80)
+    }
+    
+    cancelFeeBorderView.snp.makeConstraints {
+      $0.top.equalTo(cancelFeeView.snp.bottom)
+      $0.leading.trailing.equalToSuperview()
+      $0.height.equalTo(0.5)
+    }
   }
   
   // MARK: - Action
