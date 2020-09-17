@@ -21,6 +21,7 @@ class Time {
     case todayE = "오늘 (E)"
     case todayH = "오늘 H"
     case todayHHmm = "오늘 HH:mm"
+    case tommorowHHmm = "내일 HH:mm"
     case hourHHmm = "HH:mm"
     case tomorrow = "내일 (E)"
     case hourH = "H"
@@ -54,5 +55,29 @@ class Time {
     }
     returnText.append("이용")
     return returnText
+  }
+  
+  static func getStartEndTimeShowLabel(start: Date, end: Date) -> String {
+    var returnString = ""
+    let todayString = Time.getTimeString(type: .dayd, date: Date())
+    let tommorowString = Time.getTimeString(type: .dayd, date: Date().addingTimeInterval(TimeInterval(day)))
+    // start Time
+    if todayString == Time.getTimeString(type: .dayd, date: start) {
+      returnString.append("\(Time.getTimeString(type: .todayHHmm, date: start))")
+    } else if tommorowString == Time.getTimeString(type: .dayd, date: start) {
+      returnString.append("\(Time.getTimeString(type: .tommorowHHmm, date: start))")
+    } else {
+      returnString.append("\(Time.getTimeString(type: .castMddEHHmm, date: start))")
+    }
+    returnString.append(" - ")
+    //end Time
+    if todayString == Time.getTimeString(type: .dayd, date: end) {
+      returnString.append("\(Time.getTimeString(type: .hourHHmm, date: end))")
+    } else if tommorowString == Time.getTimeString(type: .dayd, date: end) {
+      returnString.append("\(Time.getTimeString(type: .tommorowHHmm, date: end))")
+    } else {
+      returnString.append("\(Time.getTimeString(type: .castMddEHHmm, date: end))")
+    }
+    return returnString
   }
 }

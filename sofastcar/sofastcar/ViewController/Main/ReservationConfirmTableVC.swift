@@ -238,4 +238,8 @@ extension ReservationConfirmTableVC: ResrvationConfirmCellDelegate {
   func tapSocarZoneDetailButton(forCell: ReservationConfirmCustomCell) {
     print("tabSocarZoneDetailButton")
   }
+  
+  func reloadUsingTimeCell() {    
+    tableView.reloadRows(at: [IndexPath(row: 0, section: 2)], with: .none)
+  }
 }
