@@ -70,8 +70,9 @@ class LoginVC: UIViewController {
             if let userTocken = jsonObjcet["token"] as? String {
               UserDefaults.saveUserAuthTocken(authToken: userTocken)
               let mainVC = MainVC()
-              mainVC.socarZoneProvider = SocarZoneProvider()
+              mainVC.socarZoneProvider = SocarZoneProvider()   
               let navigationController = UINavigationController(rootViewController: mainVC)
+              navigationController.modalPresentationStyle = .overFullScreen
               self.present(navigationController, animated: true, completion: nil)
             }
           }
