@@ -32,6 +32,7 @@ class MainVC: UIViewController {
     lazy var markers: [NMFMarker] = []
     let naverMapView = NMFNaverMapView()
     lazy var callPositionMarker = NMFMarker(position: defaultMarkerPosition, iconImage: NMF_MARKER_IMAGE_YELLOW)
+    var selectedMarkerIndex = 0
     
     // Views
     lazy var safeArea = self.view.safeAreaLayoutGuide
@@ -125,7 +126,9 @@ class MainVC: UIViewController {
 //                    print("Geocoding Result: \(self.admCodeArea4Name)")
                 }
 //                print("Geocoding Result: \(self.roadAddrName) \(self.roadAddrNumber1)")
-                dispa
+                DispatchQueue.main.async {
+                    self.topView.searchButton.setTitle(self.admCodeArea3Name, for: .normal)
+                }
             } catch {
                 print("Geocoding Decode Error")
             }
@@ -388,24 +391,33 @@ class MainVC: UIViewController {
         naverMapView.showScaleBar = true
         naverMapView.mapView.moveCamera(NMFCameraUpdate(position: defaultCamPosition))
         callPositionMarker.iconImage = NMFOverlayImage(name: "callPointMarker1")
+        callPositionMarker.height = 80
+        callPositionMarker.width = 80
         callPositionMarker.mapView = naverMapView.mapView
     }
     
     // MARK: - SetupMarkers
     private func setupMarkers(zoneData data: [SocarZoneData]?) -> Bool {
+        if markerTapFlag != true {
         #if true
-        let zoneMarkerIcon = UIImage(named: "socarZoneMarker")
-//        print(zoneMarkerIcon?.size)
+//        let zoneMarkerIcon = UIImage(named: "socarZoneMarker")
         
         guard data?.count != 0 else { fatalError()}
-        markers.removeAll()
+//        markers.removeAll()
+//            print(markers.count)
         for index in 0...((data?.count ?? 1) - 1) {
+            
             markers.append(NMFMarker(position: NMGLatLng(lat: data?[index].lat ?? 0, lng: data?[index].lng ?? 0)))
+            markers[index].mapView = nil
             markers[index].iconImage = NMFOverlayImage(name: "socarZoneMarker")
+            markers[index].height = 85
+            markers[index].width = 85
             markers[index].mapView = naverMapView.mapView
             markers[index].touchHandler = { (overlay) in
                 self.markerTapFlag = true
                 if let marker = overlay as? NMFMarker {
+                    self.selectedMarkerIndex = index
+                    print("selectedMarker: \(data?[self.selectedMarkerIndex].name)")
                     marker.iconImage = NMFOverlayImage(name: "socarRentMarker")
                     self.callPositionMarker.mapView = nil
                     // Socar Zone Info Update
@@ -494,6 +506,9 @@ class MainVC: UIViewController {
          return true   
         }
         #endif
+    } else {
+    
+    }
         return true // 무의미한 리턴
     }
     
@@ -603,6 +618,7 @@ class MainVC: UIViewController {
             switch result {
             case .success(let value): 
                 self?.socarZoneDataList = value; print("쏘카존 데이터 가져오기 성공")
+                
                _ = self?.setupMarkers(zoneData: self?.socarZoneDataList)
             case .failure(let error): print("쏘가존 데이터 가져오기 실패. \(error)")
             }
@@ -636,13 +652,15 @@ extension MainVC: NMFMapViewTouchDelegate {
             self.callPositionMarker.position = mapView.cameraPosition.target
             self.callPositionMarker.mapView = mapView
         })
+        markers[selectedMarkerIndex].iconImage = NMFOverlayImage(name: "socarZoneMarker")
         markerTapFlag = false
     }
 }
 
 extension MainVC: NMFMapViewCameraDelegate {
     func mapView(_ mapView: NMFMapView, cameraDidChangeByReason reason: Int, animated: Bool) {
-        //
+        self.callPositionMarker.position = mapView.cameraPosition.target
+        self.callPositionMarker.mapView = mapView
     }
     
     func mapViewCameraIdle(_ mapView: NMFMapView) {
@@ -655,6 +673,7 @@ extension MainVC: NMFMapViewCameraDelegate {
         callPositionMarker.position = camPosition
         
         // 반경 쏘카존 요청
+        print("++++Cam Idle++++")
         fetchSocarZone(lat: camPosition.lat, lng: camPosition.lng, dist: meterPerPixel)
         
     }

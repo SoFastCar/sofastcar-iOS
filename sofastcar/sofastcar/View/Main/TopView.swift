@@ -12,9 +12,9 @@ import SnapKit
 class TopView: UIView {
     
     let shadowContainer = UIView()
-    let stackView = UIStackView()
     let sideBarButton = UIButton()
     let searchButton = UIButton()
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -36,39 +36,42 @@ class TopView: UIView {
         shadowContainer.clipsToBounds = true
         self.addSubview(shadowContainer)
         
-        sideBarButton.backgroundColor = .white
-        sideBarButton.setImage(UIImage(systemName: "text.justify"), for: .normal)
         
-        sideBarButton.setContentCompressionResistancePriority(UILayoutPriority(751), for: .horizontal)
-        sideBarButton.tintColor = CommonUI.mainDark
-        stackView.addArrangedSubview(sideBarButton)
         
         searchButton.backgroundColor = .white
         searchButton.titleLabel?.textAlignment = .center
-//        searchButton.setTitle("주소가 들어감", for: .normal) // 네이버 Reverse Geocoding 완성 시 삭제
         searchButton.setTitleColor(.systemGray, for: .normal)
+//        searchButton.imageView?.contentMode = .scaleAspectFill
+//        searchButton.imageView?.frame.size = CGSize(width: 10, height: 10)
+//        searchButton.setImage(UIImage(named: "callPointMarker-circle"), for: .normal)
+//        searchButton.setPreferredSymbolConfiguration(UIImage.SymbolConfiguration(pointSize: 20), forImageIn: .normal)
+//        searchButton.imageEdgeInsets = UIEdgeInsets.init(top: 5, left: 5, bottom: 5, right: 5)
         searchButton.tintColor = .systemBlue
-        stackView.addArrangedSubview(searchButton)
+        shadowContainer.addSubview(searchButton)
         
-        stackView.axis = .horizontal
-        stackView.distribution = .fillProportionally
-        shadowContainer.addSubview(stackView)
+        sideBarButton.backgroundColor = .white
+        sideBarButton.setImage(UIImage(systemName: "text.justify"), for: .normal)
+        sideBarButton.setContentCompressionResistancePriority(UILayoutPriority(751), for: .horizontal)
+        sideBarButton.tintColor = CommonUI.mainDark
+        searchButton.addSubview(sideBarButton)
     }
     
     private func setupConstraint() {
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.snp.makeConstraints({
-            $0.top.equalToSuperview()
-            $0.leading.equalToSuperview()
-            $0.trailing.equalToSuperview()
-            $0.bottom.equalToSuperview()
-        })
         shadowContainer.translatesAutoresizingMaskIntoConstraints = false
         shadowContainer.snp.makeConstraints({
             $0.top.equalTo(self)
             $0.leading.equalTo(self)
             $0.trailing.equalTo(self)
             $0.bottom.equalTo(self)
+        })
+        
+        searchButton.snp.makeConstraints({
+            $0.edges.equalToSuperview()
+        })
+        
+        sideBarButton.snp.makeConstraints({
+            $0.top.bottom.equalToSuperview()
+            $0.leading.equalTo(20)
         })
     }
 }
