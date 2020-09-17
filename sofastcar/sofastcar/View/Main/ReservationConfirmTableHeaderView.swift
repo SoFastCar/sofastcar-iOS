@@ -19,23 +19,8 @@ class ReservationConfirmTableHeaderView: UIView {
   }
   
   var padding: CGFloat = 10
-  var isSocarSaveCar = false {
-    didSet {
-      checkIsSocarSave(isSocarSaveCar)
-    }
-  }
   var socarSaveUIList: [UIView] = []
-  var isElecticCar = false {
-    didSet {
-      checkIsElectronicCar(isElecticCar)
-    }
-  }
   var electronicUIList: [UIView] = []
-  var isBurom: Bool = false {
-    didSet {
-      checkIsburumService(isBurom)
-    }
-  }
   
   var safetyOptions: [String] = []
   
@@ -90,8 +75,8 @@ class ReservationConfirmTableHeaderView: UIView {
   
   let carImageContainerView = UIView()
   
-  let carImage: UIImageView = {
-    let imageView = UIImageView()
+  let carImage: CustomImageView = {
+    let imageView = CustomImageView()
     imageView.image = UIImage(named: "testCar")
     imageView.contentMode = .scaleAspectFit
     return imageView
@@ -190,7 +175,7 @@ class ReservationConfirmTableHeaderView: UIView {
   }()
 
   // MARK: - Life cycle
-  override init(frame: CGRect) {
+  init(frame: CGRect, isElecticCar: Bool, isBurom: Bool, isSocarSaveCar: Bool) {
     super.init(frame: frame)
     backgroundColor = .white
     self.layoutMargins = UIEdgeInsets(top: 30, left: 20, bottom: 30, right: 20)
@@ -201,6 +186,9 @@ class ReservationConfirmTableHeaderView: UIView {
     configureCarImageUI(guide)
     configureElectronucUsingInfoUI(guide)
     configureDrivingCostUI(guide)
+    checkIsElectronicCar(isElecticCar)
+    checkIsburumService(isBurom)
+    checkIsSocarSave(isSocarSaveCar)
   }
   
   required init?(coder: NSCoder) {
@@ -359,7 +347,7 @@ extension ReservationConfirmTableHeaderView: UICollectionViewDataSource, UIColle
   }
   
   private func checkIsElectronicCar(_ isElecticCar: Bool) {
-    guard !isSocarSaveCar else { return }
+    guard !isElecticCar else { return }
     electronicUIList.forEach {
       $0.isHidden = true
       $0.snp.updateConstraints {
@@ -368,8 +356,8 @@ extension ReservationConfirmTableHeaderView: UICollectionViewDataSource, UIColle
     }
   }
   
-  private func checkIsburumService(_ isBorum: Bool) {
-    guard !isBurom else { return }
+  private func checkIsburumService(_ isBurum: Bool) {
+    guard !isBurum else { return }
     burumLabel.isHidden = true
   }
 }

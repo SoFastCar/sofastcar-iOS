@@ -105,7 +105,8 @@ class BookingTimeVC: UIViewController {
   }
   
   @objc private func tapCompliteButton() {
-      guard let presentingVC = self.presentingViewController as? MainVC else { return }
+    guard let navi = self.presentingViewController as? UINavigationController else { return }
+    guard let presentingVC = self.presentingViewController as? MainVC else { return } 
       presentingVC.newStartDate = startDate
       presentingVC.newEndDate = endDate
     setBookingTimeMain?.setupTime(isChaged: true, startTime: startDate, endTime: endDate)
