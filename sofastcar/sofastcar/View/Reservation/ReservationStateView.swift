@@ -290,6 +290,61 @@ class ReservationStateView: UIScrollView {
     
     return view
   }()
+  let returnPlaceViewButton: UIView = {
+    let view = UIView()
+    view.backgroundColor = CommonUI.mainBlue
+    view.layer.cornerRadius = 5
+    //    view.isHidden = true
+    
+    return view
+  }()
+  fileprivate let returnPlaceTitleLabel: UILabel = {
+    let label = UILabel()
+    label.text = "반납 장소"
+    label.font = UIFont.preferredFont(forTextStyle: .headline)
+    label.textColor = .white
+    
+    return label
+  }()
+  fileprivate let returnPlaceLabel: UILabel = {
+    let label = UILabel()
+    label.text = "송파구 공영주차장 지상 4층"
+    label.font = UIFont.preferredFont(forTextStyle: .headline)
+    label.textColor = .white
+    
+    return label
+  }()
+  fileprivate let returnTimeIcon: UIImageView = {
+    let imageView = UIImageView()
+    imageView.image = UIImage(systemName: CommonUI.SFSymbolKey.warning.rawValue)
+    imageView.tintColor = .yellow
+    imageView.snp.makeConstraints { $0.width.height.equalTo(10) }
+    
+    return imageView
+  }()
+  fileprivate let returnTimeTitleLabel: UILabel = {
+    let label = UILabel()
+    label.text = "반납 시각"
+    label.font = UIFont.preferredFont(forTextStyle: .headline)
+    label.textColor = .white
+    
+    return label
+  }()
+  fileprivate let returnTimeLabel: UILabel = {
+    let label = UILabel()
+    label.text = "8/15 (토) 14:00"
+    label.font = UIFont.preferredFont(forTextStyle: .headline)
+    label.textColor = .white
+    
+    return label
+  }()
+  fileprivate let returnTimeDelayButton: UIButton = {
+    let button = UIButton()
+    button.addTarget(self, action: #selector(didTapButton(_:)), for: .touchUpInside)
+    button.tintColor = UIColor.white.withAlphaComponent(0.55)
+    
+    return button
+  }()
   
   // MARK: - LifeCycle
   override init(frame: CGRect) {
@@ -445,7 +500,7 @@ class ReservationStateView: UIScrollView {
     
     reservationPlaceButton.snp.makeConstraints {
       $0.top.equalTo(reservationPlaceWrapView.snp.top).offset(30)
-      $0.leading.equalTo(reservationPlaceStateSubLabel.snp.trailing).offset(40)
+      $0.leading.equalTo(reservationPlaceWrapView.snp.trailing).offset(-30)
     }
     
     returnStateView.snp.makeConstraints {
@@ -453,6 +508,31 @@ class ReservationStateView: UIScrollView {
       $0.leading.equalTo(guid).offset(20)
       $0.trailing.equalTo(guid).offset(-20)
       $0.height.equalTo(240)
+    }
+    
+    [returnPlaceViewButton].forEach {
+      returnStateView.addSubview($0)
+    }
+    
+    returnPlaceViewButton.snp.makeConstraints {
+      $0.top.equalTo(reservationCommentLabel.snp.bottom).offset(20)
+      $0.leading.equalTo(guid).offset(20)
+      $0.trailing.equalTo(guid).offset(-20)
+      $0.height.equalTo(80)
+    }
+    
+    [returnPlaceTitleLabel, returnPlaceLabel].forEach {
+      returnPlaceViewButton.addSubview($0)
+    }
+    
+    returnPlaceTitleLabel.snp.makeConstraints {
+      $0.top.equalToSuperview().offset(30)
+      $0.leading.equalToSuperview().offset(20)
+    }
+    
+    returnPlaceLabel.snp.makeConstraints {
+      $0.top.equalToSuperview().offset(30)
+      $0.leading.equalTo(returnPlaceTitleLabel.snp.trailing).offset(20)
     }
   }
   
