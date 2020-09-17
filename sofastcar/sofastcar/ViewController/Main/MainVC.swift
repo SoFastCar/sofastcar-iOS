@@ -33,6 +33,7 @@ class MainVC: UIViewController {
     let naverMapView = NMFNaverMapView()
     lazy var callPositionMarker = NMFMarker(position: defaultMarkerPosition, iconImage: NMF_MARKER_IMAGE_YELLOW)
     var selectedMarkerIndex = 0
+    var prevNumOfMarkers = 0
     
     // Views
     lazy var safeArea = self.view.safeAreaLayoutGuide
@@ -399,116 +400,119 @@ class MainVC: UIViewController {
     // MARK: - SetupMarkers
     private func setupMarkers(zoneData data: [SocarZoneData]?) -> Bool {
         if markerTapFlag != true {
-        #if true
-//        let zoneMarkerIcon = UIImage(named: "socarZoneMarker")
-        
-        guard data?.count != 0 else { fatalError()}
-//        markers.removeAll()
-//            print(markers.count)
-        for index in 0...((data?.count ?? 1) - 1) {
-            
-            markers.append(NMFMarker(position: NMGLatLng(lat: data?[index].lat ?? 0, lng: data?[index].lng ?? 0)))
-            markers[index].mapView = nil
-            markers[index].iconImage = NMFOverlayImage(name: "socarZoneMarker")
-            markers[index].height = 85
-            markers[index].width = 85
-            markers[index].mapView = naverMapView.mapView
-            markers[index].touchHandler = { (overlay) in
-                self.markerTapFlag = true
-                if let marker = overlay as? NMFMarker {
-                    self.selectedMarkerIndex = index
-                    print("selectedMarker: \(data?[self.selectedMarkerIndex].name)")
-                    marker.iconImage = NMFOverlayImage(name: "socarRentMarker")
-                    self.callPositionMarker.mapView = nil
-                    // Socar Zone Info Update
-                    self.selectedSocarZone = data?[index]
-                    self.carListView.socarZoneInfoButton.configuration(data?[index].name ?? "", data?[index].type ?? "", 
-                                                                       data?[index].subInfo ?? "", data?[index].image ?? "")
-                    // Socar List Info Update
-                    guard let testUrl = URL(string: "https://sofastcar.moorekwon.xyz/carzones/\(data?[index].id ?? 260)/cars") else { return false }
-                    var testRequest = URLRequest(url: testUrl)
-                    testRequest.httpMethod = "GET"
-                    testRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
-                    testRequest.addValue("JWT \(UserDefaults.getUserAuthTocken() ?? "")", forHTTPHeaderField: "Authorization")
-                    let testTask = URLSession.shared.dataTask(with: testRequest) {(data, response, error) in
-                        guard error == nil else { return print("error2: \(error!.localizedDescription)")}
-                        guard let responseCode = response as? HTTPURLResponse,
-                            (200...400).contains(responseCode.statusCode) else { return print("response: \(response ?? URLResponse())") }
-                        guard let responseData = data else { return print("No data")}
-                        print(responseData)
-                        let jsonDecoder = JSONDecoder()
-                        do {
-                            let decodedData = try jsonDecoder.decode(SocarListData.self, from: responseData)
-                            self.socarListDataList = decodedData
-                            self.socarListData = self.socarListDataList?.results
-                            print("쏘카 리스트 가져오기 성공")
-                            DispatchQueue.main.async {
-                                self.carListView.carListTableView.reloadData()
-                            }
-                        } catch {
-                            print("쏘카 리스트 가져오기 실패")
-                        }
-                    }
-                    testTask.resume()
-                    
-                    // Car List 팝업 by View
-                    UIView.animateKeyframes(withDuration: 1, delay: 0, animations: {
-                        UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.5, animations: {
-                            self.setBookingTimeButton.frame.origin.y = self.view.frame.height
-                            self.carListView.frame.origin.y = self.view.center.y
-                            self.naverMapView.mapView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: self.view.center.y, right: 0)
-                            self.topView.alpha = 0
-                            self.backCircleButton.isHidden = false
-                        })
-                        UIView.addKeyframe(withRelativeStartTime: 0.5, relativeDuration: 1, animations: {
-                            self.carListView.frame.origin.y = self.view.center.y
-                        })
-                    })
-                    
-                    let spotLigtPosition = NMFCameraPosition(NMGLatLng(lat: marker.position.lat + 0.0005, lng: marker.position.lng), zoom: 16)
-                    let camUpdate = NMFCameraUpdate(position: spotLigtPosition)
-                    camUpdate.animation = .fly
-                    camUpdate.animationDuration = 0.5
-                    self.naverMapView.mapView.moveCamera(camUpdate)
+            #if true
+            guard data?.count != 0 else { fatalError()}
+            if prevNumOfMarkers != 0 {
+                for index in 0...(prevNumOfMarkers - 1) {
+                    markers[index].mapView = nil
                 }
-                return true
+            } else {
+                
             }
-        }
-        
-        #else
-        testMarker.position = NMGLatLng(lat: defaultMarkerPosition.lat, lng: defaultMarkerPosition.lng)
-        testMarker.mapView = naverMapView.mapView
-        testMarker.touchHandler = { (overlay) in
-            guard let marker = overlay as? NMFMarker else { return false }
-            self.markerTapFlag = true
-            self.carListOnTopFlag = true
-            marker.iconImage = NMFOverlayImage(name: "mSNormalBlue")
-            self.callPositionMarker.mapView = nil
-            self.carListView.socarZoneInfoButton.configuration(["성수", "강남"].randomElement() ?? "", ["지상", "지하"].randomElement() ?? "", 
-                                                               ["좋음", "나쁨"].randomElement() ?? "", "서초역-1")
-            // Car List 팝업 by View
-            UIView.animateKeyframes(withDuration: 1, delay: 0, animations: {
-                UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.5, animations: {
-                    self.setBookingTimeButton.frame.origin.y = self.view.frame.height
-                    self.carListView.frame.origin.y = self.view.center.y
-                    self.naverMapView.mapView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: self.view.center.y, right: 0)
-                    self.topView.alpha = 0
-                    self.backCircleButton.isHidden = false
+            markers.removeAll()
+            prevNumOfMarkers = data?.count ?? 1
+            for index in 0...((data?.count ?? 1) - 1) {
+                markers.append(NMFMarker(position: NMGLatLng(lat: data?[index].lat ?? 0, lng: data?[index].lng ?? 0)))
+                markers[index].iconImage = NMFOverlayImage(name: "socarZoneMarker")
+                markers[index].height = 85
+                markers[index].width = 85
+                markers[index].mapView = naverMapView.mapView
+                markers[index].touchHandler = { (overlay) in
+                    self.markerTapFlag = true
+                    if let marker = overlay as? NMFMarker {
+                        self.selectedMarkerIndex = index
+//                        print("selectedMarker: \(data?[self.selectedMarkerIndex].name)")
+                        marker.iconImage = NMFOverlayImage(name: "socarRentMarker")
+                        self.callPositionMarker.mapView = nil
+                        // Socar Zone Info Update
+                        self.selectedSocarZone = data?[index]
+                        self.carListView.socarZoneInfoButton.configuration(data?[index].name ?? "", data?[index].type ?? "", 
+                                                                           data?[index].subInfo ?? "", data?[index].image ?? "")
+                        // Socar List Info Update
+                        guard let testUrl = URL(string: "https://sofastcar.moorekwon.xyz/carzones/\(data?[index].id ?? 260)/cars") else { return false }
+                        var testRequest = URLRequest(url: testUrl)
+                        testRequest.httpMethod = "GET"
+                        testRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+                        testRequest.addValue("JWT \(UserDefaults.getUserAuthTocken() ?? "")", forHTTPHeaderField: "Authorization")
+                        let testTask = URLSession.shared.dataTask(with: testRequest) {(data, response, error) in
+                            guard error == nil else { return print("error2: \(error!.localizedDescription)")}
+                            guard let responseCode = response as? HTTPURLResponse,
+                                (200...400).contains(responseCode.statusCode) else { return print("response: \(response ?? URLResponse())") }
+                            guard let responseData = data else { return print("No data")}
+                            print(responseData)
+                            let jsonDecoder = JSONDecoder()
+                            do {
+                                let decodedData = try jsonDecoder.decode(SocarListData.self, from: responseData)
+                                self.socarListDataList = decodedData
+                                self.socarListData = self.socarListDataList?.results
+                                print("쏘카 리스트 가져오기 성공")
+                                DispatchQueue.main.async {
+                                    self.carListView.carListTableView.reloadData()
+                                }
+                            } catch {
+                                print("쏘카 리스트 가져오기 실패")
+                            }
+                        }
+                        testTask.resume()
+                        
+                        // Car List 팝업 by View
+                        UIView.animateKeyframes(withDuration: 1, delay: 0, animations: {
+                            UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.5, animations: {
+                                self.setBookingTimeButton.frame.origin.y = self.view.frame.height
+                                self.carListView.frame.origin.y = self.view.center.y
+                                self.naverMapView.mapView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: self.view.center.y, right: 0)
+                                self.topView.alpha = 0
+                                self.backCircleButton.isHidden = false
+                            })
+                            UIView.addKeyframe(withRelativeStartTime: 0.5, relativeDuration: 1, animations: {
+                                self.carListView.frame.origin.y = self.view.center.y
+                            })
+                        })
+                        
+                        let spotLigtPosition = NMFCameraPosition(NMGLatLng(lat: marker.position.lat + 0.0005, lng: marker.position.lng), zoom: 16)
+                        let camUpdate = NMFCameraUpdate(position: spotLigtPosition)
+                        camUpdate.animation = .fly
+                        camUpdate.animationDuration = 0.5
+                        self.naverMapView.mapView.moveCamera(camUpdate)
+                    }
+                    return true
+                }
+            }
+            
+            #else
+            testMarker.position = NMGLatLng(lat: defaultMarkerPosition.lat, lng: defaultMarkerPosition.lng)
+            testMarker.mapView = naverMapView.mapView
+            testMarker.touchHandler = { (overlay) in
+                guard let marker = overlay as? NMFMarker else { return false }
+                self.markerTapFlag = true
+                self.carListOnTopFlag = true
+                marker.iconImage = NMFOverlayImage(name: "mSNormalBlue")
+                self.callPositionMarker.mapView = nil
+                self.carListView.socarZoneInfoButton.configuration(["성수", "강남"].randomElement() ?? "", ["지상", "지하"].randomElement() ?? "", 
+                                                                   ["좋음", "나쁨"].randomElement() ?? "", "서초역-1")
+                // Car List 팝업 by View
+                UIView.animateKeyframes(withDuration: 1, delay: 0, animations: {
+                    UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.5, animations: {
+                        self.setBookingTimeButton.frame.origin.y = self.view.frame.height
+                        self.carListView.frame.origin.y = self.view.center.y
+                        self.naverMapView.mapView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: self.view.center.y, right: 0)
+                        self.topView.alpha = 0
+                        self.backCircleButton.isHidden = false
+                    })
+                    UIView.addKeyframe(withRelativeStartTime: 0.5, relativeDuration: 1, animations: {
+                        self.carListView.frame.origin.y = self.view.center.y
+                    })
                 })
-                UIView.addKeyframe(withRelativeStartTime: 0.5, relativeDuration: 1, animations: {
-                    self.carListView.frame.origin.y = self.view.center.y
-                })
-            })
-            let camUpdate = NMFCameraUpdate(position: NMFCameraPosition(marker.position, zoom: 16))
-            camUpdate.animation = .fly
-            camUpdate.animationDuration = 0.5
-            self.naverMapView.mapView.moveCamera(camUpdate)
-         return true   
+                let camUpdate = NMFCameraUpdate(position: NMFCameraPosition(marker.position, zoom: 16))
+                camUpdate.animation = .fly
+                camUpdate.animationDuration = 0.5
+                self.naverMapView.mapView.moveCamera(camUpdate)
+                return true   
+            }
+            #endif
+        } else {
+            
         }
-        #endif
-    } else {
-    
-    }
         return true // 무의미한 리턴
     }
     
@@ -659,8 +663,12 @@ extension MainVC: NMFMapViewTouchDelegate {
 
 extension MainVC: NMFMapViewCameraDelegate {
     func mapView(_ mapView: NMFMapView, cameraDidChangeByReason reason: Int, animated: Bool) {
-        self.callPositionMarker.position = mapView.cameraPosition.target
-        self.callPositionMarker.mapView = mapView
+        if !markerTapFlag {
+            self.callPositionMarker.position = mapView.cameraPosition.target
+            self.callPositionMarker.mapView = mapView
+        } else {
+            
+        }
     }
     
     func mapViewCameraIdle(_ mapView: NMFMapView) {
