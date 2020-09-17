@@ -403,6 +403,22 @@ class ReservationStateView: UIScrollView {
     
     return view
   }()
+  fileprivate let cancelFeeIcon: UIImageView = {
+    let imageView = UIImageView()
+    imageView.image = UIImage(systemName: CommonUI.SFSymbolKey.warning.rawValue)
+    imageView.tintColor = UIColor.white.withAlphaComponent(0.55)
+    imageView.snp.makeConstraints { $0.width.height.equalTo(20) }
+    
+    return imageView
+  }()
+  fileprivate let cancelFeeLabel: UILabel = {
+    let label = UILabel()
+    label.text = "수수료 및 패널티 안내"
+    label.font = UIFont.preferredFont(forTextStyle: .subheadline)
+    label.textColor = UIColor.white.withAlphaComponent(0.55)
+    
+    return label
+  }()
   
   // MARK: - LifeCycle
   override init(frame: CGRect) {
@@ -668,6 +684,20 @@ class ReservationStateView: UIScrollView {
       $0.top.equalTo(cancelFeeView.snp.bottom)
       $0.leading.trailing.equalToSuperview()
       $0.height.equalTo(0.5)
+    }
+    
+    [cancelFeeIcon, cancelFeeLabel].forEach {
+      cancelFeeView.addSubview($0)
+    }
+    
+    cancelFeeIcon.snp.makeConstraints {
+      $0.centerY.equalToSuperview()
+      $0.leading.equalToSuperview().offset(15)
+    }
+    
+    cancelFeeLabel.snp.makeConstraints {
+      $0.centerY.equalToSuperview()
+      $0.leading.equalTo(cancelFeeIcon.snp.trailing).offset(15)
     }
   }
   
