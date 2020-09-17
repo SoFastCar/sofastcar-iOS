@@ -28,7 +28,6 @@ final class SocarZoneProvider: SocarZoneProvidable {
       guard let header = response as? HTTPURLResponse,
         (200..<300) ~= header.statusCode
         else { return completionHandler(.failure(.invalidStatusCode)) }
-        print("Response Code: \(header.statusCode)")
       guard let data = data else { return completionHandler(.failure(.noData)) }
       
       do {

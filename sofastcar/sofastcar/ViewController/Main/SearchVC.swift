@@ -55,6 +55,7 @@ class SearchVC: UIViewController {
       presentingVC.whiteView.alpha = 0
       presentingVC.topView.alpha = 1
       presentingVC.searchView.alpha = 0
+      presentingVC.setBookingTimeButton.frame.origin.y = presentingVC.view.frame.height - presentingVC.setBookingTimeButton.frame.height
       presentingVC.view.layoutIfNeeded()
     })
     presentingVC.dismiss(animated: true)

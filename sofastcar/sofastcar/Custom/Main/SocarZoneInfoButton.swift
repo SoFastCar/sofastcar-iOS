@@ -81,9 +81,12 @@ class SocarZoneInfoButton: UIButton {
         socarZoneNameLabel.text = name
         socarZoneGroundLevelLabel.text = level
         socarZoneDiscripitionLabel.text = discription
-        socarZoneImageView.image = UIImage(named: image)
-        let url = URL(string: image)
-        socarZoneImageView.kf.setImage(with: url)
+        if image == "" {
+            socarZoneImageView.backgroundColor = .white
+        } else {
+            let url = URL(string: image)
+            socarZoneImageView.kf.setImage(with: url)
+        }
     }
     
 }
