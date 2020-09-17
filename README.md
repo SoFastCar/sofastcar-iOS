@@ -1,23 +1,45 @@
-# SoFastCar-IOS
+<p align="center">
+  <img width="460" src="https://user-images.githubusercontent.com/45344633/93497199-23ff0380-f94b-11ea-819d-98c77c3711bc.png">
+</p>
+
+# SOFASTCAR-iOS
+카셰어링 서비스를 제공하는 SOCAR의 iOS Application Clone 프로젝트 입니다.
+*[SOCAR 기업페이지](https://www.socar.kr/)*
+
+## Requirements
+
+- Swift 5.0
+- Xcode
+
+## 1st Sprint
+2020.09.18일까지 진행한 1차 스프린트 입니다.
+
+<iframe width="560" height="315"
+src="https://youtu.be/IFfAk-nuQko" 
+frameborder="0" 
+allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
+allowfullscreen></iframe>
+
+
+### MVP(Minimum Viable Product)
+1차 스프린트 기간동안 기획한 최소 기능 구현 단위 입니다.
+
+<iframe width="640" height="360" src="https://youtu.be/IFfAk-nuQko" frameborder="0" gesture="media" allowfullscreen=""></iframe>
+
+## Architecture
+
+- MVC
 
 
 
-### Architecture
-
-- MVVM + MVC
-
-
-
-### Using Library
-
-##### Pod
+## Using Library List
+프로젝트 내에서 사용한 라이브러리 목록 입니다.
+### Pod
 
 1. Swift Lynt
 2. Naver Map SDK
 
-
-
-##### Swift Package Manager
+### Swift Package Manager
 
 1. Snapkit
 2. Kingfisher
