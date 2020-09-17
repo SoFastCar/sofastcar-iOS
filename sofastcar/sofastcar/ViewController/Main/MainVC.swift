@@ -92,9 +92,7 @@ class MainVC: UIViewController {
     
     // MARK: - Naver Reverse Geocoding
     func nmReveseGeocoding(of latlng: String) {
-//        guard let url = URL(string: "https://naveropenapi.apigw.ntruss.com/map-reversegeocode/v2/gc?request=coordsToaddr&coords=37.545303,127.057221&sourcecrs=epsg:4326&output=json&orders=legalcode,admcode") else { fatalError() }
-          guard let url = URL(string: "https://naveropenapi.apigw.ntruss.com/map-reversegeocode/v2/gc?request=coordsToaddr&coords=\(latlng)&sourcecrs=epsg:4326&output=json&orders=roadaddr") else { fatalError() }
-        print(url)
+        guard let url = URL(string: "https://naveropenapi.apigw.ntruss.com/map-reversegeocode/v2/gc?coords=\(latlng)&output=json&orders=roadaddr") else { fatalError() }
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
         request.addValue("10nhse2dsn", forHTTPHeaderField: "X-NCP-APIGW-API-KEY-ID")
@@ -673,16 +671,16 @@ extension MainVC: UIGestureRecognizerDelegate {
 //        print(#function)
         if topAreaFlag {
             if carListOnTopFlag {
-                print("1, carListOnTopFlag: \(carListOnTopFlag)")
+                print("1, topAreaFlag : \(topAreaFlag), carListOnTopFlag: \(carListOnTopFlag)")
                 carListView.carListTableView.isScrollEnabled = true
                 return true
             } else {
-                print("2, carListOnTopFlag: \(carListOnTopFlag)")
+                print("2, topAreaFlag : \(topAreaFlag), carListOnTopFlag: \(carListOnTopFlag)")
 //              carListView.carListTableView.isScrollEnabled = true
                 return false
             }  
         } else {
-            print("3")
+            print("3, topAreaFlag : \(topAreaFlag), carListOnTopFlag: \(carListOnTopFlag)")
             carListView.carListTableView.isScrollEnabled = false
             return true
         }
@@ -748,11 +746,10 @@ extension MainVC: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-//        print(indexPath.row)
+        print(indexPath.row)
         if indexPath.row == 0 {
             carListOnTopFlag = true
         } else {
-//            print("Hey!!!")
             carListOnTopFlag = false
         }
     }
