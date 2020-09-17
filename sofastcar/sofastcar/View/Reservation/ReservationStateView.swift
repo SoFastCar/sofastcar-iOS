@@ -314,11 +314,18 @@ class ReservationStateView: UIScrollView {
     
     return label
   }()
+  
+  fileprivate let returnTimeView: UIView = {
+    let view = UIView()
+    view.backgroundColor = .white
+    
+    return view
+  }()
   fileprivate let returnTimeIcon: UIImageView = {
     let imageView = UIImageView()
-    imageView.image = UIImage(systemName: CommonUI.SFSymbolKey.warning.rawValue)
-    imageView.tintColor = .yellow
-    imageView.snp.makeConstraints { $0.width.height.equalTo(10) }
+    imageView.image = UIImage(systemName: CommonUI.SFSymbolKey.time.rawValue)
+    imageView.tintColor = .white
+    imageView.snp.makeConstraints { $0.width.height.equalTo(20) }
     
     return imageView
   }()
@@ -340,6 +347,9 @@ class ReservationStateView: UIScrollView {
   }()
   fileprivate let returnTimeDelayButton: UIButton = {
     let button = UIButton()
+    button.setTitle("연장하기", for: .normal)
+    button.setTitleColor(.white, for: .normal)
+    button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline)
     button.addTarget(self, action: #selector(didTapButton(_:)), for: .touchUpInside)
     button.tintColor = UIColor.white.withAlphaComponent(0.55)
     
@@ -510,7 +520,7 @@ class ReservationStateView: UIScrollView {
       $0.height.equalTo(240)
     }
     
-    [returnPlaceViewButton].forEach {
+    [returnPlaceViewButton, returnTimeView].forEach {
       returnStateView.addSubview($0)
     }
     
@@ -533,6 +543,17 @@ class ReservationStateView: UIScrollView {
     returnPlaceLabel.snp.makeConstraints {
       $0.top.equalToSuperview().offset(30)
       $0.leading.equalTo(returnPlaceTitleLabel.snp.trailing).offset(20)
+    }
+    
+    returnTimeView.snp.makeConstraints {
+      $0.top.equalTo(returnPlaceViewButton.snp.bottom)
+      $0.leading.equalTo(guid).offset(20)
+      $0.trailing.equalTo(guid).offset(-20)
+      $0.height.equalTo(80)
+    }
+    
+    [returnTimeIcon].forEach {
+      returnTimeView.addSubview($0)
     }
   }
   
