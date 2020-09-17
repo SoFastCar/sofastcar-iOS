@@ -29,8 +29,9 @@ class VehicleCheckVC: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    
+
     setUI()
+    setVehicleCheckButton()
   }
   
   // MARK: - UI
@@ -55,6 +56,17 @@ class VehicleCheckVC: UIViewController {
     
     self.navigationItem.leftBarButtonItem = self.leftNavigationButton
     self.title = "차량 확인하기"
+  }
+  
+  fileprivate func setVehicleCheckButton() {
+    let vehicleCheckButton = vehicleCheckView.vehicleCheckStartButton
+    
+    if UserDefaults.getVehicleBoubleCheck() == true {
+      vehicleCheckButton.setTitle("완료되었습니다.", for: .normal)
+      vehicleCheckButton.setTitleColor(.gray, for: .normal)
+      vehicleCheckButton.backgroundColor = .systemGray6
+      vehicleCheckButton.isEnabled = false
+    }
   }
   
   // MARK: - Action
