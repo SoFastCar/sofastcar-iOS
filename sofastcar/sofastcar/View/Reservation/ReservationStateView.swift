@@ -286,7 +286,7 @@ class ReservationStateView: UIScrollView {
   fileprivate let returnStateView: UIView = {
     let view = UIView()
     view.isHidden = true
-    view.backgroundColor = .cyan
+    view.backgroundColor = .clear
     
     return view
   }()
@@ -317,7 +317,13 @@ class ReservationStateView: UIScrollView {
   
   fileprivate let returnTimeView: UIView = {
     let view = UIView()
-    view.backgroundColor = .white
+    view.backgroundColor = .clear
+    
+    return view
+  }()
+  fileprivate let returnTimeBorderView: UIView = {
+    let view = UIView()
+    view.backgroundColor = UIColor.white.withAlphaComponent(0.3)
     
     return view
   }()
@@ -520,7 +526,7 @@ class ReservationStateView: UIScrollView {
       $0.height.equalTo(240)
     }
     
-    [returnPlaceViewButton, returnTimeView].forEach {
+    [returnPlaceViewButton, returnTimeView, returnTimeBorderView].forEach {
       returnStateView.addSubview($0)
     }
     
@@ -549,12 +555,21 @@ class ReservationStateView: UIScrollView {
       $0.top.equalTo(returnPlaceViewButton.snp.bottom)
       $0.leading.equalTo(guid).offset(20)
       $0.trailing.equalTo(guid).offset(-20)
-      $0.height.equalTo(80) 
+      $0.height.equalTo(80)
     }
     
-    [returnTimeIcon].forEach {
+    returnTimeBorderView.snp.makeConstraints {
+      $0.top.equalTo(returnTimeView.snp.bottom)
+      $0.leading.trailing.equalToSuperview()
+      $0.height.equalTo(0.5)
+    }
+    
+    [returnTimeIcon, returnTimeTitleLabel, returnTimeLabel, returnTimeDelayButton].forEach {
       returnTimeView.addSubview($0)
     }
+    
+    
+    
   }
   
   // MARK: - Action
