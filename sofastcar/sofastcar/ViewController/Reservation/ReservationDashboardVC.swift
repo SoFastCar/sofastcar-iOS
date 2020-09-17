@@ -82,6 +82,11 @@ extension ReservationDashboardVC: CarKeyViewDelegate {
     switch sender {
     case carKey.returnButton:
       print("return")
+      UserDefaults.setReadyToDrive(isDriveReady: false)
+      let provideVC = MainVC()
+      provideVC.socarZoneProvider = SocarZoneProvider()
+      let mainVC = UINavigationController(rootViewController: provideVC)
+      self.present(mainVC, animated: false, completion: nil)
     case carKey.lockButton:
       print("lockButton")
     case carKey.unlockButton:
@@ -96,6 +101,11 @@ extension ReservationDashboardVC: CarKeyViewDelegate {
       print("riseUnlockButton")
     case carKey.riseReturnButton:
       print("riseReturnButton")
+      UserDefaults.setReadyToDrive(isDriveReady: false)
+      let provideVC = MainVC()
+      provideVC.socarZoneProvider = SocarZoneProvider()
+      let mainVC = UINavigationController(rootViewController: provideVC)
+      self.present(mainVC, animated: false, completion: nil)
     default:
       break
     }
