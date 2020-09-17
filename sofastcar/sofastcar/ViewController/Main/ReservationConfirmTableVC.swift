@@ -46,6 +46,13 @@ class ReservationConfirmTableVC: UITableViewController {
   var isElectronicCar: Bool = false
   var isBurom: Bool = false
   
+  let blurView: UIVisualEffectView = {
+    let effect = UIBlurEffect(style: .dark)
+    let view = UIVisualEffectView(effect: effect)
+    view.alpha = 0
+    return view
+  }()
+  
   let reservationCostInfoButton: UIButton = {
     let button = UIButton()
     button.setTitle("총 합계 23,380원", for: .normal)
@@ -81,10 +88,11 @@ class ReservationConfirmTableVC: UITableViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    configureStatusBar()
     configureNavigationContoller()
     configureTableHeaderView()
     configureReservationConfirmButton()
+    configureInsuranceMainView()
+    configureBlurView()
   }
   
   override func viewWillAppear(_ animated: Bool) {
@@ -93,15 +101,6 @@ class ReservationConfirmTableVC: UITableViewController {
     navigationController?.navigationBar.isHidden = false
     configureNavigationContoller()
     tableView.reloadData()
-  }
-
-  private func configureStatusBar() {
-    let statusBar =  UIView()
-    let window = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
-    guard let statusBarFrame = window?.windowScene?.statusBarManager?.statusBarFrame else { return }
-    statusBar.frame = statusBarFrame
-    statusBar.backgroundColor = .white
-    UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.addSubview(statusBar)
   }
   
   private func configureNavigationContoller() {
@@ -162,6 +161,12 @@ class ReservationConfirmTableVC: UITableViewController {
     myHeaderView.collectionView.reloadData()
   }
   
+  private func configureBlurView() {
+    tableView.addSubview(blurView)
+    tableView.bringSubviewToFront(blurView)
+    blurView.frame = CGRect(x: 0, y: -100, width: UIScreen.main.bounds.width, height: 2000)
+  }
+  
   private func configureReservationConfirmButton() {
     [reservationCostInfoButton, reservationConfirmButton].forEach {
       tableView.addSubview($0)
@@ -180,6 +185,10 @@ class ReservationConfirmTableVC: UITableViewController {
       $0.height.equalTo(reservationCostInfoButton)
       $0.width.equalTo(reservationCostInfoButton.snp.width).multipliedBy(0.5)
     }
+  }
+  
+  private func configureInsuranceMainView() {
+    
   }
   
   // MARK: - Button Action
@@ -223,7 +232,12 @@ class ReservationConfirmTableVC: UITableViewController {
 
 extension ReservationConfirmTableVC: ResrvationConfirmCellDelegate {
   func tapChangeInsuranceButton(forCell: ReservationConfirmCustomCell) {
-    print("tabChangeInsuranceButton")
+    let insurancePopVc = InsurancePopVC()
+    insurancePopVc.modalPresentationStyle = .overCurrentContext
+    self.present(insurancePopVc, animated: true, completion: nil)
+    UIView.animate(withDuration: 0.3) {
+      self.blurView.alpha = 1
+    }
   }
   
   func tapChangeUsingTime(forCell: ReservationConfirmCustomCell) {

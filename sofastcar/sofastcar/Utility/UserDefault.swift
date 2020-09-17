@@ -9,6 +9,7 @@
 import Foundation
 
 extension UserDefaults {
+  // MARK: - User Auth Token
   static func saveUserAuthTocken(authToken: String) {
     UserDefaults.standard.set(authToken, forKey: "UserAuthToken")
   }
@@ -22,6 +23,9 @@ extension UserDefaults {
     UserDefaults.standard.set(nil, forKey: "UserAuthToken")
   }
   
+  // MARK: - Reservation is Finish
+  
+  // MARK: - Reservation Vehicle check
   static func setVehicleDoubleCheck(check: Bool) {
     UserDefaults.standard.set(check, forKey: "VehicleDoubleCheckVC")
   }
