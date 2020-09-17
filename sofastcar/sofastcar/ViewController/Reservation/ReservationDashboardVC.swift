@@ -86,6 +86,7 @@ extension ReservationDashboardVC: CarKeyViewDelegate {
       let provideVC = MainVC()
       provideVC.socarZoneProvider = SocarZoneProvider()
       let mainVC = UINavigationController(rootViewController: provideVC)
+      mainVC.modalPresentationStyle = .fullScreen
       self.present(mainVC, animated: false, completion: nil)
     case carKey.lockButton:
       print("lockButton")
@@ -105,6 +106,7 @@ extension ReservationDashboardVC: CarKeyViewDelegate {
       let provideVC = MainVC()
       provideVC.socarZoneProvider = SocarZoneProvider()
       let mainVC = UINavigationController(rootViewController: provideVC)
+      mainVC.modalPresentationStyle = .fullScreen
       self.present(mainVC, animated: false, completion: nil)
     default:
       break
