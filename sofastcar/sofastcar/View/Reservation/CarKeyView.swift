@@ -9,7 +9,13 @@
 import UIKit
 import SnapKit
 
+protocol CarKeyViewDelegate: class {
+    func buttonAction(_ sender: UIButton)
+}
+
 class CarKeyView: UIView {
+  
+  weak var customDelegate: CarKeyViewDelegate?
   
   let screenSize = UIScreen.main.bounds
   
@@ -103,7 +109,7 @@ class CarKeyView: UIView {
     return view
   }()
   
-  fileprivate let returnButton: UIButton = {
+  let returnButton: UIButton = {
     let button = UIButton()
     button.setTitle("반납하기", for: .normal)
     button.setTitleColor(CommonUI.mainDark, for: .normal)
@@ -125,7 +131,7 @@ class CarKeyView: UIView {
     return view
   }()
   
-  fileprivate let lockButton: UIButton = {
+  let lockButton: UIButton = {
     let button = UIButton()
     button.setImage(
       UIImage(systemName: CommonUI.SFSymbolKey.lock.rawValue),
@@ -147,7 +153,7 @@ class CarKeyView: UIView {
     return label
   }()
   
-  fileprivate let unlockButton: UIButton = {
+  let unlockButton: UIButton = {
     let button = UIButton()
     button.setImage(
       UIImage(systemName: CommonUI.SFSymbolKey.unlock.rawValue),
@@ -180,7 +186,7 @@ class CarKeyView: UIView {
     return view
   }()
   
-  fileprivate let emergencyButton: UIButton = {
+  let emergencyButton: UIButton = {
     let button = UIButton()
     button.setImage(
       UIImage(systemName: CommonUI.SFSymbolKey.warning.rawValue),
@@ -211,7 +217,7 @@ class CarKeyView: UIView {
     return label
   }()
   
-  fileprivate let hornButton: UIButton = {
+  let hornButton: UIButton = {
     let button = UIButton()
     button.setImage(
       UIImage(systemName: CommonUI.SFSymbolKey.horn.rawValue),
@@ -241,7 +247,7 @@ class CarKeyView: UIView {
     return view
   }()
   
-  fileprivate let riseLockButton: UIButton = {
+  let riseLockButton: UIButton = {
     let button = UIButton()
     let config = UIImage.SymbolConfiguration(pointSize: 30, weight: .light, scale: .large)
     let largeLockSymbol = UIImage(systemName: CommonUI.SFSymbolKey.lock.rawValue, withConfiguration: config)
@@ -275,7 +281,7 @@ class CarKeyView: UIView {
     return label
   }()
   
-  fileprivate let riseUnlockButton: UIButton = {
+  let riseUnlockButton: UIButton = {
     let button = UIButton()
     let config = UIImage.SymbolConfiguration(pointSize: 30, weight: .light, scale: .large)
     let largeLockSymbol = UIImage(systemName: CommonUI.SFSymbolKey.unlock.rawValue, withConfiguration: config)
@@ -332,7 +338,7 @@ class CarKeyView: UIView {
     return view
   }()
   
-  fileprivate let riseReturnButton: UIButton = {
+  let riseReturnButton: UIButton = {
     let button = UIButton()
     let config = UIImage.SymbolConfiguration(pointSize: 30, weight: .light, scale: .large)
     let largeLockSymbol = UIImage(systemName: CommonUI.SFSymbolKey.return.rawValue, withConfiguration: config)
@@ -369,9 +375,8 @@ class CarKeyView: UIView {
       x: 0,
       y: screenSize.maxY - 180,
       width: screenSize.width,
-      height: 400
+      height: 800
     )
-    print(screenSize.maxY)
     setUI()
   }
   
@@ -446,6 +451,13 @@ class CarKeyView: UIView {
     underGestureView.snp.makeConstraints {
       $0.top.equalTo(smartKeyLabel.snp.bottom).offset(20)
       $0.leading.trailing.equalTo(self)
+      $0.height.equalTo(screenSize.maxY - 180)
+    }
+    
+    riseGestureView.snp.makeConstraints {
+      $0.top.equalTo(smartKeyLabel.snp.bottom).offset(20)
+      $0.leading.trailing.equalTo(self)
+      $0.height.equalTo(self.screenSize.maxY - (820 - self.carKeyViewHandleAreaHeight))
     }
     
     returnButton.snp.makeConstraints {
@@ -520,20 +532,7 @@ class CarKeyView: UIView {
   // MARK: - Action
   
   @objc func didTapButton(_ sender: UIButton) {
-    switch sender {
-    case returnButton:
-      print("returnButton button press")
-    case lockButton:
-      print("lockButton button press")
-    case unlockButton:
-      print("unlockButton button press")
-    case emergencyButton:
-      print("emergencyButton button press")
-    case hornButton:
-      print("hornButton button press")
-    default:
-      print("error")
-    }
+    customDelegate?.buttonAction(sender)
   }
 }
 
