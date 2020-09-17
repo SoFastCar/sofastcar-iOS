@@ -382,6 +382,27 @@ class ReservationStateView: UIScrollView {
     
     return imageView
   }()
+  fileprivate let fillUpUseLabel: UILabel = {
+    let label = UILabel()
+    label.text = "주유 방법 안내"
+    label.font = UIFont.preferredFont(forTextStyle: .subheadline)
+    label.textColor = UIColor.white.withAlphaComponent(0.55)
+    
+    return label
+  }()
+  
+  fileprivate let CancelFeeView: UIView = {
+    let view = UIView()
+    view.backgroundColor = .clear
+    
+    return view
+  }()
+  fileprivate let CancelFeeBorderView: UIView = {
+    let view = UIView()
+    view.backgroundColor = UIColor.white.withAlphaComponent(0.2)
+    
+    return view
+  }()
   
   // MARK: - LifeCycle
   override init(frame: CGRect) {
@@ -547,7 +568,7 @@ class ReservationStateView: UIScrollView {
       $0.height.equalTo(240)
     }
     
-    [returnPlaceViewButton, returnTimeView, returnTimeBorderView, fillUpUseView, fillUpUseBorderView].forEach {
+    [returnPlaceViewButton, returnTimeView, returnTimeBorderView, fillUpUseView, fillUpUseBorderView, CancelFeeView, CancelFeeBorderView].forEach {
       returnStateView.addSubview($0)
     }
     
@@ -622,8 +643,18 @@ class ReservationStateView: UIScrollView {
       $0.height.equalTo(0.5)
     }
     
-    [fillUpUseIcon].forEach {
+    [fillUpUseIcon, fillUpUseLabel].forEach {
       fillUpUseView.addSubview($0)
+    }
+    
+    fillUpUseIcon.snp.makeConstraints {
+      $0.centerY.equalToSuperview()
+      $0.leading.equalToSuperview().offset(15)
+    }
+    
+    fillUpUseLabel.snp.makeConstraints {
+      $0.centerY.equalToSuperview()
+      $0.leading.equalTo(fillUpUseIcon.snp.trailing).offset(15)
     }
     
   }
