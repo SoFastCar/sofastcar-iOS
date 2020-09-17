@@ -33,7 +33,7 @@ struct EndPoint {
 extension EndPoint {
     enum Path: String {
         case distance
-        case cars = ""
+        case cars
     }
     enum Querykey: String {
         case lat
