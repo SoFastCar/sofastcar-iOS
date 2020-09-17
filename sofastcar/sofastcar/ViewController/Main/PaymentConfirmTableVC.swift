@@ -112,7 +112,11 @@ class PaymentConfirmTableVC: UITableViewController {
   
   // MARK: - Button Action
   @objc func tabReservationFinishButton() {
-    print("Tab complete Button")
+    UserDefaults.setReadyToDrive(isDriveReady: true)
+    let reservationDachBoardVC = ReservationDashboardVC()
+    let newNaviContoller = UINavigationController(rootViewController: reservationDachBoardVC)
+    newNaviContoller.modalPresentationStyle = .overFullScreen
+    present(newNaviContoller, animated: true, completion: nil)
   }
 }
 

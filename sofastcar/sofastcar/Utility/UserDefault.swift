@@ -23,7 +23,15 @@ extension UserDefaults {
     UserDefaults.standard.set(nil, forKey: "UserAuthToken")
   }
   
-  // MARK: - Reservation is Finish
+  // MARK: - Reservation Finish Check & ReservationDashBoard
+  static func setReadyToDrive(isDriveReady: Bool) {
+    UserDefaults.standard.set(isDriveReady, forKey: "ReadyToDrive")
+  }
+  
+  static func getReadyToDrive() -> Bool {
+    guard let isReady = UserDefaults.standard.value(forKey: "ReadyToDrive") as? Bool else { return false }
+    return isReady
+  }
   
   // MARK: - Reservation Vehicle check
   static func setVehicleDoubleCheck(check: Bool) {

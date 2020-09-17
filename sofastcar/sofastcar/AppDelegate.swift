@@ -18,11 +18,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var rootView: UIViewController = UIViewController()
 //    UserDefaults.resetUserAuthTocken() // 로그아웃필요할때 사용
+//    UserDefaults.setReadyToDrive(isDriveReady: false)
     if UserDefaults.getUserAuthTocken() != nil {
-      changeUserAuthTocken()
-      let mainVC = MainVC()
-      mainVC.socarZoneProvider = SocarZoneProvider()
-      rootView = mainVC
+      if UserDefaults.getReadyToDrive() == true {
+        let reservationDashBoard = ReservationDashboardVC()
+        rootView = reservationDashBoard
+      } else {
+        changeUserAuthTocken()
+        let mainVC = MainVC()
+        mainVC.socarZoneProvider = SocarZoneProvider()
+        rootView = mainVC
+      }
     } else {
       rootView = InitVC()
     }
