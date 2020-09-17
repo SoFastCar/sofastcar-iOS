@@ -34,6 +34,7 @@ class ReservationDashboardVC: UIViewController {
   // MARK: - UI
   
   fileprivate func setUI() {
+    carKey.customDelegate = self
     view.backgroundColor = CommonUI.reservationBackground
     
     setNavigation()
@@ -68,6 +69,33 @@ class ReservationDashboardVC: UIViewController {
       let navigationController = UINavigationController(rootViewController: vehicleCheckVC)
       navigationController.modalPresentationStyle = .fullScreen
       self.present(navigationController, animated: false)
+    default:
+      break
+    }
+  }
+}
+
+// MARK: - CarKeyViewDelegate
+
+extension ReservationDashboardVC: CarKeyViewDelegate {
+  func buttonAction(_ sender: UIButton) {
+    switch sender {
+    case carKey.returnButton:
+      print("return")
+    case carKey.lockButton:
+      print("lockButton")
+    case carKey.unlockButton:
+      print("unlockButton")
+    case carKey.emergencyButton:
+      print("emergencyButton")
+    case carKey.hornButton:
+      print("hornButton")
+    case carKey.riseLockButton:
+      print("riseLockButton")
+    case carKey.riseUnlockButton:
+      print("riseUnlockButton")
+    case carKey.riseReturnButton:
+      print("riseReturnButton")
     default:
       break
     }
