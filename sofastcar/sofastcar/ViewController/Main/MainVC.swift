@@ -54,6 +54,8 @@ class MainVC: UIViewController {
     var socarListDataList: SocarListData?
     var socarListData: [SocarList]?
     var selectedSocar: SocarList?
+    var calculatedCarPrice: [Int] = []
+    var selectedCarPrice: Int = 0
     
     // Insurance Item Data
     var insuranceDataList: InsuranceDataList?
@@ -234,6 +236,7 @@ class MainVC: UIViewController {
         presentedVC.insuranceData = selectedInsurance // 보험 데이터
         presentedVC.startDate = newStartDate // 시작 시간
         presentedVC.endDate = newEndDate // 종료 시간
+        presentedVC.totalPrice = selectedCarPrice + selectedInsurance.cost // 최종 가격
         navigationController?.pushViewController(presentedVC, animated: true)
     }
     
@@ -691,7 +694,6 @@ extension MainVC: NMFMapViewCameraDelegate {
         callPositionMarker.position = camPosition
         
         // 반경 쏘카존 요청
-        print("++++Cam Idle++++")
         fetchSocarZone(lat: camPosition.lat, lng: camPosition.lng, dist: meterPerPixel)
         
     }
@@ -780,14 +782,12 @@ extension MainVC: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: CarListTableViewCell.identifier, for: indexPath) as? CarListTableViewCell else { return UITableViewCell() }
-        let date1 = Date()
-        let date2 = Date(timeInterval: 36000, since: date1)
         cell.selectionStyle = .none
         cell.separatorInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
         #if true
-        let calculatedCarPrice = divideRendTotalTimeByHalfHour * (socarListData?[indexPath.row].carPrices.standardPrice ?? 0)
-        cell.carInfoConfiguration(carImage: socarListData?[indexPath.row].image ?? "", carName: socarListData?[indexPath.row].name ?? "", carPrice: calculatedCarPrice, availableDiscount: socarListData?[indexPath.row].isEvent ?? false)
-        cell.timeInfoConfiguration(startTime: date1, finishTime: date2)
+        calculatedCarPrice.append(divideRendTotalTimeByHalfHour * (socarListData?[indexPath.row].carPrices.standardPrice ?? 0))
+        cell.carInfoConfiguration(carImage: socarListData?[indexPath.row].image ?? "", carName: socarListData?[indexPath.row].name ?? "", carPrice: calculatedCarPrice[indexPath.row], availableDiscount: socarListData?[indexPath.row].isEvent ?? false)
+        cell.timeInfoConfiguration(startTime: newStartDate, finishTime: newEndDate)
         #else
         cell.carInfoConfiguration(carImage: "SampleCar", carName: "모닝", carPrice: 30000, availableDiscount: true)
         #endif
@@ -853,6 +853,7 @@ extension MainVC: UITableViewDelegate {
 //        }
 //        testTask.resume()
         self.selectedSocar = socarListData?[indexPath.row]
+        selectedCarPrice = calculatedCarPrice[indexPath.row]
         self.insuranceData = [InsuranceData(name: "스페셜", guarantee: 10, cost: 10000), InsuranceData(name: "스탠다드", guarantee: 30, cost: 30000), InsuranceData(name: "라이트", guarantee: 50, cost: 50000)]
         insuranceMenuView.special.configuration(symbol: "circle", name: insuranceData?[0].name ?? "불러오기 실패", guarantee: insuranceData?[0].guarantee ?? 0, cost: insuranceData?[0].cost ?? 0)
         insuranceMenuView.standard.configuration(symbol: "circle", name: insuranceData?[1].name ?? "불러오기 실패", guarantee: insuranceData?[1].guarantee ?? 0, cost: insuranceData?[1].cost ?? 0)

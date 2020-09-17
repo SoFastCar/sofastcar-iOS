@@ -67,7 +67,7 @@ class ReservationDashboardVC: UIViewController {
     case .ended:
       let vehicleCheckVC = VehicleCheckVC()
       let navigationController = UINavigationController(rootViewController: vehicleCheckVC)
-      navigationController.modalPresentationStyle = .fullScreen
+      navigationController.modalPresentationStyle = .overFullScreen
       self.present(navigationController, animated: false)
     default:
       break

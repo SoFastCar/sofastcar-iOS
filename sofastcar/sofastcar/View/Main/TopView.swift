@@ -36,16 +36,15 @@ class TopView: UIView {
         shadowContainer.clipsToBounds = true
         self.addSubview(shadowContainer)
         
-        
-        
-        searchButton.backgroundColor = .white
-        searchButton.titleLabel?.textAlignment = .center
-        searchButton.setTitleColor(.systemGray, for: .normal)
-//        searchButton.imageView?.contentMode = .scaleAspectFill
-//        searchButton.imageView?.frame.size = CGSize(width: 10, height: 10)
+//        searchButton.imageView?.contentMode = .scaleAspectFit
+//        searchButton.imageView?.backgroundColor = .red
+//        searchButton.imageView?.frame.size = CGSize(width: 5, height: 5)
+//        searchButton.imageView?.clipsToBounds = true
 //        searchButton.setImage(UIImage(named: "callPointMarker-circle"), for: .normal)
 //        searchButton.setPreferredSymbolConfiguration(UIImage.SymbolConfiguration(pointSize: 20), forImageIn: .normal)
-//        searchButton.imageEdgeInsets = UIEdgeInsets.init(top: 5, left: 5, bottom: 5, right: 5)
+//        searchButton.imageEdgeInsets = UIEdgeInsets.init(top: 5, left: 5, bottom: 5, right: 5)searchButton.backgroundColor = .white
+        searchButton.titleLabel?.textAlignment = .center
+        searchButton.setTitleColor(.systemGray, for: .normal)
         searchButton.tintColor = .systemBlue
         shadowContainer.addSubview(searchButton)
         
