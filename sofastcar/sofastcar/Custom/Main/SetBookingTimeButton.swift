@@ -128,6 +128,10 @@ class SetBookingTimeButton: UIButton {
         }
         
     }
+  
+    func setButtonTitle(sTime: Date, eTime: Date) {
+      setTimeLabel.text = Time.getDiffTwoDateValueReturnString(start: sTime, end: eTime)
+    }
     
     func setupTime(isChaged flag: Bool, startTime sTime: Date, endTime eTime: Date) {
         if flag {
@@ -146,5 +150,5 @@ class SetBookingTimeButton: UIButton {
             print(Time.getTimeString(type: .castMddEHHmm, date: endTime))
             timeLabel.text = "\(Time.getTimeString(type: .todayHHmm, date: startTime)) - \(Time.getTimeString(type: .hourHHmm, date: endTime))"
         }
-    }
+    }  
 }
