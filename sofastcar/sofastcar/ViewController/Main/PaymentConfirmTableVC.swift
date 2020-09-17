@@ -48,6 +48,7 @@ class PaymentConfirmTableVC: UITableViewController {
     fatalError("init(coder:) has not been implemented")
   }
   
+  // MARK: - Life Cycle
   override func viewDidLoad() {
     super.viewDidLoad()
     configureStatusBar()
@@ -70,6 +71,7 @@ class PaymentConfirmTableVC: UITableViewController {
     navigationController?.navigationBar.prefersLargeTitles = true
     navigationController?.navigationBar.backgroundColor = .white
     navigationController?.navigationBar.barTintColor = UIColor.white
+    navigationController?.navigationBar.topItem?.title = ""
   }
   
   private func configureTableView() {

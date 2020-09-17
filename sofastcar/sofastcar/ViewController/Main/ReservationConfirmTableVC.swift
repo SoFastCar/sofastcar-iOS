@@ -24,9 +24,17 @@ class ReservationConfirmTableVC: UITableViewController {
   // MARK: - Properties
   var socarZoneData: SocarZoneData?
   var insuranceData: Insurance?
-  var socarData: SocarList?
+  var socarData: SocarList? {
+    didSet {
+      isSocarSaveCar = isSaveCarCheck()
+      isElectronicCar = isEelctronicCarCheck()
+      isBurom = isBuromCheck()
+    }
+  }
   var startDate: Date?
   var endDate: Date?
+  var newStartDate: Date?
+  var newEndDate: Date?
   var totalPrice: Int? {
     didSet {
       guard let totalPrice = totalPrice else { return }
@@ -34,10 +42,9 @@ class ReservationConfirmTableVC: UITableViewController {
     }
   }
   var headerViewHeight: CGFloat = 650
-  var isSaveCar: Bool = false
+  var isSocarSaveCar: Bool = false
   var isElectronicCar: Bool = false
-  var isBorum: Bool = false
-  let myHeaderView = ReservationConfirmTableHeaderView()
+  var isBurom: Bool = false
   
   let reservationCostInfoButton: UIButton = {
     let button = UIButton()
@@ -76,17 +83,18 @@ class ReservationConfirmTableVC: UITableViewController {
     super.viewDidLoad()
     configureStatusBar()
     configureNavigationContoller()
-    calculateTableViewHeaderHeight()
     configureTableHeaderView()
-    configureTableHeaderViewContents()
     configureReservationConfirmButton()
   }
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
+    navigationController?.isNavigationBarHidden = false
+    navigationController?.navigationBar.isHidden = false
+    configureNavigationContoller()
     tableView.reloadData()
   }
-  
+
   private func configureStatusBar() {
     let statusBar =  UIView()
     let window = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
@@ -101,17 +109,18 @@ class ReservationConfirmTableVC: UITableViewController {
     navigationController?.navigationBar.prefersLargeTitles = true
     navigationController?.navigationBar.backgroundColor = .white
     navigationController?.navigationBar.barTintColor = UIColor.white
+    navigationController?.navigationBar.tintColor = UIColor.black
   }
   
   private func calculateTableViewHeaderHeight() {
-    headerViewHeight -= isSaveCar == true ? 0 : 15
+    headerViewHeight -= isSocarSaveCar == true ? 0 : 15
     headerViewHeight -= isElectronicCar == true ? 0 : 130
   }
   
   private func configureTableHeaderView() {
-    myHeaderView.isSocarSaveCar = isSaveCarCheck()
-    myHeaderView.isElecticCar = isEelctronicCar()
-    myHeaderView.isBurom = isBurom()
+    let myHeaderView = ReservationConfirmTableHeaderView(frame: .zero, isElecticCar: isElectronicCar, isBurom: isBurom, isSocarSaveCar: isSocarSaveCar)
+    configureTableHeaderViewContents(myHeaderView: myHeaderView)
+    calculateTableViewHeaderHeight()
     tableView.allowsSelection = false
     tableView.register(ReservationConfirmCustomCell.self,
                        forCellReuseIdentifier: ReservationConfirmCustomCell.identifier)
@@ -127,25 +136,25 @@ class ReservationConfirmTableVC: UITableViewController {
   
   private func isSaveCarCheck() -> Bool {
     // 로직 필요 true / false
-    isSaveCar = false
+    isSocarSaveCar = false
     return false
   }
   
-  private func isEelctronicCar() -> Bool {
+  private func isEelctronicCarCheck() -> Bool {
     guard let feulType = socarData?.fuelType else { return false }
     isElectronicCar = feulType == "전기" ? true : false
     return isElectronicCar
   }
   
-  private func isBurom() -> Bool {
+  private func isBuromCheck() -> Bool {
     // 로직
     return false
   }
   
-  private func configureTableHeaderViewContents() {
+  private func configureTableHeaderViewContents(myHeaderView: ReservationConfirmTableHeaderView) {
     guard let socarData = socarData else { return }
+    myHeaderView.carImage.loadImage(with: socarData.image)
     myHeaderView.carName.text = socarData.name
-//    myHeaderView.carImage.image = UIImage(named: <#T##String#>)
     socarData.safetyOpt.split(separator: ",").forEach {
       myHeaderView.safetyOptions.append(String($0))
     }
@@ -218,7 +227,12 @@ extension ReservationConfirmTableVC: ResrvationConfirmCellDelegate {
   }
   
   func tapChangeUsingTime(forCell: ReservationConfirmCustomCell) {
-    print("tabChangeUsingTime")
+    guard let startDate = startDate,
+          let endDate = endDate else { return }
+    let bookingTimeVC = BookingTimeVC()
+    bookingTimeVC.startDate = startDate
+    bookingTimeVC.endDate = endDate
+    present(bookingTimeVC, animated: true)
   }
   
   func tapSocarZoneDetailButton(forCell: ReservationConfirmCustomCell) {
