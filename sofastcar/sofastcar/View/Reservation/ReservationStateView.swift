@@ -420,6 +420,16 @@ class ReservationStateView: UIScrollView {
     return label
   }()
   
+  fileprivate let reservationDetail: UILabel = {
+    let label = UILabel()
+    label.text = "수수료 및 패널티 안내"
+    label.textAlignment = .center
+    label.font = UIFont.preferredFont(forTextStyle: .subheadline)
+    label.textColor = UIColor.white.withAlphaComponent(0.55)
+    
+    return label
+  }()
+  
   // MARK: - LifeCycle
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -584,7 +594,7 @@ class ReservationStateView: UIScrollView {
       $0.height.equalTo(240)
     }
     
-    [returnPlaceViewButton, returnTimeView, returnTimeBorderView, fillUpUseView, fillUpUseBorderView, cancelFeeView, cancelFeeBorderView].forEach {
+    [returnPlaceViewButton, returnTimeView, returnTimeBorderView, fillUpUseView, fillUpUseBorderView, cancelFeeView, cancelFeeBorderView, reservationDetail].forEach {
       returnStateView.addSubview($0)
     }
     
@@ -698,6 +708,11 @@ class ReservationStateView: UIScrollView {
     cancelFeeLabel.snp.makeConstraints {
       $0.centerY.equalToSuperview()
       $0.leading.equalTo(cancelFeeIcon.snp.trailing).offset(15)
+    }
+    
+    reservationDetail.snp.makeConstraints {
+      $0.top.equalTo(cancelFeeBorderView.snp.bottom).offset(40)
+      $0.leading.trailing.equalToSuperview()
     }
   }
   
