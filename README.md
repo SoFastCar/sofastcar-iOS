@@ -14,38 +14,28 @@
 ## 1st Sprint
 2020.09.18일까지 진행한 1차 스프린트 입니다.
 
-<iframe width="560" height="315"
-src="https://youtu.be/IFfAk-nuQko" 
-frameborder="0" 
-allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
-allowfullscreen></iframe>
+
 
 
 ### MVP(Minimum Viable Product)
 1차 스프린트 기간동안 기획한 최소 기능 구현 단위 입니다.
 
-<iframe width="640" height="360" src="https://youtu.be/IFfAk-nuQko" frameborder="0" gesture="media" allowfullscreen=""></iframe>
+
 
 ## Architecture
 
 - MVC
 
-
-
 ## Using Library List
-프로젝트 내에서 사용한 라이브러리 목록 입니다.
-### Pod
+프로젝트내에서 사용한 라이브러리 목록 입니다.
 
-1. Swift Lynt
-2. Naver Map SDK
+**Pod**
+- [Swift Lynt](https://github.com/realm/SwiftLint)
+- [Naver Map SDK](https://www.ncloud.com/product/applicationService/maps)
 
-### Swift Package Manager
-
-1. Snapkit
-2. Kingfisher
-3. RxSwift
-
-
+**Swift Package Manager**
+- [Snapkit](https://github.com/SnapKit/SnapKit#contents)
+- [Kingfisher](https://github.com/onevcat/Kingfisher)
 
 ### GitHub 관련
 
