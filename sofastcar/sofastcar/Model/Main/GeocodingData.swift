@@ -20,11 +20,23 @@ struct Status: Decodable {
 }
 
 struct Results: Decodable {
-    let land: Land
+//    let land: Land
+    let region: Region
 }
 
 struct Land: Decodable {
-    let type: String
     let name: String
     let number1: String
+}
+
+struct Region: Decodable {
+//    let area0: Area
+//    let area1: Area
+//    let area2: Area
+    let area3: Area
+//    let area4: Area
+}
+
+struct Area: Decodable {
+    let name: String
 }
