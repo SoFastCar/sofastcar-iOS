@@ -570,7 +570,12 @@ class ReservationStateView: UIScrollView {
     
     returnTimeIcon.snp.makeConstraints {
       $0.centerY.equalToSuperview()
-      $0.leading.equalToSuperview().offset(20)
+      $0.leading.equalToSuperview().offset(15)
+    }
+    
+    returnTimeTitleLabel.snp.makeConstraints {
+      $0.centerY.equalToSuperview()
+      $0.leading.equalTo(returnTimeIcon.snp.trailing).offset(15)
     }
     
   }
