@@ -201,7 +201,7 @@ class MainVC: UIViewController {
         presentedVC.insuranceData = selectedInsurance // 보험 데이터
         presentedVC.startDate = newStartDate // 시작 시간
         presentedVC.endDate = newEndDate // 종료 시간
-        present(presentedVC, animated: true, completion: nil)
+        navigationController?.pushViewController(presentedVC, animated: true)
     }
     
     // MARK: - Selector(Search Button)
@@ -260,7 +260,7 @@ class MainVC: UIViewController {
         presentedVC.modalPresentationStyle = .automatic
         presentedVC.startDate = sender.startTime
         presentedVC.endDate = sender.endTime
-        present(presentedVC, animated: true)
+        self.present(presentedVC, animated: true)
     }
     
     // MARK: - Selector(Circle Back Button)
