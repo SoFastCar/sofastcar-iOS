@@ -27,7 +27,8 @@ class SearchVC: UIViewController {
   
   // MARK: - Selector
   @objc func didTapBackButton(_ sender: UIButton) {
-    guard let presentingVC = self.presentingViewController as? MainVC else { return }
+    guard let navi = self.presentingViewController as? UINavigationController else { return }
+    guard let presentingVC = navi.viewControllers.last as? MainVC else { return }
     presentingVC.searchVCDismissFlag = true
     UIView.animate(withDuration: 0.5, animations: {
       
