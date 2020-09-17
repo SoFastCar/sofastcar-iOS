@@ -330,7 +330,7 @@ class ReservationStateView: UIScrollView {
   fileprivate let returnTimeIcon: UIImageView = {
     let imageView = UIImageView()
     imageView.image = UIImage(systemName: CommonUI.SFSymbolKey.time.rawValue)
-    imageView.tintColor = .white
+    imageView.tintColor = UIColor.white.withAlphaComponent(0.55)
     imageView.snp.makeConstraints { $0.width.height.equalTo(20) }
     
     return imageView
@@ -338,26 +338,25 @@ class ReservationStateView: UIScrollView {
   fileprivate let returnTimeTitleLabel: UILabel = {
     let label = UILabel()
     label.text = "반납 시각"
-    label.font = UIFont.preferredFont(forTextStyle: .headline)
-    label.textColor = .white
+    label.font = UIFont.preferredFont(forTextStyle: .subheadline)
+    label.textColor = UIColor.white.withAlphaComponent(0.55)
     
     return label
   }()
   fileprivate let returnTimeLabel: UILabel = {
     let label = UILabel()
     label.text = "8/15 (토) 14:00"
-    label.font = UIFont.preferredFont(forTextStyle: .headline)
-    label.textColor = .white
+    label.font = UIFont.preferredFont(forTextStyle: .subheadline)
+    label.textColor = UIColor.white.withAlphaComponent(0.55)
     
     return label
   }()
   fileprivate let returnTimeDelayButton: UIButton = {
     let button = UIButton()
     button.setTitle("연장하기", for: .normal)
-    button.setTitleColor(.white, for: .normal)
-    button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline)
+    button.setTitleColor(UIColor.white.withAlphaComponent(0.55), for: .normal)
+    button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .subheadline)
     button.addTarget(self, action: #selector(didTapButton(_:)), for: .touchUpInside)
-    button.tintColor = UIColor.white.withAlphaComponent(0.55)
     
     return button
   }()
@@ -581,6 +580,11 @@ class ReservationStateView: UIScrollView {
     returnTimeLabel.snp.makeConstraints {
       $0.centerY.equalToSuperview()
       $0.leading.equalTo(returnTimeTitleLabel.snp.trailing).offset(15)
+    }
+    
+    returnTimeDelayButton.snp.makeConstraints {
+      $0.centerY.equalToSuperview()
+      $0.trailing.equalToSuperview()
     }
     
   }
