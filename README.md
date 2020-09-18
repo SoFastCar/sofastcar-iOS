@@ -21,7 +21,7 @@
 - **IDE**
   - Xcode
 
-## Using Library
+## Libraries
 프로젝트내에서 사용한 라이브러리 목록 입니다.
 
 | Pod | SPM |  
@@ -35,6 +35,14 @@
 ### Planning
 *Clone Project 프로젝트 기획*
 
+- **Development motivation**
+```
+  SOCAR를 구현하며 배웠던 내용을 정리하고, 
+  응용하며 개발에 자신감을 증가시키고
+  개발자간의 협업을 통하여 커뮤니케이션 툴을 적극적으로 활용하여 
+  커뮤니케이션 능력을 향상시키고 개발 능력을 증진시키기 위하여 
+  이번 프로젝트를 시작하게 되었습니다.
+```
 - **MVP(Minimum Viable Product)**
 *1차 스프린트 기간동안 기획한 최소 기능 구현 단위 입니다.*
 
