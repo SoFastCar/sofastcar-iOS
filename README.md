@@ -32,34 +32,51 @@
 ## Projcet
 프로젝트 기획부터 개발까지의 흐름 입니다.
 
-### Planning
-*Clone Project 프로젝트 기획*
+### Planning(프로젝트 기획 단계)
+
+2020.08.20 ~ 2020.09.02까지 진행한 프로젝트 기획 입니다.
 
 - **Development motivation**
 ```
-  SOCAR를 구현하며 배웠던 내용을 정리하고, 
-  응용하며 개발에 자신감을 증가시키고
+  SOCAR를 구현하며 배웠던 내용을 정리하고, 응용하며 개발에 자신감을 증가시키고
   개발자간의 협업을 통하여 커뮤니케이션 툴을 적극적으로 활용하여 
   커뮤니케이션 능력을 향상시키고 개발 능력을 증진시키기 위하여 
   이번 프로젝트를 시작하게 되었습니다.
 ```
 - **MVP(Minimum Viable Product)**
-*1차 스프린트 기간동안 기획한 최소 기능 구현 단위 입니다.*
 
-# [기획 발표 내용]
+<p align="center">
+  <img width="230" src="https://user-images.githubusercontent.com/45344633/93545521-95ff3900-f99b-11ea-97ca-cb99c2382f73.png">
+  <img width="230" src="https://user-images.githubusercontent.com/45344633/93545580-bcbd6f80-f99b-11ea-8cf0-83c0acbcd00b.png">
+  <img width="230" src="https://user-images.githubusercontent.com/45344633/93545643-e70f2d00-f99b-11ea-91ac-1398494be151.png">
+</p>
 
 - **Tools**
-*기획하면서 사용한 도구 입니다.*
   - Slack
   - Google Meet
-  - Drow.io
-
-### Sprint (1st)
-2020.09.18일까지 진행한 1차 스프린트 입니다.
-
-
+  - [Drow.io](https://drive.google.com/file/d/1TJlzBGoK564UiSom3pa0SYx7ThbanXFv/view?usp=sharing)
+<p align="center">
+  <img width="630" src="https://user-images.githubusercontent.com/45344633/93545771-3a817b00-f99c-11ea-8ca4-ef69b2b68166.png">
+</p>
 
 
+### Sprint(1차 구현 단계)
+
+2020.09.03 ~ 2020.09.18일까지 진행한 1차 스프린트 입니다.
+
+- **MVPDevelopment**
+**[gif 동영상 추가]**
+- **Tools**
+  - 개발 일정 관리 ([Github Projects](https://github.com/SoFastCar/sofastcar-iOS/projects))
+  <p align="center">
+  <img width="330" src="https://user-images.githubusercontent.com/45344633/93546609-1b83e880-f99e-11ea-8e73-9a6719ed62c0.png">
+  <img width="330" src="https://user-images.githubusercontent.com/45344633/93546686-4b32f080-f99e-11ea-9b34-9fa984670bb2.png">
+  </p>
+
+  - 이슈 트래킹 ([Github Issues](https://github.com/SoFastCar/sofastcar-iOS/issues))
+  <p align="center">
+  <img width="430" src="https://user-images.githubusercontent.com/45344633/93546874-c4324800-f99e-11ea-9b9f-258c2a815163.png">
+  </p>
 
 
 ### 추가 작업 필요
