@@ -113,9 +113,12 @@ class BookingTimeVC: UIViewController {
       setBookingTimeMain?.setButtonTitle(sTime: startDate, eTime: endDate)
       setBookingTimeCarList?.setupTime(isChaged: true, startTime: startDate, endTime: endDate)
       setBookingTimeCarList?.setButtonTitle(sTime: startDate, eTime: endDate)
+        presentingVC.calculatedCarPrice.removeAll()
+      presentingVC.carListView.carListTableView.reloadData()
     }
     
     if let presentingVC = navi.viewControllers.last as? ReservationConfirmTableVC {
+      print("reservationConfirm push")
       presentingVC.startDate = startDate
       presentingVC.endDate = endDate
       presentingVC.reloadUsingTimeCell()
@@ -174,13 +177,11 @@ extension BookingTimeVC: UITableViewDataSource, UITableViewDelegate {
   private func firstCellconfigure(cell: UITableViewCell) -> UITableViewCell {
     cell.textLabel?.text = firstCellTitleConfigure()
     cell.textLabel?.font = .boldSystemFont(ofSize: 20)
-    if isTimeChange {
+//    if isTimeChange {
       cell.detailTextLabel?.text = Time.getStartEndTimeShowLabel(start: startDate, end: endDate)
-    } else {
-      print(Time.getTimeString(type: .castMddEHHmm, date: startDate))
-      print(Time.getTimeString(type: .castMddEHHmm, date: endDate))
-      cell.detailTextLabel?.text = "\(Time.getTimeString(type: .todayHHmm, date: startDate)) - \(Time.getTimeString(type: .hourHHmm, date: endDate))"
-    }
+//    } else {
+//      cell.detailTextLabel?.text = "\(Time.getTimeString(type: .todayHHmm, date: startDate)) - \(Time.getTimeString(type: .hourHHmm, date: endDate))"
+//    }
     cell.detailTextLabel?.numberOfLines = 2
     cell.detailTextLabel?.textColor = .systemGray
     return cell

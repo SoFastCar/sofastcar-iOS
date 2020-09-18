@@ -32,6 +32,7 @@ class MainVC: UIViewController {
     lazy var markers: [NMFMarker] = []
     let naverMapView = NMFNaverMapView()
     lazy var callPositionMarker = NMFMarker(position: defaultMarkerPosition, iconImage: NMF_MARKER_IMAGE_YELLOW)
+//    let setlogoAlign = NMFLogoAlign(rawValue: 100)
     var selectedMarkerIndex = 0
     var prevNumOfMarkers = 0
     
@@ -48,12 +49,19 @@ class MainVC: UIViewController {
     let setBookingTimeButton = SetBookingTimeButton(on: .mainVC)
     let backCircleButton = UIButton()
     
+    // Sub Button
+    let carTypeFilterButton = UIButton()
+    let setMyPositionButton = UIButton()
+    let pairingButton = UIButton()
+    
     // Socar Zone, Socar List Data
     var socarZoneDataList: [SocarZoneData] = []
     var selectedSocarZone: SocarZoneData?
     var socarListDataList: SocarListData?
     var socarListData: [SocarList]?
     var selectedSocar: SocarList?
+    var calculatedCarPrice: [Int] = []
+    var selectedCarPrice: Int = 0
     
     // Insurance Item Data
     var insuranceDataList: InsuranceDataList?
@@ -61,8 +69,17 @@ class MainVC: UIViewController {
     var selectedInsurance = Insurance(name: "", guarantee: 0, cost: 0)
     
     // New Booking Time Data
-    var newStartDate = Date()
-    var newEndDate = Date()
+    var newStartDate = Date() {
+      didSet {
+        divideRendTotalTimeByHalfHour = Time.getDivideRentTodalTimeByHalfHour(start: newStartDate, end: newEndDate)
+      }
+    }
+    var newEndDate = Date() {
+      didSet {
+        divideRendTotalTimeByHalfHour = Time.getDivideRentTodalTimeByHalfHour(start: newStartDate, end: newEndDate)
+      }
+    }
+    var divideRendTotalTimeByHalfHour: Int = 8
     
     // Geocoding Data
     var roadAddrName: String = ""
@@ -128,7 +145,8 @@ class MainVC: UIViewController {
                 }
 //                print("Geocoding Result: \(self.roadAddrName) \(self.roadAddrNumber1)")
                 DispatchQueue.main.async {
-                    self.topView.searchButton.setTitle(self.admCodeArea3Name, for: .normal)
+//                    self.topView.searchButton.setTitle(self.admCodeArea3Name, for: .normal)
+                    self.topView.searchButton.addrLabel.text = self.admCodeArea3Name
                 }
             } catch {
                 print("Geocoding Decode Error")
@@ -224,6 +242,8 @@ class MainVC: UIViewController {
         presentedVC.insuranceData = selectedInsurance // 보험 데이터
         presentedVC.startDate = newStartDate // 시작 시간
         presentedVC.endDate = newEndDate // 종료 시간
+        presentedVC.rentPrice = selectedCarPrice // 차량 렌트 가격
+        navigationController?.navigationItem.largeTitleDisplayMode = .always
         navigationController?.pushViewController(presentedVC, animated: true)
     }
     
@@ -389,7 +409,8 @@ class MainVC: UIViewController {
         naverMapView.mapView.addCameraDelegate(delegate: self)
         naverMapView.showZoomControls = false
         naverMapView.showLocationButton = false
-        naverMapView.showScaleBar = true
+        naverMapView.showScaleBar = false
+        naverMapView.mapView.logoMargin = UIEdgeInsets(top: 0, left: 0, bottom: view.frame.height * 0.16, right: 0)
         naverMapView.mapView.moveCamera(NMFCameraUpdate(position: defaultCamPosition))
         callPositionMarker.iconImage = NMFOverlayImage(name: "callPointMarker1")
         callPositionMarker.height = 80
@@ -460,11 +481,12 @@ class MainVC: UIViewController {
                             UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.5, animations: {
                                 self.setBookingTimeButton.frame.origin.y = self.view.frame.height
                                 self.carListView.frame.origin.y = self.view.center.y
-                                self.naverMapView.mapView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: self.view.center.y, right: 0)
                                 self.topView.alpha = 0
                                 self.backCircleButton.isHidden = false
                             })
                             UIView.addKeyframe(withRelativeStartTime: 0.5, relativeDuration: 1, animations: {
+                                self.naverMapView.mapView.logoMargin = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+                                self.naverMapView.mapView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: self.view.center.y, right: 0)
                                 self.carListView.frame.origin.y = self.view.center.y
                             })
                         })
@@ -524,6 +546,32 @@ class MainVC: UIViewController {
         newStartDate.addTimeInterval(TimeInterval(20*Time.min))
         newEndDate = newStartDate.addingTimeInterval(TimeInterval(Time.hour*4))
         
+        carTypeFilterButton.layer.cornerRadius = 22
+        carTypeFilterButton.layer.shadowOpacity = 0.2
+        carTypeFilterButton.backgroundColor = .white
+        carTypeFilterButton.setImage(UIImage(systemName: "car.fill", withConfiguration: carTypeFilterButton.symbolConfiguration(pointSize: 18, weight: .regular)), for: .normal)
+        carTypeFilterButton.tintColor = CommonUI.mainDark
+        carTypeFilterButton.isHidden = false
+        view.addSubview(carTypeFilterButton)
+        
+        setMyPositionButton.layer.cornerRadius = 22
+        setMyPositionButton.layer.shadowOpacity = 0.2
+        setMyPositionButton.backgroundColor = .white
+        setMyPositionButton.contentMode = .scaleAspectFill
+        setMyPositionButton.setImage(UIImage(named: "icons8-hunt-30"), for: .normal)
+        setMyPositionButton.tintColor = CommonUI.mainDark
+        setMyPositionButton.isHidden = false
+        view.addSubview(setMyPositionButton)
+        
+        pairingButton.layer.cornerRadius = 27
+        pairingButton.layer.shadowOpacity = 0.2
+        pairingButton.backgroundColor = .white
+        pairingButton.setImage(UIImage(systemName: "arrow.turn.down.right", withConfiguration: pairingButton.symbolConfiguration(pointSize: 17, weight: .heavy)), for: .normal)
+        pairingButton.tintColor = .systemOrange
+        pairingButton.isHidden = false
+        view.addSubview(pairingButton)
+        
+        
         whiteView.frame = view.frame
         whiteView.backgroundColor = .white
         whiteView.alpha = 0
@@ -582,7 +630,26 @@ class MainVC: UIViewController {
     
     // MARK: - Setup Constraint
     private func setupConstraint() {
-        searchView.translatesAutoresizingMaskIntoConstraints = false
+        
+        carTypeFilterButton.snp.makeConstraints({
+            $0.top.equalTo(topView.snp.bottom).offset(17)
+            $0.trailing.equalTo(self.safeArea).offset(-10)
+            $0.width.height.equalTo(44)
+        })
+        
+        setMyPositionButton.snp.makeConstraints({
+            $0.top.equalTo(carTypeFilterButton.snp.bottom).offset(10)
+            $0.trailing.equalTo(self.safeArea).offset(-10)
+            $0.width.height.equalTo(44)
+        })
+        
+        pairingButton.snp.makeConstraints({
+            $0.bottom.equalTo(setBookingTimeButton.snp.top).offset(-20)
+            $0.trailing.equalTo(self.safeArea).offset(-10)
+            $0.width.equalTo(54)
+            $0.height.equalTo(54)
+        })
+        
         searchView.snp.makeConstraints({
             $0.top.equalTo(self.safeArea).offset(8)
             $0.leading.equalTo(self.safeArea).offset(10)
@@ -590,7 +657,6 @@ class MainVC: UIViewController {
             $0.height.equalTo(52)
         })
         
-        searchView.shadowContainer.translatesAutoresizingMaskIntoConstraints = false
         searchView.shadowContainer.snp.makeConstraints({
             $0.top.equalToSuperview()
             $0.leading.equalToSuperview()
@@ -598,7 +664,6 @@ class MainVC: UIViewController {
             $0.height.equalTo(52)
         })
         
-        topView.translatesAutoresizingMaskIntoConstraints = false
         topView.snp.makeConstraints({
             $0.top.equalTo(self.safeArea).offset(8)
             $0.leading.equalTo(self.safeArea).offset(10)
@@ -606,7 +671,6 @@ class MainVC: UIViewController {
             $0.height.equalTo(52)
         })
         
-        backCircleButton.translatesAutoresizingMaskIntoConstraints = false
         backCircleButton.snp.makeConstraints({
             $0.centerY.equalTo(topView)
             $0.leading.equalTo(self.safeArea).offset(10)
@@ -653,6 +717,7 @@ extension MainVC: NMFMapViewTouchDelegate {
             self.carListView.frame.origin.y = self.view.frame.height
             self.setBookingTimeButton.frame.origin.y = self.view.frame.height - self.setBookingTimeButton.frame.height
             self.naverMapView.mapView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+            self.naverMapView.mapView.logoMargin = UIEdgeInsets(top: 0, left: 0, bottom: self.view.frame.height * 0.16, right: 0)
             self.callPositionMarker.position = mapView.cameraPosition.target
             self.callPositionMarker.mapView = mapView
         })
@@ -681,7 +746,6 @@ extension MainVC: NMFMapViewCameraDelegate {
         callPositionMarker.position = camPosition
         
         // 반경 쏘카존 요청
-        print("++++Cam Idle++++")
         fetchSocarZone(lat: camPosition.lat, lng: camPosition.lng, dist: meterPerPixel)
         
     }
@@ -770,13 +834,12 @@ extension MainVC: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: CarListTableViewCell.identifier, for: indexPath) as? CarListTableViewCell else { return UITableViewCell() }
-        let date1 = Date()
-        let date2 = Date(timeInterval: 36000, since: date1)
         cell.selectionStyle = .none
         cell.separatorInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
         #if true
-        cell.carInfoConfiguration(carImage: socarListData?[indexPath.row].image ?? "", carName: socarListData?[indexPath.row].name ?? "", carPrice: 30000, availableDiscount: socarListData?[indexPath.row].isEvent ?? false)
-        cell.timeInfoConfiguration(startTime: date1, finishTime: date2)
+        calculatedCarPrice.append(divideRendTotalTimeByHalfHour * (socarListData?[indexPath.row].carPrices.standardPrice ?? 0))
+        cell.carInfoConfiguration(carImage: socarListData?[indexPath.row].image ?? "", carName: socarListData?[indexPath.row].name ?? "", carPrice: calculatedCarPrice[indexPath.row], availableDiscount: socarListData?[indexPath.row].isEvent ?? false)
+        cell.timeInfoConfiguration(startTime: newStartDate, finishTime: newEndDate)
         #else
         cell.carInfoConfiguration(carImage: "SampleCar", carName: "모닝", carPrice: 30000, availableDiscount: true)
         #endif
@@ -842,10 +905,12 @@ extension MainVC: UITableViewDelegate {
 //        }
 //        testTask.resume()
         self.selectedSocar = socarListData?[indexPath.row]
+        selectedCarPrice = calculatedCarPrice[indexPath.row]
         self.insuranceData = [InsuranceData(name: "스페셜", guarantee: 10, cost: 10000), InsuranceData(name: "스탠다드", guarantee: 30, cost: 30000), InsuranceData(name: "라이트", guarantee: 50, cost: 50000)]
         insuranceMenuView.special.configuration(symbol: "circle", name: insuranceData?[0].name ?? "불러오기 실패", guarantee: insuranceData?[0].guarantee ?? 0, cost: insuranceData?[0].cost ?? 0)
         insuranceMenuView.standard.configuration(symbol: "circle", name: insuranceData?[1].name ?? "불러오기 실패", guarantee: insuranceData?[1].guarantee ?? 0, cost: insuranceData?[1].cost ?? 0)
         insuranceMenuView.light.configuration(symbol: "circle", name: insuranceData?[2].name ?? "불러오기 실패", guarantee: insuranceData?[2].guarantee ?? 0, cost: insuranceData?[2].cost ?? 0)
+        
         UIView.animate(withDuration: 0.5, animations: {
             self.insuranceMenuView.frame.origin.y = (self.view.frame.height / 2 ) - 50
             self.visualEffectView2.alpha = 1

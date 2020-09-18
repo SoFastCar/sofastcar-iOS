@@ -32,25 +32,23 @@ class InsurancePopVC: UIViewController {
     insuranceMainView.light.addTarget(self, action: #selector(didTapInsuranceItem(_:)), for: .touchUpInside)
   }
   
-  override func loadView() {
-    view = insuranceMainView
+  override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    dismissThisViewContoller()
   }
   
-  override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-    guard let presentVC = presentingViewController as? ReservationConfirmTableVC else { return }
-    UIView.animate(withDuration: 0.4) {
-      presentVC.blurView.alpha = 0
+  private func dismissThisViewContoller() {
+    if let navi = presentingViewController as? UINavigationController {
+      guard let presentVC = navi.viewControllers.last as? ReservationConfirmTableVC else { return }
+      UIView.animate(withDuration: 0.4) {
+        presentVC.blurView.alpha = 0
+      }
+      self.dismiss(animated: true, completion: nil)
     }
-    self.dismiss(animated: true, completion: nil)
   }
   
   // MARK: - Button Action
   @objc private func tapCompleteButton() {
-    guard let presentVC = presentingViewController as? ReservationConfirmTableVC else { return }
-    UIView.animate(withDuration: 0.4) {
-      presentVC.blurView.alpha = 0
-    }
-    self.dismiss(animated: true, completion: nil)
+    dismissThisViewContoller()
   }
   
   @objc func didTapInsuranceItem(_ sender: InsuranceMenuItemButton) {

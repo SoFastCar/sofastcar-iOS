@@ -45,6 +45,7 @@ struct SocarList: Decodable {
     let manualPage: String
     let safetyOpt: String
     let convenienceOpt: String
+    var carPrices: CarPrices
     
     enum CodingKeys: String, CodingKey {
         case fuelType = "fuel_type"
@@ -55,6 +56,7 @@ struct SocarList: Decodable {
         case manualPage = "manual_page"
         case safetyOpt = "safety_option"
         case convenienceOpt = "convenience_option"
+        case carPrices = "car_prices"
         case id
         case number
         case name
@@ -62,4 +64,18 @@ struct SocarList: Decodable {
         case image
         case manufacturer
     }
+}
+
+struct CarPrices: Decodable {
+  var standardPrice: Int
+  var minPricePerKm: Int
+  var midPricePerKm: Int
+  var maxPricePerKm: Int
+  
+  enum CodingKeys: String, CodingKey {
+    case standardPrice = "standard_price"
+    case minPricePerKm = "min_price_per_km"
+    case midPricePerKm = "mid_price_per_km"
+    case maxPricePerKm = "max_price_per_km"
+  }
 }

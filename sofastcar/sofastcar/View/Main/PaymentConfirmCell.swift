@@ -12,12 +12,9 @@ class PaymentConfirmCell: UITableViewCell {
   static let identifier = "paymentCell"
   weak var delegate: PaymentConfirmCellDelegate?
   lazy var guide = contentView.layoutMarginsGuide
-  enum MyPaymentCellType: String {
-    case detailCostCell = "상세요금"
-    case paymentCardCell = "결제카드"
-    case warningBeforeReservationCell = "예약 전 주의사항"
-    case agreeAllTerms = "약관동의"
-  }
+  
+  var rentPrice: Int?
+  var insuranceData: Insurance?
   
   let sectionTitleLabel: UILabel = {
     let label = UILabel()
@@ -186,24 +183,23 @@ class PaymentConfirmCell: UITableViewCell {
     fatalError("init(coder:) has not been implemented")
   }
     
-  func configureCellByType(cellType: String) {
-    sectionTitleLabel.text = cellType
+  func configureCellByType(cellType: PaymentConfirmCellType) {
+    sectionTitleLabel.text = cellType.rawValue
     switch cellType {
-    case MyPaymentCellType.detailCostCell.rawValue:
+    case .detailCostCell:
       configureDeatilCostCellUI()
-      configureDetailCostConent()
       configureContentViewBottomLayer()
-    case MyPaymentCellType.paymentCardCell.rawValue:
+    case .paymentCardCell:
       configureContentViewTopLayer()
       configurePaymentCardCellUI()
       configurePaymentCardCellContent()
       configureContentViewBottomLayer()
-    case MyPaymentCellType.warningBeforeReservationCell.rawValue:
+    case .warningBeforeReservationCell:
       configureContentViewTopLayer()
       configureWaringLabelUI()
       configureWaringContent()
       configureContentViewBottomLayer()
-    case MyPaymentCellType.agreeAllTerms.rawValue:
+    case .agreeAllTerms:
       configureAllAgreeCell()
     default:
       break
@@ -231,7 +227,7 @@ class PaymentConfirmCell: UITableViewCell {
   }
   
   private func configureDeatilCostCellUI() {
-    [sectionTitleLabel, rentalCostTitleLabel, rentalCostTitleLabel, rentalCostLabel,
+    [sectionTitleLabel, rentalCostTitleLabel, rentalCostLabel,
      insuranceCostTitleLabel, insuranceCostLabel, spView1, discountTitleLabel, changeOptionButton,
      spView2, creditTitleLabel, creditDetailInfoButton, creditAmoutLabel].forEach {
       contentView.addSubview($0)
@@ -301,7 +297,11 @@ class PaymentConfirmCell: UITableViewCell {
     }
   }
   
-  private func configureDetailCostConent() {
+  func configureDetailCostConent() {
+    guard let rentPrice = rentPrice else { return }
+    guard let insurancePrice = insuranceData?.cost else { return }
+    rentalCostLabel.text = "\(NumberFormatter.getPriceWithDot(price: rentPrice))원"
+    insuranceCostLabel.text = "\(NumberFormatter.getPriceWithDot(price: insurancePrice))원"
   }
   
   private func configurePaymentCardCellUI() {
@@ -407,11 +407,11 @@ class PaymentConfirmCell: UITableViewCell {
   @objc func tapChangeOptionButton() {
     guard let cellType = sectionTitleLabel.text else { return }
     switch cellType {
-    case MyPaymentCellType.detailCostCell.rawValue:
+    case PaymentConfirmCellType.detailCostCell.rawValue:
       delegate?.tapChangeCouponButton(forCell: self)
-    case MyPaymentCellType.paymentCardCell.rawValue:
+    case PaymentConfirmCellType.paymentCardCell.rawValue:
       delegate?.tapChangePaymentCardButton(forCell: self)
-    case MyPaymentCellType.warningBeforeReservationCell.rawValue:
+    case PaymentConfirmCellType.warningBeforeReservationCell.rawValue:
       delegate?.tapWarningBeforeConfirmButton(forCell: self)
     default:
       break
