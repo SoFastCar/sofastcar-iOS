@@ -411,7 +411,7 @@ class MainVC: UIViewController {
         naverMapView.showZoomControls = false
         naverMapView.showLocationButton = false
         naverMapView.showScaleBar = false
-        naverMapView.mapView.logoMargin = UIEdgeInsets(top: 0, left: 0, bottom: view.frame.height * 0.16, right: 300)
+        naverMapView.mapView.logoMargin = UIEdgeInsets(top: 0, left: 0, bottom: view.frame.height * 0.16, right: 0)
         naverMapView.mapView.moveCamera(NMFCameraUpdate(position: defaultCamPosition))
         callPositionMarker.iconImage = NMFOverlayImage(name: "callPointMarker1")
         callPositionMarker.height = 80
@@ -486,6 +486,7 @@ class MainVC: UIViewController {
                                 self.backCircleButton.isHidden = false
                             })
                             UIView.addKeyframe(withRelativeStartTime: 0.5, relativeDuration: 1, animations: {
+                                self.naverMapView.mapView.logoMargin = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
                                 self.naverMapView.mapView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: self.view.center.y, right: 0)
                                 self.carListView.frame.origin.y = self.view.center.y
                             })
@@ -717,6 +718,7 @@ extension MainVC: NMFMapViewTouchDelegate {
             self.carListView.frame.origin.y = self.view.frame.height
             self.setBookingTimeButton.frame.origin.y = self.view.frame.height - self.setBookingTimeButton.frame.height
             self.naverMapView.mapView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+            self.naverMapView.mapView.logoMargin = UIEdgeInsets(top: 0, left: 0, bottom: self.view.frame.height * 0.16, right: 0)
             self.callPositionMarker.position = mapView.cameraPosition.target
             self.callPositionMarker.mapView = mapView
         })
