@@ -38,7 +38,8 @@
 
 - **Development motivation**
 ```
-  SOCAR를 구현하며 배웠던 내용을 정리하고, 응용하며 개발에 자신감을 증가시키고
+  SOCAR를 구현하며 배웠던 내용을 정리하고, 
+  응용하며 개발에 자신감을 증가시키고
   개발자간의 협업을 통하여 커뮤니케이션 툴을 적극적으로 활용하여 
   커뮤니케이션 능력을 향상시키고 개발 능력을 증진시키기 위하여 
   이번 프로젝트를 시작하게 되었습니다.
@@ -65,7 +66,18 @@
 2020.09.03 ~ 2020.09.18일까지 진행한 1차 스프린트 입니다.
 
 - **MVPDevelopment**
-**[gif 동영상 추가]**
+<p align="center" style="display: flex;justify-content: space-between;">
+  <img src="./images/LOGIN.gif" alt="LOGIN" style="zoom: 80%; margin-left: 50px" />
+  <img src="./images/LOGIN.gif" alt="LOGIN" style="zoom: 80%;" />
+  <img src="./images/RANTAL.gif" alt="RANTAL" style="zoom: 80%; margin-right: 50px" />
+</P>
+
+<p align="center" style="display: flex;justify-content: space-between;">
+  <span style="margin-left: 100px">로그인/회원가입</span>
+  <span>메인/예약</span>
+  <span style="margin-right: 100px">대여/반납</span>
+</P>
+
 - **Tools**
   - 개발 일정 관리 ([Github Projects](https://github.com/SoFastCar/sofastcar-iOS/projects))
   <p align="center">
