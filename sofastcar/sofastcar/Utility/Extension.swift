@@ -164,12 +164,3 @@ extension NumberFormatter {
     return "\(priceWithDot)"
   }
 }
-
-extension UITextField {
-  func numberWithDot(price: Int) {
-    let numberFormatter = NumberFormatter()
-    numberFormatter.numberStyle = .decimal
-    guard let priceWithDot = numberFormatter.string(from: NSNumber(value: price)) else { fatalError() }
-    self.text = "\(priceWithDot)"
-  }
-}
