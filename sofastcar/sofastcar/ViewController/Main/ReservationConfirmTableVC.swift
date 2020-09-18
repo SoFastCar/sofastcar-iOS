@@ -36,10 +36,13 @@ class ReservationConfirmTableVC: UITableViewController {
   var endDate: Date?
   var newStartDate: Date?
   var newEndDate: Date?
-  var totalPrice: Int? {
+  var rentPrice: Int? {
     didSet {
-      guard let totalPrice = totalPrice else { return }
-      reservationCostInfoButton.setTitle("총 합계 \(totalPrice) 원", for: .normal)
+      guard let rentPrice = rentPrice ,
+          let insurancePrice = insuranceData?.cost else { return }
+      let totalPrice = rentPrice+insurancePrice
+      let numberWithDot = NumberFormatter.getPriceWithDot(price: totalPrice)
+      reservationCostInfoButton.setTitle("총 합계 \(numberWithDot) 원", for: .normal)
     }
   }
   var headerViewHeight: CGFloat = 650
@@ -89,24 +92,26 @@ class ReservationConfirmTableVC: UITableViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    configureBlurView()
     configureNavigationContoller()
     configureTableHeaderView()
     configureReservationConfirmButton()
     configureInsuranceMainView()
-    configureBlurView()
   }
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
+    navigationItem.largeTitleDisplayMode = .always
     navigationController?.isNavigationBarHidden = false
     navigationController?.navigationBar.isHidden = false
-    configureNavigationContoller()
+    navigationController?.navigationBar.prefersLargeTitles = true
     tableView.reloadData()
   }
   
   private func configureNavigationContoller() {
     title = "대여 정보 확인"
     navigationController?.navigationBar.prefersLargeTitles = true
+    navigationController?.navigationItem.largeTitleDisplayMode = .always
     navigationController?.navigationBar.backgroundColor = .white
     navigationController?.navigationBar.barTintColor = UIColor.white
     navigationController?.navigationBar.tintColor = UIColor.black
@@ -125,7 +130,7 @@ class ReservationConfirmTableVC: UITableViewController {
     tableView.register(ReservationConfirmCustomCell.self,
                        forCellReuseIdentifier: ReservationConfirmCustomCell.identifier)
     tableView.tableHeaderView = myHeaderView
-    tableView.tableHeaderView?.frame = CGRect(x: 0, y: 10,
+    tableView.tableHeaderView?.frame = CGRect(x: 0, y: 0,
                                               width: UIScreen.main.bounds.width,
                                               height: headerViewHeight)
     tableView.rowHeight = UITableView.automaticDimension
@@ -194,7 +199,10 @@ class ReservationConfirmTableVC: UITableViewController {
   
   // MARK: - Button Action
   @objc func tabReservationConfirmButton() {
+    guard let insuranceData = insuranceData else { return }
+    guard let rentPrice = rentPrice else { return }
     let paymentConfirmTableVC = PaymentConfirmTableVC(style: .grouped)
+    paymentConfirmTableVC.configurePaymentConfirmTableVC(rentPrice: rentPrice, insuranceData: insuranceData)
     navigationController?.pushViewController(paymentConfirmTableVC, animated: true)
   }
   
@@ -258,4 +266,3 @@ extension ReservationConfirmTableVC: ResrvationConfirmCellDelegate {
     tableView.reloadRows(at: [IndexPath(row: 0, section: 2)], with: .none)
   }
 }
-

@@ -243,7 +243,8 @@ class MainVC: UIViewController {
         presentedVC.insuranceData = selectedInsurance // 보험 데이터
         presentedVC.startDate = newStartDate // 시작 시간
         presentedVC.endDate = newEndDate // 종료 시간
-        presentedVC.totalPrice = selectedCarPrice + selectedInsurance.cost // 최종 가격
+        presentedVC.rentPrice = selectedCarPrice // 차량 렌트 가격
+        navigationController?.navigationItem.largeTitleDisplayMode = .always
         navigationController?.pushViewController(presentedVC, animated: true)
     }
     

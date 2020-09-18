@@ -253,9 +253,9 @@ class ReservationConfirmCustomCell: UITableViewCell {
   // MARK: - ContentView Handler
   private func configureinsuranceCellContent() {
     guard let name = insuranceInfo?.name,
-          let cost = insuranceInfo?.cost else { return }
+          let guarantee = insuranceInfo?.guarantee else { return }
     contentTitleLabel.text = name
-    contentLabel.text = "자기부담금 최대 \(cost)만원"
+    contentLabel.text = "자기부담금 최대 \(guarantee)만원"
   }
   
   private func configureUsingTiemCellContent() {
