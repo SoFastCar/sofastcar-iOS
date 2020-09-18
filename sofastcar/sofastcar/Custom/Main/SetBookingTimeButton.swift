@@ -134,21 +134,6 @@ class SetBookingTimeButton: UIButton {
     }
     
     func setupTime(isChaged flag: Bool, startTime sTime: Date, endTime eTime: Date) {
-        if flag {
-            startTime = sTime
-            endTime = eTime
-//            print(Time.getTimeString(type: .castMddEHHmm, date: startTime))
-//            print(Time.getTimeString(type: .castMddEHHmm, date: endTime))
-            timeLabel.text = "\(Time.getTimeString(type: .todayHHmm, date: startTime)) - \(Time.getTimeString(type: .hourHHmm, date: endTime))"
-        } else {
-            let date = floor(Date().timeIntervalSince1970)
-            let restMinDate = Double(Int(date) % 600)
-            startTime = Date(timeIntervalSince1970: date-restMinDate)
-            startTime.addTimeInterval(TimeInterval(20*Time.min))
-            endTime = startTime.addingTimeInterval(TimeInterval(Time.hour*4))
-//            print(Time.getTimeString(type: .castMddEHHmm, date: startTime))
-//            print(Time.getTimeString(type: .castMddEHHmm, date: endTime))
-            timeLabel.text = "\(Time.getTimeString(type: .todayHHmm, date: startTime)) - \(Time.getTimeString(type: .hourHHmm, date: endTime))"
-        }
+      timeLabel.text = Time.getStartEndTimeShowLabel(start: sTime, end: eTime)
     }  
 }

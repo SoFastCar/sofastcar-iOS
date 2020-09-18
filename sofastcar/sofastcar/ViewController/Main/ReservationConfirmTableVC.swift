@@ -38,11 +38,7 @@ class ReservationConfirmTableVC: UITableViewController {
   var newEndDate: Date?
   var rentPrice: Int? {
     didSet {
-      guard let rentPrice = rentPrice ,
-          let insurancePrice = insuranceData?.cost else { return }
-      let totalPrice = rentPrice+insurancePrice
-      let numberWithDot = NumberFormatter.getPriceWithDot(price: totalPrice)
-      reservationCostInfoButton.setTitle("총 합계 \(numberWithDot) 원", for: .normal)
+      setTotalPriceAtReservationCompleteButton()
     }
   }
   var headerViewHeight: CGFloat = 650
@@ -96,7 +92,6 @@ class ReservationConfirmTableVC: UITableViewController {
     configureNavigationContoller()
     configureTableHeaderView()
     configureReservationConfirmButton()
-    configureInsuranceMainView()
   }
   
   override func viewWillAppear(_ animated: Bool) {
@@ -199,10 +194,6 @@ class ReservationConfirmTableVC: UITableViewController {
     }
   }
   
-  private func configureInsuranceMainView() {
-    
-  }
-  
   // MARK: - Button Action
   @objc func tabReservationConfirmButton() {
     guard let insuranceData = insuranceData else { return }
@@ -269,6 +260,19 @@ extension ReservationConfirmTableVC: ResrvationConfirmCellDelegate {
   }
   
   func reloadUsingTimeCell() {    
-    tableView.reloadRows(at: [IndexPath(row: 0, section: 2)], with: .none)
+//    tableView.reloadRows(at: [IndexPath(row: 0, section: 2)], with: .none)
+    tableView.reloadData()
+    setTotalPriceAtReservationCompleteButton()
+  }
+  
+  func setTotalPriceAtReservationCompleteButton() {
+    guard let socarData = socarData else { return }
+    guard let insurancePrice = insuranceData?.cost else { return }
+    guard let startDate = startDate,
+          let endDate = endDate else { return }
+    let divideRendTotalTimeByHalfHour = Time.getDivideRentTodalTimeByHalfHour(start: startDate, end: endDate)
+    let totalPrice = socarData.carPrices.standardPrice*divideRendTotalTimeByHalfHour+insurancePrice
+    let numberWithDot = NumberFormatter.getPriceWithDot(price: totalPrice)
+    reservationCostInfoButton.setTitle("총 합계 \(numberWithDot) 원", for: .normal)
   }
 }
