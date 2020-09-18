@@ -45,6 +45,7 @@
 		BC91B63A250FA91D00B76398 /* SocarZoneDataList.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC91B639250FA91D00B76398 /* SocarZoneDataList.swift */; };
 		BCDFBCDC2511E523002E4789 /* InsuranceData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCDFBCDB2511E523002E4789 /* InsuranceData.swift */; };
 		BCDFBCDE251237B2002E4789 /* GeocodingData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCDFBCDD251237B2002E4789 /* GeocodingData.swift */; };
+		BCFCF64A2513CE9A003CAA71 /* SearchCustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFCF6492513CE9A003CAA71 /* SearchCustomButton.swift */; };
 		C728C85024F7E35100063005 /* SignUpUserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C728C84F24F7E35100063005 /* SignUpUserData.swift */; };
 		C72A913824F5E15B005D464F /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72A913724F5E15B005D464F /* Extension.swift */; };
 		C72A913A24F5E32A005D464F /* SingUpInitVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72A913924F5E32A005D464F /* SingUpInitVC.swift */; };
@@ -166,6 +167,7 @@
 		BC91B639250FA91D00B76398 /* SocarZoneDataList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SocarZoneDataList.swift; path = sofastcar/Model/Main/SocarZoneDataList.swift; sourceTree = SOURCE_ROOT; };
 		BCDFBCDB2511E523002E4789 /* InsuranceData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsuranceData.swift; sourceTree = "<group>"; };
 		BCDFBCDD251237B2002E4789 /* GeocodingData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeocodingData.swift; sourceTree = "<group>"; };
+		BCFCF6492513CE9A003CAA71 /* SearchCustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SearchCustomButton.swift; path = sofastcar/Custom/Main/SearchCustomButton.swift; sourceTree = SOURCE_ROOT; };
 		C728C84F24F7E35100063005 /* SignUpUserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpUserData.swift; sourceTree = "<group>"; };
 		C72A913724F5E15B005D464F /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		C72A913924F5E32A005D464F /* SingUpInitVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingUpInitVC.swift; sourceTree = "<group>"; };
@@ -358,6 +360,7 @@
 			isa = PBXGroup;
 			children = (
 				BC4F3A17250E01FD00B7E1E7 /* AxaButton.swift */,
+				BCFCF6492513CE9A003CAA71 /* SearchCustomButton.swift */,
 				BC4F3A1A250E01FD00B7E1E7 /* InsuranceMenuItemButton.swift */,
 				BC4F3A19250E01FD00B7E1E7 /* RentReturnTimeButton.swift */,
 				BC4F3A16250E01FD00B7E1E7 /* SetBookingTimeButton.swift */,
@@ -822,6 +825,7 @@
 				C7CEF7442511BFB000C063B0 /* VehicleTakePictureView.swift in Sources */,
 				7E8473DA2507C59D0007962F /* VehicleCheckView.swift in Sources */,
 				BC91B630250FA6F200B76398 /* SocarZoneProvider.swift in Sources */,
+				BCFCF64A2513CE9A003CAA71 /* SearchCustomButton.swift in Sources */,
 				7EAA8F6824FFBB510049D514 /* ReservationDashboardVC.swift in Sources */,
 				C7CA53EC2509AA3F008DA68C /* ReservationDetailTableVC.swift in Sources */,
 				BC4F3A14250E01EB00B7E1E7 /* NMFData.swift in Sources */,

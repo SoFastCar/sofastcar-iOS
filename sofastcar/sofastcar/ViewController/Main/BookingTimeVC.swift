@@ -113,6 +113,8 @@ class BookingTimeVC: UIViewController {
       setBookingTimeMain?.setButtonTitle(sTime: startDate, eTime: endDate)
       setBookingTimeCarList?.setupTime(isChaged: true, startTime: startDate, endTime: endDate)
       setBookingTimeCarList?.setButtonTitle(sTime: startDate, eTime: endDate)
+        presentingVC.calculatedCarPrice.removeAll()
+      presentingVC.carListView.carListTableView.reloadData()
     }
     
     if let presentingVC = navi.viewControllers.last as? ReservationConfirmTableVC {
