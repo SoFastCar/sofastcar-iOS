@@ -6,36 +6,45 @@
 카셰어링 서비스를 제공하는 SOCAR의 iOS Application Clone 프로젝트 입니다.
 *[SOCAR 기업페이지](https://www.socar.kr/)*
 
-## Requirements
+## 1.Architecture
+
+- MVC
+
+## 2.Requirements
 
 - Swift 5.0
 - Xcode
 
-## 1st Sprint
+## 3.Using Library List
+프로젝트내에서 사용한 라이브러리 목록 입니다.
+
+### 3.1.Pod
+- [Swift Lynt](https://github.com/realm/SwiftLint)
+- [Naver Map SDK](https://www.ncloud.com/product/applicationService/maps)
+### 3.2.Swift Package Manager
+- [Snapkit](https://github.com/SnapKit/SnapKit#contents)
+- [Kingfisher](https://github.com/onevcat/Kingfisher)
+
+## 4.Projcet flow
+프로젝트 기획부터 개발까지의 흐름 입니다.
+
+### 4.1.Projcet Planning
+Clone Project 프로젝트 기획
+
+#### 4.1.1.MVP(Minimum Viable Product)
+1차 스프린트 기간동안 기획한 최소 기능 구현 단위 입니다.
+
+#### 4.1.2.Using tool
+기획하면서 사용한 도구 입니다.
+- Slack
+- Google Meet
+- Drow.io
+
+### 5.1.1st Sprint
 2020.09.18일까지 진행한 1차 스프린트 입니다.
 
 
 
-
-### MVP(Minimum Viable Product)
-1차 스프린트 기간동안 기획한 최소 기능 구현 단위 입니다.
-
-
-
-## Architecture
-
-- MVC
-
-## Using Library List
-프로젝트내에서 사용한 라이브러리 목록 입니다.
-
-**Pod**
-- [Swift Lynt](https://github.com/realm/SwiftLint)
-- [Naver Map SDK](https://www.ncloud.com/product/applicationService/maps)
-
-**Swift Package Manager**
-- [Snapkit](https://github.com/SnapKit/SnapKit#contents)
-- [Kingfisher](https://github.com/onevcat/Kingfisher)
 
 ### GitHub 관련
 
