@@ -36,6 +36,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let navigationController = UINavigationController(rootViewController: rootView)
     let backButtonImage = UIImage(systemName: "arrow.left")
     navigationController.navigationBar.backIndicatorImage = backButtonImage
+    navigationController.navigationBar.prefersLargeTitles = true
+    navigationController.navigationItem.largeTitleDisplayMode = .always
     navigationController.navigationBar.backIndicatorTransitionMaskImage = backButtonImage
     navigationController.navigationBar.topItem?.title = ""
     

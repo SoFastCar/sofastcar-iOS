@@ -118,6 +118,7 @@ class BookingTimeVC: UIViewController {
     }
     
     if let presentingVC = navi.viewControllers.last as? ReservationConfirmTableVC {
+      print("reservationConfirm push")
       presentingVC.startDate = startDate
       presentingVC.endDate = endDate
       presentingVC.reloadUsingTimeCell()
