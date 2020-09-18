@@ -27,7 +27,6 @@ class ReservationConfirmTableVC: UITableViewController {
   var socarData: SocarList? {
     didSet {
       guard let socarData = socarData else { return }
-      print(socarData.carPrices.standardPrice)
       isSocarSaveCar = isSaveCarCheck()
       isElectronicCar = isEelctronicCarCheck()
       isBurom = isBuromCheck()
@@ -259,3 +258,4 @@ extension ReservationConfirmTableVC: ResrvationConfirmCellDelegate {
     tableView.reloadRows(at: [IndexPath(row: 0, section: 2)], with: .none)
   }
 }
+

@@ -174,13 +174,11 @@ extension BookingTimeVC: UITableViewDataSource, UITableViewDelegate {
   private func firstCellconfigure(cell: UITableViewCell) -> UITableViewCell {
     cell.textLabel?.text = firstCellTitleConfigure()
     cell.textLabel?.font = .boldSystemFont(ofSize: 20)
-    if isTimeChange {
+//    if isTimeChange {
       cell.detailTextLabel?.text = Time.getStartEndTimeShowLabel(start: startDate, end: endDate)
-    } else {
-      print(Time.getTimeString(type: .castMddEHHmm, date: startDate))
-      print(Time.getTimeString(type: .castMddEHHmm, date: endDate))
-      cell.detailTextLabel?.text = "\(Time.getTimeString(type: .todayHHmm, date: startDate)) - \(Time.getTimeString(type: .hourHHmm, date: endDate))"
-    }
+//    } else {
+//      cell.detailTextLabel?.text = "\(Time.getTimeString(type: .todayHHmm, date: startDate)) - \(Time.getTimeString(type: .hourHHmm, date: endDate))"
+//    }
     cell.detailTextLabel?.numberOfLines = 2
     cell.detailTextLabel?.textColor = .systemGray
     return cell

@@ -260,7 +260,7 @@ class ReservationConfirmCustomCell: UITableViewCell {
   
   private func configureUsingTiemCellContent() {
     guard let startDate = startDate,
-          let endDate = endDate else { return print("시간 값 없음")}
+          let endDate = endDate else { return }
     contentTitleLabel.text = Time.getDiffTwoDateValueReturnString(start: startDate, end: endDate)
     contentLabel.text = Time.getStartEndTimeShowLabel(start: startDate, end: endDate)
 
@@ -280,7 +280,7 @@ class ReservationConfirmCustomCell: UITableViewCell {
   
   // MARK: - Button Action
   @objc func tapChangeOptionButton() {
-    guard let menuTitle = sectionTitleLabel.text else { return print("aa") }
+    guard let menuTitle = sectionTitleLabel.text else { return }
     if menuTitle == MyTalbleViewCellType.insuranceCell.rawValue {
       delegate?.tapChangeInsuranceButton(forCell: self)
     } else {
