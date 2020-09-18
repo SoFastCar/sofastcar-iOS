@@ -45,7 +45,7 @@ struct SocarList: Decodable {
     let manualPage: String
     let safetyOpt: String
     let convenienceOpt: String
-    let carPrices: CarPrices
+    var carPrices: CarPrices
     
     enum CodingKeys: String, CodingKey {
         case fuelType = "fuel_type"
@@ -67,10 +67,10 @@ struct SocarList: Decodable {
 }
 
 struct CarPrices: Decodable {
-  let standardPrice: Int
-  let minPricePerKm: Int
-  let midPricePerKm: Int
-  let maxPricePerKm: Int
+  var standardPrice: Int
+  var minPricePerKm: Int
+  var midPricePerKm: Int
+  var maxPricePerKm: Int
   
   enum CodingKeys: String, CodingKey {
     case standardPrice = "standard_price"
