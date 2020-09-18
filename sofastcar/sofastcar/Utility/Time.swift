@@ -80,4 +80,9 @@ class Time {
     }
     return returnString
   }
+  
+  static func getDivideRentTodalTimeByHalfHour(start: Date, end: Date) -> Int {
+    return Int((end.timeIntervalSince1970 - start.timeIntervalSince1970))/Time.hour*2
+  }
+  
 }

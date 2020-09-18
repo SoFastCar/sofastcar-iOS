@@ -70,13 +70,12 @@ class MainVC: UIViewController {
     // New Booking Time Data
     var newStartDate = Date() {
       didSet {
-        divideRendTotalTimeByHalfHour = Int((newEndDate.timeIntervalSince1970 - newStartDate.timeIntervalSince1970))/Time.hour*2
-        print(divideRendTotalTimeByHalfHour)
+        divideRendTotalTimeByHalfHour = Time.getDivideRentTodalTimeByHalfHour(start: newStartDate, end: newEndDate)
       }
     }
     var newEndDate = Date() {
       didSet {
-        divideRendTotalTimeByHalfHour = Int((newEndDate.timeIntervalSince1970 - newStartDate.timeIntervalSince1970))/Time.hour*2
+        divideRendTotalTimeByHalfHour = Time.getDivideRentTodalTimeByHalfHour(start: newStartDate, end: newEndDate)
       }
     }
     var divideRendTotalTimeByHalfHour: Int = 8
