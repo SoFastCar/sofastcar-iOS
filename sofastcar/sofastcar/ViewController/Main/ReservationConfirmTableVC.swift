@@ -41,6 +41,7 @@ class ReservationConfirmTableVC: UITableViewController {
       setTotalPriceAtReservationCompleteButton()
     }
   }
+  var divideRendTotalTimeByHalfHour: Int = 0
   var headerViewHeight: CGFloat = 650
   var isSocarSaveCar: Bool = false
   var isElectronicCar: Bool = false
@@ -197,7 +198,8 @@ class ReservationConfirmTableVC: UITableViewController {
   // MARK: - Button Action
   @objc func tabReservationConfirmButton() {
     guard let insuranceData = insuranceData else { return }
-    guard let rentPrice = rentPrice else { return }
+    guard let standardPrice = socarData?.carPrices.standardPrice else { return }
+    let rentPrice = standardPrice*divideRendTotalTimeByHalfHour
     let paymentConfirmTableVC = PaymentConfirmTableVC(style: .grouped)
     paymentConfirmTableVC.configurePaymentConfirmTableVC(rentPrice: rentPrice, insuranceData: insuranceData)
     navigationController?.pushViewController(paymentConfirmTableVC, animated: true)
@@ -270,7 +272,7 @@ extension ReservationConfirmTableVC: ResrvationConfirmCellDelegate {
     guard let insurancePrice = insuranceData?.cost else { return }
     guard let startDate = startDate,
           let endDate = endDate else { return }
-    let divideRendTotalTimeByHalfHour = Time.getDivideRentTodalTimeByHalfHour(start: startDate, end: endDate)
+    divideRendTotalTimeByHalfHour = Time.getDivideRentTodalTimeByHalfHour(start: startDate, end: endDate)
     let totalPrice = socarData.carPrices.standardPrice*divideRendTotalTimeByHalfHour+insurancePrice
     let numberWithDot = NumberFormatter.getPriceWithDot(price: totalPrice)
     reservationCostInfoButton.setTitle("총 합계 \(numberWithDot) 원", for: .normal)
