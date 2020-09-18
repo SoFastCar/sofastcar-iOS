@@ -253,14 +253,14 @@ class ReservationConfirmCustomCell: UITableViewCell {
   // MARK: - ContentView Handler
   private func configureinsuranceCellContent() {
     guard let name = insuranceInfo?.name,
-          let cost = insuranceInfo?.cost else { return }
+          let guarantee = insuranceInfo?.guarantee else { return }
     contentTitleLabel.text = name
-    contentLabel.text = "자기부담금 최대 \(cost)만원"
+    contentLabel.text = "자기부담금 최대 \(guarantee)만원"
   }
   
   private func configureUsingTiemCellContent() {
     guard let startDate = startDate,
-          let endDate = endDate else { return print("시간 값 없음")}
+          let endDate = endDate else { return }
     contentTitleLabel.text = Time.getDiffTwoDateValueReturnString(start: startDate, end: endDate)
     contentLabel.text = Time.getStartEndTimeShowLabel(start: startDate, end: endDate)
 
@@ -280,7 +280,7 @@ class ReservationConfirmCustomCell: UITableViewCell {
   
   // MARK: - Button Action
   @objc func tapChangeOptionButton() {
-    guard let menuTitle = sectionTitleLabel.text else { return print("aa") }
+    guard let menuTitle = sectionTitleLabel.text else { return }
     if menuTitle == MyTalbleViewCellType.insuranceCell.rawValue {
       delegate?.tapChangeInsuranceButton(forCell: self)
     } else {

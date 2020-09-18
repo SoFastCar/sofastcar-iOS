@@ -8,15 +8,23 @@
 
 import UIKit
 
+enum PaymentConfirmCellType: String {
+  case detailCostCell = "상세요금"
+  case paymentCardCell = "결제카드"
+  case warningBeforeReservationCell = "예약 전 주의사항"
+  case agreeAllTerms = "약관동의"
+  
+  static func allcase() -> [PaymentConfirmCellType] {
+    return [detailCostCell, paymentCardCell, warningBeforeReservationCell, agreeAllTerms]
+  }
+}
+
 class PaymentConfirmTableVC: UITableViewController {
   // MARK: - Properties
-  var sectionTitle: [PaymentCellType] = [.detailCostCell, .paymentCardCell, .warningBeforeReservationCell, .agreeAllTerms]
-  enum PaymentCellType: String {
-    case detailCostCell = "상세요금"
-    case paymentCardCell = "결제카드"
-    case warningBeforeReservationCell = "예약 전 주의사항"
-    case agreeAllTerms = "약관동의"
-  }
+  var insuranceData: Insurance?
+  var rentPrice: Int?
+  
+  lazy var tableViewCellArray: [PaymentConfirmCellType] = PaymentConfirmCellType.allcase()
   
   let reservationCostInfoButton: UIButton = {
     let button = UIButton()
@@ -94,9 +102,23 @@ class PaymentConfirmTableVC: UITableViewController {
     }
   }
   
+  func configurePaymentConfirmTableVC(rentPrice: Int, insuranceData: Insurance) {
+    self.rentPrice = rentPrice
+    self.insuranceData = insuranceData
+    tableView.reloadData()
+  }
+  // MARK: - Handler
+  private func setTotalPriceAtResertvationCompleteButton() {
+    guard let rentPrice = rentPrice ,
+        let insurancePrice = insuranceData?.cost else { return }
+    let totalPrice = rentPrice + insurancePrice
+    let totalPriceWithDot = NumberFormatter.getPriceWithDot(price: totalPrice)
+    reservationCostInfoButton.setTitle("총 합계 \(totalPriceWithDot) 원", for: .normal)
+  }
+  
   // MARK: - Table view data source
   override func numberOfSections(in tableView: UITableView) -> Int {
-    return sectionTitle.count
+    return tableViewCellArray.count
   }
   
   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -105,8 +127,17 @@ class PaymentConfirmTableVC: UITableViewController {
   
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = PaymentConfirmCell(style: .default, reuseIdentifier: PaymentConfirmCell.identifier)
-    cell.configureCellByType(cellType: sectionTitle[indexPath.section].rawValue)
+    cell.configureCellByType(cellType: tableViewCellArray[indexPath.section])
     cell.delegate = self
+    cell.insuranceData = insuranceData
+    cell.rentPrice = rentPrice
+    switch tableViewCellArray[indexPath.section] {
+    case .detailCostCell:
+      cell.configureDetailCostConent()
+      setTotalPriceAtResertvationCompleteButton()
+    case .agreeAllTerms, .paymentCardCell, .warningBeforeReservationCell:
+      break
+    }
     return cell
   }
   
