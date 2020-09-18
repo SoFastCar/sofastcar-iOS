@@ -158,6 +158,7 @@ class ReservationConfirmTableVC: UITableViewController {
   
   private func configureTableHeaderViewContents(myHeaderView: ReservationConfirmTableHeaderView) {
     guard let socarData = socarData else { return }
+    let price = socarData.carPrices
     myHeaderView.carImage.loadImage(with: socarData.image)
     myHeaderView.carName.text = socarData.name
     socarData.safetyOpt.split(separator: ",").forEach {
@@ -165,6 +166,11 @@ class ReservationConfirmTableVC: UITableViewController {
     }
     myHeaderView.safetyOptions.append("∙∙∙")
     myHeaderView.collectionView.reloadData()
+    if price.minPricePerKm == price.maxPricePerKm {
+       myHeaderView.carDrivingCostTitleValueLabel.text = "\(price.minPricePerKm) /km"
+    } else {
+      myHeaderView.carDrivingCostTitleValueLabel.text = "\(price.minPricePerKm) - \(price.maxPricePerKm) /km"
+    }
   }
   
   private func configureBlurView() {
