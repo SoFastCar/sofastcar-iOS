@@ -154,3 +154,22 @@ extension UIFont {
         return withTraits(traits: .traitItalic)
     }
 }
+
+// MARK: - numberFomatter
+extension NumberFormatter {
+  static func getPriceWithDot(price: Int) -> String {
+    let numberFormatter = NumberFormatter()
+    numberFormatter.numberStyle = .decimal
+    guard let priceWithDot = numberFormatter.string(from: NSNumber(value: price)) else { fatalError() }
+    return "\(priceWithDot)"
+  }
+}
+
+extension UITextField {
+  func numberWithDot(price: Int) {
+    let numberFormatter = NumberFormatter()
+    numberFormatter.numberStyle = .decimal
+    guard let priceWithDot = numberFormatter.string(from: NSNumber(value: price)) else { fatalError() }
+    self.text = "\(priceWithDot)"
+  }
+}

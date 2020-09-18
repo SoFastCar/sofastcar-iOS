@@ -114,9 +114,17 @@ class ReservationConfirmTableHeaderView: UIView {
   
   let carDrivingCostTitleLabel: UILabel = {
     let label = UILabel()
-    label.text = "주행요금 130 ~ 160원 /Km"
+    label.text = "주행요금"
     label.font = .boldSystemFont(ofSize: CommonUI.titleTextFontSize)
     label.textColor = .darkGray
+    return label
+  }()
+  
+  let carDrivingCostTitleValueLabel: UILabel = {
+    let label = UILabel()
+    label.text = "130 ~ 160원 /Km"
+    label.font = .boldSystemFont(ofSize: CommonUI.titleTextFontSize)
+    label.textColor = CommonUI.mainBlue
     return label
   }()
   
@@ -288,13 +296,18 @@ class ReservationConfirmTableHeaderView: UIView {
   }
   
   private func configureDrivingCostUI(_ guide: UILayoutGuide) {
-    [carDrivingCostTitleLabel, carDrivingCostInfoLabel, showCarDrivingCostWebViewButton, showNormalCostInfoButton].forEach {
+    [carDrivingCostTitleLabel, carDrivingCostTitleValueLabel, carDrivingCostInfoLabel, showCarDrivingCostWebViewButton, showNormalCostInfoButton].forEach {
       addSubview($0)
     }
     
     carDrivingCostTitleLabel.snp.makeConstraints {
       $0.top.equalTo(electorinicCarDrivingCostInfoTextView.snp.bottom).offset(30)
       $0.leading.equalTo(guide)
+    }
+    
+    carDrivingCostTitleValueLabel.snp.makeConstraints {
+      $0.leading.equalTo(carDrivingCostTitleLabel.snp.trailing).offset(5)
+      $0.centerY.equalTo(carDrivingCostTitleLabel.snp.centerY)
     }
     
     showNormalCostInfoButton.snp.makeConstraints {

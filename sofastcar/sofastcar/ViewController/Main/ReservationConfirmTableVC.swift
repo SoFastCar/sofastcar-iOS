@@ -27,7 +27,6 @@ class ReservationConfirmTableVC: UITableViewController {
   var socarData: SocarList? {
     didSet {
       guard let socarData = socarData else { return }
-      print(socarData.carPrices.standardPrice)
       isSocarSaveCar = isSaveCarCheck()
       isElectronicCar = isEelctronicCarCheck()
       isBurom = isBuromCheck()
@@ -37,10 +36,13 @@ class ReservationConfirmTableVC: UITableViewController {
   var endDate: Date?
   var newStartDate: Date?
   var newEndDate: Date?
-  var totalPrice: Int? {
+  var rentPrice: Int? {
     didSet {
-      guard let totalPrice = totalPrice else { return }
-      reservationCostInfoButton.setTitle("총 합계 \(totalPrice) 원", for: .normal)
+      guard let rentPrice = rentPrice ,
+          let insurancePrice = insuranceData?.cost else { return }
+      let totalPrice = rentPrice+insurancePrice
+      let numberWithDot = NumberFormatter.getPriceWithDot(price: totalPrice)
+      reservationCostInfoButton.setTitle("총 합계 \(numberWithDot) 원", for: .normal)
     }
   }
   var headerViewHeight: CGFloat = 650
@@ -90,24 +92,26 @@ class ReservationConfirmTableVC: UITableViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    configureBlurView()
     configureNavigationContoller()
     configureTableHeaderView()
     configureReservationConfirmButton()
     configureInsuranceMainView()
-    configureBlurView()
   }
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
+    navigationItem.largeTitleDisplayMode = .always
     navigationController?.isNavigationBarHidden = false
     navigationController?.navigationBar.isHidden = false
-    configureNavigationContoller()
+    navigationController?.navigationBar.prefersLargeTitles = true
     tableView.reloadData()
   }
   
   private func configureNavigationContoller() {
     title = "대여 정보 확인"
     navigationController?.navigationBar.prefersLargeTitles = true
+    navigationController?.navigationItem.largeTitleDisplayMode = .always
     navigationController?.navigationBar.backgroundColor = .white
     navigationController?.navigationBar.barTintColor = UIColor.white
     navigationController?.navigationBar.tintColor = UIColor.black
@@ -126,7 +130,7 @@ class ReservationConfirmTableVC: UITableViewController {
     tableView.register(ReservationConfirmCustomCell.self,
                        forCellReuseIdentifier: ReservationConfirmCustomCell.identifier)
     tableView.tableHeaderView = myHeaderView
-    tableView.tableHeaderView?.frame = CGRect(x: 0, y: 10,
+    tableView.tableHeaderView?.frame = CGRect(x: 0, y: 0,
                                               width: UIScreen.main.bounds.width,
                                               height: headerViewHeight)
     tableView.rowHeight = UITableView.automaticDimension
@@ -154,6 +158,7 @@ class ReservationConfirmTableVC: UITableViewController {
   
   private func configureTableHeaderViewContents(myHeaderView: ReservationConfirmTableHeaderView) {
     guard let socarData = socarData else { return }
+    let price = socarData.carPrices
     myHeaderView.carImage.loadImage(with: socarData.image)
     myHeaderView.carName.text = socarData.name
     socarData.safetyOpt.split(separator: ",").forEach {
@@ -161,6 +166,11 @@ class ReservationConfirmTableVC: UITableViewController {
     }
     myHeaderView.safetyOptions.append("∙∙∙")
     myHeaderView.collectionView.reloadData()
+    if price.minPricePerKm == price.maxPricePerKm {
+       myHeaderView.carDrivingCostTitleValueLabel.text = "\(price.minPricePerKm) /km"
+    } else {
+      myHeaderView.carDrivingCostTitleValueLabel.text = "\(price.minPricePerKm) - \(price.maxPricePerKm) /km"
+    }
   }
   
   private func configureBlurView() {
@@ -195,7 +205,10 @@ class ReservationConfirmTableVC: UITableViewController {
   
   // MARK: - Button Action
   @objc func tabReservationConfirmButton() {
+    guard let insuranceData = insuranceData else { return }
+    guard let rentPrice = rentPrice else { return }
     let paymentConfirmTableVC = PaymentConfirmTableVC(style: .grouped)
+    paymentConfirmTableVC.configurePaymentConfirmTableVC(rentPrice: rentPrice, insuranceData: insuranceData)
     navigationController?.pushViewController(paymentConfirmTableVC, animated: true)
   }
   
