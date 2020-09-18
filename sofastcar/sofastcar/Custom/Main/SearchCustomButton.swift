@@ -10,7 +10,6 @@ import UIKit
 
 class SearchCustomButton: UIButton {
 
-//    let stackView = UIStackView()
     let circleImageView = UIImageView()
     let addrLabel = UILabel()
     
@@ -25,29 +24,18 @@ class SearchCustomButton: UIButton {
     }
     
     func setupUI() {
-//        circleImageView.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 0), for: .horizontal)
-//        circleImageView.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 0), for: .vertical)
         circleImageView.contentMode = .scaleAspectFill
-//        circleImageView.frame.size = CGSize(width: 10, height: 10)
         circleImageView.image = UIImage(named: "callPointMarker-circle")
-//        stackView.addArrangedSubview(circleImageView)
         self.addSubview(circleImageView)
         
         addrLabel.text = "주소 출력"
         addrLabel.font = .systemFont(ofSize: CommonUI.titleTextFontSize, weight: .regular)
         addrLabel.textColor = CommonUI.mainDark
-//        stackView.addArrangedSubview(addrLabel)
         self.addSubview(addrLabel)
         
-//        stackView.axis = .horizontal
-//        stackView.distribution = .fillProportionally
-//        self.addSubview(stackView)
     }
     
     func setupConstraint() {
-//        stackView.snp.makeConstraints({
-//            $0.centerX.centerY.equalToSuperview()
-//        })
         circleImageView.snp.makeConstraints({
             $0.centerY.equalToSuperview()
             $0.trailing.equalTo(addrLabel.snp.leading).offset(-5)
@@ -55,7 +43,8 @@ class SearchCustomButton: UIButton {
         })
         
         addrLabel.snp.makeConstraints({
-            $0.centerX.centerY.equalToSuperview()
+            $0.centerY.equalToSuperview()
+            $0.centerX.equalToSuperview().offset(9)
         })
     }
     

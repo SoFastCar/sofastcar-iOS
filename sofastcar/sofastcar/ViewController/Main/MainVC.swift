@@ -32,6 +32,7 @@ class MainVC: UIViewController {
     lazy var markers: [NMFMarker] = []
     let naverMapView = NMFNaverMapView()
     lazy var callPositionMarker = NMFMarker(position: defaultMarkerPosition, iconImage: NMF_MARKER_IMAGE_YELLOW)
+//    let setlogoAlign = NMFLogoAlign(rawValue: 100)
     var selectedMarkerIndex = 0
     var prevNumOfMarkers = 0
     
@@ -107,7 +108,6 @@ class MainVC: UIViewController {
         navigationController?.isNavigationBarHidden = true
         UIView.animate(withDuration: 0.5, animations: {
             self.setBookingTimeButton.frame.origin.y = self.view.frame.height - self.setBookingTimeButton.frame.height
-            self.naverMapView.mapView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: self.setBookingTimeButton.frame.height, right: 0)
         })
     }
     // MARK: - Network
@@ -410,6 +410,7 @@ class MainVC: UIViewController {
         naverMapView.showZoomControls = false
         naverMapView.showLocationButton = false
         naverMapView.showScaleBar = false
+        naverMapView.mapView.logoMargin = UIEdgeInsets(top: 0, left: 0, bottom: view.frame.height * 0.16, right: 300)
         naverMapView.mapView.moveCamera(NMFCameraUpdate(position: defaultCamPosition))
         callPositionMarker.iconImage = NMFOverlayImage(name: "callPointMarker1")
         callPositionMarker.height = 80
@@ -714,7 +715,7 @@ extension MainVC: NMFMapViewTouchDelegate {
             self.backCircleButton.isHidden = true
             self.carListView.frame.origin.y = self.view.frame.height
             self.setBookingTimeButton.frame.origin.y = self.view.frame.height - self.setBookingTimeButton.frame.height
-            self.naverMapView.mapView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: self.setBookingTimeButton.frame.height, right: 0)
+            self.naverMapView.mapView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
             self.callPositionMarker.position = mapView.cameraPosition.target
             self.callPositionMarker.mapView = mapView
         })
@@ -907,6 +908,7 @@ extension MainVC: UITableViewDelegate {
         insuranceMenuView.special.configuration(symbol: "circle", name: insuranceData?[0].name ?? "불러오기 실패", guarantee: insuranceData?[0].guarantee ?? 0, cost: insuranceData?[0].cost ?? 0)
         insuranceMenuView.standard.configuration(symbol: "circle", name: insuranceData?[1].name ?? "불러오기 실패", guarantee: insuranceData?[1].guarantee ?? 0, cost: insuranceData?[1].cost ?? 0)
         insuranceMenuView.light.configuration(symbol: "circle", name: insuranceData?[2].name ?? "불러오기 실패", guarantee: insuranceData?[2].guarantee ?? 0, cost: insuranceData?[2].cost ?? 0)
+        
         UIView.animate(withDuration: 0.5, animations: {
             self.insuranceMenuView.frame.origin.y = (self.view.frame.height / 2 ) - 50
             self.visualEffectView2.alpha = 1
