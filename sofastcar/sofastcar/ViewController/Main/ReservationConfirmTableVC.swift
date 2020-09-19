@@ -48,13 +48,6 @@ class ReservationConfirmTableVC: UITableViewController {
   var isElectronicCar: Bool = false
   var isBurom: Bool = false
   
-  let blurView: UIVisualEffectView = {
-    let effect = UIBlurEffect(style: .dark)
-    let view = UIVisualEffectView(effect: effect)
-    view.alpha = 0
-    return view
-  }()
-  
   let reservationCostInfoButton: UIButton = {
     let button = UIButton()
     button.setTitle("총 합계 23,380원", for: .normal)
@@ -90,7 +83,6 @@ class ReservationConfirmTableVC: UITableViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    configureBlurView()
     configureNavigationContoller()
     configureTableHeaderView()
     configureReservationConfirmButton()
@@ -168,12 +160,6 @@ class ReservationConfirmTableVC: UITableViewController {
     } else {
       myHeaderView.carDrivingCostTitleValueLabel.text = "\(price.minPricePerKm) - \(price.maxPricePerKm) /km"
     }
-  }
-  
-  private func configureBlurView() {
-    tableView.addSubview(blurView)
-//    tableView.bringSubviewToFront(blurView)
-    blurView.frame = CGRect(x: 0, y: -100, width: UIScreen.main.bounds.width, height: 2000)
   }
   
   private func configureReservationConfirmButton() {
