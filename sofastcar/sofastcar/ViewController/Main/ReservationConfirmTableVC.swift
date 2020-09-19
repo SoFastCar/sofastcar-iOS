@@ -41,6 +41,7 @@ class ReservationConfirmTableVC: UITableViewController {
       setTotalPriceAtReservationCompleteButton()
     }
   }
+  lazy var tableViewCellTypeArray = TalbleViewCellType.allcases()
   var divideRendTotalTimeByHalfHour: Int = 0
   var headerViewHeight: CGFloat = 650
   var isSocarSaveCar: Bool = false
@@ -207,7 +208,7 @@ class ReservationConfirmTableVC: UITableViewController {
   
   // MARK: - UITableViewDataSource
   override func numberOfSections(in tableView: UITableView) -> Int {
-    return TalbleViewCellType.allcases().count
+    return tableViewCellTypeArray.count
   }
   
   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -216,20 +217,12 @@ class ReservationConfirmTableVC: UITableViewController {
   
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = ReservationConfirmCustomCell(style: .default, reuseIdentifier: ReservationConfirmCustomCell.identifier)
-    let cellTypeArray = TalbleViewCellType.allcases()
-    cell.confiure(cellType: cellTypeArray[indexPath.section])
+    cell.insuranceInfo = insuranceData
+    cell.socarZone = socarZoneData
+    cell.startDate = startDate
+    cell.endDate = endDate
     cell.delegate = self
-    switch cellTypeArray[indexPath.section] {
-    case .insuranceCell:
-      cell.insuranceInfo = insuranceData
-    case .usingSocarZone:
-      cell.socarZone = socarZoneData
-    case .usingTiemCell:
-      cell.startDate = startDate
-      cell.endDate = endDate
-    case .business, .blank:
-      break
-    }
+    cell.confiure(cellType: tableViewCellTypeArray[indexPath.section])
     return cell
   }
   
@@ -238,14 +231,14 @@ class ReservationConfirmTableVC: UITableViewController {
   }
 }
 
+// MARK: - ResrvationConfirmCellDelegate
 extension ReservationConfirmTableVC: ResrvationConfirmCellDelegate {
   func tapChangeInsuranceButton(forCell: ReservationConfirmCustomCell) {
     let insurancePopVC = InsurancePopVC()
-    insurancePopVC.modalPresentationStyle = .overCurrentContext
-    present(insurancePopVC, animated: true, completion: nil)
-    UIView.animate(withDuration: 0.3) {
-      self.blurView.alpha = 1
-    }
+    insurancePopVC.modalPresentationStyle = .overFullScreen
+    present(insurancePopVC, animated: false, completion: {
+      insurancePopVC.presnetWithAnimate()
+    })
   }
   
   func tapChangeUsingTime(forCell: ReservationConfirmCustomCell) {

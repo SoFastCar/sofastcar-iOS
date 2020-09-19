@@ -16,12 +16,19 @@ class InsurancePopVC: UIViewController {
   // MARK: - Life Cycle
   override func viewDidLoad() {
     super.viewDidLoad()
-    
-    view.backgroundColor = .none
+    configureLayout()
+    configureButtonAction()
+  }
+  
+  private func configureLayout() {
+    view.backgroundColor = UIColor.black.withAlphaComponent(0)
     view.addSubview(insuranceMainView)
-    insuranceMainView.frame = CGRect(x: 0, y: 350,
+    insuranceMainView.frame = CGRect(x: 0, y: UIScreen.main.bounds.height,
                                      width: UIScreen.main.bounds.width,
                                      height: 490)
+  }
+  
+  private func configureButtonAction() {
     insuranceMainView.confirmButton.addTarget(self, action: #selector(tapCompleteButton), for: .touchUpInside)
     
     insuranceMainView.special.tag = 0
@@ -33,22 +40,33 @@ class InsurancePopVC: UIViewController {
   }
   
   override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-    dismissThisViewContoller()
+    dismissAnimate()
   }
   
-  private func dismissThisViewContoller() {
-    if let navi = presentingViewController as? UINavigationController {
-      guard let presentVC = navi.viewControllers.last as? ReservationConfirmTableVC else { return }
-      UIView.animate(withDuration: 0.4) {
-        presentVC.blurView.alpha = 0
-      }
-      self.dismiss(animated: true, completion: nil)
+  func presnetWithAnimate() {
+    UIView.animate(withDuration: 0.3) {
+      self.view.backgroundColor = UIColor.black.withAlphaComponent(0.5)
     }
+    UIView.animate(withDuration: 0.3) {
+      self.insuranceMainView.center.y -= self.insuranceMainView.frame.height
+    }
+  }
+  
+  private func dismissWithAnimate() {
+    UIView.animate(withDuration: 0.3) {
+      self.view.backgroundColor = UIColor.black.withAlphaComponent(0)
+    }
+    
+    UIView.animate(withDuration: 0.3, animations: {
+      self.insuranceMainView.center.y += self.insuranceMainView.frame.height
+    }, completion: {_ in
+      self.dismiss(animated: true)
+    })
   }
   
   // MARK: - Button Action
   @objc private func tapCompleteButton() {
-    dismissThisViewContoller()
+    dismissWithAnimate()
   }
   
   @objc func didTapInsuranceItem(_ sender: InsuranceMenuItemButton) {
