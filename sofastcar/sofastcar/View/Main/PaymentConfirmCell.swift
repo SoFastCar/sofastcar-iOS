@@ -188,6 +188,7 @@ class PaymentConfirmCell: UITableViewCell {
     switch cellType {
     case .detailCostCell:
       configureDeatilCostCellUI()
+      configureDetailCostConent()
       configureContentViewBottomLayer()
     case .paymentCardCell:
       configureContentViewTopLayer()
@@ -201,8 +202,6 @@ class PaymentConfirmCell: UITableViewCell {
       configureContentViewBottomLayer()
     case .agreeAllTerms:
       configureAllAgreeCell()
-    default:
-      break
     }
   }
   // MARK: - SetUI
@@ -297,7 +296,7 @@ class PaymentConfirmCell: UITableViewCell {
     }
   }
   
-  func configureDetailCostConent() {
+  private func configureDetailCostConent() {
     guard let rentPrice = rentPrice else { return }
     guard let insurancePrice = insuranceData?.cost else { return }
     rentalCostLabel.text = "\(NumberFormatter.getPriceWithDot(price: rentPrice))원"
