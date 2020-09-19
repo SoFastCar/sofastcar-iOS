@@ -69,7 +69,6 @@ class InsuranceMenuView: UIView {
             $0.top.equalTo(itemStackView.snp.bottom)
             $0.leading.equalTo(self)
             $0.trailing.equalTo(self)
-//            $0.height.equalTo((UIScreen.main.bounds.height / 2 + 50) * 0.15)  
             $0.bottom.equalTo(self)
         })
     }

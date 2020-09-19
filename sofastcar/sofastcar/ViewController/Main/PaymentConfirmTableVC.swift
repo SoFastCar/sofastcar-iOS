@@ -62,6 +62,7 @@ class PaymentConfirmTableVC: UITableViewController {
     configureNavigationContoller()
     configureTableView()
     configureReservationConfirmButton()
+    setTotalPriceAtResertvationCompleteButton()
   }
   
   private func configureNavigationContoller() {
@@ -127,17 +128,10 @@ class PaymentConfirmTableVC: UITableViewController {
   
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = PaymentConfirmCell(style: .default, reuseIdentifier: PaymentConfirmCell.identifier)
-    cell.configureCellByType(cellType: tableViewCellArray[indexPath.section])
     cell.delegate = self
     cell.insuranceData = insuranceData
     cell.rentPrice = rentPrice
-    switch tableViewCellArray[indexPath.section] {
-    case .detailCostCell:
-      cell.configureDetailCostConent()
-      setTotalPriceAtResertvationCompleteButton()
-    case .agreeAllTerms, .paymentCardCell, .warningBeforeReservationCell:
-      break
-    }
+    cell.configureCellByType(cellType: tableViewCellArray[indexPath.section])
     return cell
   }
   

@@ -326,9 +326,20 @@
 			path = Login;
 			sourceTree = "<group>";
 		};
+		C73D34762515C1250075471F /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				BC4F3A03250E01B300B7E1E7 /* InsuranceMenuHeaderView.swift */,
+				BC4F3A01250E01B300B7E1E7 /* InsuranceMenuView.swift */,
+				BC4F3A02250E01B300B7E1E7 /* BookingTimeCell.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
 		C75451F924F4E5CF00E13280 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				C73D34762515C1250075471F /* Common */,
 				C72A914224F67D87005D464F /* Login */,
 				C79A0B4E250122BD0061F078 /* Main */,
 				7EF41FC12500AAEA0030752A /* Reservation */,
@@ -392,6 +403,7 @@
 			isa = PBXGroup;
 			children = (
 				C790FB1B251343BB00AF98E2 /* InsurancePopVC.swift */,
+				BC4F3A0D250E01D000B7E1E7 /* BookingTimeVC.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -401,7 +413,6 @@
 			children = (
 				BC4F3A0C250E01D000B7E1E7 /* MainVC.swift */,
 				BC4F3A0E250E01D000B7E1E7 /* SearchVC.swift */,
-				BC4F3A0D250E01D000B7E1E7 /* BookingTimeVC.swift */,
 				BC4F3A26250E029B00B7E1E7 /* ReservationConfirmTableVC.swift */,
 				C7A9C91F250848A6006CA543 /* PaymentConfirmTableVC.swift */,
 				BC91B62D250F571100B76398 /* CallZoneData.swift */,
@@ -413,11 +424,8 @@
 		C79A0B4E250122BD0061F078 /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				BC4F3A02250E01B300B7E1E7 /* BookingTimeCell.swift */,
 				BC4F3A00250E01B300B7E1E7 /* CarListTableViewCell.swift */,
 				BC4F39FF250E01B300B7E1E7 /* CarListView.swift */,
-				BC4F3A03250E01B300B7E1E7 /* InsuranceMenuHeaderView.swift */,
-				BC4F3A01250E01B300B7E1E7 /* InsuranceMenuView.swift */,
 				BC4F39FE250E01B300B7E1E7 /* SearchResultTableViewCell.swift */,
 				BC4F3A04250E01B400B7E1E7 /* SearchView.swift */,
 				C7A9C91D2507B314006CA543 /* TopView.swift */,
@@ -619,7 +627,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1160;
-				LastUpgradeCheck = 1160;
+				LastUpgradeCheck = 1200;
 				ORGANIZATIONNAME = "김광수";
 				TargetAttributes = {
 					C769C81524FCCEA900DC8226 = {
@@ -936,6 +944,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -996,6 +1005,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -1030,7 +1040,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = X6LA4P7TFP;
+				DEVELOPMENT_TEAM = 52ZXCPY3WQ;
 				INFOPLIST_FILE = sofastcar/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
