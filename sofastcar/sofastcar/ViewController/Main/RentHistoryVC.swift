@@ -13,32 +13,81 @@ class RentHistoryVC: UITableViewController {
   var reservations: [Reservation]?
   
   // MARK: - Life Cycle
+  override init(style: UITableView.Style) {
+    super.init(style: .grouped)
+  }
+  
+  required init?(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+  
   override func viewDidLoad() {
     super.viewDidLoad()
-    
+    view.backgroundColor = .white
+    configureNavigationContoller()
     configureTableView()
+  }
+  
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    configureNavigationContoller()
+    
+  }
+  
+  private func configureNavigationContoller() {
+    guard let navi = navigationController else { return print("navi Missing")}
+    title = "이용내역"
+    navi.isNavigationBarHidden = false
+    navi.navigationBar.isHidden = false
+    navi.navigationBar.prefersLargeTitles = true
+    navi.navigationItem.largeTitleDisplayMode = .always
+    navi.navigationBar.backgroundColor = .white
+    navi.navigationBar.barTintColor = UIColor.white
+    navi.navigationBar.tintColor = UIColor.black
+    navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "slider.horizontal.3"), style: .plain, target: self, action: #selector(tapFilterButton))
   }
   
   private func configureTableView() {
     tableView.delegate = self
     tableView.dataSource = self
-    tableView.rowHeight = UITableView.automaticDimension
+    tableView.backgroundColor = .systemGray6
+    tableView.estimatedRowHeight = 700
     tableView.register(RentHistoryCell.self, forCellReuseIdentifier: RentHistoryCell.identifier)
+    tableView.sectionHeaderHeight = 10
+    tableView.sectionFooterHeight = 10
+    tableView.separatorStyle = .none
+  }
+  
+  // MARK: - Button Action
+  @objc private func tapFilterButton() {
+    print("tapFilterButton")
   }
 }
 
 // MARK: - UITableViewDelegate, UITableViewDataSource
 extension RentHistoryVC {
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    if indexPath.section == 0 { return UITableViewCell() }
     let cell = RentHistoryCell(style: .default, reuseIdentifier: RentHistoryCell.identifier)
     return cell
   }
   
   override func numberOfSections(in tableView: UITableView) -> Int {
-    return 1
+    return reservations?.count ?? 5
   }
   
   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return section == 0 ? 1 : reservations?.count ?? 3
+    return 1
+  }
+  
+  override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    return indexPath.section == 0 ? 0 : UITableView.automaticDimension
+  }
+  
+  override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//    let reservationData = reservations[indexPath.section]
+    let reservationDetailTableVC = ReservationDetailTableVC(isReservationEnd: true)
+    reservationDetailTableVC.modalPresentationStyle = .overFullScreen
+    present(reservationDetailTableVC, animated: true, completion: nil)
   }
 }

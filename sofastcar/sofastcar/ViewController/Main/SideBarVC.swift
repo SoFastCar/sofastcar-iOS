@@ -134,8 +134,9 @@ extension SideBarVC: UITableViewDelegate, UITableViewDataSource {
     case .usingHistocyCell:
       dismissWithAnimated {
         guard let navi = self.presentingViewController as? UINavigationController else { return }
-        let rentHistoryVC = RentHistoryVC()
-        navi.pushViewController(rentHistoryVC, animated: true)
+        guard let mainVC = navi.viewControllers.last as? MainVC else { return }
+        let rentHistoryVC = RentHistoryVC(style: .grouped)
+        mainVC.navigationController?.pushViewController(rentHistoryVC, animated: true)
       }
     case .couponCell, .customerCenterCell, .eventBannerCell, .evnetWithBenigitCell:
       break

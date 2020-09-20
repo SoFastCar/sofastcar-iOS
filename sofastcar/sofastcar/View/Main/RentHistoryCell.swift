@@ -11,17 +11,23 @@ import UIKit
 class RentHistoryCell: UITableViewCell {
   // MARK: - Properties
   static let identifier = "RentHistoryCell"
+  lazy var guide = contentView.layoutMarginsGuide
   
-  let statusLabel: UILabel = {
-    let label = UILabel()
-    label.text = "운행중.."
-    label.backgroundColor = .systemGray4
-    label.textColor = .systemGray
-    label.font = .systemFont(ofSize: CommonUI.titleTextFontSize)
-    return label
+  let reservationStatueLabel: UIButton = {
+    let button = UIButton()
+    button.setTitle("운행중", for: .normal)
+    button.setTitle("반납완료", for: .selected)
+    button.setTitleColor(.systemGray5, for: .normal)
+    button.setTitleColor(.darkGray, for: .selected)
+    button.titleLabel?.font = .systemFont(ofSize: 15)
+    button.layer.cornerRadius = 3
+    button.isSelected = true
+    button.isUserInteractionEnabled = false
+    button.backgroundColor = .systemGray5
+    return button
   }()
   
-  let drivingTotalDistance: UILabel = {
+  let drivingTotalDistanceLabel: UILabel = {
     let label = UILabel()
     label.text = "170km"
     label.textColor = .darkGray
@@ -39,16 +45,18 @@ class RentHistoryCell: UITableViewCell {
   let carNumber: UILabel = {
     let label = UILabel()
     label.text = "57하4455"
-    label.font = .boldSystemFont(ofSize: CommonUI.titleTextFontSize+3)
+    label.font = .boldSystemFont(ofSize: CommonUI.titleTextFontSize)
     label.textColor = .black
+    label.textAlignment = .center
     return label
   }()
   
   let carName: UILabel = {
     let label = UILabel()
     label.text = "더뉴레이"
-    label.font = .systemFont(ofSize: CommonUI.titleTextFontSize)
+    label.font = .systemFont(ofSize: CommonUI.contentsTextFontSize)
     label.textColor = .black
+    label.textAlignment = .center
     return label
   }()
   
@@ -87,16 +95,85 @@ class RentHistoryCell: UITableViewCell {
   let rentDurtaionLabel: UILabel = {
     let label = UILabel()
     label.text = "8/14 (금) 14:00 - 8/15 (토) 14:00"
-    label.font = .systemFont(ofSize: CommonUI.titleTextFontSize)
+    label.font = .systemFont(ofSize: CommonUI.contentsTextFontSize)
     label.textColor = .black
     return label
   }()
   
+  // MARK: - Properties
   override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
+    contentView.layoutMargins = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
+    contentView.backgroundColor = .white
+    configureLayout()
   }
   
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
+  }
+  
+  private func configureLayout() {
+    [reservationStatueLabel, drivingTotalDistanceLabel, carImage, carName, carNumber, rentPlaceMarkImageView,
+     rentPlaceTitleLabel, returnPlaceMarkImageView, returnPlaceTitleLabel, rentDurtaionLabel].forEach {
+      contentView.addSubview($0)
+     }
+    
+    reservationStatueLabel.snp.makeConstraints {
+      $0.top.left.equalTo(guide)
+      $0.width.equalTo(60)
+      $0.height.equalTo(30)
+    }
+    
+    drivingTotalDistanceLabel.snp.makeConstraints {
+      $0.centerY.equalTo(reservationStatueLabel.snp.centerY)
+      $0.trailing.equalTo(guide)
+    }
+    
+    carImage.snp.makeConstraints {
+      $0.top.equalTo(reservationStatueLabel.snp.bottom).offset(20)
+      $0.leading.equalTo(guide).offset(20)
+      $0.width.equalTo(90)
+      $0.height.equalTo(60)
+    }
+    
+    carNumber.snp.makeConstraints {
+      $0.top.equalTo(carImage.snp.bottom)
+      $0.leading.trailing.equalTo(carImage)
+      $0.height.equalTo(30)
+    }
+    
+    carName.snp.makeConstraints {
+      $0.top.equalTo(carNumber.snp.bottom)
+      $0.leading.trailing.equalTo(carImage)
+      $0.bottom.equalTo(guide)
+      $0.height.equalTo(30)
+    }
+    
+    rentPlaceMarkImageView.snp.makeConstraints {
+      $0.top.equalTo(carImage)
+      $0.leading.equalTo(carName.snp.trailing).offset(20)
+      $0.height.width.equalTo(30)
+    }
+    
+    rentPlaceTitleLabel.snp.makeConstraints {
+      $0.centerY.equalTo(rentPlaceMarkImageView)
+      $0.leading.equalTo(rentPlaceMarkImageView.snp.trailing).offset(5)
+    }
+    
+    returnPlaceMarkImageView.snp.makeConstraints {
+      $0.top.equalTo(rentPlaceTitleLabel.snp.bottom).offset(5)
+      $0.leading.equalTo(carName.snp.trailing).offset(20)
+      $0.height.width.equalTo(30)
+    }
+    
+    returnPlaceTitleLabel.snp.makeConstraints {
+      $0.centerY.equalTo(returnPlaceMarkImageView)
+      $0.leading.equalTo(returnPlaceMarkImageView.snp.trailing).offset(5)
+    }
+    
+    rentDurtaionLabel.snp.makeConstraints {
+      $0.top.equalTo(returnPlaceTitleLabel.snp.bottom).offset(20)
+      $0.leading.equalTo(rentPlaceMarkImageView)
+    } 
   }
 }
