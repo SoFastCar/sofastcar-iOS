@@ -28,8 +28,13 @@ enum SideBarMenuType: String {
 class SideBarVC: UIViewController {
   // MARK: - Properties
   let tableView = UITableView(frame: .zero, style: .plain)
+  let viewWidthSizeRatio: CGFloat = 0.85
   let tableHeaderView = SideBarHeaderView()
   let buttonImageName = ["business", "option", "plan"]
+  var isHorizenScrolling = false
+  var isVerticalStcolling = false
+  var gapX: CGFloat = 0
+  var originX: CGFloat = 0
   
   let sideBarBottonView = SideBarBottonView()
   
@@ -38,6 +43,7 @@ class SideBarVC: UIViewController {
     super.viewDidLoad()
     view.backgroundColor = .none
     configureTableView()
+    configureTableViewPanGuesture()
     configureBottomView()
   }
   
@@ -50,13 +56,20 @@ class SideBarVC: UIViewController {
     tableView.separatorStyle = .none
     tableView.register(SideBarCustomCell.self, forCellReuseIdentifier: SideBarCustomCell.identifier)
     view.addSubview(tableView)
-       tableView.frame = CGRect(x: -UIScreen.main.bounds.width, y: 0.0,
-                                  width: UIScreen.main.bounds.width*0.85,
-                                  height: UIScreen.main.bounds.height)
+    tableView.frame = CGRect(x: -UIScreen.main.bounds.width, y: 0.0,
+                             width: UIScreen.main.bounds.width*viewWidthSizeRatio,
+                             height: UIScreen.main.bounds.height)
     
     tableHeaderView.settingButton.addTarget(self, action: #selector(tapHaederButton(_:)), for: .touchUpInside)
     tableHeaderView.notiButton.addTarget(self, action: #selector(tapHaederButton(_:)), for: .touchUpInside)
     tableHeaderView.userlevelButton.addTarget(self, action: #selector(tapHaederButton(_:)), for: .touchUpInside)
+  }
+  
+  private func configureTableViewPanGuesture() {
+    let sideViewPanGuesture = UIPanGestureRecognizer(target: self, action: #selector(dragTableView(_:)))
+//    let sideViewTouchGuesture = UIGestureRecognizer(target: self, action: <#T##Selector?#>)
+    view.addGestureRecognizer(sideViewPanGuesture)
+    
   }
   
   private func configureBottomView() {
@@ -72,6 +85,22 @@ class SideBarVC: UIViewController {
   }
   
   override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    super.touchesBegan(touches, with: event)
+    guard let touch = touches.first else { return }
+    let touchPoint = touch.location(in: touch.view)  // 실제 터치한 위치
+    if touchPoint.x > UIScreen.main.bounds.maxX * viewWidthSizeRatio {
+      dismissWithAnimated()
+    }
+    
+  }
+  // MARK: - Custtom Present/Dismiss Animate
+  func animateWithAnimate() {
+    UIView.animate(withDuration: 0.5) {
+      self.tableView.center.x += UIScreen.main.bounds.width
+    }
+  }
+  
+  func dismissWithAnimated() {
     UIView.animate(withDuration: 0.5, animations: {
       self.tableView.center.x -= UIScreen.main.bounds.width
     }, completion: { success in
@@ -79,12 +108,6 @@ class SideBarVC: UIViewController {
         self.dismiss(animated: false, completion: nil)
       }
     })
-  }
-  
-  func animate() {
-    UIView.animate(withDuration: 0.5) {
-      self.tableView.center.x += UIScreen.main.bounds.width
-    }
   }
 }
 
@@ -109,6 +132,14 @@ extension SideBarVC: UITableViewDelegate, UITableViewDataSource {
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     let cellType = SideBarMenuType.allcase()
     print(cellType[indexPath.row].rawValue)
+  }
+  
+  func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+    isVerticalStcolling = false
+  }
+  
+  func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+    isVerticalStcolling = true
   }
 }
 // MARK: - button Action
@@ -136,6 +167,33 @@ extension SideBarVC {
       print("tableHeaderView.notiButton")
     default:
       return
+    }
+  }
+}
+
+// MARK: - TableView PnaGuresture Recognizer
+extension SideBarVC {
+
+  @objc private func dragTableView(_ sender: UIPanGestureRecognizer) {
+    guard isVerticalStcolling == false else { return }
+    let touchPoint = sender.location(in: view)
+    
+    if sender.state == .began {
+      isHorizenScrolling = true
+      gapX = touchPoint.x - tableView.center.x
+      originX = tableView.center.x
+    } else if sender.state == .changed {
+      guard tableView.center.x > touchPoint.x - gapX else { return print("Aa") }
+      tableView.center.x = touchPoint.x - gapX
+    } else if sender.state == .ended {
+      isHorizenScrolling = false
+      if touchPoint.x < UIScreen.main.bounds.width*(1-viewWidthSizeRatio) {
+        dismissWithAnimated()
+      } else {
+        UIView.animate(withDuration: 0.2) {
+          self.tableView.center.x = self.originX
+        }
+      }
     }
   }
 }
