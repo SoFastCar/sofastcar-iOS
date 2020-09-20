@@ -31,6 +31,7 @@ class SideBarVC: UIViewController {
   let viewWidthSizeRatio: CGFloat = 0.85
   let tableHeaderView = SideBarHeaderView()
   let buttonImageName = ["business", "option", "plan"]
+  lazy var sideBarCellTypes = SideBarMenuType.allcase()
   var isHorizenScrolling = false
   var isVerticalStcolling = false
   var gapX: CGFloat = 0
@@ -67,9 +68,7 @@ class SideBarVC: UIViewController {
   
   private func configureTableViewPanGuesture() {
     let sideViewPanGuesture = UIPanGestureRecognizer(target: self, action: #selector(dragTableView(_:)))
-//    let sideViewTouchGuesture = UIGestureRecognizer(target: self, action: <#T##Selector?#>)
     view.addGestureRecognizer(sideViewPanGuesture)
-    
   }
   
   private func configureBottomView() {
@@ -89,7 +88,7 @@ class SideBarVC: UIViewController {
     guard let touch = touches.first else { return }
     let touchPoint = touch.location(in: touch.view)  // 실제 터치한 위치
     if touchPoint.x > UIScreen.main.bounds.maxX * viewWidthSizeRatio {
-      dismissWithAnimated()
+      dismissWithAnimated(completion: nil)
     }
     
   }
@@ -100,12 +99,13 @@ class SideBarVC: UIViewController {
     }
   }
   
-  func dismissWithAnimated() {
+  func dismissWithAnimated(completion: (() -> Void)?) {
     UIView.animate(withDuration: 0.5, animations: {
       self.tableView.center.x -= UIScreen.main.bounds.width
     }, completion: { success in
       if success {
         self.dismiss(animated: false, completion: nil)
+        completion?()
       }
     })
   }
@@ -114,14 +114,13 @@ class SideBarVC: UIViewController {
 // MARK: - UITableViewDelegate, UITableViewDataSource
 extension SideBarVC: UITableViewDelegate, UITableViewDataSource {
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return SideBarMenuType.allcase().count
+    return sideBarCellTypes.count
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     guard let cell = tableView.dequeueReusableCell(withIdentifier: SideBarCustomCell.identifier)
       as? SideBarCustomCell else { fatalError() }
-    let cellType = SideBarMenuType.allcase()
-    cell.cellConfigure(cellType: cellType[indexPath.row])
+    cell.cellConfigure(cellType: sideBarCellTypes[indexPath.row])
     return cell
   }
   
@@ -130,8 +129,20 @@ extension SideBarVC: UITableViewDelegate, UITableViewDataSource {
   }
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    let cellType = SideBarMenuType.allcase()
-    print(cellType[indexPath.row].rawValue)
+    let cellType = sideBarCellTypes[indexPath.row]
+    switch cellType {
+    case .usingHistocyCell:
+      dismissWithAnimated {
+        guard let navi = self.presentingViewController as? UINavigationController else { return }
+        guard let mainVC = navi.viewControllers.last as? MainVC else { return }
+        let rentHistoryVC = RentHistoryVC(style: .grouped)
+        mainVC.navigationController?.pushViewController(rentHistoryVC, animated: true)
+      }
+    case .couponCell, .customerCenterCell, .eventBannerCell, .evnetWithBenigitCell:
+      break
+    case .mainBoardCell, .socarPassCell, .socarPlusCell, .inviteFriendCell:
+      break
+    }
   }
   
   func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
@@ -183,12 +194,12 @@ extension SideBarVC {
       gapX = touchPoint.x - tableView.center.x
       originX = tableView.center.x
     } else if sender.state == .changed {
-      guard tableView.center.x > touchPoint.x - gapX else { return print("Aa") }
+      guard tableView.center.x > touchPoint.x - gapX else { return }
       tableView.center.x = touchPoint.x - gapX
     } else if sender.state == .ended {
       isHorizenScrolling = false
       if touchPoint.x < UIScreen.main.bounds.width*(1-viewWidthSizeRatio) {
-        dismissWithAnimated()
+        dismissWithAnimated(completion: nil)
       } else {
         UIView.animate(withDuration: 0.2) {
           self.tableView.center.x = self.originX
