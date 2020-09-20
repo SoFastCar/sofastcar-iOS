@@ -19,16 +19,8 @@ class BookingTimeVC: UIViewController {
   var rentCurrnetSelectedRow: [Int] = [0, 0, 0] // 일 시 분
   var returnCurrnetSelectedRow: [Int] = [0, 0, 0]
   
-  var startDate = Date() {
-    didSet {
-      tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .none)
-    }
-  }
-  var endDate = Date() {
-    didSet {
-      tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .none)
-    }
-  }
+  var startDate = Date()
+  var endDate = Date()
     
   var setBookingTimeMain: SetBookingTimeButton?
   var setBookingTimeCarList: SetBookingTimeButton?
@@ -223,6 +215,8 @@ extension BookingTimeVC: UITableViewDataSource, UITableViewDelegate {
   
   private func settingPickerViewByTime(cell: BookingTimeCell, row: Int) {
     let showTimeDate = row == 1 ? startDate : endDate
+    rentCurrnetSelectedRow[0] = Time.getDayIndex(start: Date(), end: startDate)
+    returnCurrnetSelectedRow[0] = Time.getDayIndex(start: Date(), end: endDate)
     let dayIndex = row == 1 ? rentCurrnetSelectedRow[0] : returnCurrnetSelectedRow[0]
     cell.updateRentTimeDatePicker(dayIndex: dayIndex, changedTime: showTimeDate)
   }
@@ -340,8 +334,8 @@ extension BookingTimeVC: BookingTimeCellDelegate {
     endDate = endDate.addingTimeInterval(TimeInterval(Time.day))
     returnCurrnetSelectedRow[0] += 1
     cell.updateRentTimeDatePicker(dayIndex: returnCurrnetSelectedRow[0], changedTime: endDate)
-    saveCurrnetSelectedRow(pickerView: cell.rentTimeDatePicker)
     tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .none)
+    saveCurrnetSelectedRow(pickerView: cell.rentTimeDatePicker)
   }
   
   func tapAddHalfHourButton(forCell cell: BookingTimeCell) {
@@ -354,8 +348,8 @@ extension BookingTimeVC: BookingTimeCellDelegate {
       returnCurrnetSelectedRow[0] = dayIndex
     }
     cell.updateRentTimeDatePicker(dayIndex: returnCurrnetSelectedRow[0], changedTime: endDate)
-    saveCurrnetSelectedRow(pickerView: cell.rentTimeDatePicker)
     tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .none)
+    saveCurrnetSelectedRow(pickerView: cell.rentTimeDatePicker)
   }
   
   func tapAddHourButton(forCell cell: BookingTimeCell) {
@@ -367,7 +361,7 @@ extension BookingTimeVC: BookingTimeCellDelegate {
       returnCurrnetSelectedRow[0] = dayIndex
     }
     cell.updateRentTimeDatePicker(dayIndex: dayIndex, changedTime: endDate)
-    saveCurrnetSelectedRow(pickerView: cell.rentTimeDatePicker)
     tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .none)
+    saveCurrnetSelectedRow(pickerView: cell.rentTimeDatePicker)
   }
 }
