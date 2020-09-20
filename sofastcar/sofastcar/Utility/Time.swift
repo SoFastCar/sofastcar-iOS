@@ -57,6 +57,13 @@ class Time {
     return returnText
   }
   
+  static func getDayIndex(start: Date, end: Date) -> Int {
+    let calendar = Calendar.current
+    let offsetComps = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: start, to: end)
+    guard let dayIndex = offsetComps.day else { return 0 }
+    return dayIndex
+  }
+  
   static func getStartEndTimeShowLabel(start: Date, end: Date) -> String {
     var returnString = ""
     let todayString = Time.getTimeString(type: .dayd, date: Date())
