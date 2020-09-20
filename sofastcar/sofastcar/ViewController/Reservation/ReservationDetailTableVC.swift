@@ -61,10 +61,12 @@ class ReservationDetailTableVC: UITableViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    view.backgroundColor = .white
+    tableView.backgroundColor = .systemGray6
     configureTableView()
     configureTableViewSegController()
   }
-  
+
   private func configureTableView() {
     tableView.allowsSelection = false
     tableView.tableHeaderView = customTableHeaderView

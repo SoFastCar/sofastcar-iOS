@@ -11,6 +11,17 @@ import UIKit
 class RentHistoryVC: UITableViewController {
   // MARK: - Properties
   var reservations: [Reservation]?
+  lazy var filterButtonImageView: UIImageView = {
+    let imageView = UIImageView()
+    if let image = UIImage(systemName: "slider.horizontal.3")?.cgImage {
+      let rotationImage = UIImage(cgImage: image, scale: 2, orientation: .left)
+      imageView.image = rotationImage
+    }
+    imageView.isUserInteractionEnabled = true
+    let tapguesture = UITapGestureRecognizer.init(target: self, action: #selector(tapFilterButton))
+    imageView.addGestureRecognizer(tapguesture)
+    return imageView
+  }()
   
   // MARK: - Life Cycle
   override init(style: UITableView.Style) {
@@ -44,7 +55,10 @@ class RentHistoryVC: UITableViewController {
     navi.navigationBar.backgroundColor = .white
     navi.navigationBar.barTintColor = UIColor.white
     navi.navigationBar.tintColor = UIColor.black
-    navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "slider.horizontal.3"), style: .plain, target: self, action: #selector(tapFilterButton))
+    navi.navigationBar.addSubview(filterButtonImageView)
+    filterButtonImageView.snp.makeConstraints {
+      $0.bottom.trailing.equalTo(navi.navigationBar).offset(-10)
+    }
   }
   
   private func configureTableView() {
