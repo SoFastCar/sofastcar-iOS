@@ -61,20 +61,17 @@ class ReservationDetailTableVC: UITableViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    configureNavigation()
+    view.backgroundColor = .white
+    tableView.backgroundColor = .systemGray6
     configureTableView()
     configureTableViewSegController()
   }
-  
-  private func configureNavigation() {
-    guard let customTableHeaderView = customTableHeaderView else { return }
-    navigationItem.leftBarButtonItem = customTableHeaderView.leftNavigationButton
-  }
-  
+
   private func configureTableView() {
     tableView.allowsSelection = false
     tableView.tableHeaderView = customTableHeaderView
-    tableView.tableHeaderView?.frame.size.height = 100
+    customTableHeaderView?.closeButton.addTarget(self, action: #selector(tapCloseButton), for: .touchUpInside)
+    tableView.tableHeaderView?.frame.size.height = 135
     tableView.estimatedRowHeight = 600
     tableView.sectionHeaderHeight = 10
     tableView.sectionFooterHeight = 0
@@ -159,6 +156,10 @@ class ReservationDetailTableVC: UITableViewController {
     view.segmentindicator.snp.updateConstraints {
       $0.leading.equalTo(view.segmentControll).offset(9+setIndex*83)
     }
+  }
+  
+  @objc private func tapCloseButton() {
+    dismiss(animated: true, completion: nil)
   }
 }
 

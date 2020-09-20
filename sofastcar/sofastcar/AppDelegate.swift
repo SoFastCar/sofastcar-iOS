@@ -70,14 +70,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         guard let header = response as? HTTPURLResponse,
           (200..<300) ~= header.statusCode else { print("Create User Auth token Error"); return }
-        print("Response Code: \(header.statusCode)")
-        
         guard let responseData = data else { return }
-        
         if let jsonData = try? JSONSerialization.jsonObject(with: responseData, options: []) as? [String: String] {
           if let newUserAuthToken = jsonData["token"] {
             UserDefaults.saveUserAuthTocken(authToken: newUserAuthToken)
-            print(newUserAuthToken)
           }
         }
       }

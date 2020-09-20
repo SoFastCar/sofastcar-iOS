@@ -30,15 +30,11 @@ class ReservationDetailHeader: UIView {
     return segControll
   }()
   
-  lazy var leftNavigationButton: UIBarButtonItem = {
-    let barButtonItem = UIBarButtonItem(
-      image: UIImage(systemName: "xmark"),
-      style: .plain,
-      target: self,
-      action: nil
-    )
-    barButtonItem.tintColor = .black
-    return barButtonItem
+  lazy var closeButton: UIButton = {
+    let button = UIButton()
+    button.setImage(UIImage(systemName: CommonUI.SFSymbolKey.close.rawValue), for: .normal)
+    button.imageView?.tintColor = .black
+    return button
   }()
   
   let carNumberLabel: UILabel = {
@@ -89,17 +85,23 @@ class ReservationDetailHeader: UIView {
   }
   
   private func configureLayout() {
-    [carNumberLabel, reservationStatueLabel, segmentControll, segmentindicator].forEach {
+    [closeButton, carNumberLabel, reservationStatueLabel, segmentControll, segmentindicator].forEach {
       addSubview($0)
     }
     
+    closeButton.snp.makeConstraints {
+      $0.top.leading.equalTo(self).offset(5)
+      $0.height.width.equalTo(40)
+    }
+    
     carNumberLabel.snp.makeConstraints {
-      $0.top.leading.equalTo(layoutMarginsGuide)
+      $0.top.equalTo(closeButton.snp.bottom).offset(5)
+      $0.leading.equalTo(layoutMarginsGuide)
     }
     
     reservationStatueLabel.snp.makeConstraints {
       $0.leading.equalTo(carNumberLabel.snp.trailing).offset(10)
-      $0.height.equalTo(carNumberLabel)
+      $0.height.equalTo(carNumberLabel).offset(-10)
       $0.width.equalTo(70)
       $0.centerY.equalTo(carNumberLabel.snp.centerY)
     }

@@ -291,7 +291,7 @@ class MainVC: UIViewController {
       let sideBarVC = SideBarVC()
       sideBarVC.modalPresentationStyle = .overFullScreen
       present(sideBarVC, animated: false, completion: {
-        sideBarVC.animate()
+        sideBarVC.animateWithAnimate()
       })
     }
     
