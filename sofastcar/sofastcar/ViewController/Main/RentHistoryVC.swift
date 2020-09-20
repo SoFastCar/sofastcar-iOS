@@ -8,19 +8,9 @@
 
 import UIKit
 
-enum RentHistoryCellType {
-  case headerViewCell
-  case rentHistroyCell
-  
-  static func allcase() -> [RentHistoryCellType] {
-    return [headerViewCell, rentHistroyCell]
-  }
-}
-
 class RentHistoryVC: UITableViewController {
   // MARK: - Properties
   var reservations: [Reservation]?
-  lazy var rentHistoryCellTypeList = RentHistoryCellType.allcase()
   
   // MARK: - Life Cycle
   override func viewDidLoad() {
@@ -33,21 +23,22 @@ class RentHistoryVC: UITableViewController {
     tableView.delegate = self
     tableView.dataSource = self
     tableView.rowHeight = UITableView.automaticDimension
+    tableView.register(RentHistoryCell.self, forCellReuseIdentifier: RentHistoryCell.identifier)
   }
 }
 
 // MARK: - UITableViewDelegate, UITableViewDataSource
 extension RentHistoryVC {
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell = UITableViewCell(style: .default, reuseIdentifier: "cell")
+    let cell = RentHistoryCell(style: .default, reuseIdentifier: RentHistoryCell.identifier)
     return cell
   }
   
   override func numberOfSections(in tableView: UITableView) -> Int {
-    return rentHistoryCellTypeList.count
+    return 1
   }
   
   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return section == 0 ? 1 : reservations?.count ?? 0
+    return section == 0 ? 1 : reservations?.count ?? 3
   }
 }
