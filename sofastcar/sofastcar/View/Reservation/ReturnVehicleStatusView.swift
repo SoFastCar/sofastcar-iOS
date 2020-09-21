@@ -229,6 +229,18 @@ class ReturnVehicleStatusView: UIView {
     return stackView
   }()
   
+  fileprivate let anyProblemButton: UIButton = {
+    let button = UIButton()
+    button.setTitle("혹시 문제가 생겼나요?", for: .normal)
+    button.setTitleColor(CommonUI.mainDark, for: .normal)
+    if let title = button.titleLabel?.text {
+        button.setAttributedTitle(title.getUnderLineAttributedText(), for: .normal)
+    }
+    button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .subheadline)
+    
+    return button
+  }()
+  
   // MARK: - LifeCycle
   
   override init(frame: CGRect) {
@@ -250,7 +262,8 @@ class ReturnVehicleStatusView: UIView {
       descriptionLabel,
       vehicleStatusLabelStackView,
       vehicleReturnOptionIndicatorStackView,
-      vehicleReturnOptionLabelStackView
+      vehicleReturnOptionLabelStackView,
+      anyProblemButton
     ].forEach {
       self.addSubview($0)
     }
@@ -283,6 +296,11 @@ class ReturnVehicleStatusView: UIView {
     vehicleReturnOptionLabelStackView.snp.makeConstraints {
       $0.top.equalTo(descriptionLabel.snp.bottom).offset(30)
       $0.leading.equalTo(vehicleReturnOptionIndicatorStackView.snp.trailing).offset(10)
+    }
+    
+    anyProblemButton.snp.makeConstraints {
+      $0.top.equalTo(vehicleReturnOptionLabelStackView.snp.bottom).offset(20)
+      $0.trailing.equalToSuperview().offset(-20)
     }
   }
 }
