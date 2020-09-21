@@ -311,7 +311,7 @@ class DetailSocarZoneInfoCell: UITableViewCell {
     showDetailInfoButton.snp.makeConstraints {
       $0.top.bottom.equalTo(self)
       $0.leading.trailing.equalTo(guide)
-      $0.height.equalTo(60)
+      $0.height.equalTo(80)
     }
   }
   
