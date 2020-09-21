@@ -7,24 +7,33 @@
 //
 
 import UIKit
+import SnapKit
 
 class ReturnVehicleStatusVC: UIViewController {
+  
+  fileprivate let returnVehicleStatusView = ReturnVehicleStatusView()
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+  // MARK: - LifeCycle
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    
+    setUI()
+  }
+  
+  // MARK: - UI
+  
+  fileprivate func setUI() {
+    
+    view.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+    
+    [returnVehicleStatusView].forEach {
+      view.addSubview($0)
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    returnVehicleStatusView.snp.makeConstraints {
+      $0.top.equalToSuperview().offset(view.frame.height / 3)
+      $0.leading.trailing.bottom.equalToSuperview()
     }
-    */
-
+  }
 }
