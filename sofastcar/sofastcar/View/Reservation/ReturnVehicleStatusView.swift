@@ -8,8 +8,14 @@
 
 import UIKit
 
-class ReturnVehicleStatusView: UIView {
+protocol ReturnVehicleStatusViewDelegate: class {
+    func buttonAction(_ sender: UIButton)
+}
 
+class ReturnVehicleStatusView: UIView {
+  
+  weak var customDelegate: ReturnVehicleStatusViewDelegate?
+  
   fileprivate let warningImage: UIImageView = {
     let imageView = UIImageView()
     let config = UIImage.SymbolConfiguration(pointSize: 30, weight: .light, scale: .large)
@@ -48,7 +54,7 @@ class ReturnVehicleStatusView: UIView {
     
     return label
   }()
-
+  
   fileprivate let lockStatusLabel: UILabel = {
     let label = UILabel()
     label.text = "잠금 상태"
@@ -229,14 +235,27 @@ class ReturnVehicleStatusView: UIView {
     return stackView
   }()
   
-  fileprivate let anyProblemButton: UIButton = {
+  let anyProblemButton: UIButton = {
     let button = UIButton()
     button.setTitle("혹시 문제가 생겼나요?", for: .normal)
     button.setTitleColor(CommonUI.mainDark, for: .normal)
     if let title = button.titleLabel?.text {
-        button.setAttributedTitle(title.getUnderLineAttributedText(), for: .normal)
+      button.setAttributedTitle(title.getUnderLineAttributedText(), for: .normal)
     }
     button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .subheadline)
+//    button.addTarget(self, action: #selector(buttonAction(_:)), for: .touchUpInside)
+    
+    return button
+  }()
+  
+  let checkButton: UIButton = {
+    let button = UIButton()
+    button.setTitle("확인", for: .normal)
+    button.setTitleColor(CommonUI.mainDark, for: .normal)
+    button.backgroundColor = .clear
+    button.layer.borderWidth = 1
+    button.layer.borderColor = UIColor.black.withAlphaComponent(0.3).cgColor
+    //    button.addTarget(self, action: #selector(buttonAction(_:)), for: .touchUpInside)
     
     return button
   }()
@@ -263,9 +282,10 @@ class ReturnVehicleStatusView: UIView {
       vehicleStatusLabelStackView,
       vehicleReturnOptionIndicatorStackView,
       vehicleReturnOptionLabelStackView,
-      anyProblemButton
-    ].forEach {
-      self.addSubview($0)
+      anyProblemButton,
+      checkButton
+      ].forEach {
+        self.addSubview($0)
     }
     
     setConstraints()
@@ -302,5 +322,18 @@ class ReturnVehicleStatusView: UIView {
       $0.top.equalTo(vehicleReturnOptionLabelStackView.snp.bottom).offset(20)
       $0.trailing.equalToSuperview().offset(-20)
     }
+  
+    checkButton.snp.makeConstraints {
+      $0.top.equalTo(anyProblemButton.snp.bottom).offset(20)
+      $0.leading.equalToSuperview().offset(20)
+      $0.trailing.equalToSuperview().offset(-20)
+      $0.height.equalTo(60)
+    }
   }
+  
+  // MARK: - Action
+//
+//  @objc func buttonAction(_ sender: UIButton) {
+//    customDelegate?.buttonAction(sender)
+//  }
 }
