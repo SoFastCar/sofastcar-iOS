@@ -10,6 +10,18 @@ import UIKit
 
 class ReturnVehicleStatusView: UIView {
 
+  fileprivate let warningImage: UIImageView = {
+    let imageView = UIImageView()
+    let config = UIImage.SymbolConfiguration(pointSize: 30, weight: .light, scale: .large)
+    imageView.image = UIImage(
+      systemName: CommonUI.SFSymbolKey.warning.rawValue,
+      withConfiguration: config
+    )
+    imageView.tintColor = CommonUI.mainDark
+    
+    return imageView
+  }()
+  
   // MARK: - LifeCycle
   
   override init(frame: CGRect) {
@@ -24,6 +36,20 @@ class ReturnVehicleStatusView: UIView {
   // MARK: - UI
   
   fileprivate func setUI() {
-    self.backgroundColor = .magenta
+    self.backgroundColor = .white
+    
+    [warningImage].forEach {
+      self.addSubview($0)
+    }
+    
+    setConstraints()
+  }
+  
+  fileprivate func setConstraints() {
+    
+    warningImage.snp.makeConstraints {
+      $0.top.equalToSuperview().offset(30)
+      $0.leading.equalToSuperview().offset(20)
+    }
   }
 }
