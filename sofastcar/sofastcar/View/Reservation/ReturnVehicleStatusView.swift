@@ -92,6 +92,8 @@ class ReturnVehicleStatusView: UIView {
     return stackView
   }()
   
+  
+  
   fileprivate lazy var vehicleReturnOptionStatusStackView: UIStackView = {
     let stackView = UIStackView(
       arrangedSubviews: [
@@ -146,6 +148,11 @@ class ReturnVehicleStatusView: UIView {
     vehicleStatusLabelStackView.snp.makeConstraints {
       $0.top.equalTo(descriptionLabel.snp.bottom).offset(30)
       $0.leading.equalToSuperview().offset(20)
+    }
+    
+    vehicleReturnOptionStatusStackView.snp.makeConstraints {
+      $0.top.equalTo(descriptionLabel.snp.bottom).offset(30)
+      $0.leading.equalTo(vehicleStatusLabelStackView.snp.trailing).offset(30)
     }
   }
 }
