@@ -164,3 +164,31 @@ extension NumberFormatter {
     return "\(priceWithDot)"
   }
 }
+
+// MARK: - For Cell Line
+extension UITableViewCell {
+  func configureContentViewTopBottomLayer() {
+    configureContentViewTopLayer()
+    configureContentViewBottomLayer()
+  }
+  
+  func configureContentViewTopLayer() {
+    let view = UIView()
+    view.backgroundColor = .systemGray4
+    self.contentView.addSubview(view)
+    view.snp.makeConstraints {
+      $0.top.leading.trailing.equalTo(self.contentView)
+      $0.height.equalTo(0.7)
+    }
+  }
+
+  func configureContentViewBottomLayer() {
+    let view = UIView()
+    view.backgroundColor = .systemGray4
+    self.contentView.addSubview(view)
+    view.snp.makeConstraints {
+      $0.bottom.leading.trailing.equalTo(self.contentView)
+      $0.height.equalTo(0.7)
+    }
+  }
+}

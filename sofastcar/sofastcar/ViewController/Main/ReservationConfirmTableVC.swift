@@ -26,7 +26,6 @@ class ReservationConfirmTableVC: UITableViewController {
   var insuranceData: Insurance?
   var socarData: SocarList? {
     didSet {
-      guard let socarData = socarData else { return }
       isSocarSaveCar = isSaveCarCheck()
       isElectronicCar = isEelctronicCarCheck()
       isBurom = isBuromCheck()
@@ -100,7 +99,7 @@ class ReservationConfirmTableVC: UITableViewController {
   private func configureNavigationContoller() {
     title = "대여 정보 확인"
     navigationController?.navigationBar.prefersLargeTitles = true
-    navigationController?.navigationItem.largeTitleDisplayMode = .always
+    navigationController?.navigationItem.largeTitleDisplayMode = .automatic
     navigationController?.navigationBar.backgroundColor = .white
     navigationController?.navigationBar.barTintColor = UIColor.white
     navigationController?.navigationBar.tintColor = UIColor.black
@@ -238,6 +237,9 @@ extension ReservationConfirmTableVC: ResrvationConfirmCellDelegate {
   
   func tapSocarZoneDetailButton(forCell: ReservationConfirmCustomCell) {
     print("tabSocarZoneDetailButton")
+    guard let socarZoneData = socarZoneData else { return }
+    let detailSocarZoneInfoVC = DetailSocarZoneInfoVC(socarZoneData: socarZoneData)
+    present(detailSocarZoneInfoVC, animated: true, completion: nil)
   }
   
   func reloadUsingTimeCell() {    

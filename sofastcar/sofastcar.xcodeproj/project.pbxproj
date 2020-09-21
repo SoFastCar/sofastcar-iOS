@@ -55,6 +55,8 @@
 		C73D34872515FE4C0075471F /* RentHistoryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C73D34862515FE4C0075471F /* RentHistoryVC.swift */; };
 		C73D348B251601910075471F /* Reservation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C73D348A251601910075471F /* Reservation.swift */; };
 		C73D34912516036C0075471F /* RentHistoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C73D34902516036C0075471F /* RentHistoryCell.swift */; };
+		C73D3498251876890075471F /* DetailSocarZoneInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C73D3497251876890075471F /* DetailSocarZoneInfoVC.swift */; };
+		C73D349C251879BB0075471F /* DetailSocarZoneInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C73D349B251879BB0075471F /* DetailSocarZoneInfoCell.swift */; };
 		C75451F424F4E58F00E13280 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = C75451F324F4E58F00E13280 /* RxSwift */; };
 		C75451F624F4E58F00E13280 /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = C75451F524F4E58F00E13280 /* RxRelay */; };
 		C75451F824F4E58F00E13280 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = C75451F724F4E58F00E13280 /* RxCocoa */; };
@@ -180,6 +182,8 @@
 		C73D34862515FE4C0075471F /* RentHistoryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RentHistoryVC.swift; sourceTree = "<group>"; };
 		C73D348A251601910075471F /* Reservation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reservation.swift; sourceTree = "<group>"; };
 		C73D34902516036C0075471F /* RentHistoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RentHistoryCell.swift; sourceTree = "<group>"; };
+		C73D3497251876890075471F /* DetailSocarZoneInfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailSocarZoneInfoVC.swift; sourceTree = "<group>"; };
+		C73D349B251879BB0075471F /* DetailSocarZoneInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailSocarZoneInfoCell.swift; sourceTree = "<group>"; };
 		C7592015250773A700778849 /* ReservationConfirmCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationConfirmCVCell.swift; sourceTree = "<group>"; };
 		C769C81024FCA9FB00DC8226 /* SingUpCompleteVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingUpCompleteVC.swift; sourceTree = "<group>"; };
 		C769C81624FCCEA900DC8226 /* sofastcarUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = sofastcarUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -338,6 +342,7 @@
 				BC4F3A03250E01B300B7E1E7 /* InsuranceMenuHeaderView.swift */,
 				BC4F3A01250E01B300B7E1E7 /* InsuranceMenuView.swift */,
 				BC4F3A02250E01B300B7E1E7 /* BookingTimeCell.swift */,
+				C73D349B251879BB0075471F /* DetailSocarZoneInfoCell.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -410,6 +415,7 @@
 			children = (
 				C790FB1B251343BB00AF98E2 /* InsurancePopVC.swift */,
 				BC4F3A0D250E01D000B7E1E7 /* BookingTimeVC.swift */,
+				C73D3497251876890075471F /* DetailSocarZoneInfoVC.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -802,6 +808,7 @@
 				BCDFBCDE251237B2002E4789 /* GeocodingData.swift in Sources */,
 				C73D34912516036C0075471F /* RentHistoryCell.swift in Sources */,
 				7EF41FC62501F6D90030752A /* CarKeyView.swift in Sources */,
+				C73D349C251879BB0075471F /* DetailSocarZoneInfoCell.swift in Sources */,
 				C7BD348C24F54A5700089F0D /* InitVC.swift in Sources */,
 				C769C82E24FDB69B00DC8226 /* DriverLicenseEnrollinitView.swift in Sources */,
 				C7F5B54225106A1800AE0054 /* SocaZoneProvidable.swift in Sources */,
@@ -862,6 +869,7 @@
 				C7CEF74C2511BFEA00C063B0 /* VehicleCheckCell.swift in Sources */,
 				BC4F3A09250E01B400B7E1E7 /* BookingTimeCell.swift in Sources */,
 				7EF41FC32500AB3A0030752A /* ReservationStateView.swift in Sources */,
+				C73D3498251876890075471F /* DetailSocarZoneInfoVC.swift in Sources */,
 				BC3F2E9A250E49B3003E2C44 /* EndPoint.swift in Sources */,
 				BC4F3A08250E01B400B7E1E7 /* InsuranceMenuView.swift in Sources */,
 				C7592016250773A700778849 /* ReservationConfirmCVCell.swift in Sources */,

@@ -387,31 +387,6 @@ class ReservationRentalInfoCell: UITableViewCell {
       $0.height.equalTo(60)
     }
   }
-  // MARK: - For Cell Line
-  private func configureContentViewTopBottomLayer() {
-    configureContentViewTopLayer()
-    configureContentViewBottomLayer()
-  }
-  
-  private func configureContentViewTopLayer() {
-    let view = UIView()
-    view.backgroundColor = .systemGray4
-    contentView.addSubview(view)
-    view.snp.makeConstraints {
-      $0.top.leading.trailing.equalTo(contentView)
-      $0.height.equalTo(0.7)
-    }
-  }
-
-  private func configureContentViewBottomLayer() {
-    let view = UIView()
-    view.backgroundColor = .systemGray4
-    contentView.addSubview(view)
-    view.snp.makeConstraints {
-      $0.bottom.leading.trailing.equalTo(contentView)
-      $0.height.equalTo(0.7)
-    }
-  }
 }
 
 // MARK: - CollectionView DataSource / DelegateFlowLayout
