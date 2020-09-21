@@ -39,10 +39,11 @@ class DetailSocarZoneInfoVC: UITableViewController {
   }
   
   private func configureTableView() {
+    tableView.allowsSelection = false
     tableView.estimatedRowHeight = 600
     tableView.rowHeight = UITableView.automaticDimension
     tableView.sectionHeaderHeight = 0
-    tableView.sectionFooterHeight = 10
+    tableView.sectionFooterHeight = 20
     tableView.separatorStyle = .none
     tableView.register(DetailSocarZoneInfoCell.self, forCellReuseIdentifier: DetailSocarZoneInfoCell.identifier)
   }

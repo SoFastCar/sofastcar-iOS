@@ -145,17 +145,21 @@ class DetailSocarZoneInfoCell: UITableViewCell {
     return label
   }()
   
-  let socarMenerContentLabel: UILabel = {
-    let label = UILabel()
-    label.numberOfLines = 3
-    label.text = """
+  let socarMenerContentTextView: UITextView = {
+    let textView = UITextView()
+    let text = """
     - 지정된 반납 장소에 주차선을 맞춰주세요.
     - 스레기는 쓰래기통에 버려주세요.
     - 쏘카는 절대 금연! 흡연 시 페널티가 부과될 수 있어요.
     """
-    label.font = .systemFont(ofSize: CommonUI.contentsTextFontSize)
-    label.textColor = .black
-    return label
+    let font = UIFont.systemFont(ofSize: CommonUI.contentsTextViewFontSize)
+    let attributedString = NSAttributedString.attributedStringWithLienSpacing(text: text, font: font)
+    textView.attributedText = attributedString
+    textView.textColor = .black
+    textView.isSelectable = false
+    textView.allowsEditingTextAttributes = false
+    textView.isScrollEnabled = false
+    return textView
   }()
   
   // MARK: - Detail Info Button Cell
@@ -183,14 +187,14 @@ class DetailSocarZoneInfoCell: UITableViewCell {
   func configureCellUI(cellType: DetailSocarZoneInfoCellType) {
     switch cellType {
     case .mainTitle:
-      configureMainTitleCellUI()
       configureMainTitleCellContents()
+      configureMainTitleCellUI()
     case .subTitle:
-      configureSubTitleCellUI()
       configureSubTitleCellContents()
+      configureSubTitleCellUI()
     case .detailInfoButton:
-      configureDetailInfoCellUI()
       configureDetailInfoCellContents()
+      configureDetailInfoCellUI()
     }
   }
   
@@ -285,19 +289,44 @@ class DetailSocarZoneInfoCell: UITableViewCell {
   }
   
   private func configureSubTitleCellUI() {
+    [socarMenerTitleLabel, socarMenerContentTextView].forEach {
+      contentView.addSubview($0)
+    }
     
+    socarMenerTitleLabel.snp.makeConstraints {
+      $0.top.leading.equalTo(guide)
+    }
+    
+    socarMenerContentTextView.snp.makeConstraints {
+      $0.top.equalTo(socarMenerTitleLabel.snp.bottom).offset(padding)
+      $0.leading.equalTo(guide)
+      $0.bottom.equalTo(guide)
+    }
   }
   
   private func configureDetailInfoCellUI() {
+    contentView.addSubview(showDetailInfoButton)
+    contentView.backgroundColor = .systemGray6
     
+    showDetailInfoButton.snp.makeConstraints {
+      $0.top.bottom.equalTo(self)
+      $0.leading.trailing.equalTo(guide)
+      $0.height.equalTo(60)
+    }
   }
   
   // MARK: - configure Cell Contents
   
   private func configureMainTitleCellContents() {
     guard let socarZone = socarZoneData else { return }
+    print(socarZone)
     socarZoneTitleNameLabel.text = socarZone.name
-//    socarZoneLocationLabel.text = socarZoneData
+    socarZoneLocationLabel.text = socarZone.subInfo
+    addressValeuLabel.text = socarZone.address
+    parkingTypeValeuLabel.text = socarZone.address
+    detailAddressValeuLabel.text = socarZone.detailInfo
+    parkingTypeValeuLabel.text = socarZone.type
+    parkingUsableTimeValeuLabel.text = socarZone.operTime
   }
   
   private func configureSubTitleCellContents() {
