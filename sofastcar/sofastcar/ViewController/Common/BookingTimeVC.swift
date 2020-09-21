@@ -169,11 +169,7 @@ extension BookingTimeVC: UITableViewDataSource, UITableViewDelegate {
   private func firstCellconfigure(cell: UITableViewCell) -> UITableViewCell {
     cell.textLabel?.text = firstCellTitleConfigure()
     cell.textLabel?.font = .boldSystemFont(ofSize: 20)
-//    if isTimeChange {
-      cell.detailTextLabel?.text = Time.getStartEndTimeShowLabel(start: startDate, end: endDate)
-//    } else {
-//      cell.detailTextLabel?.text = "\(Time.getTimeString(type: .todayHHmm, date: startDate)) - \(Time.getTimeString(type: .hourHHmm, date: endDate))"
-//    }
+    cell.detailTextLabel?.text = Time.getStartEndTimeShowLabel(start: startDate, end: endDate)
     cell.detailTextLabel?.numberOfLines = 2
     cell.detailTextLabel?.textColor = .systemGray
     return cell
@@ -237,8 +233,26 @@ extension BookingTimeVC: UIPickerViewDelegate, UIPickerViewDataSource {
   func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
     return 50
   }
-
+  
   func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+    let indexArray = pickerView.tag == 1 ? rentCurrnetSelectedRow : returnCurrnetSelectedRow
+    var userSelectedDate = pickerView.tag == 1 ? startDate : endDate
+    switch component {
+    case 0:
+      userSelectedDate.addTimeInterval(TimeInterval(Time.day*(row-indexArray[component])))
+    case 1:
+      userSelectedDate.addTimeInterval(TimeInterval(Time.hour*(row-indexArray[component])))
+    case 2:
+      userSelectedDate.addTimeInterval(TimeInterval(Time.min*10*(row-indexArray[component])))
+    default:
+      break
+    }
+    
+    guard startDate < userSelectedDate else {
+      pickerView.selectRow(indexArray[component], inComponent: component, animated: true)
+      return print("Fail to change Date before StartTime")
+    }
+    
     isTimeChange = true
     updatePickerViewTime(pickViewType: pickerView.tag, row: row, component: component)
     saveCurrnetSelectedRow(pickerView: pickerView)

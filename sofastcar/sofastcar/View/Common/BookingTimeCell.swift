@@ -169,16 +169,6 @@ class BookingTimeCell: UITableViewCell {
     }
   }
   
-  private func configureContentViewTopLayer() {
-    let view = UIView()
-    view.backgroundColor = .systemGray4
-    contentView.addSubview(view)
-    view.snp.makeConstraints {
-      $0.top.leading.trailing.equalTo(contentView)
-      $0.height.equalTo(0.7)
-    }
-  }
-  
   // MARK: - UI Handler
   func cellUIContoller(isOpen: Bool) {
     self.openStatusImageButton.isSelected = isOpen
