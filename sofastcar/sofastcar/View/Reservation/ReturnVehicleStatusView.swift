@@ -22,6 +22,15 @@ class ReturnVehicleStatusView: UIView {
     return imageView
   }()
   
+  fileprivate let descriptionLabel: UILabel = {
+    let label = UILabel()
+    label.text = "반납을 위해 아래 항목을 확인해주세요"
+    label.textColor = CommonUI.mainDark
+    label.font = UIFont.preferredFont(forTextStyle: .headline)
+    
+    return label
+  }()
+  
   // MARK: - LifeCycle
   
   override init(frame: CGRect) {
@@ -38,7 +47,7 @@ class ReturnVehicleStatusView: UIView {
   fileprivate func setUI() {
     self.backgroundColor = .white
     
-    [warningImage].forEach {
+    [warningImage, descriptionLabel].forEach {
       self.addSubview($0)
     }
     
@@ -49,6 +58,11 @@ class ReturnVehicleStatusView: UIView {
     
     warningImage.snp.makeConstraints {
       $0.top.equalToSuperview().offset(30)
+      $0.leading.equalToSuperview().offset(20)
+    }
+    
+    descriptionLabel.snp.makeConstraints {
+      $0.top.equalTo(warningImage.snp.bottom).offset(30)
       $0.leading.equalToSuperview().offset(20)
     }
   }
