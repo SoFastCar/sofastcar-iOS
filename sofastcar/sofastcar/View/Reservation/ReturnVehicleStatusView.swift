@@ -168,6 +168,67 @@ class ReturnVehicleStatusView: UIView {
     return stackView
   }()
   
+  fileprivate let startingStatusToggleLabel: UILabel = {
+    let label = UILabel()
+    label.text = "OFF 완료"
+    label.textColor = CommonUI.mainDark.withAlphaComponent(0.3)
+    label.font = UIFont.preferredFont(forTextStyle: .subheadline)
+    
+    return label
+  }()
+  
+  fileprivate let headlightStatusToggleLabel: UILabel = {
+    let label = UILabel()
+    label.text = "OFF 완료"
+    label.textColor = CommonUI.mainDark.withAlphaComponent(0.3)
+    label.font = UIFont.preferredFont(forTextStyle: .subheadline)
+    
+    return label
+  }()
+  
+  fileprivate let lockStatusToggleLabel: UILabel = {
+    let label = UILabel()
+    label.text = "잠금 필요"
+    label.textColor = CommonUI.mainDark
+    label.font = UIFont.preferredFont(forTextStyle: .subheadline)
+    
+    return label
+  }()
+  
+  fileprivate let doorCloseStatusToggleLabel: UILabel = {
+    let label = UILabel()
+    label.text = "OFF 완료"
+    label.textColor = CommonUI.mainDark.withAlphaComponent(0.3)
+    label.font = UIFont.preferredFont(forTextStyle: .subheadline)
+    
+    return label
+  }()
+  
+  fileprivate let returnTimeStatusToggleLabel: UILabel = {
+    let label = UILabel()
+    label.text = "OFF 완료"
+    label.textColor = CommonUI.mainDark.withAlphaComponent(0.3)
+    label.font = UIFont.preferredFont(forTextStyle: .subheadline)
+    
+    return label
+  }()
+  
+  fileprivate lazy var vehicleReturnOptionLabelStackView: UIStackView = {
+    let stackView = UIStackView(
+      arrangedSubviews: [
+        startingStatusToggleLabel,
+        headlightStatusToggleLabel,
+        lockStatusToggleLabel,
+        doorCloseStatusToggleLabel,
+        returnTimeStatusToggleLabel
+      ]
+    )
+    stackView.axis = .vertical
+    stackView.spacing = 20
+    
+    return stackView
+  }()
+  
   // MARK: - LifeCycle
   
   override init(frame: CGRect) {
@@ -184,7 +245,13 @@ class ReturnVehicleStatusView: UIView {
   fileprivate func setUI() {
     self.backgroundColor = .white
     
-    [warningImage, descriptionLabel, vehicleStatusLabelStackView, vehicleReturnOptionIndicatorStackView].forEach {
+    [
+      warningImage,
+      descriptionLabel,
+      vehicleStatusLabelStackView,
+      vehicleReturnOptionIndicatorStackView,
+      vehicleReturnOptionLabelStackView
+    ].forEach {
       self.addSubview($0)
     }
     
@@ -211,6 +278,11 @@ class ReturnVehicleStatusView: UIView {
     vehicleReturnOptionIndicatorStackView.snp.makeConstraints {
       $0.top.equalTo(descriptionLabel.snp.bottom).offset(30)
       $0.leading.equalTo(vehicleStatusLabelStackView.snp.trailing).offset(30)
+    }
+    
+    vehicleReturnOptionLabelStackView.snp.makeConstraints {
+      $0.top.equalTo(descriptionLabel.snp.bottom).offset(30)
+      $0.leading.equalTo(vehicleReturnOptionIndicatorStackView.snp.trailing).offset(10)
     }
   }
 }
