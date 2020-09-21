@@ -44,3 +44,9 @@ protocol BookingTimeCellDelegate: class {
   func tapAddHalfHourButton(forCell cell: BookingTimeCell)
   func tapAddHourButton(forCell cell: BookingTimeCell)
 }
+
+protocol DetailSocarZoneInfoCellDelegate: class {
+  func tapShowLoactionInMap(forCell cell: DetailSocarZoneInfoCell)
+  func tapFindWayToSocarZone(forCell cell: DetailSocarZoneInfoCell)
+  func tapShowDetailInfo(forCell cell: DetailSocarZoneInfoCell)
+}

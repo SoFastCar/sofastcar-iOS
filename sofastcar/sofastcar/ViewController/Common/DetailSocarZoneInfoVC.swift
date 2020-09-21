@@ -12,22 +12,20 @@ enum DetailSocarZoneInfoCellType: String {
   case mainTitle = "주차장"
   case subTitle = "쏘카 이용 매너"
   case detailInfoButton = "상세안내 더보기"
-  case warningForUsing = "이용 주의사항"
   
-  static func allcases(isReservationEnd: Bool) -> [DetailSocarZoneInfoCellType] {
-    return isReservationEnd == true ? [mainTitle, subTitle, detailInfoButton] : [mainTitle, warningForUsing, subTitle]
+  static func allcases() -> [DetailSocarZoneInfoCellType] {
+    return [mainTitle, subTitle, detailInfoButton]
   }
 }
 
 class DetailSocarZoneInfoVC: UITableViewController {
   // MARK: - Properties
-  var detailSocarzoneInfoCellTypeList: [DetailSocarZoneInfoCellType]?
+  var detailSocarzoneInfoCellTypeList: [DetailSocarZoneInfoCellType] = DetailSocarZoneInfoCellType.allcases()
   var socarZoneData: SocarZoneData?
   
-  init(socarZoneData: SocarZoneData, isReservationEnd: Bool) {
+  init(socarZoneData: SocarZoneData) {
     super.init(style: .grouped)
     self.socarZoneData = socarZoneData
-    detailSocarzoneInfoCellTypeList = DetailSocarZoneInfoCellType.allcases(isReservationEnd: isReservationEnd)
   }
   
   required init?(coder: NSCoder) {
@@ -36,7 +34,6 @@ class DetailSocarZoneInfoVC: UITableViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    view.backgroundColor = .white
     configureTableView()
   }
   
@@ -53,12 +50,12 @@ class DetailSocarZoneInfoVC: UITableViewController {
   // MARK: - Button Action
   @objc private func tapCloseButton() {
     print("tapCloseButton")
+    dismiss(animated: true, completion: nil)
   }
   
   // MARK: - Table view data source
   override func numberOfSections(in tableView: UITableView) -> Int {
-    guard let menuList = detailSocarzoneInfoCellTypeList else { fatalError() }
-    return menuList.count
+    return detailSocarzoneInfoCellTypeList.count
   }
   
   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -68,14 +65,24 @@ class DetailSocarZoneInfoVC: UITableViewController {
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = DetailSocarZoneInfoCell(style: .default, reuseIdentifier: DetailSocarZoneInfoCell.identifier)
     cell.socarZoneData = self.socarZoneData
-    guard let menuList = detailSocarzoneInfoCellTypeList else { fatalError()  }
-    cell.configureCellUI(cellType: menuList[indexPath.section])
+    cell.delegate = self
+    cell.closeButton.addTarget(self, action: #selector(tapCloseButton), for: .touchUpInside)
+    cell.configureCellUI(cellType: detailSocarzoneInfoCellTypeList[indexPath.section])
     return cell
   }
-  
-  override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-    let view = UIView()
-    view.backgroundColor = .systemGray6
-    return view
+}
+
+extension DetailSocarZoneInfoVC: DetailSocarZoneInfoCellDelegate {
+  func tapShowDetailInfo(forCell cell: DetailSocarZoneInfoCell) {
+    print("tapShowDetailInfo")
   }
+  
+  func tapShowLoactionInMap(forCell cell: DetailSocarZoneInfoCell) {
+    print("tapShowLoactionInMap")
+  }
+  
+  func tapFindWayToSocarZone(forCell cell: DetailSocarZoneInfoCell) {
+    print("tapFindWayToSocarZone")
+  }
+  
 }

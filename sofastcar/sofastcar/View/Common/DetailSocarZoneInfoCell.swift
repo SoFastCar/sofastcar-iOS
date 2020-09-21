@@ -15,6 +15,7 @@ class DetailSocarZoneInfoCell: UITableViewCell {
   let subTextColor = UIColor.systemGray2
   let padding: CGFloat = 20
   var socarZoneData: SocarZoneData?
+  weak var delegate: DetailSocarZoneInfoCellDelegate?
   
   // MARK: - MainTitleCell Properties
   lazy var closeButton: UIButton = {
@@ -48,7 +49,7 @@ class DetailSocarZoneInfoCell: UITableViewCell {
     return label
   }()
   
-  let showSocarZoneLocationInMapButton: UIButton = {
+  lazy var showSocarZoneLocationInMapButton: UIButton = {
     let button = UIButton()
     button.setTitle("지도보기", for: .normal)
     button.titleLabel?.font = .systemFont(ofSize: CommonUI.titleTextFontSize)
@@ -56,10 +57,11 @@ class DetailSocarZoneInfoCell: UITableViewCell {
     button.backgroundColor = .white
     button.layer.borderWidth = 1
     button.layer.borderColor = UIColor.systemGray6.cgColor
+    button.addTarget(self, action: #selector(tapShowLocationInMap), for: .touchUpInside)
     return button
   }()
   
-  let findSocarZoneHowToGoButton: UIButton = {
+  lazy var findWayToSocarZoneButton: UIButton = {
     let button = UIButton()
     button.setTitle("길찾기", for: .normal)
     button.titleLabel?.font = .systemFont(ofSize: CommonUI.titleTextFontSize)
@@ -67,6 +69,7 @@ class DetailSocarZoneInfoCell: UITableViewCell {
     button.backgroundColor = .white
     button.layer.borderWidth = 1
     button.layer.borderColor = UIColor.systemGray6.cgColor
+    button.addTarget(self, action: #selector(tapFindWayToSocarZone), for: .touchUpInside)
     return button
   }()
   
@@ -163,7 +166,7 @@ class DetailSocarZoneInfoCell: UITableViewCell {
   }()
   
   // MARK: - Detail Info Button Cell
-  let showDetailInfoButton: UIButton = {
+  lazy var showDetailInfoButton: UIButton = {
     let button = UIButton()
     button.setTitle("상세안내 더보기", for: .normal)
     button.titleLabel?.font = .systemFont(ofSize: CommonUI.titleTextFontSize)
@@ -171,6 +174,7 @@ class DetailSocarZoneInfoCell: UITableViewCell {
     button.backgroundColor = .white
     button.layer.borderWidth = 1
     button.layer.borderColor = UIColor.systemGray4.cgColor
+    button.addTarget(self, action: #selector(tapShowDetailInfo), for: .touchUpInside)
     return button
   }()
   
@@ -187,6 +191,7 @@ class DetailSocarZoneInfoCell: UITableViewCell {
   func configureCellUI(cellType: DetailSocarZoneInfoCellType) {
     switch cellType {
     case .mainTitle:
+      configureCommonCellUI()
       configureMainTitleCellContents()
       configureMainTitleCellUI()
       configureContentViewBottomLayer()
@@ -197,22 +202,30 @@ class DetailSocarZoneInfoCell: UITableViewCell {
     case .detailInfoButton:
       configureDetailInfoCellContents()
       configureDetailInfoCellUI()
-    case .warningForUsing:
-      configureWaringForUsingCellConent()
-      configureWaringForUsingCellUI()
     }
   }
   
   // MARK: - Configure Cell UI
-  private func configureMainTitleCellUI() {
-    addSubview(closeButton)
-    closeButton.snp.makeConstraints {
-      $0.top.equalTo(self).offset(-30)
-      $0.leading.equalTo(self).offset(10)
-      $0.width.height.equalTo(30)
+  private func configureCommonCellUI() {
+    let whiteView = UIView()
+    whiteView.backgroundColor = .white
+    addSubview(whiteView)
+    whiteView.snp.makeConstraints {
+      $0.bottom.equalTo(self.snp.top)
+      $0.leading.trailing.equalTo(self)
+      $0.height.equalTo(100)
     }
     
-    [socarZoneTitleNameLabel, rentPlaceMarkImageView, socarZoneLocationLabel, showSocarZoneLocationInMapButton, findSocarZoneHowToGoButton, addressLabel, addressValeuLabel, detailAddressLabel, detailAddressValeuLabel, parkingTypeLabel, parkingTypeValeuLabel, parkingUsableTimeLabel, parkingUsableTimeValeuLabel].forEach {
+    addSubview(closeButton)
+    closeButton.snp.makeConstraints {
+      $0.top.equalTo(self).offset(-20)
+      $0.leading.equalTo(self).offset(10)
+      $0.width.height.equalTo(40)
+    }
+  }
+  
+  private func configureMainTitleCellUI() {
+    [socarZoneTitleNameLabel, rentPlaceMarkImageView, socarZoneLocationLabel, showSocarZoneLocationInMapButton, findWayToSocarZoneButton, addressLabel, addressValeuLabel, detailAddressLabel, detailAddressValeuLabel, parkingTypeLabel, parkingTypeValeuLabel, parkingUsableTimeLabel, parkingUsableTimeValeuLabel].forEach {
       contentView.addSubview($0)
     }
     
@@ -237,7 +250,7 @@ class DetailSocarZoneInfoCell: UITableViewCell {
       $0.height.equalTo(60)
     }
     
-    findSocarZoneHowToGoButton.snp.makeConstraints {
+    findWayToSocarZoneButton.snp.makeConstraints {
       $0.top.equalTo(showSocarZoneLocationInMapButton)
       $0.leading.equalTo(showSocarZoneLocationInMapButton.snp.trailing).offset(-1)
       $0.trailing.equalTo(guide)
@@ -303,7 +316,7 @@ class DetailSocarZoneInfoCell: UITableViewCell {
     }
     
     socarMenerContentTextView.snp.makeConstraints {
-      $0.top.equalTo(socarMenerTitleLabel.snp.bottom).offset(padding)
+      $0.top.equalTo(socarMenerTitleLabel.snp.bottom).offset(padding/2)
       $0.leading.equalTo(guide)
       $0.bottom.equalTo(guide)
     }
@@ -331,14 +344,9 @@ class DetailSocarZoneInfoCell: UITableViewCell {
     }
   }
   
-  private func configureWaringForUsingCellUI() {
-    
-  }
-  
   // MARK: - configure Cell Contents
   private func configureMainTitleCellContents() {
     guard let socarZone = socarZoneData else { return }
-    print(socarZone)
     socarZoneTitleNameLabel.text = socarZone.name
     socarZoneLocationLabel.text = socarZone.subInfo
     addressValeuLabel.text = socarZone.address
@@ -356,7 +364,18 @@ class DetailSocarZoneInfoCell: UITableViewCell {
     
   }
   
-  private func configureWaringForUsingCellConent() {
-    
+  // MARK: - Button Action
+  
+  @objc private func tapShowLocationInMap() {
+    delegate?.tapShowLoactionInMap(forCell: self)
   }
+  
+  @objc private func tapFindWayToSocarZone() {
+    delegate?.tapFindWayToSocarZone(forCell: self)
+  }
+  
+  @objc private func tapShowDetailInfo() {
+    delegate?.tapShowDetailInfo(forCell: self)
+  }
+  
 }
