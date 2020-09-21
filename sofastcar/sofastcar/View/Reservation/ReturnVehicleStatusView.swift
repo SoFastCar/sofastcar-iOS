@@ -31,6 +31,14 @@ class ReturnVehicleStatusView: UIView {
     return label
   }()
   
+  fileprivate lazy var vehicleStatusStackView: UIStackView = {
+    let stackView = UIStackView(arrangedSubviews: [])
+    stackView.axis = .vertical
+    stackView.spacing = 20
+    
+    return stackView
+  }()
+  
   // MARK: - LifeCycle
   
   override init(frame: CGRect) {
@@ -47,7 +55,7 @@ class ReturnVehicleStatusView: UIView {
   fileprivate func setUI() {
     self.backgroundColor = .white
     
-    [warningImage, descriptionLabel].forEach {
+    [warningImage, descriptionLabel, vehicleStatusStackView].forEach {
       self.addSubview($0)
     }
     
@@ -63,6 +71,11 @@ class ReturnVehicleStatusView: UIView {
     
     descriptionLabel.snp.makeConstraints {
       $0.top.equalTo(warningImage.snp.bottom).offset(30)
+      $0.leading.equalToSuperview().offset(20)
+    }
+    
+    vehicleStatusStackView.snp.makeConstraints {
+      $0.top.equalTo(descriptionLabel.snp.bottom).offset(20)
       $0.leading.equalToSuperview().offset(20)
     }
   }
