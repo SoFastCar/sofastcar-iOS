@@ -92,16 +92,74 @@ class ReturnVehicleStatusView: UIView {
     return stackView
   }()
   
+  fileprivate let startingIndicatorImage: UIImageView = {
+    let imageView = UIImageView()
+    let config = UIImage.SymbolConfiguration(pointSize: 15, weight: .light, scale: .small)
+    imageView.image = UIImage(
+      systemName: CommonUI.SFSymbolKey.circle.rawValue,
+      withConfiguration: config
+    )
+    imageView.tintColor = CommonUI.mainDark.withAlphaComponent(0.3)
+    
+    return imageView
+  }()
   
+  fileprivate let headlightIndicatorImage: UIImageView = {
+    let imageView = UIImageView()
+    let config = UIImage.SymbolConfiguration(pointSize: 15, weight: .light, scale: .small)
+    imageView.image = UIImage(
+      systemName: CommonUI.SFSymbolKey.circle.rawValue,
+      withConfiguration: config
+    )
+    imageView.tintColor = CommonUI.mainDark.withAlphaComponent(0.3)
+    
+    return imageView
+  }()
   
-  fileprivate lazy var vehicleReturnOptionStatusStackView: UIStackView = {
+  fileprivate let lockIndicatorImage: UIImageView = {
+    let imageView = UIImageView()
+    let config = UIImage.SymbolConfiguration(pointSize: 15, weight: .light, scale: .small)
+    imageView.image = UIImage(
+      systemName: CommonUI.SFSymbolKey.circle.rawValue,
+      withConfiguration: config
+    )
+    imageView.tintColor = .red
+    
+    return imageView
+  }()
+  
+  fileprivate let doorCloseIndicatorImage: UIImageView = {
+    let imageView = UIImageView()
+    let config = UIImage.SymbolConfiguration(pointSize: 15, weight: .light, scale: .small)
+    imageView.image = UIImage(
+      systemName: CommonUI.SFSymbolKey.circle.rawValue,
+      withConfiguration: config
+    )
+    imageView.tintColor = CommonUI.mainDark.withAlphaComponent(0.3)
+    
+    return imageView
+  }()
+  
+  fileprivate let returnTimeIndicatorImage: UIImageView = {
+    let imageView = UIImageView()
+    let config = UIImage.SymbolConfiguration(pointSize: 15, weight: .light, scale: .small)
+    imageView.image = UIImage(
+      systemName: CommonUI.SFSymbolKey.circle.rawValue,
+      withConfiguration: config
+    )
+    imageView.tintColor = CommonUI.mainDark.withAlphaComponent(0.3)
+    
+    return imageView
+  }()
+  
+  fileprivate lazy var vehicleReturnOptionIndicatorStackView: UIStackView = {
     let stackView = UIStackView(
       arrangedSubviews: [
-        startingStatusLabel,
-        headlightStatusLabel,
-        lockStatusLabel,
-        doorCloseStatusLabel,
-        returnTimeStatusLabel
+        startingIndicatorImage,
+        headlightIndicatorImage,
+        lockIndicatorImage,
+        doorCloseIndicatorImage,
+        returnTimeIndicatorImage
       ]
     )
     stackView.axis = .vertical
@@ -126,7 +184,7 @@ class ReturnVehicleStatusView: UIView {
   fileprivate func setUI() {
     self.backgroundColor = .white
     
-    [warningImage, descriptionLabel, vehicleStatusLabelStackView, vehicleReturnOptionStatusStackView].forEach {
+    [warningImage, descriptionLabel, vehicleStatusLabelStackView, vehicleReturnOptionIndicatorStackView].forEach {
       self.addSubview($0)
     }
     
@@ -150,7 +208,7 @@ class ReturnVehicleStatusView: UIView {
       $0.leading.equalToSuperview().offset(20)
     }
     
-    vehicleReturnOptionStatusStackView.snp.makeConstraints {
+    vehicleReturnOptionIndicatorStackView.snp.makeConstraints {
       $0.top.equalTo(descriptionLabel.snp.bottom).offset(30)
       $0.leading.equalTo(vehicleStatusLabelStackView.snp.trailing).offset(30)
     }
