@@ -192,3 +192,10 @@ extension UITableViewCell {
     }
   }
 }
+
+// MARK: - String / Underline
+extension String {
+   func getUnderLineAttributedText() -> NSAttributedString {
+    return NSMutableAttributedString(string: self, attributes: [.underlineStyle: NSUnderlineStyle.single.rawValue])
+   }
+}

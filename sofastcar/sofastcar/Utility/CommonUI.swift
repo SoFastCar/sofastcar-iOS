@@ -51,6 +51,7 @@ class CommonUI {
     case leftArrow = "arrow.left"
     case camera = "camera.fill"
     case time = "stopwatch.fill"
+    case circle = "circle.fill"
   }
   
   static let locale = NSLocale(localeIdentifier: "ko_KO")

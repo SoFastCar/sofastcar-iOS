@@ -14,7 +14,7 @@
 		7E8473E42509AB420007962F /* LeftAlignedTagCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8473E32509AB420007962F /* LeftAlignedTagCollectionViewFlowLayout.swift */; };
 		7E8473E72509FBD00007962F /* LeftAlignedCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8473E62509FBD00007962F /* LeftAlignedCollectionViewFlowLayout.swift */; };
 		7EAA8F6824FFBB510049D514 /* ReservationDashboardVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EAA8F6724FFBB510049D514 /* ReservationDashboardVC.swift */; };
-		7EF41FC32500AB3A0030752A /* ReservationStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF41FC22500AB3A0030752A /* ReservationStateView.swift */; };
+		
 		7EF41FC62501F6D90030752A /* CarKeyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF41FC52501F6D90030752A /* CarKeyView.swift */; };
 		BC3F2E9A250E49B3003E2C44 /* EndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3F2E99250E49B3003E2C44 /* EndPoint.swift */; };
 		BC4F3A05250E01B400B7E1E7 /* SearchResultTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4F39FE250E01B300B7E1E7 /* SearchResultTableViewCell.swift */; };
