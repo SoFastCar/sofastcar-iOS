@@ -23,6 +23,14 @@ class RentHistoryVC: UITableViewController {
     return imageView
   }()
   
+  let topBackgroundView: UIView = {
+    let view = UIView()
+    view.backgroundColor = .white
+    return view
+  }()
+  
+  let statusBar =  UIView()
+  
   // MARK: - Life Cycle
   override init(style: UITableView.Style) {
     super.init(style: .grouped)
@@ -36,13 +44,26 @@ class RentHistoryVC: UITableViewController {
     super.viewDidLoad()
     view.backgroundColor = .white
     configureNavigationContoller()
+    configureStatusBar()
     configureTableView()
   }
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     configureNavigationContoller()
-    
+  }
+  
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(animated)
+    statusBar.alpha = 0
+  }
+  
+  func configureStatusBar() {
+    let window = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
+    guard let statusBarFrame = window?.windowScene?.statusBarManager?.statusBarFrame else { return }
+    statusBar.frame = statusBarFrame
+    statusBar.backgroundColor = .white
+    UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.addSubview(statusBar)
   }
   
   private func configureNavigationContoller() {
@@ -68,7 +89,7 @@ class RentHistoryVC: UITableViewController {
     tableView.estimatedRowHeight = 700
     tableView.register(RentHistoryCell.self, forCellReuseIdentifier: RentHistoryCell.identifier)
     tableView.sectionHeaderHeight = 10
-    tableView.sectionFooterHeight = 10
+    tableView.sectionFooterHeight = 0
     tableView.separatorStyle = .none
   }
   
@@ -81,7 +102,11 @@ class RentHistoryVC: UITableViewController {
 // MARK: - UITableViewDelegate, UITableViewDataSource
 extension RentHistoryVC {
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    if indexPath.section == 0 { return UITableViewCell() }
+    if indexPath.section == 0 {
+      let cell = UITableViewCell()
+      cell.configureContentViewTopBottomLayer()
+      return cell
+    }
     let cell = RentHistoryCell(style: .default, reuseIdentifier: RentHistoryCell.identifier)
     return cell
   }
