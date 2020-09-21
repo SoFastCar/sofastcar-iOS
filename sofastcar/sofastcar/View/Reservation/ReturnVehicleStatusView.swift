@@ -243,7 +243,7 @@ class ReturnVehicleStatusView: UIView {
       button.setAttributedTitle(title.getUnderLineAttributedText(), for: .normal)
     }
     button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .subheadline)
-//    button.addTarget(self, action: #selector(buttonAction(_:)), for: .touchUpInside)
+    button.addTarget(self, action: #selector(buttonAction(_:)), for: .touchUpInside)
     
     return button
   }()
@@ -255,7 +255,7 @@ class ReturnVehicleStatusView: UIView {
     button.backgroundColor = .clear
     button.layer.borderWidth = 1
     button.layer.borderColor = UIColor.black.withAlphaComponent(0.3).cgColor
-    //    button.addTarget(self, action: #selector(buttonAction(_:)), for: .touchUpInside)
+        button.addTarget(self, action: #selector(buttonAction(_:)), for: .touchUpInside)
     
     return button
   }()
@@ -332,8 +332,8 @@ class ReturnVehicleStatusView: UIView {
   }
   
   // MARK: - Action
-//
-//  @objc func buttonAction(_ sender: UIButton) {
-//    customDelegate?.buttonAction(sender)
-//  }
+
+  @objc func buttonAction(_ sender: UIButton) {
+    customDelegate?.buttonAction(sender)
+  }
 }

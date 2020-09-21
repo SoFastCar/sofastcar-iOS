@@ -24,6 +24,7 @@ class ReturnVehicleStatusVC: UIViewController {
   // MARK: - UI
   
   fileprivate func setUI() {
+    returnVehicleStatusView.customDelegate = self
     
     view.backgroundColor = UIColor.black.withAlphaComponent(0.5)
     
@@ -34,6 +35,21 @@ class ReturnVehicleStatusVC: UIViewController {
     returnVehicleStatusView.snp.makeConstraints {
       $0.top.equalToSuperview().offset(view.frame.height / 3)
       $0.leading.trailing.bottom.equalToSuperview()
+    }
+  }
+}
+
+// MARK: - ReturnVehicleStatusViewDelegate
+
+extension ReturnVehicleStatusVC: ReturnVehicleStatusViewDelegate {
+  func buttonAction(_ sender: UIButton) {
+    switch sender {
+    case returnVehicleStatusView.anyProblemButton:
+      print("returnVehicleStatusView.anyProblemButton")
+    case returnVehicleStatusView.checkButton:
+      print("returnVehicleStatusView.checkButton")
+    default:
+      break
     }
   }
 }
