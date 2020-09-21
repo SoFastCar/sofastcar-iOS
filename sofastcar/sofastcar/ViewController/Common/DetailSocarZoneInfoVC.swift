@@ -74,7 +74,9 @@ class DetailSocarZoneInfoVC: UITableViewController {
 
 extension DetailSocarZoneInfoVC: DetailSocarZoneInfoCellDelegate {
   func tapShowDetailInfo(forCell cell: DetailSocarZoneInfoCell) {
-    print("tapShowDetailInfo")
+    guard let socarZoneData = socarZoneData else { return }
+    let detailSocarZoneInfoVC = DetailSocarZoneInfoVC(socarZoneData: socarZoneData)
+    present(detailSocarZoneInfoVC, animated: true, completion: nil)
   }
   
   func tapShowLoactionInMap(forCell cell: DetailSocarZoneInfoCell) {
