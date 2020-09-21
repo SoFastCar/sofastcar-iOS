@@ -24,7 +24,7 @@
 
 | Pod | SPM |  
 |:---:|:---:|
-| [Swift Lynt](https://github.com/realm/SwiftLint) | [Snapkit](https://github.com/SnapKit/SnapKit#contents) |
+| [Swift Lint](https://github.com/realm/SwiftLint) | [Snapkit](https://github.com/SnapKit/SnapKit#contents) |
 | [Naver Map SDK](https://www.ncloud.com/product/applicationService/maps) | [Kingfisher](https://github.com/onevcat/Kingfisher) |
 
 ---
