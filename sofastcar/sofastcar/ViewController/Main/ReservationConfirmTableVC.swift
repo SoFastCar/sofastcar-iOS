@@ -238,8 +238,8 @@ extension ReservationConfirmTableVC: ResrvationConfirmCellDelegate {
   func tapSocarZoneDetailButton(forCell: ReservationConfirmCustomCell) {
     print("tabSocarZoneDetailButton")
     guard let socarZoneData = socarZoneData else { return }
-    let detailSocarZoneInfoVC = DetailSocarZoneInfoVC(socarZoneData: socarZoneData)
-    detailSocarZoneInfoVC.modalPresentationStyle = .overFullScreen
+    let detailSocarZoneInfoVC = DetailSocarZoneInfoVC(socarZoneData: socarZoneData, isReservationEnd: false)
+//    detailSocarZoneInfoVC.modalPresentationStyle = .automatic
     present(detailSocarZoneInfoVC, animated: false, completion: nil)
   }
   

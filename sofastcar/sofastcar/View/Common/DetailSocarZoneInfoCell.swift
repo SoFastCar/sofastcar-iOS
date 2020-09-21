@@ -44,7 +44,7 @@ class DetailSocarZoneInfoCell: UITableViewCell {
     let label = UILabel()
     label.text = "로딩중..."
     label.font = .systemFont(ofSize: CommonUI.contentsTextFontSize)
-    label.textColor = .systemGray4
+    label.textColor = .darkGray
     return label
   }()
   
@@ -170,7 +170,7 @@ class DetailSocarZoneInfoCell: UITableViewCell {
     button.setTitleColor(.darkGray, for: .normal)
     button.backgroundColor = .white
     button.layer.borderWidth = 1
-    button.layer.borderColor = UIColor.systemGray6.cgColor
+    button.layer.borderColor = UIColor.systemGray4.cgColor
     return button
   }()
   
@@ -189,12 +189,17 @@ class DetailSocarZoneInfoCell: UITableViewCell {
     case .mainTitle:
       configureMainTitleCellContents()
       configureMainTitleCellUI()
+      configureContentViewBottomLayer()
     case .subTitle:
       configureSubTitleCellContents()
       configureSubTitleCellUI()
+      configureContentViewTopBottomLayer()
     case .detailInfoButton:
       configureDetailInfoCellContents()
       configureDetailInfoCellUI()
+    case .warningForUsing:
+      configureWaringForUsingCellConent()
+      configureWaringForUsingCellUI()
     }
   }
   
@@ -305,18 +310,32 @@ class DetailSocarZoneInfoCell: UITableViewCell {
   }
   
   private func configureDetailInfoCellUI() {
-    contentView.addSubview(showDetailInfoButton)
+    let paddingView = UIView()
+    paddingView.backgroundColor = .systemGray6
     contentView.backgroundColor = .systemGray6
+    [showDetailInfoButton, paddingView].forEach {
+      contentView.addSubview($0)
+    }
     
     showDetailInfoButton.snp.makeConstraints {
-      $0.top.bottom.equalTo(self)
+      $0.top.equalTo(guide).offset(-padding)
+      $0.leading.trailing.equalTo(guide)
+      $0.height.equalTo(60)
+    }
+    
+    paddingView.snp.makeConstraints {
+      $0.top.equalTo(showDetailInfoButton.snp.bottom)
       $0.leading.trailing.equalTo(guide)
       $0.height.equalTo(80)
+      $0.bottom.equalTo(guide)
     }
   }
   
-  // MARK: - configure Cell Contents
+  private func configureWaringForUsingCellUI() {
+    
+  }
   
+  // MARK: - configure Cell Contents
   private func configureMainTitleCellContents() {
     guard let socarZone = socarZoneData else { return }
     print(socarZone)
@@ -334,6 +353,10 @@ class DetailSocarZoneInfoCell: UITableViewCell {
   }
   
   private func configureDetailInfoCellContents() {
+    
+  }
+  
+  private func configureWaringForUsingCellConent() {
     
   }
 }
