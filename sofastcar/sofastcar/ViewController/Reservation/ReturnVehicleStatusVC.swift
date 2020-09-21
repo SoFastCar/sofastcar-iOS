@@ -33,7 +33,7 @@ class ReturnVehicleStatusVC: UIViewController {
     }
     
     returnVehicleStatusView.snp.makeConstraints {
-      $0.top.equalToSuperview().offset(view.frame.height / 3)
+      $0.top.equalToSuperview().offset(view.frame.height / 2.5)
       $0.leading.trailing.bottom.equalToSuperview()
     }
   }
