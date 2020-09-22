@@ -137,7 +137,7 @@ class SetBookingTimeButton: UIButton {
     if flag {
         startTime = sTime
         endTime = eTime
-        timeLabel.text = "\(Time.getTimeString(type: .todayHHmm, date: startTime)) - \(Time.getTimeString(type: .hourHHmm, date: endTime))"
+        timeLabel.text = Time.getStartEndTimeShowLabel(start: sTime, end: eTime)
     } else {
         let date = floor(Date().timeIntervalSince1970)
         let restMinDate = Double(Int(date) % 600)
