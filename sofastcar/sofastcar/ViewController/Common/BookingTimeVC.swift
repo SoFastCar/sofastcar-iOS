@@ -13,11 +13,13 @@ class BookingTimeVC: UIViewController {
   // MARK: - Properties
   let titleStringArray = ["대여 시각", "반납 시각"]
   let calendar = Calendar.current
-  var isTimeChange: Bool = false
   var isHalfHourSelected: Bool = false
   
   var rentCurrnetSelectedRow: [Int] = [0, 0, 0] // 일 시 분
   var returnCurrnetSelectedRow: [Int] = [0, 0, 0]
+  
+  var originalStartDate = Date()
+  var originalEndDate = Date()
   
   var startDate = Date()
   var endDate = Date()
@@ -58,8 +60,8 @@ class BookingTimeVC: UIViewController {
   
   fileprivate func configureInitialTimeSetting() {
     Time.getInitialStartAndEndTimeForReservation { (startDate, endDate) in
-      self.startDate = startDate
-      self.endDate = endDate
+      self.originalStartDate = startDate
+      self.originalEndDate = endDate
     }
   }
   
@@ -184,26 +186,22 @@ extension BookingTimeVC: UITableViewDataSource, UITableViewDelegate {
   }
   
   private func firstCellTitleConfigure() -> String {
-    if isTimeChange == false {
-      return "이용시간 설정하기"
-    } else {
-      var returnText = "총 "
-      let offsetComps = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: startDate, to: endDate)
-      if let day = offsetComps.day,
-        day != 0 {
-        returnText.append("\(day)일 ")
-      }
-      if let hour = offsetComps.hour,
-        hour != 0 {
-        returnText.append("\(hour)시간 ")
-      }
-      if let minute = offsetComps.minute,
-        minute != 0 {
-        returnText.append("\(minute)분 ")
-      }
-      returnText.append("이용")
-      return returnText
+    var returnText = "총 "
+    let offsetComps = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: startDate, to: endDate)
+    if let day = offsetComps.day,
+       day != 0 {
+      returnText.append("\(day)일 ")
     }
+    if let hour = offsetComps.hour,
+       hour != 0 {
+      returnText.append("\(hour)시간 ")
+    }
+    if let minute = offsetComps.minute,
+       minute != 0 {
+      returnText.append("\(minute)분 ")
+    }
+    returnText.append("이용")
+    return returnText
   }
   
   private func firstCellDetailTitleCongifure() -> String {
@@ -256,12 +254,20 @@ extension BookingTimeVC: UIPickerViewDelegate, UIPickerViewDataSource {
       break
     }
     
-    guard startDate < userSelectedDate else {
-      pickerView.selectRow(indexArray[component], inComponent: component, animated: true)
-      return print("Fail to change Date before StartTime")
+    tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .none)
+    
+    if pickerView.tag == 1 {
+      guard originalStartDate.addingTimeInterval(TimeInterval(-1)) < userSelectedDate else {
+        pickerView.selectRow(indexArray[component], inComponent: component, animated: true)
+        return print("Fail to change Date before StartTime")
+      }
+    } else if pickerView.tag == 2 {
+      guard originalEndDate.addingTimeInterval(TimeInterval(-1)) < userSelectedDate else {
+        pickerView.selectRow(indexArray[component], inComponent: component, animated: true)
+        return print("Fail to change Date before StartTime")
+      }
     }
     
-    isTimeChange = true
     updatePickerViewTime(pickViewType: pickerView.tag, row: row, component: component)
     saveCurrnetSelectedRow(pickerView: pickerView)
     pickerView.reloadComponent(component)
