@@ -186,6 +186,10 @@ class ReservationConfirmTableVC: UITableViewController {
     guard let insuranceData = insuranceData else { return }
     guard let standardPrice = socarData?.carPrices.standardPrice else { return }
     let rentPrice = standardPrice*divideRendTotalTimeByHalfHour
+    if let navi = self.presentingViewController as? UINavigationController, 
+       let presentingVC = navi.viewControllers.last as? MainVC {
+        presentingVC.reservationCompleteFlag = true        
+    }
     let paymentConfirmTableVC = PaymentConfirmTableVC(style: .grouped)
     paymentConfirmTableVC.configurePaymentConfirmTableVC(rentPrice: rentPrice, insuranceData: insuranceData)
     navigationController?.pushViewController(paymentConfirmTableVC, animated: true)
