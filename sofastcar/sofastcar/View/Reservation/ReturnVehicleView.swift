@@ -7,8 +7,15 @@
 //
 
 import UIKit
+import SnapKit
+
+protocol ReturnVehicleViewDelegate: class {
+    func didTapButton(_ sender: UIButton)
+}
 
 class ReturnVehicleView: UIView {
+  
+  weak var delegate: ReturnVehicleViewDelegate?
   
   // MARK: - LifeCycle
   
@@ -26,5 +33,11 @@ class ReturnVehicleView: UIView {
   
   fileprivate func setUI() {
     self.backgroundColor = .cyan
+  }
+  
+  // MARK: - Action
+  
+  @objc func didTapButton(_ sender: UIButton) {
+    delegate?.didTapButton(sender)
   }
 }
