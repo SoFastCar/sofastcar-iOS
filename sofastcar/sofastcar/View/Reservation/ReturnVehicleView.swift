@@ -19,9 +19,18 @@ class ReturnVehicleView: UIView {
   
   fileprivate let returnPlaceCheckView: UIView = {
     let view = UIView()
-    view.backgroundColor = .red
+    view.backgroundColor = .white
     
     return view
+  }()
+  
+  fileprivate let returnPlaceDescriptionTitleLabel: UILabel = {
+    let label = UILabel()
+    label.text = "송파동 공영주차장 에 반납하셨나요?"
+    label.font = UIFont.preferredFont(forTextStyle: .headline)
+    label.textColor = CommonUI.mainDark
+    
+    return label
   }()
   
   fileprivate let returnFinalCheckView: UIView = {
@@ -83,7 +92,17 @@ class ReturnVehicleView: UIView {
     returnRuleGuide()
   }
   
-  fileprivate func returnPlaceCheck() { }
+  fileprivate func returnPlaceCheck() {
+    
+    [returnPlaceDescriptionTitleLabel].forEach {
+      returnPlaceCheckView.addSubview($0)
+    }
+    
+    returnPlaceDescriptionTitleLabel.snp.makeConstraints {
+      $0.top.equalToSuperview().offset(10)
+      $0.leading.equalToSuperview().offset(20)
+    }
+  }
   fileprivate func returnFinalCheck() { }
   fileprivate func returnRuleGuide() { }
   
