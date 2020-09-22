@@ -66,7 +66,7 @@ class ReservationDetailTableVC: UITableViewController {
     configureTableView()
     configureTableViewSegController()
   }
-
+  
   private func configureTableView() {
     tableView.allowsSelection = false
     tableView.tableHeaderView = customTableHeaderView
