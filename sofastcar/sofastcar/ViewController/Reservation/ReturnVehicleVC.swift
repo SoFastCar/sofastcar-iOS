@@ -11,6 +11,8 @@ import SnapKit
 
 class ReturnVehicleVC: UIViewController {
   
+  fileprivate let returnVehicleView = ReturnVehicleView()
+  
   // MARK: - LifeCycle
   
   override func viewDidLoad() {
@@ -22,6 +24,13 @@ class ReturnVehicleVC: UIViewController {
   // MARK: - UI
   
   fileprivate func setUI() {
-    view.backgroundColor = .magenta
+    
+    [returnVehicleView].forEach {
+      view.addSubview($0)
+    }
+    
+    returnVehicleView.snp.makeConstraints {
+      $0.edges.equalToSuperview()
+    }
   }
 }
