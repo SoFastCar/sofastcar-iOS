@@ -65,6 +65,12 @@ class ReservationDetailHeader: UIView {
     return view
   }()
   
+  let topBackgroundView: UIView = {
+    let view = UIView()
+    view.backgroundColor = .white
+    return view
+  }()
+  
   // MARK: - Life Cycle
   init(frame: CGRect, isReservationEnd: Bool) {
     super.init(frame: frame)
@@ -72,6 +78,7 @@ class ReservationDetailHeader: UIView {
     reservationStatueLabel.backgroundColor = isReservationEnd ? .systemGray5 : CommonUI.mainDark
     configureDefaultSetting()
     configureLayout()
+    configureTopBackgroundSetting()
   }
   
   required init?(coder: NSCoder) {
@@ -119,6 +126,15 @@ class ReservationDetailHeader: UIView {
       $0.height.equalTo(1)
       $0.width.equalTo(65)
       $0.leading.equalTo(segmentControll).offset(9)
+    }
+  }
+  
+  private func configureTopBackgroundSetting() {
+    addSubview(topBackgroundView)
+    topBackgroundView.snp.makeConstraints {
+      $0.bottom.equalTo(closeButton.snp.top)
+      $0.leading.trailing.equalTo(self)
+      $0.height.equalTo(80)
     }
   }
 }

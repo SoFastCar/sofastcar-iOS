@@ -199,3 +199,15 @@ extension String {
     return NSMutableAttributedString(string: self, attributes: [.underlineStyle: NSUnderlineStyle.single.rawValue])
    }
 }
+
+// MARK: - Status Bar
+extension UIViewController {
+  func configureStatusBar(backgroundColor: UIColor) {
+    let statusBar =  UIView()
+    let window = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
+    guard let statusBarFrame = window?.windowScene?.statusBarManager?.statusBarFrame else { return }
+    statusBar.frame = statusBarFrame
+    statusBar.backgroundColor = backgroundColor
+    UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.addSubview(statusBar)
+  }
+}

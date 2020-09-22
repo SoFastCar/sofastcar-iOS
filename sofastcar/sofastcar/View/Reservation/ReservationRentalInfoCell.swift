@@ -127,6 +127,8 @@ class ReservationRentalInfoCell: UITableViewCell {
     button.backgroundColor = .white
     button.setTitleColor(.gray, for: .normal)
     button.addTarget(self, action: #selector(tapReservationCancelButton), for: .touchUpInside)
+    button.layer.borderWidth = 1
+    button.layer.borderColor = UIColor.systemGray4.cgColor
     return button
   }()
   
@@ -155,6 +157,7 @@ class ReservationRentalInfoCell: UITableViewCell {
       configureContentViewTopBottomLayer()
     case .socarZone:
       usingSocarZoneCellUI()
+      configureContentViewTopBottomLayer()
     case .otherDriver:
       otherDriverCellUI()
       configureOtherDriverCellContent()
@@ -166,7 +169,7 @@ class ReservationRentalInfoCell: UITableViewCell {
     case .cancelWarning:
       cancelWarningCellUI()
       configureCancelWarningCellContent()
-      configureContentViewBottomLayer()
+      configureContentViewTopBottomLayer()
     case .cancel:
       cancellCellUI()
     case .blank:
