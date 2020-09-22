@@ -126,7 +126,6 @@ class SetBookingTimeButton: UIButton {
         $0.trailing.equalToSuperview().offset(-20)
       })
     }
-    
   }
   
   func setButtonTitle(sTime: Date, eTime: Date) {
@@ -139,12 +138,12 @@ class SetBookingTimeButton: UIButton {
         endTime = eTime
         timeLabel.text = Time.getStartEndTimeShowLabel(start: sTime, end: eTime)
     } else {
-        let date = floor(Date().timeIntervalSince1970)
-        let restMinDate = Double(Int(date) % 600)
-        startTime = Date(timeIntervalSince1970: date-restMinDate)
-        startTime.addTimeInterval(TimeInterval(20*Time.min))
-        endTime = startTime.addingTimeInterval(TimeInterval(Time.hour*4))
-        timeLabel.text = "\(Time.getTimeString(type: .todayHHmm, date: startTime)) - \(Time.getTimeString(type: .hourHHmm, date: endTime))"
+      Time.getInitialStartAndEndTimeForReservation { (sTime, eTime) in
+        self.startTime = sTime
+        self.endTime = eTime
+        self.timeLabel.text = "\(Time.getTimeString(type: .todayHHmm, date: startTime)) - \(Time.getTimeString(type: .hourHHmm, date: endTime))"
+
+      }
     }
   }
 }

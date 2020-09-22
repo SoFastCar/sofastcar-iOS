@@ -571,7 +571,6 @@ class MainVC: UIViewController {
         pairingButton.isHidden = false
         view.addSubview(pairingButton)
         
-        
         whiteView.frame = view.frame
         whiteView.backgroundColor = .white
         whiteView.alpha = 0

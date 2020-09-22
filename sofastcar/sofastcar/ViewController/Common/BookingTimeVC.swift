@@ -50,9 +50,17 @@ class BookingTimeVC: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     view.backgroundColor = .white
+    configureInitialTimeSetting()
     configureTableView()
     configureLayout()
     settingAuthCompleteButton()
+  }
+  
+  fileprivate func configureInitialTimeSetting() {
+    Time.getInitialStartAndEndTimeForReservation { (startDate, endDate) in
+      self.startDate = startDate
+      self.endDate = endDate
+    }
   }
   
   fileprivate func configureTableView() {
@@ -224,9 +232,9 @@ extension BookingTimeVC: UIPickerViewDelegate, UIPickerViewDataSource {
   }
   
   func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-    if component == 0 { return 60 }
-    if component == 1 { return 24 }
-    if component == 2 { return 6 }
+    if component == DateComponentType.day.rawValue { return 60 }
+    if component == DateComponentType.hour.rawValue { return 24 }
+    if component == DateComponentType.min.rawValue { return 6 }
     return 0
   }
   
