@@ -17,6 +17,27 @@ class ReturnVehicleView: UIView {
   
   weak var delegate: ReturnVehicleViewDelegate?
   
+  fileprivate let returnPlaceCheckView: UIView = {
+    let view = UIView()
+    view.backgroundColor = .red
+    
+    return view
+  }()
+  
+  fileprivate let returnFinalCheckView: UIView = {
+    let view = UIView()
+    view.backgroundColor = .green
+    
+    return view
+  }()
+  
+  fileprivate let returnRuleGuideView: UIView = {
+    let view = UIView()
+    view.backgroundColor = .blue
+      
+    return view
+  }()
+  
   // MARK: - LifeCycle
   
   override init(frame: CGRect) {
@@ -32,8 +53,39 @@ class ReturnVehicleView: UIView {
   // MARK: - UI
   
   fileprivate func setUI() {
+    let guid = self.safeAreaLayoutGuide
     self.backgroundColor = .cyan
+    
+    [returnPlaceCheckView, returnFinalCheckView, returnRuleGuideView].forEach {
+      self.addSubview($0)
+    }
+    
+    returnPlaceCheckView.snp.makeConstraints {
+      $0.top.equalTo(guid)
+      $0.leading.trailing.equalToSuperview()
+      $0.height.equalTo(150)
+    }
+    
+    returnFinalCheckView.snp.makeConstraints {
+      $0.top.equalTo(returnPlaceCheckView.snp.bottom).offset(10)
+      $0.leading.trailing.equalToSuperview()
+      $0.height.equalTo(250)
+    }
+    
+    returnRuleGuideView.snp.makeConstraints {
+      $0.top.equalTo(returnFinalCheckView.snp.bottom).offset(10)
+      $0.leading.trailing.equalToSuperview()
+      $0.height.equalTo(100)
+    }
+    
+    returnPlaceCheck()
+    returnFinalCheck()
+    returnRuleGuide()
   }
+  
+  fileprivate func returnPlaceCheck() { }
+  fileprivate func returnFinalCheck() { }
+  fileprivate func returnRuleGuide() { }
   
   // MARK: - Action
   
