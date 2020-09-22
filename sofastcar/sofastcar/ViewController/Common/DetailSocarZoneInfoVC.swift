@@ -34,18 +34,8 @@ class DetailSocarZoneInfoVC: UITableViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    configureStatusBar()
     configureTableView()
   }
-  
-  private func configureStatusBar() {
-     let statusBar =  UIView()
-     let window = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
-     guard let statusBarFrame = window?.windowScene?.statusBarManager?.statusBarFrame else { return }
-     statusBar.frame = statusBarFrame
-     statusBar.backgroundColor = .white
-     UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.addSubview(statusBar)
-   }
   
   private func configureTableView() {
     tableView.allowsSelection = false

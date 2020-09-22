@@ -205,9 +205,11 @@ class ReservationPaymentCell: UITableViewCell {
     case .beforeCost:
       beforeCostCellUI()
       beforeCostContent()
+      configureContentViewTopBottomLayer()
     case .afterCost:
       afterCostCellUI()
       afterCostCellContent()
+      configureContentViewTopBottomLayer()
     }
   }
   
@@ -355,7 +357,6 @@ class ReservationPaymentCell: UITableViewCell {
       $0.centerY.equalTo(couponLabel.snp.centerY)
       $0.trailing.equalTo(guide)
     }
-    configureContentViewTopBottomLayer()
   }
   
   private func beforeCostContent() {
@@ -398,7 +399,6 @@ class ReservationPaymentCell: UITableViewCell {
       $0.leading.equalTo(guide)
       $0.bottom.equalTo(guide)
     }
-    configureContentViewTopLayer()
   }
   
   private func afterCostCellContent() {
