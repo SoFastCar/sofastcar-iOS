@@ -48,6 +48,18 @@ class BookingTimeVC: UIViewController {
   
   let authCompleteButton = CompleteButton(frame: .zero, title: "확인")
   
+  let reservationWaringView: UIView = {
+    let view = UIView()
+    view.backgroundColor = CommonUI.mainDark
+    return view
+  }()
+  
+  let label: UILabel = {
+    let label = UILabel()
+    label.layoutMargins = UIEdgeInsets
+    return label
+  }()
+  
   // MARK: - Life Cycle
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -101,7 +113,7 @@ class BookingTimeVC: UIViewController {
     }
   }
   
-  // MARK: - Button Action
+  // MARK: - Handler
   @objc private func tapDismissButton() {
     self.dismiss(animated: true, completion: nil)
   }
@@ -120,12 +132,17 @@ class BookingTimeVC: UIViewController {
     }
     
     if let presentingVC = navi.viewControllers.last as? ReservationConfirmTableVC {
-      print("reservationConfirm push")
       presentingVC.startDate = startDate
       presentingVC.endDate = endDate
       presentingVC.reloadUsingTimeCell()
     }
     self.dismiss(animated: true, completion: nil)
+  }
+  
+  private func reservationChecker() {
+    if endDate.timeIntervalSince1970 - startDate.timeIntervalSince1970 < Time.day*15 {
+      
+    }
   }
 }
 
@@ -240,39 +257,6 @@ extension BookingTimeVC: UIPickerViewDelegate, UIPickerViewDataSource {
     return 50
   }
   
-  func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-    let indexArray = pickerView.tag == 1 ? rentCurrnetSelectedRow : returnCurrnetSelectedRow
-    var userSelectedDate = pickerView.tag == 1 ? startDate : endDate
-    switch component {
-    case 0:
-      userSelectedDate.addTimeInterval(TimeInterval(Time.day*(row-indexArray[component])))
-    case 1:
-      userSelectedDate.addTimeInterval(TimeInterval(Time.hour*(row-indexArray[component])))
-    case 2:
-      userSelectedDate.addTimeInterval(TimeInterval(Time.min*10*(row-indexArray[component])))
-    default:
-      break
-    }
-    
-    tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .none)
-    
-    if pickerView.tag == 1 {
-      guard originalStartDate.addingTimeInterval(TimeInterval(-1)) < userSelectedDate else {
-        pickerView.selectRow(indexArray[component], inComponent: component, animated: true)
-        return print("Fail to change Date before StartTime")
-      }
-    } else if pickerView.tag == 2 {
-      guard originalEndDate.addingTimeInterval(TimeInterval(-1)) < userSelectedDate else {
-        pickerView.selectRow(indexArray[component], inComponent: component, animated: true)
-        return print("Fail to change Date before StartTime")
-      }
-    }
-    
-    updatePickerViewTime(pickViewType: pickerView.tag, row: row, component: component)
-    saveCurrnetSelectedRow(pickerView: pickerView)
-    pickerView.reloadComponent(component)
-  }
-  
   func pickerView(_ pickerView: UIPickerView, widthForComponent component: Int) -> CGFloat {
     if component == 0 { return 80 }
     return 50
@@ -307,6 +291,58 @@ extension BookingTimeVC: UIPickerViewDelegate, UIPickerViewDataSource {
       pickerLabel?.text = ""
     }
     return pickerLabel!
+  }
+  
+  func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+    let indexArray = pickerView.tag == 1 ? rentCurrnetSelectedRow : returnCurrnetSelectedRow
+    let compareDate = pickerView.tag == 1 ? endDate : startDate
+    var userSelectedDate = pickerView.tag == 1 ? startDate : endDate
+    let beforeTimeInterval = endDate.timeIntervalSince1970 - startDate.timeIntervalSince1970
+    switch component {
+    case 0:
+      userSelectedDate.addTimeInterval(TimeInterval(Time.day*(row-indexArray[component])))
+    case 1:
+      userSelectedDate.addTimeInterval(TimeInterval(Time.hour*(row-indexArray[component])))
+    case 2:
+      userSelectedDate.addTimeInterval(TimeInterval(Time.min*10*(row-indexArray[component])))
+    default:
+      break
+    }
+    
+    tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .none)
+    
+    if pickerView.tag == 1 {
+      if userSelectedDate < originalStartDate {
+        pickerView.selectRow(indexArray[component], inComponent: component, animated: true)
+        return print("Fail to change Date before StartTime")
+      } else if userSelectedDate >= compareDate {
+        print("This case to change Date [ so fast  1 ]")
+        startDate = userSelectedDate
+        endDate = userSelectedDate.addingTimeInterval(beforeTimeInterval)
+        tableView.reloadRows(at: [IndexPath(row: 2, section: 0)], with: .none)
+      } else if compareDate.timeIntervalSince1970 - userSelectedDate.timeIntervalSince1970 < Double(Time.min*30) {
+        print("This case to change Date [ Min time helf hour ]")
+        startDate = userSelectedDate
+        endDate = userSelectedDate.addingTimeInterval(TimeInterval(Time.min*30))
+        print(Time.getTimeString(type: .castMddEHHmm, date: startDate))
+        print(Time.getTimeString(type: .castMddEHHmm, date: endDate))
+        tableView.reloadRows(at: [IndexPath(row: 2, section: 0)], with: .none)
+      }
+    } else {
+      if compareDate >= userSelectedDate {
+        pickerView.selectRow(indexArray[component], inComponent: component, animated: true)
+        return print("Fail to change Date [ so fast  2 ]")
+      }
+      if userSelectedDate.timeIntervalSince1970 - compareDate.timeIntervalSince1970 < Double(Time.min*30) {
+        pickerView.selectRow(indexArray[component], inComponent: component, animated: true)
+       return print("Fail to change Date [ Min time helf hour ]")
+      }
+    }
+    
+    updatePickerViewTime(pickViewType: pickerView.tag, row: row, component: component)
+    saveCurrnetSelectedRow(pickerView: pickerView)
+    pickerView.reloadComponent(component)
+    tableView.reloadData()
   }
   
   private func updatePickerViewTime(pickViewType: Int, row: Int, component: Int) {
