@@ -59,6 +59,22 @@ class ReturnVehicleView: UIView {
     return label
   }()
   
+  fileprivate let returnParkingPlaceCheckTrueButtonView: CheckButtonView = {
+    let view = CheckButtonView()
+    view.toggle = false
+    view.buttonTypeLabel = "네"
+    
+    return view
+  }()
+  
+  fileprivate let returnParkingPlaceCheckFalseButtonView: CheckButtonView = {
+    let view = CheckButtonView()
+    view.toggle = false
+    view.buttonTypeLabel = "아니요"
+
+    return view
+  }()
+  
   fileprivate let returnFinalCheckView: UIView = {
     let view = UIView()
     view.backgroundColor = .green
@@ -122,7 +138,7 @@ class ReturnVehicleView: UIView {
   
   fileprivate func returnPlaceCheck() {
     
-    [returnPlaceDescriptionTitleLabel, returnPlaceCheckTrueButtonView, returnPlaceCheckFalseButtonView, returnParkingPlaceLabel].forEach {
+    [returnPlaceDescriptionTitleLabel, returnPlaceCheckTrueButtonView, returnPlaceCheckFalseButtonView, returnParkingPlaceLabel, returnParkingPlaceCheckTrueButtonView, returnParkingPlaceCheckFalseButtonView].forEach {
       returnPlaceCheckView.addSubview($0)
     }
     
@@ -149,6 +165,20 @@ class ReturnVehicleView: UIView {
       $0.top.equalTo(returnPlaceCheckTrueButtonView.snp.bottom).offset(20)
       $0.leading.equalToSuperview().offset(20)
     }
+    
+    returnParkingPlaceCheckTrueButtonView.snp.makeConstraints {
+      $0.top.equalTo(returnParkingPlaceLabel.snp.bottom).offset(20)
+      $0.leading.equalToSuperview().offset(150)
+      $0.width.equalTo(50)
+      $0.height.equalTo(20)
+    }
+    
+    returnParkingPlaceCheckFalseButtonView.snp.makeConstraints {
+      $0.top.equalTo(returnParkingPlaceLabel.snp.bottom).offset(20)
+      $0.leading.equalTo(returnParkingPlaceCheckTrueButtonView.snp.trailing).offset(40)
+      $0.width.equalTo(50)
+      $0.height.equalTo(20)
+    }
   }
   fileprivate func returnFinalCheck() { }
   fileprivate func returnRuleGuide() { }
@@ -162,9 +192,21 @@ class ReturnVehicleView: UIView {
       target: self,
       action: #selector(checkAction)
     )
+    let returnParkingPlaceCheckTrueGesture = UITapGestureRecognizer(
+      target: self,
+      action: #selector(checkAction)
+    )
+    let returnParkingPlaceCheckFalseGesture = UITapGestureRecognizer(
+      target: self,
+      action: #selector(checkAction)
+    )
     
     returnPlaceCheckTrueButtonView.addGestureRecognizer(returnPlaceCheckTrueButtonGesture)
     returnPlaceCheckFalseButtonView.addGestureRecognizer(returnPlaceCheckFalseButtonGesture)
+    
+    returnParkingPlaceCheckTrueButtonView.addGestureRecognizer(returnParkingPlaceCheckTrueGesture)
+    
+    returnParkingPlaceCheckTrueButtonView.addGestureRecognizer(returnParkingPlaceCheckFalseGesture)
   }
   
   // MARK: - Action
@@ -184,7 +226,7 @@ class ReturnVehicleView: UIView {
         returnPlaceCheckView.snp.remakeConstraints {
           $0.top.equalTo(self.safeAreaLayoutGuide)
           $0.leading.trailing.equalToSuperview()
-          $0.height.equalTo(200)
+          $0.height.equalTo(180)
           returnParkingPlaceLabel.isHidden = false
         }
       } else {
@@ -198,6 +240,10 @@ class ReturnVehicleView: UIView {
 
     case returnPlaceCheckFalseButtonView:
       returnPlaceCheckFalseButtonView.toggle.toggle()
+    case returnParkingPlaceCheckTrueButtonView:
+      returnParkingPlaceCheckTrueButtonView.toggle.toggle()
+    case returnParkingPlaceCheckFalseButtonView:
+      returnParkingPlaceCheckFalseButtonView.toggle.toggle()
     default:
       break
     }
