@@ -33,6 +33,14 @@ class ReturnVehicleView: UIView {
     return label
   }()
   
+  fileprivate let returnPlaceCheckTrueButtonView: CheckButtonView = {
+    let view = CheckButtonView()
+    view.toggle = false
+    view.buttonTypeLabel = "네"
+    
+    return view
+  }()
+  
   fileprivate let returnFinalCheckView: UIView = {
     let view = UIView()
     view.backgroundColor = .green
@@ -94,13 +102,18 @@ class ReturnVehicleView: UIView {
   
   fileprivate func returnPlaceCheck() {
     
-    [returnPlaceDescriptionTitleLabel].forEach {
+    [returnPlaceDescriptionTitleLabel, returnPlaceCheckTrueButtonView].forEach {
       returnPlaceCheckView.addSubview($0)
     }
     
     returnPlaceDescriptionTitleLabel.snp.makeConstraints {
       $0.top.equalToSuperview().offset(10)
       $0.leading.equalToSuperview().offset(20)
+    }
+    
+    returnPlaceCheckTrueButtonView.snp.makeConstraints {
+      $0.top.equalTo(returnPlaceDescriptionTitleLabel.snp.bottom).offset(20)
+      $0.leading.equalToSuperview().offset(150)
     }
   }
   fileprivate func returnFinalCheck() { }
