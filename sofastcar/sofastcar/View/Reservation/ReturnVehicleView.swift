@@ -202,6 +202,7 @@ class ReturnVehicleView: UIView {
     let button = UIButton()
     button.setImage(UIImage(systemName: CommonUI.SFSymbolKey.rightChevron.rawValue), for: .normal)
     button.tintColor = CommonUI.mainDark
+    button.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
     
     return button
   }()
@@ -212,6 +213,7 @@ class ReturnVehicleView: UIView {
     button.backgroundColor = CommonUI.mainBlue
     button.contentHorizontalAlignment = .center
     button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0)
+    button.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
     
     return button
   }()
