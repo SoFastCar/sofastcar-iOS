@@ -8,14 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		1226A60FC1A80A06F7DAB1AE /* Pods_sofastcar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC793DBC933237B89DC3FEED /* Pods_sofastcar.framework */; };
-<<<<<<< HEAD
 		7E35BE99251840590024DCE5 /* ReturnVehicleStatusVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E35BE98251840590024DCE5 /* ReturnVehicleStatusVC.swift */; };
 		7E35BE9B251841B70024DCE5 /* ReturnVehicleStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E35BE9A251841B70024DCE5 /* ReturnVehicleStatusView.swift */; };
 		7E77D994251A402B002C6BF1 /* ReturnVehicleVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E77D993251A402B002C6BF1 /* ReturnVehicleVC.swift */; };
 		7E77D998251A41AD002C6BF1 /* ReturnVehicleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E77D997251A41AD002C6BF1 /* ReturnVehicleView.swift */; };
 		7E77D99C251B07D1002C6BF1 /* CheckButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E77D99B251B07D1002C6BF1 /* CheckButtonView.swift */; };
-=======
->>>>>>> 38cb6da1e207e68a2e070e55bfcf312738057b00
 		7E8473D82507BD6B0007962F /* VehicleCheckVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8473D72507BD6B0007962F /* VehicleCheckVC.swift */; };
 		7E8473DA2507C59D0007962F /* VehicleCheckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8473D92507C59D0007962F /* VehicleCheckView.swift */; };
 		7E8473E225088E830007962F /* TagCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8473E125088E830007962F /* TagCollectionViewCell.swift */; };
@@ -143,14 +140,11 @@
 
 /* Begin PBXFileReference section */
 		385247949553C4B863A7F4DF /* Pods-sofastcar.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sofastcar.debug.xcconfig"; path = "Target Support Files/Pods-sofastcar/Pods-sofastcar.debug.xcconfig"; sourceTree = "<group>"; };
-<<<<<<< HEAD
 		7E35BE98251840590024DCE5 /* ReturnVehicleStatusVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReturnVehicleStatusVC.swift; sourceTree = "<group>"; };
 		7E35BE9A251841B70024DCE5 /* ReturnVehicleStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReturnVehicleStatusView.swift; sourceTree = "<group>"; };
 		7E77D993251A402B002C6BF1 /* ReturnVehicleVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReturnVehicleVC.swift; sourceTree = "<group>"; };
 		7E77D997251A41AD002C6BF1 /* ReturnVehicleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReturnVehicleView.swift; sourceTree = "<group>"; };
 		7E77D99B251B07D1002C6BF1 /* CheckButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckButtonView.swift; sourceTree = "<group>"; };
-=======
->>>>>>> 38cb6da1e207e68a2e070e55bfcf312738057b00
 		7E8473D72507BD6B0007962F /* VehicleCheckVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehicleCheckVC.swift; sourceTree = "<group>"; };
 		7E8473D92507C59D0007962F /* VehicleCheckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehicleCheckView.swift; sourceTree = "<group>"; };
 		7E8473E125088E830007962F /* TagCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -301,12 +295,9 @@
 				C7CEF73D2511BF4D00C063B0 /* VehicleTakePictureVC.swift */,
 				C7CEF73F2511BF7A00C063B0 /* VehicleDoubleCheckVC.swift */,
 				7E8473D72507BD6B0007962F /* VehicleCheckVC.swift */,
-<<<<<<< HEAD
 				7E35BE98251840590024DCE5 /* ReturnVehicleStatusVC.swift */,
 				7E77D993251A402B002C6BF1 /* ReturnVehicleVC.swift */,
-=======
 				C73D34A52518E6DD0075471F /* ReturnVehicleStatusVC.swift */,
->>>>>>> 38cb6da1e207e68a2e070e55bfcf312738057b00
 			);
 			path = Reservation;
 			sourceTree = "<group>";
@@ -329,14 +320,11 @@
 				C7CEF7472511BFBE00C063B0 /* VehicleDoubleCheckView.swift */,
 				C7CEF7492511BFD100C063B0 /* MenuCollectionViewCell.swift */,
 				C7CEF74B2511BFE900C063B0 /* VehicleCheckCell.swift */,
-<<<<<<< HEAD
 				7E35BE9A251841B70024DCE5 /* ReturnVehicleStatusView.swift */,
 				7E77D997251A41AD002C6BF1 /* ReturnVehicleView.swift */,
 				7E77D99B251B07D1002C6BF1 /* CheckButtonView.swift */,
-=======
 				C73D34A92518E7010075471F /* ReturnVehicleStatusView.swift */,
 				C73D34AD2518E7180075471F /* ReservationStateView.swift */,
->>>>>>> 38cb6da1e207e68a2e070e55bfcf312738057b00
 			);
 			path = Reservation;
 			sourceTree = "<group>";
