@@ -106,9 +106,7 @@ extension ReservationDashboardVC: CarKeyViewDelegate {
     case carKey.riseReturnButton:
       print("riseReturnButton")
       UserDefaults.setReadyToDrive(isDriveReady: false)
-      let provideVC = MainVC()
-      provideVC.socarZoneProvider = SocarZoneProvider()
-      let mainVC = UINavigationController(rootViewController: provideVC)
+      let mainVC = UINavigationController(rootViewController: ReturnVehicleVC())
       mainVC.modalPresentationStyle = .fullScreen
       self.present(mainVC, animated: false, completion: nil)
     default:

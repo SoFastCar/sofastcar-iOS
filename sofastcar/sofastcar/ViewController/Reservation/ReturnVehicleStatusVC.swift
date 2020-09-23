@@ -12,7 +12,7 @@ import SnapKit
 class ReturnVehicleStatusVC: UIViewController {
   
   fileprivate let returnVehicleStatusView = ReturnVehicleStatusView()
-
+  
   // MARK: - LifeCycle
   
   override func viewDidLoad() {
@@ -25,8 +25,6 @@ class ReturnVehicleStatusVC: UIViewController {
   
   fileprivate func setUI() {
     returnVehicleStatusView.customDelegate = self
-    
-    view.backgroundColor = UIColor.black.withAlphaComponent(0.5)
     
     [returnVehicleStatusView].forEach {
       view.addSubview($0)
@@ -48,6 +46,7 @@ extension ReturnVehicleStatusVC: ReturnVehicleStatusViewDelegate {
       print("returnVehicleStatusView.anyProblemButton")
     case returnVehicleStatusView.checkButton:
       print("returnVehicleStatusView.checkButton")
+      dismiss(animated: true, completion: nil)
     default:
       break
     }
