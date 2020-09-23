@@ -18,7 +18,7 @@ class CompleteButton: UIButton {
   
   init(frame: CGRect, title: String) {
     super.init(frame: frame)
-    self.titleLabel?.font = .systemFont(ofSize: 18)
+    self.titleLabel?.font = .boldSystemFont(ofSize: 18)
     
     self.setTitle(title, for: .normal)
     self.setTitleColor(.white, for: .normal)
