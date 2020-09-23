@@ -21,8 +21,16 @@ class BookingTimeVC: UIViewController {
   var originalStartDate = Date()
   var originalEndDate = Date()
   
-  var startDate = Date()
-  var endDate = Date()
+  var startDate = Date() {
+    didSet {
+      reservationChecker()
+    }
+  }
+  var endDate = Date() {
+    didSet {
+      reservationChecker()
+    }
+  }
     
   var setBookingTimeMain: SetBookingTimeButton?
   var setBookingTimeCarList: SetBookingTimeButton?
@@ -33,7 +41,7 @@ class BookingTimeVC: UIViewController {
     case min = 2
   }
   
-  let dismissButton: UIButton = {
+  lazy var dismissButton: UIButton = {
     let button = UIButton()
     let sysimgaCongfigure = UIImage.SymbolConfiguration(pointSize: 30, weight: .thin)
     button.setImage(UIImage(systemName: "xmark", withConfiguration: sysimgaCongfigure), for: .normal)
@@ -54,10 +62,26 @@ class BookingTimeVC: UIViewController {
     return view
   }()
   
-  let label: UILabel = {
-    let label = UILabel()
-    label.layoutMargins = UIEdgeInsets
-    return label
+  let reservationWaringTextView: UITextView = {
+    let textView = UITextView()
+    textView.textContainerInset = UIEdgeInsets(top: 15, left: 10, bottom: 10, right: 60)
+    textView.textAlignment = .natural
+    textView.text = "쏘카는 최대 30분부터 ~ 최대 14일까지 사용할 수 있습니다."
+    textView.backgroundColor = CommonUI.mainDark
+    textView.textColor = .white
+    textView.font = .boldSystemFont(ofSize: CommonUI.titleTextFontSize)
+    textView.layer.cornerRadius = 10
+    textView.isScrollEnabled = false
+    return textView
+  }()
+  
+  lazy var  waringTextViewOkButtton: UIButton = {
+    let button = UIButton()
+    button.setTitle("확인", for: .normal)
+    button.setTitleColor(CommonUI.mainBlue, for: .normal)
+    button.titleLabel?.font = .boldSystemFont(ofSize: CommonUI.titleTextFontSize)
+    button.addTarget(self, action: #selector(tapWarningOkButton), for: .touchUpInside)
+    return button
   }()
   
   // MARK: - Life Cycle
@@ -68,6 +92,7 @@ class BookingTimeVC: UIViewController {
     configureTableView()
     configureLayout()
     settingAuthCompleteButton()
+    settingReservationWaringLabel()
   }
   
   fileprivate func configureInitialTimeSetting() {
@@ -113,6 +138,25 @@ class BookingTimeVC: UIViewController {
     }
   }
   
+  private func settingReservationWaringLabel() {
+    [reservationWaringTextView, waringTextViewOkButtton].forEach {
+      tableView.addSubview($0)
+      $0.isHidden = true
+    }
+    
+    reservationWaringTextView.snp.makeConstraints {
+      $0.bottom.equalTo(tableView.safeAreaLayoutGuide).offset(-100)
+      $0.leading.equalTo(tableView.safeAreaLayoutGuide).offset(10)
+      $0.trailing.equalTo(tableView.safeAreaLayoutGuide).offset(-10)
+      $0.height.equalTo(70)
+    }
+    
+    waringTextViewOkButtton.snp.makeConstraints {
+      $0.trailing.equalTo(reservationWaringTextView).offset(-20)
+      $0.centerY.equalTo(reservationWaringTextView)
+    }
+  }
+  
   // MARK: - Handler
   @objc private func tapDismissButton() {
     self.dismiss(animated: true, completion: nil)
@@ -139,10 +183,23 @@ class BookingTimeVC: UIViewController {
     self.dismiss(animated: true, completion: nil)
   }
   
+  @objc private func tapWarningOkButton() {
+    reservationWaringTextView.isHidden = true
+    waringTextViewOkButtton.isHidden = true
+  }
+  
   private func reservationChecker() {
-    if endDate.timeIntervalSince1970 - startDate.timeIntervalSince1970 < Time.day*15 {
-      
+    if endDate.timeIntervalSince1970 - startDate.timeIntervalSince1970 > TimeInterval(Time.day*14) {
+      showReservationWaringLabel(isHidden: false)
+    } else {
+      authCompleteButton.isEnabled = true
     }
+  }
+  
+  private func showReservationWaringLabel(isHidden: Bool) {
+    reservationWaringTextView.isHidden = isHidden
+    waringTextViewOkButtton.isHidden = isHidden
+    authCompleteButton.isEnabled = isHidden
   }
 }
 
