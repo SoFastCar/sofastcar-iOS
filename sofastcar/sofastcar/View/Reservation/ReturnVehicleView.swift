@@ -210,8 +210,10 @@ class ReturnVehicleView: UIView {
   let returnButton: UIButton = {
     let button = UIButton()
     button.setTitle("반납하기", for: .normal)
-    button.backgroundColor = CommonUI.mainBlue
     button.contentHorizontalAlignment = .center
+    button.backgroundColor = .systemGray4
+    button.setTitleColor(.gray, for: .normal)
+    button.isEnabled = false
     button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0)
     button.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
     
@@ -398,6 +400,27 @@ class ReturnVehicleView: UIView {
     personalItemButtonView.addGestureRecognizer(personalItemBGesture)
   }
   
+  fileprivate func enableTrueReturnButton() {
+    
+    returnButton.backgroundColor = CommonUI.mainBlue
+    returnButton.setTitleColor(.white, for: .normal)
+  }
+  
+  fileprivate func enableFalseReturnButton() {
+    
+    returnButton.backgroundColor = .systemGray4
+    returnButton.setTitleColor(.gray, for: .normal)
+  }
+  
+  fileprivate func checkToggleTrue() {
+    if returnPlaceCheckTrueButtonView.toggle == true && returnPlaceCheckFalseButtonView.toggle == false && returnParkingPlaceCheckTrueButtonView.toggle == true && returnParkingPlaceCheckFalseButtonView.toggle == false && windowCloseButtonView.toggle == true && illuminationOffButtonView.toggle == true && personalItemButtonView.toggle == true {
+      enableTrueReturnButton()
+      print("all true")
+    } else {
+      enableFalseReturnButton()
+    }
+  }
+  
   // MARK: - Action
   
   @objc func didTapButton(_ sender: UIButton) {
@@ -409,6 +432,7 @@ class ReturnVehicleView: UIView {
     switch sender.view {
     case returnPlaceCheckTrueButtonView:
       returnPlaceCheckTrueButtonView.toggle.toggle()
+      checkToggleTrue()
       
       if returnPlaceCheckTrueButtonView.toggle == true && returnPlaceCheckFalseButtonView.toggle == true {
         returnPlaceCheckFalseButtonView.toggle.toggle()
@@ -438,6 +462,7 @@ class ReturnVehicleView: UIView {
 
     case returnPlaceCheckFalseButtonView:
       returnPlaceCheckFalseButtonView.toggle.toggle()
+      checkToggleTrue()
       
       if returnPlaceCheckTrueButtonView.toggle == true && returnPlaceCheckFalseButtonView.toggle == true {
         returnPlaceCheckTrueButtonView.toggle.toggle()
@@ -453,6 +478,7 @@ class ReturnVehicleView: UIView {
       
     case returnParkingPlaceCheckTrueButtonView:
       returnParkingPlaceCheckTrueButtonView.toggle.toggle()
+      checkToggleTrue()
       
       if returnParkingPlaceCheckTrueButtonView.toggle == true && returnParkingPlaceCheckFalseButtonView.toggle == true {
         returnParkingPlaceCheckFalseButtonView.toggle.toggle()
@@ -460,6 +486,7 @@ class ReturnVehicleView: UIView {
       
     case returnParkingPlaceCheckFalseButtonView:
       returnParkingPlaceCheckFalseButtonView.toggle.toggle()
+      checkToggleTrue()
       
       if returnParkingPlaceCheckTrueButtonView.toggle == true && returnParkingPlaceCheckFalseButtonView.toggle == true {
         returnParkingPlaceCheckTrueButtonView.toggle.toggle()
@@ -467,10 +494,13 @@ class ReturnVehicleView: UIView {
       
     case windowCloseButtonView:
       windowCloseButtonView.toggle.toggle()
+      checkToggleTrue()
     case illuminationOffButtonView:
       illuminationOffButtonView.toggle.toggle()
+      checkToggleTrue()
     case personalItemButtonView:
       personalItemButtonView.toggle.toggle()
+      checkToggleTrue()
     default:
       break
     }
