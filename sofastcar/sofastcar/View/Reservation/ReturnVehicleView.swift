@@ -206,7 +206,7 @@ class ReturnVehicleView: UIView {
     
     returnParkingPlaceCheckTrueButtonView.addGestureRecognizer(returnParkingPlaceCheckTrueGesture)
     
-    returnParkingPlaceCheckTrueButtonView.addGestureRecognizer(returnParkingPlaceCheckFalseGesture)
+    returnParkingPlaceCheckFalseButtonView.addGestureRecognizer(returnParkingPlaceCheckFalseGesture)
   }
   
   // MARK: - Action
@@ -242,6 +242,8 @@ class ReturnVehicleView: UIView {
           $0.leading.trailing.equalToSuperview()
           $0.height.equalTo(100)
           returnParkingPlaceLabel.isHidden = true
+          returnParkingPlaceCheckTrueButtonView.toggle = false
+          returnParkingPlaceCheckFalseButtonView.toggle = false
         }
       }
 
@@ -255,13 +257,24 @@ class ReturnVehicleView: UIView {
           $0.leading.trailing.equalToSuperview()
           $0.height.equalTo(100)
           returnParkingPlaceLabel.isHidden = true
+          returnParkingPlaceCheckTrueButtonView.toggle = false
+          returnParkingPlaceCheckFalseButtonView.toggle = false
         }
       }
       
     case returnParkingPlaceCheckTrueButtonView:
       returnParkingPlaceCheckTrueButtonView.toggle.toggle()
+      
+      if returnParkingPlaceCheckTrueButtonView.toggle == true && returnParkingPlaceCheckFalseButtonView.toggle == true {
+        returnParkingPlaceCheckFalseButtonView.toggle.toggle()
+      }
+      
     case returnParkingPlaceCheckFalseButtonView:
       returnParkingPlaceCheckFalseButtonView.toggle.toggle()
+      
+      if returnParkingPlaceCheckTrueButtonView.toggle == true && returnParkingPlaceCheckFalseButtonView.toggle == true {
+        returnParkingPlaceCheckTrueButtonView.toggle.toggle()
+      }
     default:
       break
     }
