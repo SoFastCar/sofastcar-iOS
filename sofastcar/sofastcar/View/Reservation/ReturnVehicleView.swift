@@ -49,6 +49,16 @@ class ReturnVehicleView: UIView {
     return view
   }()
   
+  fileprivate let returnParkingPlaceLabel: UILabel = {
+    let label = UILabel()
+    label.text = "지상 4층 에 반납하셨나요?"
+    label.font = UIFont.preferredFont(forTextStyle: .headline)
+    label.textColor = CommonUI.mainDark
+    label.isHidden = true
+    
+    return label
+  }()
+  
   fileprivate let returnFinalCheckView: UIView = {
     let view = UIView()
     view.backgroundColor = .green
@@ -88,7 +98,7 @@ class ReturnVehicleView: UIView {
     returnPlaceCheckView.snp.makeConstraints {
       $0.top.equalTo(guid)
       $0.leading.trailing.equalToSuperview()
-      $0.height.equalTo(150)
+      $0.height.equalTo(100)
     }
     
     returnFinalCheckView.snp.makeConstraints {
@@ -106,11 +116,13 @@ class ReturnVehicleView: UIView {
     returnPlaceCheck()
     returnFinalCheck()
     returnRuleGuide()
+    
+    setGesture()
   }
   
   fileprivate func returnPlaceCheck() {
     
-    [returnPlaceDescriptionTitleLabel, returnPlaceCheckTrueButtonView, returnPlaceCheckFalseButtonView].forEach {
+    [returnPlaceDescriptionTitleLabel, returnPlaceCheckTrueButtonView, returnPlaceCheckFalseButtonView, returnParkingPlaceLabel].forEach {
       returnPlaceCheckView.addSubview($0)
     }
     
@@ -132,13 +144,62 @@ class ReturnVehicleView: UIView {
       $0.width.equalTo(50)
       $0.height.equalTo(20)
     }
+    
+    returnParkingPlaceLabel.snp.makeConstraints {
+      $0.top.equalTo(returnPlaceCheckTrueButtonView.snp.bottom).offset(20)
+      $0.leading.equalToSuperview().offset(20)
+    }
   }
   fileprivate func returnFinalCheck() { }
   fileprivate func returnRuleGuide() { }
+  
+  fileprivate func setGesture() {
+    let returnPlaceCheckTrueButtonGesture = UITapGestureRecognizer(
+      target: self,
+      action: #selector(checkAction)
+    )
+    let returnPlaceCheckFalseButtonGesture = UITapGestureRecognizer(
+      target: self,
+      action: #selector(checkAction)
+    )
+    
+    returnPlaceCheckTrueButtonView.addGestureRecognizer(returnPlaceCheckTrueButtonGesture)
+    returnPlaceCheckFalseButtonView.addGestureRecognizer(returnPlaceCheckFalseButtonGesture)
+  }
   
   // MARK: - Action
   
   @objc func didTapButton(_ sender: UIButton) {
     delegate?.didTapButton(sender)
+  }
+  
+  @objc func checkAction(_ sender: UITapGestureRecognizer) {
+    print(sender)
+    
+    switch sender.view {
+    case returnPlaceCheckTrueButtonView:
+      returnPlaceCheckTrueButtonView.toggle.toggle()
+      
+      if returnPlaceCheckTrueButtonView.toggle == true {
+        returnPlaceCheckView.snp.remakeConstraints {
+          $0.top.equalTo(self.safeAreaLayoutGuide)
+          $0.leading.trailing.equalToSuperview()
+          $0.height.equalTo(200)
+          returnParkingPlaceLabel.isHidden = false
+        }
+      } else {
+        returnPlaceCheckView.snp.remakeConstraints {
+          $0.top.equalTo(self.safeAreaLayoutGuide)
+          $0.leading.trailing.equalToSuperview()
+          $0.height.equalTo(100)
+          returnParkingPlaceLabel.isHidden = true
+        }
+      }
+
+    case returnPlaceCheckFalseButtonView:
+      returnPlaceCheckFalseButtonView.toggle.toggle()
+    default:
+      break
+    }
   }
 }

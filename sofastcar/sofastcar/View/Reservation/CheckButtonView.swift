@@ -11,7 +11,7 @@ import SnapKit
 
 class CheckButtonView: UIView {
   
-  var toggle: Bool? {
+  var toggle: Bool = false {
     didSet {
       switch toggle {
       case true:
@@ -51,9 +51,9 @@ class CheckButtonView: UIView {
     setUI()
   }
   
-  override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-    toggle?.toggle()
-  }
+//  override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+//    toggle?.toggle()
+//  }
   
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
