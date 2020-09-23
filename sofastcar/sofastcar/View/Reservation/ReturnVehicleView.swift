@@ -132,6 +132,56 @@ class ReturnVehicleView: UIView {
     return stackView
   }()
   
+  fileprivate let windowCloseButtonView: CheckButtonView = {
+    let view = CheckButtonView()
+    view.toggle = false
+    view.buttonTypeLabel = "네"
+    view.snp.makeConstraints {
+      $0.width.equalTo(50)
+      $0.height.equalTo(15)
+    }
+    
+    return view
+  }()
+  
+  fileprivate let illuminationOffButtonView: CheckButtonView = {
+    let view = CheckButtonView()
+    view.toggle = false
+    view.buttonTypeLabel = "네"
+    view.snp.makeConstraints {
+      $0.width.equalTo(50)
+      $0.height.equalTo(15)
+    }
+
+    return view
+  }()
+  
+  fileprivate let personalItemButtonView: CheckButtonView = {
+    let view = CheckButtonView()
+    view.toggle = false
+    view.buttonTypeLabel = "네"
+    view.snp.makeConstraints {
+      $0.width.equalTo(50)
+      $0.height.equalTo(15)
+    }
+
+    return view
+  }()
+  
+  fileprivate lazy var checkButtonStackView: UIStackView = {
+    let stackView = UIStackView(
+      arrangedSubviews: [
+        windowCloseButtonView,
+        illuminationOffButtonView,
+        personalItemButtonView
+      ]
+    )
+    stackView.axis = .vertical
+    stackView.spacing = 20
+    
+    return stackView
+  }()
+  
   fileprivate let returnRuleGuideView: UIView = {
     let view = UIView()
     view.backgroundColor = .blue
@@ -232,7 +282,7 @@ class ReturnVehicleView: UIView {
   }
   fileprivate func returnFinalCheck() {
     
-    [returnFinalCheckDescriptionLabel, checkLabelStackView].forEach {
+    [returnFinalCheckDescriptionLabel, checkLabelStackView, checkButtonStackView].forEach {
       returnFinalCheckView.addSubview($0)
     }
     
@@ -244,6 +294,11 @@ class ReturnVehicleView: UIView {
     checkLabelStackView.snp.makeConstraints {
       $0.top.equalTo(returnFinalCheckDescriptionLabel.snp.bottom).offset(20)
       $0.leading.equalToSuperview().offset(20)
+    }
+    
+    checkButtonStackView.snp.makeConstraints {
+      $0.top.equalTo(returnFinalCheckDescriptionLabel.snp.bottom).offset(20)
+      $0.trailing.equalToSuperview().offset(-20)
     }
   }
   fileprivate func returnRuleGuide() { }
@@ -266,12 +321,31 @@ class ReturnVehicleView: UIView {
       action: #selector(checkAction)
     )
     
+    let windowCloseesture = UITapGestureRecognizer(
+      target: self,
+      action: #selector(checkAction)
+    )
+    let illuminationOffGesture = UITapGestureRecognizer(
+      target: self,
+      action: #selector(checkAction)
+    )
+    let personalItemBGesture = UITapGestureRecognizer(
+      target: self,
+      action: #selector(checkAction)
+    )
+    
     returnPlaceCheckTrueButtonView.addGestureRecognizer(returnPlaceCheckTrueButtonGesture)
     returnPlaceCheckFalseButtonView.addGestureRecognizer(returnPlaceCheckFalseButtonGesture)
     
     returnParkingPlaceCheckTrueButtonView.addGestureRecognizer(returnParkingPlaceCheckTrueGesture)
     
     returnParkingPlaceCheckFalseButtonView.addGestureRecognizer(returnParkingPlaceCheckFalseGesture)
+    
+    windowCloseButtonView.addGestureRecognizer(windowCloseesture)
+    
+    illuminationOffButtonView.addGestureRecognizer(illuminationOffGesture)
+    
+    personalItemButtonView.addGestureRecognizer(personalItemBGesture)
   }
   
   // MARK: - Action
@@ -341,6 +415,12 @@ class ReturnVehicleView: UIView {
         returnParkingPlaceCheckTrueButtonView.toggle.toggle()
       }
       
+    case windowCloseButtonView:
+      windowCloseButtonView.toggle.toggle()
+    case illuminationOffButtonView:
+      illuminationOffButtonView.toggle.toggle()
+    case personalItemButtonView:
+      personalItemButtonView.toggle.toggle()
     default:
       break
     }
