@@ -184,9 +184,26 @@ class ReturnVehicleView: UIView {
   
   fileprivate let returnRuleGuideView: UIView = {
     let view = UIView()
-    view.backgroundColor = .blue
+    view.backgroundColor = .white
       
     return view
+  }()
+  
+  fileprivate let socarRuleGuidLabel: UILabel = {
+    let label = UILabel()
+    label.text = "쏘카 이용규칙 및 패널티 안내"
+    label.font = UIFont.preferredFont(forTextStyle: .headline)
+    label.textColor = CommonUI.mainDark
+    
+    return label
+  }()
+  
+  let rightChevronButton: UIButton = {
+    let button = UIButton()
+    button.setImage(UIImage(systemName: CommonUI.SFSymbolKey.rightChevron.rawValue), for: .normal)
+    button.tintColor = CommonUI.mainDark
+    
+    return button
   }()
   
   // MARK: - LifeCycle
@@ -226,7 +243,7 @@ class ReturnVehicleView: UIView {
     returnRuleGuideView.snp.makeConstraints {
       $0.top.equalTo(returnFinalCheckView.snp.bottom).offset(10)
       $0.leading.trailing.equalToSuperview()
-      $0.height.equalTo(100)
+      $0.height.equalTo(80)
     }
     
     returnPlaceCheck()
@@ -301,7 +318,22 @@ class ReturnVehicleView: UIView {
       $0.trailing.equalToSuperview().offset(-20)
     }
   }
-  fileprivate func returnRuleGuide() { }
+  fileprivate func returnRuleGuide() {
+    
+    [socarRuleGuidLabel, rightChevronButton].forEach {
+      returnRuleGuideView.addSubview($0)
+    }
+    
+    socarRuleGuidLabel.snp.makeConstraints {
+      $0.centerY.equalToSuperview()
+      $0.leading.equalToSuperview().offset(20)
+    }
+    
+    rightChevronButton.snp.makeConstraints {
+      $0.centerY.equalToSuperview()
+      $0.trailing.equalToSuperview().offset(-20)
+    }
+  }
   
   fileprivate func setGesture() {
     let returnPlaceCheckTrueButtonGesture = UITapGestureRecognizer(
