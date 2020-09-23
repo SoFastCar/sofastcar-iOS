@@ -234,7 +234,7 @@ class ReturnVehicleView: UIView {
   
   fileprivate func setUI() {
     let guid = self.safeAreaLayoutGuide
-    self.backgroundColor = .cyan
+    self.backgroundColor = CommonUI.grayColor
     
     [returnPlaceCheckView, returnFinalCheckView, returnRuleGuideView, returnButton].forEach {
       self.addSubview($0)
