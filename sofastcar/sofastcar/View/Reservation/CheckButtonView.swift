@@ -29,7 +29,7 @@ class CheckButtonView: UIView {
       checkButtonLabel.text = buttonTypeLabel
     }
   }
-
+  
   fileprivate let checkIcon: UIImageView = {
     let imageView = UIImageView()
     imageView.image = UIImage(systemName: CommonUI.SFSymbolKey.check.rawValue)
@@ -49,6 +49,10 @@ class CheckButtonView: UIView {
     super.init(frame: frame)
     
     setUI()
+  }
+  
+  override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    toggle?.toggle()
   }
   
   required init?(coder: NSCoder) {
