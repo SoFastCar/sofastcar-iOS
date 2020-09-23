@@ -216,13 +216,20 @@ class ReturnVehicleView: UIView {
   }
   
   @objc func checkAction(_ sender: UITapGestureRecognizer) {
-    print(sender)
     
     switch sender.view {
     case returnPlaceCheckTrueButtonView:
       returnPlaceCheckTrueButtonView.toggle.toggle()
       
-      if returnPlaceCheckTrueButtonView.toggle == true {
+      if returnPlaceCheckTrueButtonView.toggle == true && returnPlaceCheckFalseButtonView.toggle == true {
+        returnPlaceCheckFalseButtonView.toggle.toggle()
+        returnPlaceCheckView.snp.remakeConstraints {
+          $0.top.equalTo(self.safeAreaLayoutGuide)
+          $0.leading.trailing.equalToSuperview()
+          $0.height.equalTo(180)
+          returnParkingPlaceLabel.isHidden = false
+        }
+      } else if returnPlaceCheckTrueButtonView.toggle == true {
         returnPlaceCheckView.snp.remakeConstraints {
           $0.top.equalTo(self.safeAreaLayoutGuide)
           $0.leading.trailing.equalToSuperview()
@@ -240,6 +247,17 @@ class ReturnVehicleView: UIView {
 
     case returnPlaceCheckFalseButtonView:
       returnPlaceCheckFalseButtonView.toggle.toggle()
+      
+      if returnPlaceCheckTrueButtonView.toggle == true && returnPlaceCheckFalseButtonView.toggle == true {
+        returnPlaceCheckTrueButtonView.toggle.toggle()
+        returnPlaceCheckView.snp.remakeConstraints {
+          $0.top.equalTo(self.safeAreaLayoutGuide)
+          $0.leading.trailing.equalToSuperview()
+          $0.height.equalTo(100)
+          returnParkingPlaceLabel.isHidden = true
+        }
+      }
+      
     case returnParkingPlaceCheckTrueButtonView:
       returnParkingPlaceCheckTrueButtonView.toggle.toggle()
     case returnParkingPlaceCheckFalseButtonView:
