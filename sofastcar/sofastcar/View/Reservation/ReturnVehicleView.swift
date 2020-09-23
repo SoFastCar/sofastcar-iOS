@@ -421,6 +421,26 @@ class ReturnVehicleView: UIView {
     }
   }
   
+  fileprivate func returnPlaceFoldConstraints() {
+    returnPlaceCheckView.snp.remakeConstraints {
+      $0.top.equalTo(self.safeAreaLayoutGuide)
+      $0.leading.trailing.equalToSuperview()
+      $0.height.equalTo(100)
+      returnParkingPlaceLabel.isHidden = false
+    }
+  }
+  
+  fileprivate func returnPlaceExpansionConstraints() {
+    returnPlaceCheckView.snp.remakeConstraints {
+      $0.top.equalTo(self.safeAreaLayoutGuide)
+      $0.leading.trailing.equalToSuperview()
+      $0.height.equalTo(100)
+      returnParkingPlaceLabel.isHidden = true
+      returnParkingPlaceCheckTrueButtonView.toggle = false
+      returnParkingPlaceCheckFalseButtonView.toggle = false
+    }
+  }
+  
   // MARK: - Action
   
   @objc func didTapButton(_ sender: UIButton) {
@@ -436,28 +456,11 @@ class ReturnVehicleView: UIView {
       
       if returnPlaceCheckTrueButtonView.toggle == true && returnPlaceCheckFalseButtonView.toggle == true {
         returnPlaceCheckFalseButtonView.toggle.toggle()
-        returnPlaceCheckView.snp.remakeConstraints {
-          $0.top.equalTo(self.safeAreaLayoutGuide)
-          $0.leading.trailing.equalToSuperview()
-          $0.height.equalTo(180)
-          returnParkingPlaceLabel.isHidden = false
-        }
+        returnPlaceExpansionConstraints()
       } else if returnPlaceCheckTrueButtonView.toggle == true {
-        returnPlaceCheckView.snp.remakeConstraints {
-          $0.top.equalTo(self.safeAreaLayoutGuide)
-          $0.leading.trailing.equalToSuperview()
-          $0.height.equalTo(180)
-          returnParkingPlaceLabel.isHidden = false
-        }
+        returnPlaceExpansionConstraints()
       } else {
-        returnPlaceCheckView.snp.remakeConstraints {
-          $0.top.equalTo(self.safeAreaLayoutGuide)
-          $0.leading.trailing.equalToSuperview()
-          $0.height.equalTo(100)
-          returnParkingPlaceLabel.isHidden = true
-          returnParkingPlaceCheckTrueButtonView.toggle = false
-          returnParkingPlaceCheckFalseButtonView.toggle = false
-        }
+        returnPlaceExpansionConstraints()
       }
 
     case returnPlaceCheckFalseButtonView:
@@ -466,14 +469,7 @@ class ReturnVehicleView: UIView {
       
       if returnPlaceCheckTrueButtonView.toggle == true && returnPlaceCheckFalseButtonView.toggle == true {
         returnPlaceCheckTrueButtonView.toggle.toggle()
-        returnPlaceCheckView.snp.remakeConstraints {
-          $0.top.equalTo(self.safeAreaLayoutGuide)
-          $0.leading.trailing.equalToSuperview()
-          $0.height.equalTo(100)
-          returnParkingPlaceLabel.isHidden = true
-          returnParkingPlaceCheckTrueButtonView.toggle = false
-          returnParkingPlaceCheckFalseButtonView.toggle = false
-        }
+        returnPlaceExpansionConstraints()
       }
       
     case returnParkingPlaceCheckTrueButtonView:
