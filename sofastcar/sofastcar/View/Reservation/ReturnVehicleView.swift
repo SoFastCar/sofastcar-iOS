@@ -206,6 +206,16 @@ class ReturnVehicleView: UIView {
     return button
   }()
   
+  let returnButton: UIButton = {
+    let button = UIButton()
+    button.setTitle("반납하기", for: .normal)
+    button.backgroundColor = CommonUI.mainBlue
+    button.contentHorizontalAlignment = .center
+    button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0)
+    
+    return button
+  }()
+  
   // MARK: - LifeCycle
   
   override init(frame: CGRect) {
@@ -224,7 +234,7 @@ class ReturnVehicleView: UIView {
     let guid = self.safeAreaLayoutGuide
     self.backgroundColor = .cyan
     
-    [returnPlaceCheckView, returnFinalCheckView, returnRuleGuideView].forEach {
+    [returnPlaceCheckView, returnFinalCheckView, returnRuleGuideView, returnButton].forEach {
       self.addSubview($0)
     }
     
@@ -242,6 +252,12 @@ class ReturnVehicleView: UIView {
     
     returnRuleGuideView.snp.makeConstraints {
       $0.top.equalTo(returnFinalCheckView.snp.bottom).offset(10)
+      $0.leading.trailing.equalToSuperview()
+      $0.height.equalTo(80)
+    }
+    
+    returnButton.snp.makeConstraints {
+      $0.bottom.equalToSuperview()
       $0.leading.trailing.equalToSuperview()
       $0.height.equalTo(80)
     }
