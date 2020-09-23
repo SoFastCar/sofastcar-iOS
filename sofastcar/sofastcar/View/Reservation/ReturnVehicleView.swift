@@ -77,9 +77,59 @@ class ReturnVehicleView: UIView {
   
   fileprivate let returnFinalCheckView: UIView = {
     let view = UIView()
-    view.backgroundColor = .green
+    view.backgroundColor = .white
     
     return view
+  }()
+  
+  fileprivate let returnFinalCheckDescriptionLabel: UILabel = {
+    let label = UILabel()
+    label.text = "반납 전 마지막 확인"
+    label.font = UIFont.preferredFont(forTextStyle: .headline)
+    label.textColor = CommonUI.mainDark
+    
+    return label
+  }()
+  
+  fileprivate let windowCloseLabel: UILabel = {
+    let label = UILabel()
+    label.text = "창문은 모두 닫았나요?"
+    label.font = UIFont.preferredFont(forTextStyle: .subheadline)
+    label.textColor = CommonUI.mainDark
+    
+    return label
+  }()
+  
+  fileprivate let illuminationOffLabel: UILabel = {
+    let label = UILabel()
+    label.text = "실내등은 모두 껐나요?"
+    label.font = UIFont.preferredFont(forTextStyle: .subheadline)
+    label.textColor = CommonUI.mainDark
+    
+    return label
+  }()
+  
+  fileprivate let personalItemLabel: UILabel = {
+    let label = UILabel()
+    label.text = "개인 소지품은 모두 챙겼나요?"
+    label.font = UIFont.preferredFont(forTextStyle: .subheadline)
+    label.textColor = CommonUI.mainDark
+    
+    return label
+  }()
+  
+  fileprivate lazy var checkLabelStackView: UIStackView = {
+    let stackView = UIStackView(
+      arrangedSubviews: [
+        windowCloseLabel,
+        illuminationOffLabel,
+        personalItemLabel
+      ]
+    )
+    stackView.axis = .vertical
+    stackView.spacing = 20
+    
+    return stackView
   }()
   
   fileprivate let returnRuleGuideView: UIView = {
@@ -120,7 +170,7 @@ class ReturnVehicleView: UIView {
     returnFinalCheckView.snp.makeConstraints {
       $0.top.equalTo(returnPlaceCheckView.snp.bottom).offset(10)
       $0.leading.trailing.equalToSuperview()
-      $0.height.equalTo(250)
+      $0.height.equalTo(200)
     }
     
     returnRuleGuideView.snp.makeConstraints {
@@ -180,7 +230,22 @@ class ReturnVehicleView: UIView {
       $0.height.equalTo(20)
     }
   }
-  fileprivate func returnFinalCheck() { }
+  fileprivate func returnFinalCheck() {
+    
+    [returnFinalCheckDescriptionLabel, checkLabelStackView].forEach {
+      returnFinalCheckView.addSubview($0)
+    }
+    
+    returnFinalCheckDescriptionLabel.snp.makeConstraints {
+      $0.top.equalToSuperview().offset(20)
+      $0.leading.equalToSuperview().offset(20)
+    }
+    
+    checkLabelStackView.snp.makeConstraints {
+      $0.top.equalTo(returnFinalCheckDescriptionLabel.snp.bottom).offset(20)
+      $0.leading.equalToSuperview().offset(20)
+    }
+  }
   fileprivate func returnRuleGuide() { }
   
   fileprivate func setGesture() {
@@ -275,6 +340,7 @@ class ReturnVehicleView: UIView {
       if returnParkingPlaceCheckTrueButtonView.toggle == true && returnParkingPlaceCheckFalseButtonView.toggle == true {
         returnParkingPlaceCheckTrueButtonView.toggle.toggle()
       }
+      
     default:
       break
     }
