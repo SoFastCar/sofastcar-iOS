@@ -13,14 +13,24 @@ class BookingTimeVC: UIViewController {
   // MARK: - Properties
   let titleStringArray = ["대여 시각", "반납 시각"]
   let calendar = Calendar.current
-  var isTimeChange: Bool = false
   var isHalfHourSelected: Bool = false
   
   var rentCurrnetSelectedRow: [Int] = [0, 0, 0] // 일 시 분
   var returnCurrnetSelectedRow: [Int] = [0, 0, 0]
   
-  var startDate = Date()
-  var endDate = Date()
+  var originalStartDate = Date()
+  var originalEndDate = Date()
+  
+  var startDate = Date() {
+    didSet {
+      reservationChecker()
+    }
+  }
+  var endDate = Date() {
+    didSet {
+      reservationChecker()
+    }
+  }
     
   var setBookingTimeMain: SetBookingTimeButton?
   var setBookingTimeCarList: SetBookingTimeButton?
@@ -31,7 +41,7 @@ class BookingTimeVC: UIViewController {
     case min = 2
   }
   
-  let dismissButton: UIButton = {
+  lazy var dismissButton: UIButton = {
     let button = UIButton()
     let sysimgaCongfigure = UIImage.SymbolConfiguration(pointSize: 30, weight: .thin)
     button.setImage(UIImage(systemName: "xmark", withConfiguration: sysimgaCongfigure), for: .normal)
@@ -46,13 +56,50 @@ class BookingTimeVC: UIViewController {
   
   let authCompleteButton = CompleteButton(frame: .zero, title: "확인")
   
+  let reservationWaringView: UIView = {
+    let view = UIView()
+    view.backgroundColor = CommonUI.mainDark
+    return view
+  }()
+  
+  let reservationWaringTextView: UITextView = {
+    let textView = UITextView()
+    textView.textContainerInset = UIEdgeInsets(top: 15, left: 10, bottom: 10, right: 60)
+    textView.textAlignment = .natural
+    textView.text = "쏘카는 최대 30분부터 ~ 최대 14일까지 사용할 수 있습니다."
+    textView.backgroundColor = CommonUI.mainDark
+    textView.textColor = .white
+    textView.font = .boldSystemFont(ofSize: CommonUI.titleTextFontSize)
+    textView.layer.cornerRadius = 10
+    textView.isScrollEnabled = false
+    return textView
+  }()
+  
+  lazy var  waringTextViewOkButtton: UIButton = {
+    let button = UIButton()
+    button.setTitle("확인", for: .normal)
+    button.setTitleColor(CommonUI.mainBlue, for: .normal)
+    button.titleLabel?.font = .boldSystemFont(ofSize: CommonUI.titleTextFontSize)
+    button.addTarget(self, action: #selector(tapWarningOkButton), for: .touchUpInside)
+    return button
+  }()
+  
   // MARK: - Life Cycle
   override func viewDidLoad() {
     super.viewDidLoad()
     view.backgroundColor = .white
+    configureInitialTimeSetting()
     configureTableView()
     configureLayout()
     settingAuthCompleteButton()
+    settingReservationWaringLabel()
+  }
+  
+  fileprivate func configureInitialTimeSetting() {
+    Time.getInitialStartAndEndTimeForReservation { (startDate, endDate) in
+      self.originalStartDate = startDate
+      self.originalEndDate = endDate
+    }
   }
   
   fileprivate func configureTableView() {
@@ -91,7 +138,26 @@ class BookingTimeVC: UIViewController {
     }
   }
   
-  // MARK: - Button Action
+  private func settingReservationWaringLabel() {
+    [reservationWaringTextView, waringTextViewOkButtton].forEach {
+      tableView.addSubview($0)
+      $0.isHidden = true
+    }
+    
+    reservationWaringTextView.snp.makeConstraints {
+      $0.bottom.equalTo(tableView.safeAreaLayoutGuide).offset(-100)
+      $0.leading.equalTo(tableView.safeAreaLayoutGuide).offset(10)
+      $0.trailing.equalTo(tableView.safeAreaLayoutGuide).offset(-10)
+      $0.height.equalTo(70)
+    }
+    
+    waringTextViewOkButtton.snp.makeConstraints {
+      $0.trailing.equalTo(reservationWaringTextView).offset(-20)
+      $0.centerY.equalTo(reservationWaringTextView)
+    }
+  }
+  
+  // MARK: - Handler
   @objc private func tapDismissButton() {
     self.dismiss(animated: true, completion: nil)
   }
@@ -110,12 +176,30 @@ class BookingTimeVC: UIViewController {
     }
     
     if let presentingVC = navi.viewControllers.last as? ReservationConfirmTableVC {
-      print("reservationConfirm push")
       presentingVC.startDate = startDate
       presentingVC.endDate = endDate
       presentingVC.reloadUsingTimeCell()
     }
     self.dismiss(animated: true, completion: nil)
+  }
+  
+  @objc private func tapWarningOkButton() {
+    reservationWaringTextView.isHidden = true
+    waringTextViewOkButtton.isHidden = true
+  }
+  
+  private func reservationChecker() {
+    if endDate.timeIntervalSince1970 - startDate.timeIntervalSince1970 > TimeInterval(Time.day*14) {
+      showReservationWaringLabel(isHidden: false)
+    } else {
+      authCompleteButton.isEnabled = true
+    }
+  }
+  
+  private func showReservationWaringLabel(isHidden: Bool) {
+    reservationWaringTextView.isHidden = isHidden
+    waringTextViewOkButtton.isHidden = isHidden
+    authCompleteButton.isEnabled = isHidden
   }
 }
 
@@ -169,37 +253,29 @@ extension BookingTimeVC: UITableViewDataSource, UITableViewDelegate {
   private func firstCellconfigure(cell: UITableViewCell) -> UITableViewCell {
     cell.textLabel?.text = firstCellTitleConfigure()
     cell.textLabel?.font = .boldSystemFont(ofSize: 20)
-//    if isTimeChange {
-      cell.detailTextLabel?.text = Time.getStartEndTimeShowLabel(start: startDate, end: endDate)
-//    } else {
-//      cell.detailTextLabel?.text = "\(Time.getTimeString(type: .todayHHmm, date: startDate)) - \(Time.getTimeString(type: .hourHHmm, date: endDate))"
-//    }
+    cell.detailTextLabel?.text = Time.getStartEndTimeShowLabel(start: startDate, end: endDate)
     cell.detailTextLabel?.numberOfLines = 2
     cell.detailTextLabel?.textColor = .systemGray
     return cell
   }
   
   private func firstCellTitleConfigure() -> String {
-    if isTimeChange == false {
-      return "이용시간 설정하기"
-    } else {
-      var returnText = "총 "
-      let offsetComps = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: startDate, to: endDate)
-      if let day = offsetComps.day,
-        day != 0 {
-        returnText.append("\(day)일 ")
-      }
-      if let hour = offsetComps.hour,
-        hour != 0 {
-        returnText.append("\(hour)시간 ")
-      }
-      if let minute = offsetComps.minute,
-        minute != 0 {
-        returnText.append("\(minute)분 ")
-      }
-      returnText.append("이용")
-      return returnText
+    var returnText = "총 "
+    let offsetComps = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: startDate, to: endDate)
+    if let day = offsetComps.day,
+       day != 0 {
+      returnText.append("\(day)일 ")
     }
+    if let hour = offsetComps.hour,
+       hour != 0 {
+      returnText.append("\(hour)시간 ")
+    }
+    if let minute = offsetComps.minute,
+       minute != 0 {
+      returnText.append("\(minute)분 ")
+    }
+    returnText.append("이용")
+    return returnText
   }
   
   private func firstCellDetailTitleCongifure() -> String {
@@ -228,21 +304,14 @@ extension BookingTimeVC: UIPickerViewDelegate, UIPickerViewDataSource {
   }
   
   func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-    if component == 0 { return 60 }
-    if component == 1 { return 24 }
-    if component == 2 { return 6 }
+    if component == DateComponentType.day.rawValue { return 60 }
+    if component == DateComponentType.hour.rawValue { return 24 }
+    if component == DateComponentType.min.rawValue { return 6 }
     return 0
   }
   
   func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
     return 50
-  }
-
-  func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-    isTimeChange = true
-    updatePickerViewTime(pickViewType: pickerView.tag, row: row, component: component)
-    saveCurrnetSelectedRow(pickerView: pickerView)
-    pickerView.reloadComponent(component)
   }
   
   func pickerView(_ pickerView: UIPickerView, widthForComponent component: Int) -> CGFloat {
@@ -279,6 +348,58 @@ extension BookingTimeVC: UIPickerViewDelegate, UIPickerViewDataSource {
       pickerLabel?.text = ""
     }
     return pickerLabel!
+  }
+  
+  func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+    let indexArray = pickerView.tag == 1 ? rentCurrnetSelectedRow : returnCurrnetSelectedRow
+    let compareDate = pickerView.tag == 1 ? endDate : startDate
+    var userSelectedDate = pickerView.tag == 1 ? startDate : endDate
+    let beforeTimeInterval = endDate.timeIntervalSince1970 - startDate.timeIntervalSince1970
+    switch component {
+    case 0:
+      userSelectedDate.addTimeInterval(TimeInterval(Time.day*(row-indexArray[component])))
+    case 1:
+      userSelectedDate.addTimeInterval(TimeInterval(Time.hour*(row-indexArray[component])))
+    case 2:
+      userSelectedDate.addTimeInterval(TimeInterval(Time.min*10*(row-indexArray[component])))
+    default:
+      break
+    }
+    
+    tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .none)
+    
+    if pickerView.tag == 1 {
+      if userSelectedDate < originalStartDate {
+        pickerView.selectRow(indexArray[component], inComponent: component, animated: true)
+        return print("Fail to change Date before StartTime")
+      } else if userSelectedDate >= compareDate {
+        print("This case to change Date [ so fast  1 ]")
+        startDate = userSelectedDate
+        endDate = userSelectedDate.addingTimeInterval(beforeTimeInterval)
+        tableView.reloadRows(at: [IndexPath(row: 2, section: 0)], with: .none)
+      } else if compareDate.timeIntervalSince1970 - userSelectedDate.timeIntervalSince1970 < Double(Time.min*30) {
+        print("This case to change Date [ Min time helf hour ]")
+        startDate = userSelectedDate
+        endDate = userSelectedDate.addingTimeInterval(TimeInterval(Time.min*30))
+        print(Time.getTimeString(type: .castMddEHHmm, date: startDate))
+        print(Time.getTimeString(type: .castMddEHHmm, date: endDate))
+        tableView.reloadRows(at: [IndexPath(row: 2, section: 0)], with: .none)
+      }
+    } else {
+      if compareDate >= userSelectedDate {
+        pickerView.selectRow(indexArray[component], inComponent: component, animated: true)
+        return print("Fail to change Date [ so fast  2 ]")
+      }
+      if userSelectedDate.timeIntervalSince1970 - compareDate.timeIntervalSince1970 < Double(Time.min*30) {
+        pickerView.selectRow(indexArray[component], inComponent: component, animated: true)
+       return print("Fail to change Date [ Min time helf hour ]")
+      }
+    }
+    
+    updatePickerViewTime(pickViewType: pickerView.tag, row: row, component: component)
+    saveCurrnetSelectedRow(pickerView: pickerView)
+    pickerView.reloadComponent(component)
+    tableView.reloadData()
   }
   
   private func updatePickerViewTime(pickViewType: Int, row: Int, component: Int) {

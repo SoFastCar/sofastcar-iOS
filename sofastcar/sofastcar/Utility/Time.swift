@@ -92,4 +92,12 @@ class Time {
     return Int((end.timeIntervalSince1970 - start.timeIntervalSince1970))/Time.hour*2
   }
   
+  static func getInitialStartAndEndTimeForReservation(complete: (_ startTime: Date, _ endTime: Date) -> Void) {
+    let date = floor(Date().timeIntervalSince1970)
+    let restMinDate = Double(Int(date) % 600)
+    var startTime = Date(timeIntervalSince1970: date-restMinDate)
+    startTime.addTimeInterval(TimeInterval(20*Time.min))
+    let endTime = startTime.addingTimeInterval(TimeInterval(Time.hour*4))
+    complete(startTime, endTime)
+  }
 }

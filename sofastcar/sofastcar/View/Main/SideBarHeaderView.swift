@@ -22,7 +22,7 @@ class SideBarHeaderView: UIView {
   let userIdLable: UILabel = {
     let label = UILabel()
     label.text = "test@gmail.com"
-    label.font = .systemFont(ofSize: CommonUI.titleTextFontSize)
+    label.font = .systemFont(ofSize: CommonUI.contentsTextFontSize)
     label.textColor = .systemGray
     return label
   }()
@@ -32,11 +32,11 @@ class SideBarHeaderView: UIView {
     let attributedString = NSMutableAttributedString()
     attributedString.append(NSAttributedString(string: "쏘카클럽 Level 1 >", attributes:
       [NSAttributedString.Key.foregroundColor: CommonUI.mainBlue,
-       NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: CommonUI.contentsTextFontSize)]))
+       NSAttributedString.Key.font: UIFont.systemFont(ofSize: CommonUI.contentsTextFontSize-1)]))
     button.setAttributedTitle(attributedString, for: .normal)
     button.backgroundColor = .white
     button.layer.borderColor = CommonUI.mainBlue.cgColor
-    button.layer.borderWidth = 2
+    button.layer.borderWidth = 1
     return button
   }()
   
@@ -87,7 +87,7 @@ class SideBarHeaderView: UIView {
       $0.leading.equalTo(guide)
       $0.bottom.equalTo(guide)
       $0.width.equalTo(140)
-      $0.height.equalTo(25)
+      $0.height.equalTo(20)
     }
     
     notiButton.snp.makeConstraints {

@@ -165,10 +165,49 @@ extension NumberFormatter {
   }
 }
 
-// MARK: - String / Underline
+// MARK: - For Cell Line
+extension UITableViewCell {
+  func configureContentViewTopBottomLayer() {
+    configureContentViewTopLayer()
+    configureContentViewBottomLayer()
+  }
+  
+  func configureContentViewTopLayer() {
+    let view = UIView()
+    view.backgroundColor = .systemGray4
+    self.contentView.addSubview(view)
+    view.snp.makeConstraints {
+      $0.top.leading.trailing.equalTo(self.contentView)
+      $0.height.equalTo(0.7)
+    }
+  }
 
+  func configureContentViewBottomLayer() {
+    let view = UIView()
+    view.backgroundColor = .systemGray4
+    self.contentView.addSubview(view)
+    view.snp.makeConstraints {
+      $0.bottom.leading.trailing.equalTo(self.contentView)
+      $0.height.equalTo(0.7)
+    }
+  }
+}
+
+// MARK: - String / Underline
 extension String {
    func getUnderLineAttributedText() -> NSAttributedString {
     return NSMutableAttributedString(string: self, attributes: [.underlineStyle: NSUnderlineStyle.single.rawValue])
    }
+}
+
+// MARK: - Status Bar
+extension UIViewController {
+  func configureStatusBar(backgroundColor: UIColor) {
+    let statusBar =  UIView()
+    let window = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
+    guard let statusBarFrame = window?.windowScene?.statusBarManager?.statusBarFrame else { return }
+    statusBar.frame = statusBarFrame
+    statusBar.backgroundColor = backgroundColor
+    UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.addSubview(statusBar)
+  }
 }

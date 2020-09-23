@@ -71,7 +71,7 @@ class RentHistoryCell: UITableViewCell {
   let rentPlaceTitleLabel: UILabel = {
     let label = UILabel()
     label.text = "송파동 공영주차장"
-    label.font = .systemFont(ofSize: CommonUI.titleTextFontSize)
+    label.font = .systemFont(ofSize: CommonUI.contentsTextFontSize)
     label.textColor = .black
     return label
   }()
@@ -87,7 +87,7 @@ class RentHistoryCell: UITableViewCell {
   let returnPlaceTitleLabel: UILabel = {
     let label = UILabel()
     label.text = "송파동 공영주차장"
-    label.font = .systemFont(ofSize: CommonUI.titleTextFontSize)
+    label.font = .systemFont(ofSize: CommonUI.contentsTextFontSize)
     label.textColor = .black
     return label
   }()
@@ -95,7 +95,7 @@ class RentHistoryCell: UITableViewCell {
   let rentDurtaionLabel: UILabel = {
     let label = UILabel()
     label.text = "8/14 (금) 14:00 - 8/15 (토) 14:00"
-    label.font = .systemFont(ofSize: CommonUI.contentsTextFontSize)
+    label.font = .systemFont(ofSize: 12)
     label.textColor = .black
     return label
   }()
@@ -103,9 +103,10 @@ class RentHistoryCell: UITableViewCell {
   // MARK: - Properties
   override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
-    contentView.layoutMargins = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
+    contentView.layoutMargins = UIEdgeInsets(top: 15, left: 15, bottom: 15, right: 15)
     contentView.backgroundColor = .white
     configureLayout()
+    configureContentViewTopBottomLayer()
   }
   
   required init?(coder: NSCoder) {
@@ -173,7 +174,7 @@ class RentHistoryCell: UITableViewCell {
     
     rentDurtaionLabel.snp.makeConstraints {
       $0.top.equalTo(returnPlaceTitleLabel.snp.bottom).offset(20)
-      $0.leading.equalTo(rentPlaceMarkImageView)
+      $0.leading.equalTo(rentPlaceMarkImageView).offset(3)
     } 
   }
 }

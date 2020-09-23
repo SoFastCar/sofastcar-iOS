@@ -26,6 +26,7 @@ class MainVC: UIViewController {
     var searchVCDismissFlag = false
     var insuranceMenuViewFlag = false
     var bookingButtonDownFlag = false
+    var reservationCompleteFlag = true
     
     // Naver Map Framework
     let testMarker = NMFMarker()
@@ -105,9 +106,13 @@ class MainVC: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         navigationController?.isNavigationBarHidden = true
-        UIView.animate(withDuration: 0.5, animations: {
-            self.setBookingTimeButton.frame.origin.y = self.view.frame.height - self.setBookingTimeButton.frame.height
-        })
+        if reservationCompleteFlag {
+            UIView.animate(withDuration: 0.5, animations: {
+                self.setBookingTimeButton.frame.origin.y = self.view.frame.height - self.setBookingTimeButton.frame.height
+            })
+        } else {
+            
+        }
     }
     // MARK: - Network
     func networking() {
@@ -440,6 +445,7 @@ class MainVC: UIViewController {
                 markers[index].mapView = naverMapView.mapView
                 markers[index].touchHandler = { (overlay) in
                     self.markerTapFlag = true
+                    self.reservationCompleteFlag = false
                     if let marker = overlay as? NMFMarker {
                         self.selectedMarkerIndex = index
 //                        print("selectedMarker: \(data?[self.selectedMarkerIndex].name)")
@@ -570,7 +576,6 @@ class MainVC: UIViewController {
         pairingButton.tintColor = .systemOrange
         pairingButton.isHidden = false
         view.addSubview(pairingButton)
-        
         
         whiteView.frame = view.frame
         whiteView.backgroundColor = .white

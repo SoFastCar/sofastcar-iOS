@@ -205,26 +205,6 @@ class PaymentConfirmCell: UITableViewCell {
     }
   }
   // MARK: - SetUI
-  private func configureContentViewTopLayer() {
-    let view = UIView()
-    view.backgroundColor = .systemGray4
-    contentView.addSubview(view)
-    view.snp.makeConstraints {
-      $0.top.leading.trailing.equalTo(contentView)
-      $0.height.equalTo(0.7)
-    }
-  }
-
-  private func configureContentViewBottomLayer() {
-    let view = UIView()
-    view.backgroundColor = .systemGray4
-    contentView.addSubview(view)
-    view.snp.makeConstraints {
-      $0.bottom.leading.trailing.equalTo(contentView)
-      $0.height.equalTo(0.7)
-    }
-  }
-  
   private func configureDeatilCostCellUI() {
     [sectionTitleLabel, rentalCostTitleLabel, rentalCostLabel,
      insuranceCostTitleLabel, insuranceCostLabel, spView1, discountTitleLabel, changeOptionButton,

@@ -35,14 +35,15 @@ class SideBarVC: UIViewController {
   var isHorizenScrolling = false
   var isVerticalStcolling = false
   var gapX: CGFloat = 0
-  var originX: CGFloat = 0
+  var tableViewOriginX: CGFloat = 0
+  var firstTouchOriginX: CGFloat = 0
   
   let sideBarBottonView = SideBarBottonView()
   
   // MARK: - Life Cycle
   override func viewDidLoad() {
     super.viewDidLoad()
-    view.backgroundColor = .none
+    view.backgroundColor = UIColor.black.withAlphaComponent(0)
     configureTableView()
     configureTableViewPanGuesture()
     configureBottomView()
@@ -96,12 +97,14 @@ class SideBarVC: UIViewController {
   func animateWithAnimate() {
     UIView.animate(withDuration: 0.5) {
       self.tableView.center.x += UIScreen.main.bounds.width
+      self.view.backgroundColor = UIColor.black.withAlphaComponent(0.5)
     }
   }
   
   func dismissWithAnimated(completion: (() -> Void)?) {
     UIView.animate(withDuration: 0.5, animations: {
       self.tableView.center.x -= UIScreen.main.bounds.width
+      self.view.backgroundColor = UIColor.black.withAlphaComponent(0)
     }, completion: { success in
       if success {
         self.dismiss(animated: false, completion: nil)
@@ -192,9 +195,12 @@ extension SideBarVC {
     if sender.state == .began {
       isHorizenScrolling = true
       gapX = touchPoint.x - tableView.center.x
-      originX = tableView.center.x
+      tableViewOriginX = tableView.center.x
+      firstTouchOriginX = touchPoint.x
     } else if sender.state == .changed {
-      guard tableView.center.x > touchPoint.x - gapX else { return }
+      guard firstTouchOriginX > touchPoint.x else { return }
+      let viewBackGroundColorRatio = min(touchPoint.x/UIScreen.main.bounds.width, 0.5)
+      self.view.backgroundColor = UIColor.black.withAlphaComponent(viewBackGroundColorRatio)
       tableView.center.x = touchPoint.x - gapX
     } else if sender.state == .ended {
       isHorizenScrolling = false
@@ -202,7 +208,7 @@ extension SideBarVC {
         dismissWithAnimated(completion: nil)
       } else {
         UIView.animate(withDuration: 0.2) {
-          self.tableView.center.x = self.originX
+          self.tableView.center.x = self.tableViewOriginX
         }
       }
     }

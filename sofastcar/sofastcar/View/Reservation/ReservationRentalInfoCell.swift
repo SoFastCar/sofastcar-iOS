@@ -127,6 +127,8 @@ class ReservationRentalInfoCell: UITableViewCell {
     button.backgroundColor = .white
     button.setTitleColor(.gray, for: .normal)
     button.addTarget(self, action: #selector(tapReservationCancelButton), for: .touchUpInside)
+    button.layer.borderWidth = 1
+    button.layer.borderColor = UIColor.systemGray4.cgColor
     return button
   }()
   
@@ -155,6 +157,7 @@ class ReservationRentalInfoCell: UITableViewCell {
       configureContentViewTopBottomLayer()
     case .socarZone:
       usingSocarZoneCellUI()
+      configureContentViewTopBottomLayer()
     case .otherDriver:
       otherDriverCellUI()
       configureOtherDriverCellContent()
@@ -166,7 +169,7 @@ class ReservationRentalInfoCell: UITableViewCell {
     case .cancelWarning:
       cancelWarningCellUI()
       configureCancelWarningCellContent()
-      configureContentViewBottomLayer()
+      configureContentViewTopBottomLayer()
     case .cancel:
       cancellCellUI()
     case .blank:
@@ -385,31 +388,6 @@ class ReservationRentalInfoCell: UITableViewCell {
     cancelButton.snp.makeConstraints {
       $0.top.leading.trailing.bottom.equalTo(guide)
       $0.height.equalTo(60)
-    }
-  }
-  // MARK: - For Cell Line
-  private func configureContentViewTopBottomLayer() {
-    configureContentViewTopLayer()
-    configureContentViewBottomLayer()
-  }
-  
-  private func configureContentViewTopLayer() {
-    let view = UIView()
-    view.backgroundColor = .systemGray4
-    contentView.addSubview(view)
-    view.snp.makeConstraints {
-      $0.top.leading.trailing.equalTo(contentView)
-      $0.height.equalTo(0.7)
-    }
-  }
-
-  private func configureContentViewBottomLayer() {
-    let view = UIView()
-    view.backgroundColor = .systemGray4
-    contentView.addSubview(view)
-    view.snp.makeConstraints {
-      $0.bottom.leading.trailing.equalTo(contentView)
-      $0.height.equalTo(0.7)
     }
   }
 }
