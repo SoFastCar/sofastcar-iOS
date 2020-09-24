@@ -107,6 +107,18 @@ class UserStatusAfterReturnView: UIView {
     return view
   }()
   
+  fileprivate let userLevelBenefitLabel: UILabel = {
+    let label = UILabel()
+    label.text = "쏘카클럽 레벨 4인을 위한 혜택, 지금 바로 확인해보세요!"
+    label.font = UIFont.preferredFont(forTextStyle: .subheadline)
+    label.textColor = CommonUI.mainDark.withAlphaComponent(0.5)
+    label.backgroundColor = .systemGray6
+    label.numberOfLines = .max
+    label.textAlignment = .center
+    
+    return label
+  }()
+  
   // MARK: - LifeCycle
   
   override init(frame: CGRect) {
@@ -142,7 +154,7 @@ class UserStatusAfterReturnView: UIView {
       $0.top.equalTo(titleLabel.snp.bottom).offset(30)
       $0.leading.equalToSuperview().offset(20)
       $0.trailing.equalToSuperview().offset(-20)
-      $0.height.equalTo(300)
+      $0.height.equalTo(280)
     }
     
     userStatus()
@@ -150,7 +162,7 @@ class UserStatusAfterReturnView: UIView {
   
   fileprivate func userStatus() {
     
-    [userLevelLabel, userNextLevelbaklogLabel, userAddKilometerLabel, userLevelStatusbarView].forEach {
+    [userLevelLabel, userNextLevelbaklogLabel, userAddKilometerLabel, userLevelStatusbarView, userLevelBenefitLabel].forEach {
       userStatusView.addSubview($0)
     }
     
@@ -174,6 +186,13 @@ class UserStatusAfterReturnView: UIView {
       $0.leading.equalToSuperview().offset(20)
       $0.trailing.equalToSuperview().offset(-20)
       $0.height.equalTo(30)
+    }
+    
+    userLevelBenefitLabel.snp.makeConstraints {
+      $0.top.equalTo(userLevelStatusbarView.snp.bottom).offset(20)
+      $0.leading.equalToSuperview().offset(20)
+      $0.trailing.equalToSuperview().offset(-20)
+      $0.height.equalTo(80)
     }
     
     userLabelStatusbar()
