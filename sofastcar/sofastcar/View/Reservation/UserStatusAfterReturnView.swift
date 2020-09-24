@@ -95,6 +95,18 @@ class UserStatusAfterReturnView: UIView {
     return view
   }()
   
+  fileprivate let userLevelAddKilometerStatusbar: UIView = {
+    let view = UIView()
+    view.backgroundColor = UIColor(
+      red: 6 / 255,
+      green: 184 / 255,
+      blue: 255 / 255,
+      alpha: 1
+    )
+    
+    return view
+  }()
+  
   // MARK: - LifeCycle
   
   override init(frame: CGRect) {
@@ -168,18 +180,20 @@ class UserStatusAfterReturnView: UIView {
   }
   
   fileprivate func userLabelStatusbar() {
-    [userLevelPreviousStatusbar].forEach {
+    [userLevelPreviousStatusbar, userLevelAddKilometerStatusbar].forEach {
       userLevelStatusbarView.addSubview($0)
     }
     
     userLevelPreviousStatusbar.snp.makeConstraints {
-      $0.top.equalToSuperview()
-      $0.leading.equalToSuperview()
-      $0.bottom.equalToSuperview()
-      $0.width.equalToSuperview().dividedBy(3) // 현재 경험치
+      $0.top.leading.bottom.equalToSuperview()
+      $0.width.equalToSuperview().dividedBy(4) // 현재 경험치
     }
     
-    
+    userLevelAddKilometerStatusbar.snp.makeConstraints {
+      $0.top.bottom.equalToSuperview()
+      $0.leading.equalTo(userLevelPreviousStatusbar.snp.trailing)
+      $0.width.equalToSuperview().dividedBy(2.5) // 추가 경험치
+    }
   }
   
   // MARK: - Action
