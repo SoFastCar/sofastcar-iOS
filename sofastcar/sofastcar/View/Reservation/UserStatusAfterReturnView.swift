@@ -119,6 +119,16 @@ class UserStatusAfterReturnView: UIView {
     return label
   }()
   
+  fileprivate let userPaymentDescriptionLabel: UILabel = {
+    let label = UILabel()
+    label.text = "・ 주행요금, 하이패스, 연장 요금 등은 등록된 결제카드\n  로 결제됩니다."
+    label.font = UIFont.preferredFont(forTextStyle: .subheadline)
+    label.textColor = CommonUI.mainDark.withAlphaComponent(0.5)
+    label.numberOfLines = .max
+    
+    return label
+  }()
+  
   // MARK: - LifeCycle
   
   override init(frame: CGRect) {
@@ -136,7 +146,7 @@ class UserStatusAfterReturnView: UIView {
   fileprivate func setUI() {
     self.backgroundColor = .white
     
-    [closeButton, titleLabel, userStatusView].forEach {
+    [closeButton, titleLabel, userStatusView, userPaymentDescriptionLabel].forEach {
       self.addSubview($0)
     }
     
@@ -155,6 +165,11 @@ class UserStatusAfterReturnView: UIView {
       $0.leading.equalToSuperview().offset(20)
       $0.trailing.equalToSuperview().offset(-20)
       $0.height.equalTo(280)
+    }
+    
+    userPaymentDescriptionLabel.snp.makeConstraints {
+      $0.top.equalTo(userStatusView.snp.bottom).offset(30)
+      $0.leading.equalToSuperview().offset(20)
     }
     
     userStatus()
