@@ -12,6 +12,7 @@
 		7E77D998251A41AD002C6BF1 /* ReturnVehicleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E77D997251A41AD002C6BF1 /* ReturnVehicleView.swift */; };
 		7E77D99C251B07D1002C6BF1 /* CheckButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E77D99B251B07D1002C6BF1 /* CheckButtonView.swift */; };
 		7E77D9AF251C45C1002C6BF1 /* UserStatusAfterReturnVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E77D9AE251C45C1002C6BF1 /* UserStatusAfterReturnVC.swift */; };
+		7E77D9B3251C4BDC002C6BF1 /* UserStatusAfterReturnView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E77D9B2251C4BDC002C6BF1 /* UserStatusAfterReturnView.swift */; };
 		7E8473D82507BD6B0007962F /* VehicleCheckVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8473D72507BD6B0007962F /* VehicleCheckVC.swift */; };
 		7E8473DA2507C59D0007962F /* VehicleCheckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8473D92507C59D0007962F /* VehicleCheckView.swift */; };
 		7E8473E225088E830007962F /* TagCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8473E125088E830007962F /* TagCollectionViewCell.swift */; };
@@ -145,6 +146,7 @@
 		7E77D997251A41AD002C6BF1 /* ReturnVehicleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReturnVehicleView.swift; sourceTree = "<group>"; };
 		7E77D99B251B07D1002C6BF1 /* CheckButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckButtonView.swift; sourceTree = "<group>"; };
 		7E77D9AE251C45C1002C6BF1 /* UserStatusAfterReturnVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStatusAfterReturnVC.swift; sourceTree = "<group>"; };
+		7E77D9B2251C4BDC002C6BF1 /* UserStatusAfterReturnView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStatusAfterReturnView.swift; sourceTree = "<group>"; };
 		7E8473D72507BD6B0007962F /* VehicleCheckVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehicleCheckVC.swift; sourceTree = "<group>"; };
 		7E8473D92507C59D0007962F /* VehicleCheckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehicleCheckView.swift; sourceTree = "<group>"; };
 		7E8473E125088E830007962F /* TagCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -326,6 +328,7 @@
 				7E77D99B251B07D1002C6BF1 /* CheckButtonView.swift */,
 				C73D34A92518E7010075471F /* ReturnVehicleStatusView.swift */,
 				C73D34AD2518E7180075471F /* ReservationStateView.swift */,
+				7E77D9B2251C4BDC002C6BF1 /* UserStatusAfterReturnView.swift */,
 			);
 			path = Reservation;
 			sourceTree = "<group>";
@@ -897,6 +900,7 @@
 				C7D66D1224FA925000679B99 /* DefualtUserInfoVC.swift in Sources */,
 				C7A454AE24FA0C9900FA08B7 /* SelectPopupVC.swift in Sources */,
 				BC4F3A1B250E01FE00B7E1E7 /* SetBookingTimeButton.swift in Sources */,
+				7E77D9B3251C4BDC002C6BF1 /* UserStatusAfterReturnView.swift in Sources */,
 				C7CEF74C2511BFEA00C063B0 /* VehicleCheckCell.swift in Sources */,
 				BC4F3A09250E01B400B7E1E7 /* BookingTimeCell.swift in Sources */,
 				C73D3498251876890075471F /* DetailSocarZoneInfoVC.swift in Sources */,

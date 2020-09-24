@@ -7,8 +7,11 @@
 //
 
 import UIKit
+import SnapKit
 
 class UserStatusAfterReturnVC: UIViewController {
+  
+  fileprivate let userStatusAfterReturnView = UserStatusAfterReturnView()
   
   // MARK: - LifeCycle
   
@@ -21,7 +24,23 @@ class UserStatusAfterReturnVC: UIViewController {
   // MARK: - UI
 
   fileprivate func setUI() {
+    userStatusAfterReturnView.delegate = self
     navigationItem.hidesBackButton = true
-    view.backgroundColor = .magenta
+    
+    [userStatusAfterReturnView].forEach {
+      view.addSubview($0)
+    }
+    
+    userStatusAfterReturnView.snp.makeConstraints {
+      $0.edges.equalToSuperview()
+    }
+  }
+}
+
+// MARK: - UserStatusAfterReturnViewDelegate
+
+extension UserStatusAfterReturnVC: UserStatusAfterReturnViewDelegate {
+  func didTapButton(_ sender: UIButton) {
+    print("didTapButton")
   }
 }
