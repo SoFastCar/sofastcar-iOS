@@ -44,5 +44,11 @@ class UserStatusAfterReturnVC: UIViewController {
 extension UserStatusAfterReturnVC: UserStatusAfterReturnViewDelegate {
   func didTapButton(_ sender: UIButton) {
     print("didTapButton")
+    switch sender {
+    case userStatusAfterReturnView.closeButton:
+      dismiss(animated: false, completion: nil)
+    default:
+      break
+    }
   }
 }

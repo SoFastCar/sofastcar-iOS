@@ -211,3 +211,15 @@ extension UIViewController {
     UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.addSubview(statusBar)
   }
 }
+
+// MARK: - Shadow Maker
+
+extension UIView {
+  func shadowMaker(view: UIView) {
+    view.layer.shadowColor = UIColor.systemGray3.cgColor
+    view.layer.shadowOffset = CGSize(width: 0, height: 2.0)
+    view.layer.shadowRadius = 5
+    view.layer.shadowOpacity = 0.5
+    view.layer.masksToBounds = false
+  }
+}

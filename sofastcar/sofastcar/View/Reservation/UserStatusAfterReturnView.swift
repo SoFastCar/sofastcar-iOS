@@ -17,7 +17,7 @@ class UserStatusAfterReturnView: UIView {
   
   weak var delegate: UserStatusAfterReturnViewDelegate?
   
-  fileprivate let closeButton: UIButton = {
+  let closeButton: UIButton = {
     let button = UIButton()
     let config = UIImage.SymbolConfiguration(pointSize: 20, weight: .light, scale: .large)
     let closeSymbol = UIImage(systemName: CommonUI.SFSymbolKey.close.rawValue, withConfiguration: config)
@@ -40,6 +40,15 @@ class UserStatusAfterReturnView: UIView {
     return label
   }()
   
+  fileprivate let userStatusView: UIView = {
+    let view = UIView()
+    view.backgroundColor = .white
+    view.layer.cornerRadius = 5
+    view.shadowMaker(view: view)
+    
+    return view
+  }()
+  
   // MARK: - LifeCycle
   
   override init(frame: CGRect) {
@@ -55,20 +64,35 @@ class UserStatusAfterReturnView: UIView {
   // MARK: - UI
   
   fileprivate func setUI() {
-    self.backgroundColor = .cyan
+    self.backgroundColor = .white
     
-    [closeButton, titleLabel].forEach {
+    [closeButton, titleLabel, userStatusView].forEach {
       self.addSubview($0)
     }
     
     closeButton.snp.makeConstraints {
       $0.top.equalToSuperview().offset(10)
-      $0.leading.equalToSuperview().offset(20)
+      $0.leading.equalToSuperview().offset(10)
     }
     
     titleLabel.snp.makeConstraints {
       $0.top.equalTo(closeButton.snp.bottom).offset(20)
       $0.leading.equalToSuperview().offset(20)
+    }
+    
+    userStatusView.snp.makeConstraints {
+      $0.top.equalTo(titleLabel.snp.bottom).offset(30)
+      $0.leading.equalToSuperview().offset(20)
+      $0.trailing.equalToSuperview().offset(-20)
+      $0.height.equalTo(300)
+    }
+    
+    userStatus()
+  }
+  
+  fileprivate func userStatus() {
+    [].forEach {
+      userStatusView.addSubview($0)
     }
   }
   
