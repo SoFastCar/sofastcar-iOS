@@ -67,6 +67,15 @@ class UserStatusAfterReturnView: UIView {
     return label
   }()
   
+  fileprivate let userAddKilometerLabel: UILabel = {
+    let label = UILabel()
+    label.text = "+170km"
+    label.font = UIFont.preferredFont(forTextStyle: .subheadline).bold()
+    label.textColor = CommonUI.mainBlue
+    
+    return label
+  }()
+  
   // MARK: - LifeCycle
   
   override init(frame: CGRect) {
@@ -110,7 +119,7 @@ class UserStatusAfterReturnView: UIView {
   
   fileprivate func userStatus() {
     
-    [userLevelLabel, userNextLevelbaklogLabel].forEach {
+    [userLevelLabel, userNextLevelbaklogLabel, userAddKilometerLabel].forEach {
       userStatusView.addSubview($0)
     }
     
@@ -121,6 +130,11 @@ class UserStatusAfterReturnView: UIView {
     
     userNextLevelbaklogLabel.snp.makeConstraints {
       $0.top.equalTo(userLevelLabel.snp.bottom).offset(10)
+      $0.centerX.equalToSuperview()
+    }
+    
+    userAddKilometerLabel.snp.makeConstraints {
+      $0.top.equalTo(userNextLevelbaklogLabel.snp.bottom).offset(20)
       $0.centerX.equalToSuperview()
     }
   }
