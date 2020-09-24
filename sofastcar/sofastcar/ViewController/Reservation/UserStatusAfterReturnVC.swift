@@ -10,6 +10,8 @@ import UIKit
 
 class UserStatusAfterReturnVC: UIViewController {
   
+  // MARK: - LifeCycle
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     
@@ -19,6 +21,7 @@ class UserStatusAfterReturnVC: UIViewController {
   // MARK: - UI
 
   fileprivate func setUI() {
+    navigationItem.hidesBackButton = true
     view.backgroundColor = .magenta
   }
 }
