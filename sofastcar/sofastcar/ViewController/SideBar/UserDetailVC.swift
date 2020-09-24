@@ -38,7 +38,7 @@ enum UserDetailSectionType: String {
 class UserDetailVC: UIViewController {
   // MARK: - Properties
   let tableView = UITableView(frame: .zero, style: .grouped)
-  let tableHeaderView = SideBarHeaderView()
+  let tableHeaderView = SideBarHeaderView(frame: .zero, isMain: false)
   lazy var sectionTitleArray = UserDetailSectionType.allcase()
   var cellTitleArray = [String]()
   
@@ -52,11 +52,6 @@ class UserDetailVC: UIViewController {
   }
   
   private func configureLayout() {
-    tableHeaderView.userlevelButton.isHidden = true
-    tableHeaderView.userlevelButton.snp.updateConstraints {
-      $0.height.equalTo(0)
-    }
-    
     view.addSubview(tableView)
     tableView.frame = CGRect(x: UIScreen.main.bounds.width, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
   }
@@ -65,7 +60,8 @@ class UserDetailVC: UIViewController {
     tableView.dataSource = self
     tableView.delegate = self
     tableView.tableHeaderView = tableHeaderView
-    tableView.tableHeaderView?.frame.size.height = 140
+    tableView.tableHeaderView?.frame.size.height = 150
+    tableView.tableHeaderView?.backgroundColor = .white
     tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
     tableView.rowHeight = 50
     tableView.sectionHeaderHeight = 50

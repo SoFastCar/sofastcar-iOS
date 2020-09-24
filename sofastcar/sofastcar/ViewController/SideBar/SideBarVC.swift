@@ -29,7 +29,7 @@ class SideBarVC: UIViewController {
   // MARK: - Properties
   let tableView = UITableView(frame: .zero, style: .plain)
   let viewWidthSizeRatio: CGFloat = 0.85
-  let tableHeaderView = SideBarHeaderView()
+  let tableHeaderView = SideBarHeaderView(frame: .zero, isMain: true)
   let buttonImageName = ["business", "option", "plan"]
   lazy var sideBarCellTypes = SideBarMenuType.allcase()
   var isHorizenScrolling = false
