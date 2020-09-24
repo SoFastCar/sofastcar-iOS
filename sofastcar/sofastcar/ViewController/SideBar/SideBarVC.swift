@@ -177,19 +177,25 @@ extension SideBarVC {
       print("tableHeaderView.userlevelButton")
     case tableHeaderView.settingButton:
       print("tableHeaderView.tapHaederButton")
-      UIView.animate(withDuration: 0.5, animations: {
-        self.tableView.center.x -= UIScreen.main.bounds.width
-        self.view.backgroundColor = UIColor.black.withAlphaComponent(0)
-      }, completion: { sucess in
-        if sucess {
-          let userDetailVC = UserDetailVC()
-          userDetailVC.modalPresentationStyle = .overFullScreen
-          self.present(userDetailVC, animated: false, completion: {
-            print("animate")
-            userDetailVC.presentWithAnimate()
-          })
-        }
-      })
+      dismissWithAnimated {
+        guard let navi = self.presentingViewController as? UINavigationController else { return }
+        guard let mainVC = navi.viewControllers.last as? MainVC else { return }
+        let userDetailVC = UserDetailVC()
+        mainVC.navigationController?.pushViewController(userDetailVC, animated: true)
+      }
+//      UIView.animate(withDuration: 0.5, animations: {
+//        self.tableView.center.x -= UIScreen.main.bounds.width
+//        self.view.backgroundColor = UIColor.black.withAlphaComponent(0)
+//      }, completion: { sucess in
+//        if sucess {
+//          let userDetailVC = UserDetailVC()
+//          userDetailVC.modalPresentationStyle = .overFullScreen
+//          self.present(userDetailVC, animated: false, completion: {
+//            print("animate")
+//            userDetailVC.presentWithAnimate()
+//          })
+//        }
+//      })
     case tableHeaderView.notiButton:
       print("tableHeaderView.notiButton")
     default:

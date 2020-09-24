@@ -82,7 +82,7 @@
 		C7724A74251B0C2F008197A5 /* CustomCameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7724A73251B0C2F008197A5 /* CustomCameraView.swift */; };
 		C7724A84251C4132008197A5 /* UserDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7724A83251C4132008197A5 /* UserDetailVC.swift */; };
 		C779CE12251AF2AD00A81EB3 /* CustomCameraVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C779CE11251AF2AD00A81EB3 /* CustomCameraVC.swift */; };
-		C77AF469251C558000DEDB76 /* UserDefaultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77AF468251C558000DEDB76 /* UserDefaultCell.swift */; };
+		C77AF469251C558000DEDB76 /* UserDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77AF468251C558000DEDB76 /* UserDetailCell.swift */; };
 		C78071A82510413700EF214C /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = C78071A72510413700EF214C /* Time.swift */; };
 		C790FB1C251343BB00AF98E2 /* InsurancePopVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C790FB1B251343BB00AF98E2 /* InsurancePopVC.swift */; };
 		C79A0B57250224F80061F078 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = C79A0B56250224F80061F078 /* Alamofire */; };
@@ -215,7 +215,7 @@
 		C7724A73251B0C2F008197A5 /* CustomCameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCameraView.swift; sourceTree = "<group>"; };
 		C7724A83251C4132008197A5 /* UserDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailVC.swift; sourceTree = "<group>"; };
 		C779CE11251AF2AD00A81EB3 /* CustomCameraVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCameraVC.swift; sourceTree = "<group>"; };
-		C77AF468251C558000DEDB76 /* UserDefaultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultCell.swift; sourceTree = "<group>"; };
+		C77AF468251C558000DEDB76 /* UserDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailCell.swift; sourceTree = "<group>"; };
 		C78071A72510413700EF214C /* Time.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Time.swift; sourceTree = "<group>"; };
 		C790FB1B251343BB00AF98E2 /* InsurancePopVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsurancePopVC.swift; sourceTree = "<group>"; };
 		C79A0B5A2504656B0061F078 /* PhoneAuthResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneAuthResponse.swift; sourceTree = "<group>"; };
@@ -446,7 +446,7 @@
 				C7F5B5492511A61F00AE0054 /* SideBarCustomCell.swift */,
 				C7CEF73B2511B07D00C063B0 /* SideBarBottonView.swift */,
 				C73D34902516036C0075471F /* RentHistoryCell.swift */,
-				C77AF468251C558000DEDB76 /* UserDefaultCell.swift */,
+				C77AF468251C558000DEDB76 /* UserDetailCell.swift */,
 			);
 			path = SideBar;
 			sourceTree = "<group>";
@@ -901,7 +901,7 @@
 				C7F2E63A250647ED0004EBF9 /* Insurance.swift in Sources */,
 				C7A9C920250848A6006CA543 /* PaymentConfirmTableVC.swift in Sources */,
 				C7F2E63C2507133B0004EBF9 /* Protocol.swift in Sources */,
-				C77AF469251C558000DEDB76 /* UserDefaultCell.swift in Sources */,
+				C77AF469251C558000DEDB76 /* UserDetailCell.swift in Sources */,
 				C7CEF74A2511BFD100C063B0 /* MenuCollectionViewCell.swift in Sources */,
 				BC4F3A15250E01EB00B7E1E7 /* SocarZoneData.swift in Sources */,
 				C728C85024F7E35100063005 /* SignUpUserData.swift in Sources */,
