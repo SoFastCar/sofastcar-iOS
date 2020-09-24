@@ -58,6 +58,15 @@ class UserStatusAfterReturnView: UIView {
     return label
   }()
   
+  fileprivate let userNextLevelbaklogLabel: UILabel = {
+    let label = UILabel()
+    label.text = "레벨 5까지 207km 남았어요."
+    label.font = UIFont.preferredFont(forTextStyle: .subheadline)
+    label.textColor = CommonUI.mainDark.withAlphaComponent(0.5)
+    
+    return label
+  }()
+  
   // MARK: - LifeCycle
   
   override init(frame: CGRect) {
@@ -101,12 +110,17 @@ class UserStatusAfterReturnView: UIView {
   
   fileprivate func userStatus() {
     
-    [userLevelLabel].forEach {
+    [userLevelLabel, userNextLevelbaklogLabel].forEach {
       userStatusView.addSubview($0)
     }
     
     userLevelLabel.snp.makeConstraints {
       $0.top.equalToSuperview().offset(20)
+      $0.centerX.equalToSuperview()
+    }
+    
+    userNextLevelbaklogLabel.snp.makeConstraints {
+      $0.top.equalTo(userLevelLabel.snp.bottom).offset(10)
       $0.centerX.equalToSuperview()
     }
   }
