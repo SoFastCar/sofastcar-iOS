@@ -16,6 +16,7 @@ class SearchVC: UIViewController {
     //    let socarZoneData = SocarZoneData()
     var nMapAddress: [NMapAddress]?
     var searchResultData: [Document] = []
+    var selectedSearchData: Document?
     lazy var safeArea = self.view.safeAreaLayoutGuide
     var tempCnt = 0
     
@@ -28,7 +29,7 @@ class SearchVC: UIViewController {
     
     // MARK: - Selector
     @objc func didTapBackButton(_ sender: UIButton) {
-        dissmissSearchVC()
+        dissmissSearchVC(isResult: false)
 //        guard let navi = self.presentingViewController as? UINavigationController else { return }
 //        guard let presentingVC = navi.viewControllers.last as? MainVC else { return }
 //        presentingVC.searchVCDismissFlag = true
@@ -65,7 +66,7 @@ class SearchVC: UIViewController {
     }
     
     // MARK: - Dissmiss func
-    private func dissmissSearchVC() {
+    private func dissmissSearchVC(isResult flag: Bool) {
         guard let navi = self.presentingViewController as? UINavigationController else { return }
         guard let presentingVC = navi.viewControllers.last as? MainVC else { return }
         presentingVC.searchVCDismissFlag = true
@@ -97,6 +98,16 @@ class SearchVC: UIViewController {
             presentingVC.setBookingTimeButton.frame.origin.y = presentingVC.view.frame.height - presentingVC.setBookingTimeButton.frame.height
             presentingVC.view.layoutIfNeeded()
         })
+        if flag {
+            presentingVC.callPositionMarker.position = NMGLatLng(lat: Double(selectedSearchData?.lat ?? "0") ?? 0, lng: Double(selectedSearchData?.lng ?? "0") ?? 0)
+            presentingVC.topView.searchButton.addrLabel.text = selectedSearchData?.placeName ?? "검색 결과 없음"
+            presentingVC.naverMapView.mapView.moveCamera(NMFCameraUpdate(position: NMFCameraPosition(NMGLatLng(lat: Double(selectedSearchData?.lat ?? "0") ?? 0, 
+                                                                                                               lng: Double(selectedSearchData?.lng ?? "0") ?? 0),
+                                                                                                     zoom: 16)))
+        } else {
+            
+        }
+        
         presentingVC.dismiss(animated: true)
     }
     
@@ -112,8 +123,7 @@ class SearchVC: UIViewController {
         searchView.searchResultTableView.dataSource = self
         searchView.searchResultTableView.delegate = self
         searchView.searchResultTableView.register(SearchResultTableViewCell.self, forCellReuseIdentifier: SearchResultTableViewCell.identifier)
-        view.addSubview(searchView)
-        
+        view.addSubview(searchView)        
     }
     
     // MARK: - Setup Constraint
@@ -176,7 +186,8 @@ extension SearchVC: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        selectedSearchData = searchResultData[indexPath.row]
+        dissmissSearchVC(isResult: true)        
     }
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
@@ -184,11 +195,7 @@ extension SearchVC: UITableViewDelegate {
     }
 }
 
-extension SearchVC: UITextFieldDelegate {
-    //  func textFieldDidBeginEditing(_ textField: UITextField) {
-    //    
-    //  }
-    
+extension SearchVC: UITextFieldDelegate {    
     func textFieldDidChangeSelection(_ textField: UITextField) {
         print(#function)
         guard let inputText = textField.text else { return }
@@ -221,13 +228,4 @@ extension SearchVC: UITextFieldDelegate {
             }.resume()
         }    
     }
-    //  func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-    //    print(#function)
-    //    return true
-    //  }
-    //    
-    //  func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-    //    print(#function)
-    //    return true
-    //}
 }

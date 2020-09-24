@@ -79,7 +79,7 @@ class SearchResultTableViewCell: UITableViewCell {
         
         let convertToInt = Double(distance) ?? 0
         if convertToInt >= 1000 {
-            distanceFromMeLabel.text = String(format: "%.1f km", convertToInt / 1000)  
+            distanceFromMeLabel.text = String(format: "%.1fkm", convertToInt / 1000)  
         } else {
             distanceFromMeLabel.text = "\(distance)m"
         }         

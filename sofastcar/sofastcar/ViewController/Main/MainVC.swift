@@ -151,6 +151,7 @@ class MainVC: UIViewController {
 //                print("Geocoding Result: \(self.roadAddrName) \(self.roadAddrNumber1)")
                 DispatchQueue.main.async {
 //                    self.topView.searchButton.setTitle(self.admCodeArea3Name, for: .normal)
+                    print("12312313123123")
                     self.topView.searchButton.addrLabel.text = self.admCodeArea3Name
                 }
             } catch {
@@ -748,8 +749,13 @@ extension MainVC: NMFMapViewCameraDelegate {
         let meterPerPixel = mapView.projection.metersPerPixel(atLatitude: camPosition.lat, zoom: camZoom)
         
         // 검색 바 Geocoding
-        nmReveseGeocoding(of: "\(camPosition.lng),\(camPosition.lat)")
-        callPositionMarker.position = camPosition
+        if searchVCDismissFlag {
+            
+        } else {
+            nmReveseGeocoding(of: "\(camPosition.lng),\(camPosition.lat)")
+            callPositionMarker.position = camPosition
+        }
+        searchVCDismissFlag = false
         
         // 반경 쏘카존 요청
         fetchSocarZone(lat: camPosition.lat, lng: camPosition.lng, dist: meterPerPixel)
