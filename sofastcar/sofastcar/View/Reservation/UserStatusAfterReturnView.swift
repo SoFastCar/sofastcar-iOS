@@ -48,6 +48,15 @@ class UserStatusAfterReturnView: UIView {
     
     return view
   }()
+
+  fileprivate let userLevelLabel: UILabel = {
+    let label = UILabel()
+    label.text = "Level 4"
+    label.font = UIFont.preferredFont(forTextStyle: .title1).bold()
+    label.textColor = CommonUI.mainDark.withAlphaComponent(0.7)
+    
+    return label
+  }()
   
   // MARK: - LifeCycle
   
@@ -91,8 +100,14 @@ class UserStatusAfterReturnView: UIView {
   }
   
   fileprivate func userStatus() {
-    [].forEach {
+    
+    [userLevelLabel].forEach {
       userStatusView.addSubview($0)
+    }
+    
+    userLevelLabel.snp.makeConstraints {
+      $0.top.equalToSuperview().offset(20)
+      $0.centerX.equalToSuperview()
     }
   }
   
