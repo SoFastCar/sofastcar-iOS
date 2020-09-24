@@ -124,7 +124,6 @@ extension RentHistoryVC {
   }
   
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//    let reservationData = reservations[indexPath.section]
     let reservationDetailTableVC = ReservationDetailTableVC(isReservationEnd: true)
     reservationDetailTableVC.modalPresentationStyle = .overFullScreen
     present(reservationDetailTableVC, animated: true, completion: nil)
