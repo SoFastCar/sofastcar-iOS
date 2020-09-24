@@ -76,9 +76,21 @@ class UserStatusAfterReturnView: UIView {
     return label
   }()
   
-  fileprivate let userLabelStatusbarView: UIView = {
+  fileprivate let userLevelStatusbarView: UIView = {
     let view = UIView()
     view.backgroundColor = .systemGray5
+    
+    return view
+  }()
+
+  fileprivate let userLevelPreviousStatusbar: UIView = {
+    let view = UIView()
+    view.backgroundColor = UIColor(
+      red: 3 / 255,
+      green: 135 / 255,
+      blue: 220 / 255,
+      alpha: 1
+    )
     
     return view
   }()
@@ -126,7 +138,7 @@ class UserStatusAfterReturnView: UIView {
   
   fileprivate func userStatus() {
     
-    [userLevelLabel, userNextLevelbaklogLabel, userAddKilometerLabel, userLabelStatusbarView].forEach {
+    [userLevelLabel, userNextLevelbaklogLabel, userAddKilometerLabel, userLevelStatusbarView].forEach {
       userStatusView.addSubview($0)
     }
     
@@ -145,7 +157,7 @@ class UserStatusAfterReturnView: UIView {
       $0.centerX.equalToSuperview()
     }
     
-    userLabelStatusbarView.snp.makeConstraints {
+    userLevelStatusbarView.snp.makeConstraints {
       $0.top.equalTo(userAddKilometerLabel.snp.bottom).offset(10)
       $0.leading.equalToSuperview().offset(20)
       $0.trailing.equalToSuperview().offset(-20)
@@ -156,9 +168,18 @@ class UserStatusAfterReturnView: UIView {
   }
   
   fileprivate func userLabelStatusbar() {
-    [].forEach {
-      userLabelStatusbarView.addSubview($0)
+    [userLevelPreviousStatusbar].forEach {
+      userLevelStatusbarView.addSubview($0)
     }
+    
+    userLevelPreviousStatusbar.snp.makeConstraints {
+      $0.top.equalToSuperview()
+      $0.leading.equalToSuperview()
+      $0.bottom.equalToSuperview()
+      $0.width.equalToSuperview().dividedBy(3) // 현재 경험치
+    }
+    
+    
   }
   
   // MARK: - Action
