@@ -84,6 +84,8 @@
 		C769C83A24FE5E5100DC8226 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C769C83924FE5E5100DC8226 /* LoginView.swift */; };
 		C76B2A6324F7A799004E4CBD /* UserAuthVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76B2A6224F7A799004E4CBD /* UserAuthVC.swift */; };
 		C76B2A6524F7A7BB004E4CBD /* UserAuthScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76B2A6424F7A7BB004E4CBD /* UserAuthScrollView.swift */; };
+		C7724A74251B0C2F008197A5 /* CustomCameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7724A73251B0C2F008197A5 /* CustomCameraView.swift */; };
+		C779CE12251AF2AD00A81EB3 /* CustomCameraVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C779CE11251AF2AD00A81EB3 /* CustomCameraVC.swift */; };
 		C78071A82510413700EF214C /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = C78071A72510413700EF214C /* Time.swift */; };
 		C790FB1C251343BB00AF98E2 /* InsurancePopVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C790FB1B251343BB00AF98E2 /* InsurancePopVC.swift */; };
 		C79A0B57250224F80061F078 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = C79A0B56250224F80061F078 /* Alamofire */; };
@@ -218,6 +220,8 @@
 		C769C83924FE5E5100DC8226 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		C76B2A6224F7A799004E4CBD /* UserAuthVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAuthVC.swift; sourceTree = "<group>"; };
 		C76B2A6424F7A7BB004E4CBD /* UserAuthScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAuthScrollView.swift; sourceTree = "<group>"; };
+		C7724A73251B0C2F008197A5 /* CustomCameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCameraView.swift; sourceTree = "<group>"; };
+		C779CE11251AF2AD00A81EB3 /* CustomCameraVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCameraVC.swift; sourceTree = "<group>"; };
 		C78071A72510413700EF214C /* Time.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Time.swift; sourceTree = "<group>"; };
 		C790FB1B251343BB00AF98E2 /* InsurancePopVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsurancePopVC.swift; sourceTree = "<group>"; };
 		C79A0B5A2504656B0061F078 /* PhoneAuthResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneAuthResponse.swift; sourceTree = "<group>"; };
@@ -353,6 +357,7 @@
 				C7D66D1324FA930100679B99 /* DefaultUserInfoView.swift */,
 				C769C82824FD0A1200DC8226 /* CardEnrollView.swift */,
 				C769C82D24FDB69B00DC8226 /* DriverLicenseEnrollinitView.swift */,
+				C7724A73251B0C2F008197A5 /* CustomCameraView.swift */,
 				C769C83324FDD99300DC8226 /* CheckDriverLicenseView.swift */,
 				C769C83924FE5E5100DC8226 /* LoginView.swift */,
 			);
@@ -500,6 +505,7 @@
 				C769C82224FCDEA100DC8226 /* CardEnrollinitVC.swift */,
 				C769C82624FD09CE00DC8226 /* CardEnrollVC.swift */,
 				C769C82A24FDB35600DC8226 /* DriverLicenseEnrollinitVC.swift */,
+				C779CE11251AF2AD00A81EB3 /* CustomCameraVC.swift */,
 				C769C83124FDD97F00DC8226 /* CheckDriverLicenseVC.swift */,
 				C769C83524FDF03C00DC8226 /* SocarPassVC.swift */,
 				C769C83724FE5E3700DC8226 /* LoginVC.swift */,
@@ -871,6 +877,8 @@
 				C769C83224FDD97F00DC8226 /* CheckDriverLicenseVC.swift in Sources */,
 				7E8473E42509AB420007962F /* LeftAlignedTagCollectionViewFlowLayout.swift in Sources */,
 				BC4F3A06250E01B400B7E1E7 /* CarListView.swift in Sources */,
+				C779CE12251AF2AD00A81EB3 /* CustomCameraVC.swift in Sources */,
+				C7724A74251B0C2F008197A5 /* CustomCameraView.swift in Sources */,
 				BC4F3A1D250E01FE00B7E1E7 /* SocarZoneInfoButton.swift in Sources */,
 				C769C83A24FE5E5100DC8226 /* LoginView.swift in Sources */,
 				C7CEF74E25124BA100C063B0 /* CustomImageView.swift in Sources */,
