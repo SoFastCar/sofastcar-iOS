@@ -129,6 +129,19 @@ class UserStatusAfterReturnView: UIView {
     return label
   }()
   
+  let detailUsageHistory: UIButton = {
+    let button = UIButton()
+    button.setTitle("이용내역 자세히 보기", for: .normal)
+    button.setTitleColor(CommonUI.mainDark.withAlphaComponent(0.7), for: .normal)
+    if let title = button.titleLabel?.text {
+      button.setAttributedTitle(title.getUnderLineAttributedText(), for: .normal)
+    }
+    button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .subheadline)
+    button.addTarget(self, action: #selector(didTapButton(_:)), for: .touchUpInside)
+    
+    return button
+  }()
+  
   // MARK: - LifeCycle
   
   override init(frame: CGRect) {
@@ -146,7 +159,7 @@ class UserStatusAfterReturnView: UIView {
   fileprivate func setUI() {
     self.backgroundColor = .white
     
-    [closeButton, titleLabel, userStatusView, userPaymentDescriptionLabel].forEach {
+    [closeButton, titleLabel, userStatusView, userPaymentDescriptionLabel, detailUsageHistory].forEach {
       self.addSubview($0)
     }
     
@@ -170,6 +183,11 @@ class UserStatusAfterReturnView: UIView {
     userPaymentDescriptionLabel.snp.makeConstraints {
       $0.top.equalTo(userStatusView.snp.bottom).offset(30)
       $0.leading.equalToSuperview().offset(20)
+    }
+    
+    detailUsageHistory.snp.makeConstraints {
+      $0.top.equalTo(userPaymentDescriptionLabel.snp.bottom).offset(30)
+      $0.centerX.equalToSuperview()
     }
     
     userStatus()
