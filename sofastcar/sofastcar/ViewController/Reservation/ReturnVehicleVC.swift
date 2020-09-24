@@ -74,6 +74,15 @@ class ReturnVehicleVC: UIViewController {
 
 extension ReturnVehicleVC: ReturnVehicleViewDelegate {
   func didTapButton(_ sender: UIButton) {
-    print("\(sender)button did tap")
+    switch sender {
+    case returnVehicleView.rightChevronButton:
+      print("rightCheveronButton")
+    case returnVehicleView.returnButton:
+      print("returnButton")
+      let userStatusAfterReturnVC = UserStatusAfterReturnVC()
+      navigationController?.pushViewController(userStatusAfterReturnVC, animated: true)
+    default:
+      break
+    }
   }
 }
