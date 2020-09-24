@@ -80,7 +80,9 @@
 		C76B2A6324F7A799004E4CBD /* UserAuthVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76B2A6224F7A799004E4CBD /* UserAuthVC.swift */; };
 		C76B2A6524F7A7BB004E4CBD /* UserAuthScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76B2A6424F7A7BB004E4CBD /* UserAuthScrollView.swift */; };
 		C7724A74251B0C2F008197A5 /* CustomCameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7724A73251B0C2F008197A5 /* CustomCameraView.swift */; };
+		C7724A84251C4132008197A5 /* UserDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7724A83251C4132008197A5 /* UserDetailVC.swift */; };
 		C779CE12251AF2AD00A81EB3 /* CustomCameraVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C779CE11251AF2AD00A81EB3 /* CustomCameraVC.swift */; };
+		C77AF469251C558000DEDB76 /* UserDefaultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77AF468251C558000DEDB76 /* UserDefaultCell.swift */; };
 		C78071A82510413700EF214C /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = C78071A72510413700EF214C /* Time.swift */; };
 		C790FB1C251343BB00AF98E2 /* InsurancePopVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C790FB1B251343BB00AF98E2 /* InsurancePopVC.swift */; };
 		C79A0B57250224F80061F078 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = C79A0B56250224F80061F078 /* Alamofire */; };
@@ -211,7 +213,9 @@
 		C76B2A6224F7A799004E4CBD /* UserAuthVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAuthVC.swift; sourceTree = "<group>"; };
 		C76B2A6424F7A7BB004E4CBD /* UserAuthScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAuthScrollView.swift; sourceTree = "<group>"; };
 		C7724A73251B0C2F008197A5 /* CustomCameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCameraView.swift; sourceTree = "<group>"; };
+		C7724A83251C4132008197A5 /* UserDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailVC.swift; sourceTree = "<group>"; };
 		C779CE11251AF2AD00A81EB3 /* CustomCameraVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCameraVC.swift; sourceTree = "<group>"; };
+		C77AF468251C558000DEDB76 /* UserDefaultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultCell.swift; sourceTree = "<group>"; };
 		C78071A72510413700EF214C /* Time.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Time.swift; sourceTree = "<group>"; };
 		C790FB1B251343BB00AF98E2 /* InsurancePopVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsurancePopVC.swift; sourceTree = "<group>"; };
 		C79A0B5A2504656B0061F078 /* PhoneAuthResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneAuthResponse.swift; sourceTree = "<group>"; };
@@ -363,6 +367,7 @@
 		C75451F924F4E5CF00E13280 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				C7724A82251C3E08008197A5 /* SideBar */,
 				C73D34762515C1250075471F /* Common */,
 				C72A914224F67D87005D464F /* Login */,
 				C79A0B4E250122BD0061F078 /* Main */,
@@ -383,6 +388,7 @@
 		C75451FB24F4E5DB00E13280 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				C7724A81251C3DF8008197A5 /* SideBar */,
 				C790FB1A2513439B00AF98E2 /* Common */,
 				C7BD348724F53BDE00089F0D /* Login */,
 				C79A0B4D250122B40061F078 /* Main */,
@@ -423,6 +429,28 @@
 			path = sofastcarUITests;
 			sourceTree = "<group>";
 		};
+		C7724A81251C3DF8008197A5 /* SideBar */ = {
+			isa = PBXGroup;
+			children = (
+				C7F5B5452510D72600AE0054 /* SideBarVC.swift */,
+				C73D34862515FE4C0075471F /* RentHistoryVC.swift */,
+				C7724A83251C4132008197A5 /* UserDetailVC.swift */,
+			);
+			path = SideBar;
+			sourceTree = "<group>";
+		};
+		C7724A82251C3E08008197A5 /* SideBar */ = {
+			isa = PBXGroup;
+			children = (
+				C7F5B547251197F300AE0054 /* SideBarHeaderView.swift */,
+				C7F5B5492511A61F00AE0054 /* SideBarCustomCell.swift */,
+				C7CEF73B2511B07D00C063B0 /* SideBarBottonView.swift */,
+				C73D34902516036C0075471F /* RentHistoryCell.swift */,
+				C77AF468251C558000DEDB76 /* UserDefaultCell.swift */,
+			);
+			path = SideBar;
+			sourceTree = "<group>";
+		};
 		C790FB1A2513439B00AF98E2 /* Common */ = {
 			isa = PBXGroup;
 			children = (
@@ -441,8 +469,6 @@
 				BC4F3A26250E029B00B7E1E7 /* ReservationConfirmTableVC.swift */,
 				C7A9C91F250848A6006CA543 /* PaymentConfirmTableVC.swift */,
 				BC91B62D250F571100B76398 /* CallZoneData.swift */,
-				C7F5B5452510D72600AE0054 /* SideBarVC.swift */,
-				C73D34862515FE4C0075471F /* RentHistoryVC.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -459,10 +485,6 @@
 				BC4F3A20250E024F00B7E1E7 /* ReservationConfirmTableHeaderView.swift */,
 				C7592015250773A700778849 /* ReservationConfirmCVCell.swift */,
 				C7A9C9212508510B006CA543 /* PaymentConfirmCell.swift */,
-				C7F5B547251197F300AE0054 /* SideBarHeaderView.swift */,
-				C7F5B5492511A61F00AE0054 /* SideBarCustomCell.swift */,
-				C7CEF73B2511B07D00C063B0 /* SideBarBottonView.swift */,
-				C73D34902516036C0075471F /* RentHistoryCell.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -791,6 +813,7 @@
 				C769C82324FCDEA100DC8226 /* CardEnrollinitVC.swift in Sources */,
 				C7CEF7462511BFB000C063B0 /* VehicleTakePictureMenuView.swift in Sources */,
 				BC4F3A05250E01B400B7E1E7 /* SearchResultTableViewCell.swift in Sources */,
+				C7724A84251C4132008197A5 /* UserDetailVC.swift in Sources */,
 				C7CEF73E2511BF4D00C063B0 /* VehicleTakePictureVC.swift in Sources */,
 				BC4F3A07250E01B400B7E1E7 /* CarListTableViewCell.swift in Sources */,
 				C72A914124F61857005D464F /* TouButton.swift in Sources */,
@@ -878,6 +901,7 @@
 				C7F2E63A250647ED0004EBF9 /* Insurance.swift in Sources */,
 				C7A9C920250848A6006CA543 /* PaymentConfirmTableVC.swift in Sources */,
 				C7F2E63C2507133B0004EBF9 /* Protocol.swift in Sources */,
+				C77AF469251C558000DEDB76 /* UserDefaultCell.swift in Sources */,
 				C7CEF74A2511BFD100C063B0 /* MenuCollectionViewCell.swift in Sources */,
 				BC4F3A15250E01EB00B7E1E7 /* SocarZoneData.swift in Sources */,
 				C728C85024F7E35100063005 /* SignUpUserData.swift in Sources */,

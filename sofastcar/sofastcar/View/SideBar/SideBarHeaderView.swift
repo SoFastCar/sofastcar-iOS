@@ -27,6 +27,14 @@ class SideBarHeaderView: UIView {
     return label
   }()
   
+  let userPhoneNumberLabel: UILabel = {
+    let label = UILabel()
+    label.text = "010-0000-0000"
+    label.font = .systemFont(ofSize: CommonUI.contentsTextFontSize)
+    label.textColor = .systemGray
+    return label
+  }()
+  
   let userlevelButton: UIButton = {
     let button = UIButton()
     let attributedString = NSMutableAttributedString()
