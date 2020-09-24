@@ -76,6 +76,13 @@ class UserStatusAfterReturnView: UIView {
     return label
   }()
   
+  fileprivate let userLabelStatusbarView: UIView = {
+    let view = UIView()
+    view.backgroundColor = .systemGray5
+    
+    return view
+  }()
+  
   // MARK: - LifeCycle
   
   override init(frame: CGRect) {
@@ -119,7 +126,7 @@ class UserStatusAfterReturnView: UIView {
   
   fileprivate func userStatus() {
     
-    [userLevelLabel, userNextLevelbaklogLabel, userAddKilometerLabel].forEach {
+    [userLevelLabel, userNextLevelbaklogLabel, userAddKilometerLabel, userLabelStatusbarView].forEach {
       userStatusView.addSubview($0)
     }
     
@@ -136,6 +143,21 @@ class UserStatusAfterReturnView: UIView {
     userAddKilometerLabel.snp.makeConstraints {
       $0.top.equalTo(userNextLevelbaklogLabel.snp.bottom).offset(20)
       $0.centerX.equalToSuperview()
+    }
+    
+    userLabelStatusbarView.snp.makeConstraints {
+      $0.top.equalTo(userAddKilometerLabel.snp.bottom).offset(10)
+      $0.leading.equalToSuperview().offset(20)
+      $0.trailing.equalToSuperview().offset(-20)
+      $0.height.equalTo(30)
+    }
+    
+    userLabelStatusbar()
+  }
+  
+  fileprivate func userLabelStatusbar() {
+    [].forEach {
+      userLabelStatusbarView.addSubview($0)
     }
   }
   
