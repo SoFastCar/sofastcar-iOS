@@ -24,15 +24,17 @@ class UserStatusAfterReturnVC: UIViewController {
   // MARK: - UI
 
   fileprivate func setUI() {
+    let guid = view.safeAreaLayoutGuide
     userStatusAfterReturnView.delegate = self
-    navigationItem.hidesBackButton = true
+    navigationController?.isNavigationBarHidden = true
+    view.backgroundColor = .white
     
     [userStatusAfterReturnView].forEach {
       view.addSubview($0)
     }
     
     userStatusAfterReturnView.snp.makeConstraints {
-      $0.edges.equalToSuperview()
+      $0.edges.equalTo(guid)
     }
   }
 }

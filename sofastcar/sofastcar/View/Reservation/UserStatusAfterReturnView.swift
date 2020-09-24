@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SnapKit
 
 protocol UserStatusAfterReturnViewDelegate: class {
     func didTapButton(_ sender: UIButton)
@@ -15,6 +16,29 @@ protocol UserStatusAfterReturnViewDelegate: class {
 class UserStatusAfterReturnView: UIView {
   
   weak var delegate: UserStatusAfterReturnViewDelegate?
+  
+  fileprivate let closeButton: UIButton = {
+    let button = UIButton()
+    let config = UIImage.SymbolConfiguration(pointSize: 20, weight: .light, scale: .large)
+    let closeSymbol = UIImage(systemName: CommonUI.SFSymbolKey.close.rawValue, withConfiguration: config)
+    button.setImage(
+      closeSymbol,
+      for: .normal
+    )
+    button.addTarget(self, action: #selector(didTapButton(_:)), for: .touchUpInside)
+    button.tintColor = CommonUI.mainDark
+    
+    return button
+  }()
+  
+  fileprivate let titleLabel: UILabel = {
+    let label = UILabel()
+    label.text = "반납되었습니다."
+    label.font = UIFont.preferredFont(forTextStyle: .title1).bold()
+    label.textColor = CommonUI.mainDark
+    
+    return label
+  }()
   
   // MARK: - LifeCycle
   
@@ -32,6 +56,20 @@ class UserStatusAfterReturnView: UIView {
   
   fileprivate func setUI() {
     self.backgroundColor = .cyan
+    
+    [closeButton, titleLabel].forEach {
+      self.addSubview($0)
+    }
+    
+    closeButton.snp.makeConstraints {
+      $0.top.equalToSuperview().offset(10)
+      $0.leading.equalToSuperview().offset(20)
+    }
+    
+    titleLabel.snp.makeConstraints {
+      $0.top.equalTo(closeButton.snp.bottom).offset(20)
+      $0.leading.equalToSuperview().offset(20)
+    }
   }
   
   // MARK: - Action
