@@ -46,7 +46,7 @@ class DriverLicenseEnrollinitVC: UIViewController {
   }
   
   @objc private func tapDriverAuthCompletebutton() {
-    let newDriverLicenseEnrollinitVC = NewDriverLicenseEnrollinitVC()
-    navigationController?.pushViewController(newDriverLicenseEnrollinitVC, animated: false)
+    let customCameraVC = CustomCameraVC()
+    navigationController?.pushViewController(customCameraVC, animated: false)
   }
 }

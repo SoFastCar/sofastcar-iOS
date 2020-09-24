@@ -10,9 +10,9 @@ import UIKit
 import SnapKit
 import AVFoundation
 
-class NewDriverLicenseEnrollinitVC: UIViewController {
+class CustomCameraVC: UIViewController {
   // MARK: - Properties
-  let myView = NewDriverLicenseEnrollinitView()
+  let myView = CustomCameraView()
   
   var captureSession = AVCaptureSession()
   var backCamera: AVCaptureDevice?
@@ -115,7 +115,7 @@ class NewDriverLicenseEnrollinitVC: UIViewController {
   }
 }
 
-extension NewDriverLicenseEnrollinitVC: AVCapturePhotoCaptureDelegate {
+extension CustomCameraVC: AVCapturePhotoCaptureDelegate {
   func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
     if let imageDate = photo.fileDataRepresentation() {
       print(imageDate)

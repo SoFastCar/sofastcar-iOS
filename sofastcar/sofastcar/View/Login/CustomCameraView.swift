@@ -9,7 +9,7 @@
 import UIKit
 import SnapKit
 
-class NewDriverLicenseEnrollinitView: UIView {
+class CustomCameraView: UIView {
   // MARK: - Init
   let buttonWidthSize: CGFloat = 80
   
@@ -38,8 +38,8 @@ class NewDriverLicenseEnrollinitView: UIView {
     return view
   }()
   
-  let backgroundView: UIView = {
-    let view = UIView()
+  let backgroundView: UIImageView = {
+    let view = UIImageView()
     view.backgroundColor = UIColor.black.withAlphaComponent(0.5)
     return view
   }()
@@ -56,6 +56,7 @@ class NewDriverLicenseEnrollinitView: UIView {
     
     configureBackgroundView()
     mask(viewToMask: backgroundView, maskRect: rect, invert: true)
+    configureCardRectangelBorderLayout()
     configureLayout()
   }
   
@@ -67,17 +68,15 @@ class NewDriverLicenseEnrollinitView: UIView {
     let maskLayer = CAShapeLayer()
     let path = CGMutablePath()
     if invert { // invert True 시 Mask 반전
-      path.addRect(CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width,  height:UIScreen.main.bounds.height))
+      path.addRect(CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
     }
     path.addRect(maskRect)
-    
     maskLayer.path = path
     if invert {
       maskLayer.fillRule = .evenOdd
     }
-    
     // Set the mask of the view.
-    viewToMask.layer.mask = maskLayer;
+    viewToMask.layer.mask = maskLayer
   }
 
   private func configureLayout() {
@@ -100,6 +99,27 @@ class NewDriverLicenseEnrollinitView: UIView {
       $0.bottom.equalTo(bottomView.snp.top)
       $0.centerX.equalTo(self.snp.centerX)
       $0.width.height.equalTo(buttonWidthSize)
+    }
+  }
+  
+  private func configureCardRectangelBorderLayout() {
+    UIGraphicsBeginImageContext(CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
+    
+    if let context = UIGraphicsGetCurrentContext() {
+      print("Paining Strart")
+      // Draw Line
+      // 선 굵기를 2.0으로 설정
+      context.setLineWidth(2.0)
+      // 선 색상을 빨간색으로 설정
+      context.setStrokeColor(UIColor.red.cgColor)
+      
+      context.move(to: CGPoint(x: 50, y: 250))
+      context.addLine(to: CGPoint(x: 50, y: 300))
+      // 추가하 선을 콘텍스트에 그림
+      context.strokePath()
+      
+      backgroundView.image = UIGraphicsGetImageFromCurrentImageContext()
+      UIGraphicsEndImageContext()
     }
   }
   
