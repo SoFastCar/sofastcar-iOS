@@ -32,6 +32,44 @@ class UserStatusAfterReturnVC: UIViewController {
     return label
   }()
   
+  fileprivate let goodButton: UIButton = {
+    let button = UIButton()
+    button.setTitle("좋아요", for: .normal)
+    button.setTitleColor(CommonUI.mainDark.withAlphaComponent(0.5), for: .normal)
+    button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .subheadline).bold()
+    button.layer.borderWidth = 1
+    button.layer.borderColor = CommonUI.mainDark.withAlphaComponent(0.2).cgColor
+    button.addTarget(self, action: #selector(didTapFeedbackButton(_:)), for: .touchUpInside)
+    button.snp.makeConstraints {
+      $0.width.equalTo(120)
+    }
+    
+    return button
+  }()
+  
+  fileprivate let notGoodButton: UIButton = {
+    let button = UIButton()
+    button.setTitle("별로에요", for: .normal)
+    button.setTitleColor(CommonUI.mainDark.withAlphaComponent(0.5), for: .normal)
+    button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .subheadline).bold()
+    button.layer.borderWidth = 1
+    button.layer.borderColor = CommonUI.mainDark.withAlphaComponent(0.2).cgColor
+    button.addTarget(self, action: #selector(didTapFeedbackButton(_:)), for: .touchUpInside)
+    button.snp.makeConstraints {
+      $0.width.equalTo(120)
+    }
+    
+    return button
+  }()
+  
+  fileprivate lazy var buttonStackView: UIStackView = {
+    let stackView = UIStackView(arrangedSubviews: [goodButton, notGoodButton])
+    stackView.axis = .horizontal
+    stackView.spacing = 20
+    
+    return stackView
+  }()
+  
   // MARK: - LifeCycle
   
   override func viewDidLoad() {
@@ -68,13 +106,32 @@ class UserStatusAfterReturnVC: UIViewController {
   
   fileprivate func floatingSurvey() {
     
-    [floatingSurveyTitleLabel].forEach {
+    [floatingSurveyTitleLabel, buttonStackView].forEach {
       floatingSurveyView.addSubview($0)
     }
     
     floatingSurveyTitleLabel.snp.makeConstraints {
       $0.top.equalToSuperview().offset(30)
       $0.centerX.equalToSuperview()
+    }
+    
+    buttonStackView.snp.makeConstraints {
+      $0.top.equalTo(floatingSurveyTitleLabel.snp.bottom).offset(20)
+      $0.centerX.equalToSuperview()
+      $0.height.equalTo(40)
+    }
+  }
+  
+  // MARK: - Action
+  
+  @objc func didTapFeedbackButton(_ sender: UIButton) {
+    switch sender {
+    case goodButton:
+      print("goodButton")
+    case notGoodButton:
+      print("notGoodButton")
+    default:
+      break
     }
   }
 }
