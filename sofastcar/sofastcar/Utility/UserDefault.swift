@@ -51,4 +51,12 @@ extension UserDefaults {
     let check = UserDefaults.standard.bool(forKey: "VehicleCheckVC")
     return check
   }
+  
+  // MARK: - Logout Button
+  static func deleteUserSettingForLogout() {
+    resetUserAuthTocken()
+    setReadyToDrive(isDriveReady: false)
+    setVehicleDoubleCheck(check: false)
+    setVehiclCheck(check: false)
+  }
 }

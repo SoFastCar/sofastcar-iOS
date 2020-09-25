@@ -12,6 +12,7 @@ class UserDetailCell: UITableViewCell {
   // MARK: - Properties
   static let identifier = "UserDetailCell"
   lazy var guide = contentView.layoutMarginsGuide
+  weak var delegate: UserDetailCellDelegate?
 
   let menuLabel: UILabel = {
     let label = UILabel()
@@ -46,6 +47,7 @@ class UserDetailCell: UITableViewCell {
     if cellType == "로그아웃" {
       backgroundColor = .systemGray6
       configureButtonCell()
+      logoutButton.addTarget(self, action: #selector(tapLogoutButton), for: .touchUpInside)
     } else if cellType == "" {
       
     } else if cellType == "앱 버전" {
@@ -54,7 +56,6 @@ class UserDetailCell: UITableViewCell {
     } else {
       configureLayout()
     }
-//    configureButtomLine()
   }
   
   required init?(coder: NSCoder) {
@@ -62,12 +63,11 @@ class UserDetailCell: UITableViewCell {
   }
   
   private func configureButtonCell() {
-    contentView.addSubview(logoutButton)
+    addSubview(logoutButton)
     logoutButton.snp.makeConstraints {
-      $0.top.bottom.equalTo(contentView).offset(-50)
-      $0.leading.equalTo(contentView).offset(20)
-      $0.trailing.equalTo(contentView).offset(-20)
-      $0.height.equalTo(50)
+      $0.top.bottom.equalTo(safeAreaLayoutGuide)
+      $0.leading.equalTo(safeAreaLayoutGuide).offset(20)
+      $0.trailing.equalTo(safeAreaLayoutGuide).offset(-20)
     }
   }
   
@@ -87,11 +87,8 @@ class UserDetailCell: UITableViewCell {
     }
   }
   
-  private func configureButtomLine() {
-    let path = UIBezierPath()
-    path.move(to: CGPoint(x: contentView.frame.maxX, y: contentView.frame.minY))
-    path.addLine(to: CGPoint(x: contentView.frame.maxX, y: contentView.frame.maxY))
-    UIColor.systemRed.set()
-    path.stroke()
+  // MARK: - Button Action
+  @objc private func tapLogoutButton() {
+    delegate?.tapLogoutButton(forCell: self)
   }
 }
