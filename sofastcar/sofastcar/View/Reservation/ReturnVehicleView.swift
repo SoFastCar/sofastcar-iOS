@@ -213,9 +213,9 @@ class ReturnVehicleView: UIView {
     button.contentHorizontalAlignment = .center
     button.backgroundColor = .systemGray4
     button.setTitleColor(.gray, for: .normal)
-    button.isEnabled = false
     button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0)
     button.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
+    button.isEnabled = false
     
     return button
   }()
@@ -415,6 +415,7 @@ class ReturnVehicleView: UIView {
   fileprivate func checkToggleTrue() {
     if returnPlaceCheckTrueButtonView.toggle == true && returnPlaceCheckFalseButtonView.toggle == false && returnParkingPlaceCheckTrueButtonView.toggle == true && returnParkingPlaceCheckFalseButtonView.toggle == false && windowCloseButtonView.toggle == true && illuminationOffButtonView.toggle == true && personalItemButtonView.toggle == true {
       enableTrueReturnButton()
+      returnButton.isEnabled = true
       print("all true")
     } else {
       enableFalseReturnButton()
