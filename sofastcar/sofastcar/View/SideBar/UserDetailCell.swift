@@ -63,14 +63,6 @@ class UserDetailCell: UITableViewCell {
   }
   
   private func configureButtonCell() {
-//    contentView.addSubview(logoutButton)
-//    logoutButton.snp.makeConstraints {
-//      $0.top.bottom.equalTo(contentView)//.offset(-40)
-//      $0.leading.equalTo(contentView).offset(20)
-//      $0.trailing.equalTo(contentView).offset(-20)
-//      $0.height.equalTo(50)
-//    }
-    
     addSubview(logoutButton)
     logoutButton.snp.makeConstraints {
       $0.top.bottom.equalTo(safeAreaLayoutGuide)

@@ -141,10 +141,12 @@ extension UserDetailVC: UITableViewDataSource, UITableViewDelegate {
   }
   
   func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-    if sectionTitleArray[section] == .blank || sectionTitleArray[section] == .logoutButton {
-      return nil
-    }
     let label = UILabel()
+    if sectionTitleArray[section] == .blank || sectionTitleArray[section] == .logoutButton {
+      print("HeaderSection")
+      label.frame = .zero
+      return label
+    }
     label.backgroundColor = .white
     label.text = "     \(sectionTitleArray[section].rawValue)"
     label.font = .boldSystemFont(ofSize: CommonUI.titleTextFontSize)
@@ -155,14 +157,12 @@ extension UserDetailVC: UITableViewDataSource, UITableViewDelegate {
   func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
     print(sectionTitleArray.count)
     if section == 0 { return 0 }
-    if section == sectionTitleArray.count - 1 { return 0 }
     if section == sectionTitleArray.count - 2 { return 0 }
     return 50
   }
   
   func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
     if section == 0 { return 0 }
-    if section == sectionTitleArray.count - 1 { return 0 }
     if section == sectionTitleArray.count - 2 { return 0 }
     return 10
   }
@@ -179,7 +179,16 @@ extension UserDetailVC: UITableViewDataSource, UITableViewDelegate {
 
 extension UserDetailVC: UserDetailCellDelegate {
   func tapLogoutButton(forCell cell: UserDetailCell) {
+    let alertActionContoller = UIAlertController(title: "확인해주세요", message: "정말 로그아웃 하시겠어요?", preferredStyle: .alert)
     
-    
+    let cancelAction = UIAlertAction(title: "취소", style: .cancel) { (_) in }
+    let okAction = UIAlertAction(title: "확인", style: .default) { _ in
+      UserDefaults.deleteUserSettingForLogout()
+      let initVC = InitVC()
+      self.navigationController?.pushViewController(initVC, animated: false)
+    }
+    alertActionContoller.addAction(cancelAction)
+    alertActionContoller.addAction(okAction)
+    present(alertActionContoller, animated: true, completion: nil)
   }
 }
