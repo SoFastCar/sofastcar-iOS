@@ -136,6 +136,7 @@ extension UserDetailVC: UITableViewDataSource, UITableViewDelegate {
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     cellTitleArray = getCellTitleArray(section: indexPath.section)
     let cell = UserDetailCell(style: .default, reuseIdentifier: UserDetailCell.identifier, cellType: cellTitleArray[indexPath.row])
+    cell.delegate = self
     return cell
   }
   
@@ -153,16 +154,16 @@ extension UserDetailVC: UITableViewDataSource, UITableViewDelegate {
   
   func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
     print(sectionTitleArray.count)
-    if section == 0 { print("aa",section ); return 0 }
-    if section == sectionTitleArray.count - 1 { print("bb",section ); return 0 }
-    if section == sectionTitleArray.count - 2 { print("cc", section);  return 0 }
+    if section == 0 { return 0 }
+    if section == sectionTitleArray.count - 1 { return 0 }
+    if section == sectionTitleArray.count - 2 { return 0 }
     return 50
   }
   
   func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
     if section == 0 { return 0 }
-    if section == sectionTitleArray.count - 1 { print("c");  return 0 }
-    if section == sectionTitleArray.count - 2 { print("c23");  return 0 }
+    if section == sectionTitleArray.count - 1 { return 0 }
+    if section == sectionTitleArray.count - 2 { return 0 }
     return 10
   }
   
@@ -173,5 +174,12 @@ extension UserDetailVC: UITableViewDataSource, UITableViewDelegate {
     view.layer.borderColor = UIColor.systemGray5.cgColor
     view.layer.borderWidth = 1
     return view
+  }
+}
+
+extension UserDetailVC: UserDetailCellDelegate {
+  func tapLogoutButton(forCell cell: UserDetailCell) {
+    
+    
   }
 }
