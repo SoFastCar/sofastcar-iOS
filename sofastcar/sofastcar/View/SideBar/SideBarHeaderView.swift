@@ -37,7 +37,7 @@ class SideBarHeaderView: UIView {
     return label
   }()
   
-  let userlevelButton: UIButton = {
+  let socarClubButton: UIButton = {
     let button = UIButton()
     let attributedString = NSMutableAttributedString()
     attributedString.append(NSAttributedString(string: "쏘카클럽 Level 1 >", attributes:
@@ -79,7 +79,7 @@ class SideBarHeaderView: UIView {
   private func configureLayout(_ isMain: Bool) {
     
     if isMain {
-      [userNameLable, userIdLable, userlevelButton, settingButton, notiButton].forEach {
+      [userNameLable, userIdLable, socarClubButton, settingButton, notiButton].forEach {
         addSubview($0)
       }
     } else {
@@ -99,7 +99,7 @@ class SideBarHeaderView: UIView {
     }
     
     if isMain {
-      userlevelButton.snp.makeConstraints {
+      socarClubButton.snp.makeConstraints {
         $0.top.equalTo(userIdLable.snp.bottom).offset(5)
         $0.leading.equalTo(guide)
         $0.bottom.equalTo(guide)

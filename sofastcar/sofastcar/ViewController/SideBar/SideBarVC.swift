@@ -64,7 +64,7 @@ class SideBarVC: UIViewController {
     
     tableHeaderView.settingButton.addTarget(self, action: #selector(tapHaederButton(_:)), for: .touchUpInside)
     tableHeaderView.notiButton.addTarget(self, action: #selector(tapHaederButton(_:)), for: .touchUpInside)
-    tableHeaderView.userlevelButton.addTarget(self, action: #selector(tapHaederButton(_:)), for: .touchUpInside)
+    tableHeaderView.socarClubButton.addTarget(self, action: #selector(tapHaederButton(_:)), for: .touchUpInside)
   }
   
   private func configureTableViewPanGuesture() {
@@ -172,30 +172,23 @@ extension SideBarVC {
   }
   
   @objc func tapHaederButton(_ sender: UIButton) {
+    guard let navi = self.presentingViewController as? UINavigationController else { return }
+    guard let mainVC = navi.viewControllers.last as? MainVC else { return }
+    
     switch sender {
-    case tableHeaderView.userlevelButton:
-      print("tableHeaderView.userlevelButton")
+    case tableHeaderView.socarClubButton:
+      dismissWithAnimated {
+        let socarClubVC = SocarClubVC()
+        let navicontroller = UINavigationController(rootViewController: socarClubVC)
+        navicontroller.modalPresentationStyle = .overFullScreen
+        mainVC.present(navicontroller, animated: true, completion: nil)
+      }
     case tableHeaderView.settingButton:
       print("tableHeaderView.tapHaederButton")
       dismissWithAnimated {
-        guard let navi = self.presentingViewController as? UINavigationController else { return }
-        guard let mainVC = navi.viewControllers.last as? MainVC else { return }
         let userDetailVC = UserDetailVC()
         mainVC.navigationController?.pushViewController(userDetailVC, animated: true)
       }
-//      UIView.animate(withDuration: 0.5, animations: {
-//        self.tableView.center.x -= UIScreen.main.bounds.width
-//        self.view.backgroundColor = UIColor.black.withAlphaComponent(0)
-//      }, completion: { sucess in
-//        if sucess {
-//          let userDetailVC = UserDetailVC()
-//          userDetailVC.modalPresentationStyle = .overFullScreen
-//          self.present(userDetailVC, animated: false, completion: {
-//            print("animate")
-//            userDetailVC.presentWithAnimate()
-//          })
-//        }
-//      })
     case tableHeaderView.notiButton:
       print("tableHeaderView.notiButton")
     default:
