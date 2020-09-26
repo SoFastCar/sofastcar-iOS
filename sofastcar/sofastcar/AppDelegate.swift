@@ -33,7 +33,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       rootView = InitVC()
     }
     
-    let navigationController = UINavigationController(rootViewController: rootView)
+    let navigationController = UINavigationController(rootViewController: SocarClubVC())
     let backButtonImage = UIImage(systemName: "arrow.left")
     navigationController.navigationBar.backIndicatorImage = backButtonImage
     navigationController.navigationBar.backIndicatorTransitionMaskImage = backButtonImage

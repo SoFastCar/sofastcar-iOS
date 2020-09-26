@@ -25,6 +25,7 @@ class SocarClubVC: UIViewController {
   private func configureNavigationController() {
     title = "쏘카클럽"
     navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: CommonUI.SFSymbolKey.close.rawValue), style: .plain, target: self, action: #selector(tapCloseButton))
+    navigationController?.navigationBar.tintColor = .black
   }
   
   // MARK: - Handler
