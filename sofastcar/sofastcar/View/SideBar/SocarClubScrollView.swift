@@ -85,6 +85,11 @@ class SocarClubScrollView: UIScrollView {
     return label
   }()
   
+  let seperateView: DotsLineView = {
+    let view = DotsLineView()
+    return view
+  }()
+  
   // MARK: - Life Cycle
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -92,6 +97,7 @@ class SocarClubScrollView: UIScrollView {
     configureSocarDrivingUI()
     configuerCircleUI()
     configureLabelInCircle()
+    addSeparateView()
   }
   
   required init?(coder: NSCoder) {
@@ -175,22 +181,22 @@ class SocarClubScrollView: UIScrollView {
                             startAngle: .pi * -180 / 360,
                             endAngle: .pi * 270 / 360,
                             clockwise: true)
-//    path.lineWidth = circleGuide.userExCircleLineWidth
-//    path.lineCapStyle = .square
-//    path.lineJoinStyle = .bevel
-//    CommonUI.mainBlue.set()
-//    path.stroke()
+    path.lineWidth = circleGuide.userExCircleLineWidth
+    path.lineCapStyle = .square
+    path.lineJoinStyle = .bevel
+    CommonUI.mainBlue.set()
+    path.stroke()
     
     layer.path = path.cgPath
-    
-    let animation = CABasicAnimation(keyPath: "fillColor")
+    let animation = CABasicAnimation(keyPath: "position")
     animation.fromValue = 0
-    animation.toValue = CommonUI.mainBlue.cgColor
+    animation.toValue = 1
     animation.duration = 5
+    layer.lineWidth = circleGuide.userExCircleLineWidth
     layer.fillColor = nil
     layer.strokeColor = CommonUI.mainBlue.cgColor
-    layer.lineWidth = circleGuide.userExCircleLineWidth
-    layer.add(animation, forKey: "fillColor")
+//    layer.strokeEnd = .pi
+    layer.add(animation, forKey: animation.keyPath)
     
     displayLevelImageView.layer.addSublayer(layer)
     UIGraphicsEndImageContext()
@@ -210,5 +216,17 @@ class SocarClubScrollView: UIScrollView {
       $0.centerX.equalTo(displayLevelImageView.snp.centerX)
       $0.centerY.equalTo(displayLevelImageView.snp.centerY).offset(15)
     }
+  }
+  
+  private func addSeparateView() {
+    contentView.addSubview(seperateView)
+    
+    seperateView.snp.makeConstraints {
+      $0.top.equalTo(userClubLevelInfoLable.snp.bottom).offset(10)
+      $0.leading.trailing.equalTo(guide)
+      $0.height.equalTo(1)
+    }
+    seperateView.draw(seperateView.frame)
+
   }
 }
