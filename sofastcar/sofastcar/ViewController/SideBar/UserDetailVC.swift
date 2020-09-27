@@ -51,18 +51,9 @@ class UserDetailVC: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     view.backgroundColor = .none
-    configureStatusBar()
     configureNavigationContoller()
     configureLayout()
     configureTableView()
-  }
-  
-  func configureStatusBar() {
-    let window = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
-    guard let statusBarFrame = window?.windowScene?.statusBarManager?.statusBarFrame else { return }
-    statusBar.frame = statusBarFrame
-    statusBar.backgroundColor = .white
-    UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.addSubview(statusBar)
   }
   
   private func configureNavigationContoller() {
