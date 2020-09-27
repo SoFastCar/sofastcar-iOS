@@ -16,7 +16,9 @@ class SocarClubScrollView: UIScrollView {
   var userTotalDrivingKm: Int = 800
   var userDrivingKm: Int = 200
   lazy var guide = contentView.layoutMarginsGuide
+  var downLoadButtonArray: [UIButton] = []
   
+  // MARK: - First Section Properties
   struct CircleImageContract {
     let circlePadding: CGFloat = 20
     
@@ -85,25 +87,91 @@ class SocarClubScrollView: UIScrollView {
     return label
   }()
   
-  let seperateView: DotsLineView = {
-    let view = DotsLineView()
-    return view
+  let seperateView = DotsLineView()
+  
+  // MARK: - Second Section UI Properties
+  lazy var secondTitleLabel: UILabel = {
+    let label = UILabel()
+    label.text = "레벨 \(userLevel) 혜택과 함께 쏘카클럽만의\n드라이빌 코스를 만나보세요!"
+    label.numberOfLines = 2
+    label.font = .boldSystemFont(ofSize: 20)
+    label.textColor = .black
+    label.textAlignment = .center
+    return label
+  }()
+  
+  let socarClubRecommnedCourceLabel: UILabel = {
+    let label = UILabel()
+//    label.text = "쏘카클럽 드라이빌 추천 코스 보러가기 >"
+    label.font = .systemFont(ofSize: CommonUI.contentsTextFontSize-2)
+    label.textColor = .systemGray2
+    let attributedString = NSMutableAttributedString.init(string: "쏘카클럽 드라이빙 추천 코스 보러가기 >")
+    attributedString.addAttribute(NSAttributedString.Key.underlineStyle, value: 1, range: NSRange.init(location: 0, length: attributedString.length))
+    label.attributedText = attributedString
+    return label
+  }()
+  
+  // MARK: - Third Section UI Properties
+  let seperateView1 = DotsLineView()
+  
+  lazy var thirdSectionTitleLabel: UILabel = {
+    let label = UILabel()
+    label.text = "레벨 \(userLevel)의 혜택"
+    label.font = .boldSystemFont(ofSize: 20)
+    label.textColor = .gray
+    return label
+  }()
+  
+  let couponTitleLabel: UILabel = {
+    let label = UILabel()
+    label.text = "• 매달 드리는 쿠폰"
+    label.textColor = .black
+    label.font = .boldSystemFont(ofSize: 20)
+    return label
+  }()
+  
+  let couponSubTitleLable: UILabel = {
+    let label = UILabel()
+    label.text = "매달 1일 레벨별 할인 쿠폰을 드립니다."
+    label.font = .systemFont(ofSize: 15)
+    label.textColor = .gray
+    return label
+  }()
+  
+  let couponView = CouponView()
+  
+  let showLavelBenefitsButton: UIButton = {
+    let button = UIButton()
+    button.setTitle("레벨별 혜택보기", for: .normal)
+    button.setTitleColor(CommonUI.mainBlue, for: .normal)
+    button.backgroundColor = .white
+    button.layer.borderWidth = 2
+    button.layer.borderColor = UIColor.systemGray4.cgColor
+    return button
   }()
   
   // MARK: - Life Cycle
   override init(frame: CGRect) {
     super.init(frame: frame)
+    //first Section
     configureScrollView()
     configureSocarDrivingUI()
     configuerCircleUI()
     configureLabelInCircle()
     addSeparateView()
+    
+    //second Section
+    configureSecondSectionUI()
+    
+    //third SEction
+    configureThirdSectionUI()
   }
   
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
   
+  // MARK: - First Section UI Setting
   private func configureScrollView() {
     // 기기별 스크롤뷰 조절
     var heightPadding: CGFloat = 0
@@ -114,7 +182,7 @@ class SocarClubScrollView: UIScrollView {
     }
     backgroundColor = .white
     self.contentSize = .init(width: UIScreen.main.bounds.width,
-                             height: UIScreen.main.bounds.height+heightPadding+44)
+                             height: UIScreen.main.bounds.height+heightPadding+150)
     contentView.frame = CGRect(x: 0, y: 0,
                                width: UIScreen.main.bounds.width,
                                height: UIScreen.main.bounds.height+heightPadding)
@@ -227,6 +295,67 @@ class SocarClubScrollView: UIScrollView {
       $0.height.equalTo(1)
     }
     seperateView.draw(seperateView.frame)
-
+  }
+  
+  // MARK: - Second Section UI Setting
+  private func configureSecondSectionUI() {
+    [secondTitleLabel, socarClubRecommnedCourceLabel, seperateView1].forEach {
+      contentView.addSubview($0)
+    }
+    
+    secondTitleLabel.snp.makeConstraints {
+      $0.top.equalTo(seperateView.snp.bottom).offset(40)
+      $0.centerX.equalTo(guide.snp.centerX)
+    }
+    
+    socarClubRecommnedCourceLabel.snp.makeConstraints {
+      $0.top.equalTo(secondTitleLabel.snp.bottom).offset(20)
+      $0.centerX.equalTo(guide.snp.centerX)
+    }
+    
+    seperateView1.snp.makeConstraints {
+      $0.top.equalTo(socarClubRecommnedCourceLabel.snp.bottom).offset(40)
+      $0.leading.trailing.equalTo(guide)
+      $0.height.equalTo(1)
+    }
+    seperateView1.draw(seperateView1.frame)
+  }
+  
+  // MARK: - Third Section UI Setting
+  private func configureThirdSectionUI() {
+    [thirdSectionTitleLabel, couponTitleLabel, couponSubTitleLable, showLavelBenefitsButton].forEach {
+      contentView.addSubview($0)
+    }
+    
+    thirdSectionTitleLabel.snp.makeConstraints {
+      $0.top.equalTo(seperateView1.snp.bottom).offset(20)
+      $0.leading.equalTo(guide)
+    }
+    
+    couponTitleLabel.snp.makeConstraints {
+      $0.top.equalTo(thirdSectionTitleLabel.snp.bottom).offset(40)
+      $0.centerX.equalTo(guide.snp.centerX)
+    }
+    
+    couponSubTitleLable.snp.makeConstraints {
+      $0.top.equalTo(couponTitleLabel.snp.bottom).offset(10)
+      $0.centerX.equalTo(guide.snp.centerX)
+    }
+    
+    contentView.addSubview(couponView)
+    
+    couponView.snp.makeConstraints {
+      $0.top.equalTo(couponSubTitleLable.snp.bottom).offset(20)
+      $0.leading.trailing.equalTo(guide)
+      $0.height.equalTo(110)
+    }
+    couponView.draw(couponView.frame)
+    downLoadButtonArray.append(couponView.downloadButton)
+    
+    showLavelBenefitsButton.snp.makeConstraints {
+      $0.top.equalTo(couponView.snp.bottom).offset(10)
+      $0.leading.trailing.equalTo(guide)
+      $0.height.equalTo(60)
+    }
   }
 }

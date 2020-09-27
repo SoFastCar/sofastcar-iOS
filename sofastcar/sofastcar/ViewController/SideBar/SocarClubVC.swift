@@ -16,6 +16,7 @@ class SocarClubVC: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     configureNavigationController()
+    configureScrollViewButtonConfigure()
   }
   
   override func loadView() {
@@ -28,8 +29,20 @@ class SocarClubVC: UIViewController {
     navigationController?.navigationBar.tintColor = .black
   }
   
+  private func configureScrollViewButtonConfigure() {
+    myScrollView.downLoadButtonArray.forEach {
+      $0.addTarget(self, action: #selector(tapDownloadCouponButton(_:)), for: .touchUpInside)
+    }
+  }
+  
   // MARK: - Handler
   @objc private func tapCloseButton() {
     dismiss(animated: true, completion: nil)
+  }
+  
+  @objc private func tapDownloadCouponButton(_ sender: UIButton) {
+    print("aaa")
+    guard let couponTitle = sender.currentTitle else { return print("aa") }
+    print(couponTitle)
   }
 }
