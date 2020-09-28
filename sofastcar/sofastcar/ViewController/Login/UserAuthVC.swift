@@ -333,9 +333,9 @@ class UserAuthVC: UIViewController {
       guard let userGender = view.userSexTextField.text else { return }
       guard let userPhoneNumber = Int(view.userPhoneNumberTextField.text ?? "") else { return print("Errir0")}
       
-      self.user?.useranme = userName
+      self.user?.username = userName
       self.user?.userBirthDay = "\(userBirthDay)\(userGender)"
-      self.user?.userPhoneNumber = userPhoneNumber
+      self.user?.userPhoneNumber = "\(userPhoneNumber)"
       
       let defualtUserInfoVC = DefualtUserInfoVC()
       defualtUserInfoVC.user = self.user
