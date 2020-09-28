@@ -7,10 +7,19 @@
 //
 
 import UIKit
+import AVKit
+import AVFoundation
 
 class SocarClubVC: UIViewController {
+  // MARK: - [test]Passed Data
+  var user: SignUpUserData = .init(name: "김광수", birthDay: "900101", phoneNumber: "01000000000", drivingAmount: 100000)
+  var couponArray: [Coupon] = [
+    Coupon(uid: "12", name: "월간 저녁 쿠폰 - 최대 16시간", desctiption: "월간 쿠폰, 매달 다운로드 가능", discountPrice: 9000),
+    Coupon(uid: "13", name: "월간 저녁 쿠폰 - 최대 8시간", desctiption: "월간 쿠폰, 매달 다운로드 가능", discountPrice: 10000)
+  ]
+  
   // MARK: - Properties
-  let myScrollView = SocarClubScrollView()
+  lazy var myScrollView = SocarClubScrollView(frame: .zero, couponArray: couponArray, user: user)
   
   // MARK: - Life Cycle
   override func viewDidLoad() {
@@ -23,6 +32,19 @@ class SocarClubVC: UIViewController {
     view = myScrollView
   }
   
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: myScrollView.drivingMovPlayer.currentItem, queue: nil) { _ in
+      self.myScrollView.drivingMovPlayer.seek(to: CMTime.zero)
+      self.myScrollView.drivingMovPlayer.play()
+    }
+  }
+  
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(animated)
+    NotificationCenter.default.removeObserver(self, name: .AVPlayerItemDidPlayToEndTime, object: nil)
+  }
+  
   private func configureNavigationController() {
     title = "쏘카클럽"
     navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: CommonUI.SFSymbolKey.close.rawValue), style: .plain, target: self, action: #selector(tapCloseButton))
@@ -33,6 +55,7 @@ class SocarClubVC: UIViewController {
     myScrollView.downLoadButtonArray.forEach {
       $0.addTarget(self, action: #selector(tapDownloadCouponButton(_:)), for: .touchUpInside)
     }
+    myScrollView.showLavelBenefitsButton.addTarget(self, action: #selector(tapShowDetailLevelBenefits), for: .touchUpInside)
   }
   
   // MARK: - Handler
@@ -44,5 +67,9 @@ class SocarClubVC: UIViewController {
     print("aaa")
     guard let couponTitle = sender.currentTitle else { return print("aa") }
     print(couponTitle)
+  }
+  
+  @objc private func tapShowDetailLevelBenefits() {
+    print("bbb")
   }
 }

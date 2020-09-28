@@ -9,45 +9,47 @@
 import UIKit
 
 class CouponView: UIView {
-  let textFontSize: CGFloat = 13
-  let buttonWidth: CGFloat = 50
+  var coupon: Coupon?
   
-  var couponIndex = 12
-  var couponName = "월간 저녁 쿠폰 - 최대 16시간"
-  var couponPrice = 9000
-  var couponInfo = "월간 쿠폰, 매달 다운로드 가능"
-  
-  lazy var couponTitleLabel: UILabel = {
+  let couponTitleLabel: UILabel = {
     let label = UILabel()
-    label.text = "[쏘카클럽] \(couponName)"
-    label.font = .boldSystemFont(ofSize: textFontSize)
+    label.text = "로딩중...."
+    label.font = .boldSystemFont(ofSize: 13)
     return label
   }()
   
-  lazy var couponPriceLabel: UILabel = {
+  let couponPriceLabel: UILabel = {
     let label = UILabel()
-    label.text = "\(couponPrice)원"
-    label.font = .boldSystemFont(ofSize: textFontSize)
+    label.text = "로딩중...."
+    label.font = .boldSystemFont(ofSize: 13)
     return label
   }()
   
-  lazy var couponInfoLabel: UILabel = {
+  let couponInfoLabel: UILabel = {
     let label = UILabel()
-    label.text = "\(couponInfo)"
-    label.font = .systemFont(ofSize: textFontSize)
+    label.text = "로딩중...."
+    label.font = .systemFont(ofSize: 13)
     label.textColor = .darkGray
     return label
   }()
   
-  lazy var downloadButton: UIButton = {
+  let downloadButton: UIButton = {
     let button = UIButton()
-    button.setTitle("\(couponIndex)", for: .selected)
     button.setImage(UIImage(systemName: "tray.and.arrow.down.fill"), for: .normal)
     button.imageView?.tintColor = .white
     button.backgroundColor = .systemGray4
-    button.layer.cornerRadius = buttonWidth/2
+    button.layer.cornerRadius = 25
     return button
   }()
+  
+  init(frame: CGRect, coupon: Coupon) {
+    super.init(frame: frame)
+    self.coupon = coupon
+  }
+  
+  required init?(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
   
   override func draw(_ rect: CGRect) {
     self.backgroundColor = .white
@@ -65,6 +67,7 @@ class CouponView: UIView {
     path.stroke()
     
     configureLabelUI()
+    configureLabelContent()
   }
   
   private func configureLabelUI() {
@@ -85,8 +88,19 @@ class CouponView: UIView {
       
       downloadButton.centerYAnchor.constraint(equalTo: self.centerYAnchor),
       downloadButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
-      downloadButton.widthAnchor.constraint(equalToConstant: buttonWidth),
-      downloadButton.heightAnchor.constraint(equalToConstant: buttonWidth)
+      downloadButton.widthAnchor.constraint(equalToConstant: 50),
+      downloadButton.heightAnchor.constraint(equalToConstant: 50)
     ])
+  }
+  
+  private func configureLabelContent() {
+    guard let couponUid = coupon?.uid else { return print("1")}
+    guard let name = coupon?.name else { return print("2")}
+    guard let discountPrice = coupon?.discountPrice else { return print("3")}
+    guard let description = coupon?.description else { return print("4")}
+    couponTitleLabel.text = "[쏘카클럽] \(name)"
+    couponPriceLabel.text = "\(discountPrice)원"
+    couponInfoLabel.text = "\(description)"
+    downloadButton.setTitle(couponUid, for: .selected)
   }
 }

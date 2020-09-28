@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import AVKit
+import AVFoundation
 
 class SocarClubScrollView: UIScrollView {
   // MARK: - Properties
@@ -17,6 +19,8 @@ class SocarClubScrollView: UIScrollView {
   var userDrivingKm: Int = 200
   lazy var guide = contentView.layoutMarginsGuide
   var downLoadButtonArray: [UIButton] = []
+  var couponViewArray: [UIView] = []
+  let movPlayerHeight: CGFloat = 220
   
   // MARK: - First Section Properties
   struct CircleImageContract {
@@ -83,7 +87,7 @@ class SocarClubScrollView: UIScrollView {
     label.numberOfLines = 3
     label.textAlignment = .center
     label.textColor = .darkGray
-    label.font = .boldSystemFont(ofSize: CommonUI.contentsTextFontSize)
+    label.font = .boldSystemFont(ofSize: CommonUI.contentsTextFontSize-1)
     return label
   }()
   
@@ -92,12 +96,21 @@ class SocarClubScrollView: UIScrollView {
   // MARK: - Second Section UI Properties
   lazy var secondTitleLabel: UILabel = {
     let label = UILabel()
-    label.text = "레벨 \(userLevel) 혜택과 함께 쏘카클럽만의\n드라이빌 코스를 만나보세요!"
+    label.text = "레벨 \(userLevel) 혜택과 함께 쏘카클럽만의\n드라이빙 코스를 만나보세요!"
     label.numberOfLines = 2
-    label.font = .boldSystemFont(ofSize: 20)
+    label.font = .boldSystemFont(ofSize: 18)
     label.textColor = .black
     label.textAlignment = .center
     return label
+  }()
+  
+  let movPlayerView = UIView()
+  
+  let drivingMovPlayer: AVPlayer = {
+    let videoPath = Bundle.main.path(forResource: "SocarClub", ofType: ".mov")
+    let player = AVPlayer(url: URL(fileURLWithPath: videoPath!))
+    player.actionAtItemEnd = .none
+    return player
   }()
   
   let socarClubRecommnedCourceLabel: UILabel = {
@@ -138,8 +151,6 @@ class SocarClubScrollView: UIScrollView {
     return label
   }()
   
-  let couponView = CouponView()
-  
   let showLavelBenefitsButton: UIButton = {
     let button = UIButton()
     button.setTitle("레벨별 혜택보기", for: .normal)
@@ -151,10 +162,11 @@ class SocarClubScrollView: UIScrollView {
   }()
   
   // MARK: - Life Cycle
-  override init(frame: CGRect) {
+  init(frame: CGRect, couponArray: [Coupon], user: SignUpUserData) {
     super.init(frame: frame)
+    configureScrollView(couponArray: couponArray)
+    
     //first Section
-    configureScrollView()
     configureSocarDrivingUI()
     configuerCircleUI()
     configureLabelInCircle()
@@ -164,7 +176,7 @@ class SocarClubScrollView: UIScrollView {
     configureSecondSectionUI()
     
     //third SEction
-    configureThirdSectionUI()
+    configureThirdSectionUI(couponArray: couponArray)
   }
   
   required init?(coder: NSCoder) {
@@ -172,7 +184,7 @@ class SocarClubScrollView: UIScrollView {
   }
   
   // MARK: - First Section UI Setting
-  private func configureScrollView() {
+  private func configureScrollView(couponArray: [Coupon]) {
     // 기기별 스크롤뷰 조절
     var heightPadding: CGFloat = 0
     if UIScreen.main.bounds.height < 670 { // se, Se2...
@@ -181,8 +193,9 @@ class SocarClubScrollView: UIScrollView {
       heightPadding = 0
     }
     backgroundColor = .white
+    let verticalPadding = Int(movPlayerHeight) + 110*couponArray.count + 10*(couponArray.count) + 44
     self.contentSize = .init(width: UIScreen.main.bounds.width,
-                             height: UIScreen.main.bounds.height+heightPadding+150)
+                             height: UIScreen.main.bounds.height+heightPadding+CGFloat(verticalPadding))
     contentView.frame = CGRect(x: 0, y: 0,
                                width: UIScreen.main.bounds.width,
                                height: UIScreen.main.bounds.height+heightPadding)
@@ -299,7 +312,7 @@ class SocarClubScrollView: UIScrollView {
   
   // MARK: - Second Section UI Setting
   private func configureSecondSectionUI() {
-    [secondTitleLabel, socarClubRecommnedCourceLabel, seperateView1].forEach {
+    [secondTitleLabel, movPlayerView, socarClubRecommnedCourceLabel, seperateView1].forEach {
       contentView.addSubview($0)
     }
     
@@ -308,8 +321,19 @@ class SocarClubScrollView: UIScrollView {
       $0.centerX.equalTo(guide.snp.centerX)
     }
     
-    socarClubRecommnedCourceLabel.snp.makeConstraints {
+    movPlayerView.snp.makeConstraints {
       $0.top.equalTo(secondTitleLabel.snp.bottom).offset(20)
+      $0.leading.trailing.equalTo(guide)
+      $0.height.equalTo(200)
+    }
+    
+    let playerLayer = AVPlayerLayer(player: drivingMovPlayer)
+    playerLayer.frame = CGRect(x: -20, y: 0, width: UIScreen.main.bounds.width, height: movPlayerHeight)
+    movPlayerView.layer.addSublayer(playerLayer)
+    drivingMovPlayer.play()
+    
+    socarClubRecommnedCourceLabel.snp.makeConstraints {
+      $0.top.equalTo(movPlayerView.snp.bottom).offset(20)
       $0.centerX.equalTo(guide.snp.centerX)
     }
     
@@ -322,7 +346,7 @@ class SocarClubScrollView: UIScrollView {
   }
   
   // MARK: - Third Section UI Setting
-  private func configureThirdSectionUI() {
+  private func configureThirdSectionUI(couponArray: [Coupon]) {
     [thirdSectionTitleLabel, couponTitleLabel, couponSubTitleLable, showLavelBenefitsButton].forEach {
       contentView.addSubview($0)
     }
@@ -342,18 +366,28 @@ class SocarClubScrollView: UIScrollView {
       $0.centerX.equalTo(guide.snp.centerX)
     }
     
-    contentView.addSubview(couponView)
+    for coupon in couponArray {
+      let couponView = CouponView(frame: .zero, coupon: coupon)
+      couponView.draw(couponView.frame)
+      downLoadButtonArray.append(couponView.downloadButton)
+      couponViewArray.append(couponView)
+    }
     
-    couponView.snp.makeConstraints {
+    let stackView = UIStackView(arrangedSubviews: couponViewArray)
+    stackView.axis = .vertical
+    stackView.distribution = .fillEqually
+    stackView.spacing = 10
+    
+    contentView.addSubview(stackView)
+    
+    stackView.snp.makeConstraints {
       $0.top.equalTo(couponSubTitleLable.snp.bottom).offset(20)
       $0.leading.trailing.equalTo(guide)
-      $0.height.equalTo(110)
+      $0.height.equalTo(110*couponArray.count + 10*(couponArray.count-1))
     }
-    couponView.draw(couponView.frame)
-    downLoadButtonArray.append(couponView.downloadButton)
     
     showLavelBenefitsButton.snp.makeConstraints {
-      $0.top.equalTo(couponView.snp.bottom).offset(10)
+      $0.top.equalTo(stackView.snp.bottom).offset(10)
       $0.leading.trailing.equalTo(guide)
       $0.height.equalTo(60)
     }

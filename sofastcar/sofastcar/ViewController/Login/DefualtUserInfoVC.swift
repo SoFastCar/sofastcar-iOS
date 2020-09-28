@@ -114,7 +114,7 @@ class DefualtUserInfoVC: UIViewController {
   @objc private func tabInputCompletButton() {
     guard let userEmail = myView.userIdTextField.text else { return }
     guard let userPassword = myView.userPasswordField.text else { return }
-    guard let userName = user?.useranme else { return }
+    guard let userName = user?.username else { return }
 //    guard let encryptedUserPassword = sha256(userPassword: userPassword) else { return }
     let sendUSerSignUpData: [String: Any] = [
       "name": userName,
