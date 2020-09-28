@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import AVKit
+import AVFoundation
 
 class SocarClubScrollView: UIScrollView {
   // MARK: - Properties
@@ -18,6 +20,7 @@ class SocarClubScrollView: UIScrollView {
   lazy var guide = contentView.layoutMarginsGuide
   var downLoadButtonArray: [UIButton] = []
   var couponViewArray: [UIView] = []
+  let movPlayerHeight: CGFloat = 220
   
   // MARK: - First Section Properties
   struct CircleImageContract {
@@ -84,7 +87,7 @@ class SocarClubScrollView: UIScrollView {
     label.numberOfLines = 3
     label.textAlignment = .center
     label.textColor = .darkGray
-    label.font = .boldSystemFont(ofSize: CommonUI.contentsTextFontSize)
+    label.font = .boldSystemFont(ofSize: CommonUI.contentsTextFontSize-1)
     return label
   }()
   
@@ -93,12 +96,20 @@ class SocarClubScrollView: UIScrollView {
   // MARK: - Second Section UI Properties
   lazy var secondTitleLabel: UILabel = {
     let label = UILabel()
-    label.text = "레벨 \(userLevel) 혜택과 함께 쏘카클럽만의\n드라이빌 코스를 만나보세요!"
+    label.text = "레벨 \(userLevel) 혜택과 함께 쏘카클럽만의\n드라이빙 코스를 만나보세요!"
     label.numberOfLines = 2
-    label.font = .boldSystemFont(ofSize: 20)
+    label.font = .boldSystemFont(ofSize: 18)
     label.textColor = .black
     label.textAlignment = .center
     return label
+  }()
+  
+  let movPlayerView = UIView()
+  
+  let drivingMovPlayer: AVPlayer = {
+    let videoPath = Bundle.main.path(forResource: "SocarClub", ofType: ".mov")
+    let player = AVPlayer(url: URL(fileURLWithPath: videoPath!))
+    return player
   }()
   
   let socarClubRecommnedCourceLabel: UILabel = {
@@ -181,7 +192,7 @@ class SocarClubScrollView: UIScrollView {
       heightPadding = 0
     }
     backgroundColor = .white
-    let verticalPadding = 110*couponArray.count + 10*(couponArray.count)
+    let verticalPadding = Int(movPlayerHeight) + 110*couponArray.count + 10*(couponArray.count) + 44
     self.contentSize = .init(width: UIScreen.main.bounds.width,
                              height: UIScreen.main.bounds.height+heightPadding+CGFloat(verticalPadding))
     contentView.frame = CGRect(x: 0, y: 0,
@@ -300,7 +311,7 @@ class SocarClubScrollView: UIScrollView {
   
   // MARK: - Second Section UI Setting
   private func configureSecondSectionUI() {
-    [secondTitleLabel, socarClubRecommnedCourceLabel, seperateView1].forEach {
+    [secondTitleLabel, movPlayerView, socarClubRecommnedCourceLabel, seperateView1].forEach {
       contentView.addSubview($0)
     }
     
@@ -309,8 +320,19 @@ class SocarClubScrollView: UIScrollView {
       $0.centerX.equalTo(guide.snp.centerX)
     }
     
-    socarClubRecommnedCourceLabel.snp.makeConstraints {
+    movPlayerView.snp.makeConstraints {
       $0.top.equalTo(secondTitleLabel.snp.bottom).offset(20)
+      $0.leading.trailing.equalTo(guide)
+      $0.height.equalTo(200)
+    }
+    
+    let playerLayer = AVPlayerLayer(player: drivingMovPlayer)
+    playerLayer.frame = CGRect(x: -20, y: 0, width: UIScreen.main.bounds.width, height: movPlayerHeight)
+    movPlayerView.layer.addSublayer(playerLayer)
+    drivingMovPlayer.play()
+    
+    socarClubRecommnedCourceLabel.snp.makeConstraints {
+      $0.top.equalTo(movPlayerView.snp.bottom).offset(20)
       $0.centerX.equalTo(guide.snp.centerX)
     }
     

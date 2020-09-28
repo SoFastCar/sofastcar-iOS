@@ -101,6 +101,7 @@
 		C7B29A712520799F00AB081B /* DotsLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B29A702520799F00AB081B /* DotsLineView.swift */; };
 		C7B29A7A2520C79E00AB081B /* CouponView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B29A792520C79E00AB081B /* CouponView.swift */; };
 		C7B29A8E252181AB00AB081B /* Coupon.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B29A8D252181AB00AB081B /* Coupon.swift */; };
+		C7B29A992521F91F00AB081B /* SocarClub.mov in Resources */ = {isa = PBXBuildFile; fileRef = C7B29A982521F91E00AB081B /* SocarClub.mov */; };
 		C7BD348C24F54A5700089F0D /* InitVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BD348B24F54A5700089F0D /* InitVC.swift */; };
 		C7CA53EC2509AA3F008DA68C /* ReservationDetailTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CA53EB2509AA3F008DA68C /* ReservationDetailTableVC.swift */; };
 		C7CA53EE2509AF2F008DA68C /* ReservationDetailHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CA53ED2509AF2F008DA68C /* ReservationDetailHeader.swift */; };
@@ -245,6 +246,7 @@
 		C7B29A702520799F00AB081B /* DotsLineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DotsLineView.swift; sourceTree = "<group>"; };
 		C7B29A792520C79E00AB081B /* CouponView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouponView.swift; sourceTree = "<group>"; };
 		C7B29A8D252181AB00AB081B /* Coupon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coupon.swift; sourceTree = "<group>"; };
+		C7B29A982521F91E00AB081B /* SocarClub.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = SocarClub.mov; sourceTree = "<group>"; };
 		C7BD348B24F54A5700089F0D /* InitVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitVC.swift; sourceTree = "<group>"; tabWidth = 3; };
 		C7CA53EB2509AA3F008DA68C /* ReservationDetailTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationDetailTableVC.swift; sourceTree = "<group>"; };
 		C7CA53ED2509AF2F008DA68C /* ReservationDetailHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationDetailHeader.swift; sourceTree = "<group>"; };
@@ -410,7 +412,7 @@
 			children = (
 				C79A0B59250465460061F078 /* Login */,
 				C7F2E638250647C40004EBF9 /* Main */,
-				C7B29A8D252181AB00AB081B /* Coupon.swift */,
+				C7B29A912521BC0D00AB081B /* SideBar */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -538,6 +540,14 @@
 			path = SideBar;
 			sourceTree = "<group>";
 		};
+		C7B29A912521BC0D00AB081B /* SideBar */ = {
+			isa = PBXGroup;
+			children = (
+				C7B29A8D252181AB00AB081B /* Coupon.swift */,
+			);
+			path = SideBar;
+			sourceTree = "<group>";
+		};
 		C7BD348724F53BDE00089F0D /* Login */ = {
 			isa = PBXGroup;
 			children = (
@@ -585,6 +595,7 @@
 		C7EA08E924EFF29C001A7ED4 = {
 			isa = PBXGroup;
 			children = (
+				C7B29A982521F91E00AB081B /* SocarClub.mov */,
 				C7EA091924F001B8001A7ED4 /* .swiftlint.yml */,
 				C7EA08F424EFF29C001A7ED4 /* sofastcar */,
 				C769C81724FCCEA900DC8226 /* sofastcarUITests */,
@@ -770,6 +781,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C7B29A992521F91F00AB081B /* SocarClub.mov in Resources */,
 				C7EA091A24F001B8001A7ED4 /* .swiftlint.yml in Resources */,
 				C7EA090224EFF29D001A7ED4 /* LaunchScreen.storyboard in Resources */,
 				C7EA08FF24EFF29D001A7ED4 /* Assets.xcassets in Resources */,
@@ -1154,7 +1166,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = W5DN7MBP3R;
+				DEVELOPMENT_TEAM = 52ZXCPY3WQ;
 				INFOPLIST_FILE = sofastcar/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1174,7 +1186,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = W5DN7MBP3R;
+				DEVELOPMENT_TEAM = 52ZXCPY3WQ;
 				INFOPLIST_FILE = sofastcar/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (

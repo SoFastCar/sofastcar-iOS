@@ -40,6 +40,7 @@ class SocarClubVC: UIViewController {
     myScrollView.downLoadButtonArray.forEach {
       $0.addTarget(self, action: #selector(tapDownloadCouponButton(_:)), for: .touchUpInside)
     }
+    myScrollView.showLavelBenefitsButton.addTarget(self, action: #selector(tapShowDetailLevelBenefits), for: .touchUpInside)
   }
   
   // MARK: - Handler
@@ -51,5 +52,9 @@ class SocarClubVC: UIViewController {
     print("aaa")
     guard let couponTitle = sender.currentTitle else { return print("aa") }
     print(couponTitle)
+  }
+  
+  @objc private func tapShowDetailLevelBenefits() {
+    print("bbb")
   }
 }
