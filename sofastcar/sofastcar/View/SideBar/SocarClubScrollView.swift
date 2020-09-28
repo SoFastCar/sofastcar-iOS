@@ -109,6 +109,7 @@ class SocarClubScrollView: UIScrollView {
   let drivingMovPlayer: AVPlayer = {
     let videoPath = Bundle.main.path(forResource: "SocarClub", ofType: ".mov")
     let player = AVPlayer(url: URL(fileURLWithPath: videoPath!))
+    player.actionAtItemEnd = .none
     return player
   }()
   

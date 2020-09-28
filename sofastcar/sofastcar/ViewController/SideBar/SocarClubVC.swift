@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import AVKit
+import AVFoundation
 
 class SocarClubVC: UIViewController {
   // MARK: - [test]Passed Data
@@ -28,6 +30,19 @@ class SocarClubVC: UIViewController {
   
   override func loadView() {
     view = myScrollView
+  }
+  
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: myScrollView.drivingMovPlayer.currentItem, queue: nil) { _ in
+      self.myScrollView.drivingMovPlayer.seek(to: CMTime.zero)
+      self.myScrollView.drivingMovPlayer.play()
+    }
+  }
+  
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(animated)
+    NotificationCenter.default.removeObserver(self, name: .AVPlayerItemDidPlayToEndTime, object: nil)
   }
   
   private func configureNavigationController() {
