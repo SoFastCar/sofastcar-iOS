@@ -100,6 +100,7 @@
 		C7B29A6B251DBBA100AB081B /* SocarClubScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B29A6A251DBBA100AB081B /* SocarClubScrollView.swift */; };
 		C7B29A712520799F00AB081B /* DotsLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B29A702520799F00AB081B /* DotsLineView.swift */; };
 		C7B29A7A2520C79E00AB081B /* CouponView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B29A792520C79E00AB081B /* CouponView.swift */; };
+		C7B29A8E252181AB00AB081B /* Coupon.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B29A8D252181AB00AB081B /* Coupon.swift */; };
 		C7BD348C24F54A5700089F0D /* InitVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BD348B24F54A5700089F0D /* InitVC.swift */; };
 		C7CA53EC2509AA3F008DA68C /* ReservationDetailTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CA53EB2509AA3F008DA68C /* ReservationDetailTableVC.swift */; };
 		C7CA53EE2509AF2F008DA68C /* ReservationDetailHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CA53ED2509AF2F008DA68C /* ReservationDetailHeader.swift */; };
@@ -243,6 +244,7 @@
 		C7B29A6A251DBBA100AB081B /* SocarClubScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocarClubScrollView.swift; sourceTree = "<group>"; };
 		C7B29A702520799F00AB081B /* DotsLineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DotsLineView.swift; sourceTree = "<group>"; };
 		C7B29A792520C79E00AB081B /* CouponView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouponView.swift; sourceTree = "<group>"; };
+		C7B29A8D252181AB00AB081B /* Coupon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coupon.swift; sourceTree = "<group>"; };
 		C7BD348B24F54A5700089F0D /* InitVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitVC.swift; sourceTree = "<group>"; tabWidth = 3; };
 		C7CA53EB2509AA3F008DA68C /* ReservationDetailTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationDetailTableVC.swift; sourceTree = "<group>"; };
 		C7CA53ED2509AF2F008DA68C /* ReservationDetailHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationDetailHeader.swift; sourceTree = "<group>"; };
@@ -408,6 +410,7 @@
 			children = (
 				C79A0B59250465460061F078 /* Login */,
 				C7F2E638250647C40004EBF9 /* Main */,
+				C7B29A8D252181AB00AB081B /* Coupon.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -951,6 +954,7 @@
 				7E77D99C251B07D1002C6BF1 /* CheckButtonView.swift in Sources */,
 				BC4F3A15250E01EB00B7E1E7 /* SocarZoneData.swift in Sources */,
 				C728C85024F7E35100063005 /* SignUpUserData.swift in Sources */,
+				C7B29A8E252181AB00AB081B /* Coupon.swift in Sources */,
 				7E77D994251A402B002C6BF1 /* ReturnVehicleVC.swift in Sources */,
 				BC4F3A1C250E01FE00B7E1E7 /* AxaButton.swift in Sources */,
 				C7D66D1224FA925000679B99 /* DefualtUserInfoVC.swift in Sources */,
