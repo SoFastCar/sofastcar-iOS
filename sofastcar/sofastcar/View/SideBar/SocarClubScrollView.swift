@@ -17,6 +17,7 @@ class SocarClubScrollView: UIScrollView {
   var userDrivingKm: Int = 200
   lazy var guide = contentView.layoutMarginsGuide
   var downLoadButtonArray: [UIButton] = []
+  var couponViewArray: [UIView] = []
   
   // MARK: - First Section Properties
   struct CircleImageContract {
@@ -138,8 +139,6 @@ class SocarClubScrollView: UIScrollView {
     return label
   }()
   
-  let couponView = CouponView()
-  
   let showLavelBenefitsButton: UIButton = {
     let button = UIButton()
     button.setTitle("레벨별 혜택보기", for: .normal)
@@ -151,10 +150,11 @@ class SocarClubScrollView: UIScrollView {
   }()
   
   // MARK: - Life Cycle
-  override init(frame: CGRect) {
+  init(frame: CGRect, couponArray: [Coupon], user: SignUpUserData) {
     super.init(frame: frame)
+    configureScrollView(couponArray: couponArray)
+    
     //first Section
-    configureScrollView()
     configureSocarDrivingUI()
     configuerCircleUI()
     configureLabelInCircle()
@@ -164,7 +164,7 @@ class SocarClubScrollView: UIScrollView {
     configureSecondSectionUI()
     
     //third SEction
-    configureThirdSectionUI()
+    configureThirdSectionUI(couponArray: couponArray)
   }
   
   required init?(coder: NSCoder) {
@@ -172,7 +172,7 @@ class SocarClubScrollView: UIScrollView {
   }
   
   // MARK: - First Section UI Setting
-  private func configureScrollView() {
+  private func configureScrollView(couponArray: [Coupon]) {
     // 기기별 스크롤뷰 조절
     var heightPadding: CGFloat = 0
     if UIScreen.main.bounds.height < 670 { // se, Se2...
@@ -181,8 +181,9 @@ class SocarClubScrollView: UIScrollView {
       heightPadding = 0
     }
     backgroundColor = .white
+    let verticalPadding = 110*couponArray.count + 10*(couponArray.count)
     self.contentSize = .init(width: UIScreen.main.bounds.width,
-                             height: UIScreen.main.bounds.height+heightPadding+150)
+                             height: UIScreen.main.bounds.height+heightPadding+CGFloat(verticalPadding))
     contentView.frame = CGRect(x: 0, y: 0,
                                width: UIScreen.main.bounds.width,
                                height: UIScreen.main.bounds.height+heightPadding)
@@ -322,7 +323,7 @@ class SocarClubScrollView: UIScrollView {
   }
   
   // MARK: - Third Section UI Setting
-  private func configureThirdSectionUI() {
+  private func configureThirdSectionUI(couponArray: [Coupon]) {
     [thirdSectionTitleLabel, couponTitleLabel, couponSubTitleLable, showLavelBenefitsButton].forEach {
       contentView.addSubview($0)
     }
@@ -342,18 +343,28 @@ class SocarClubScrollView: UIScrollView {
       $0.centerX.equalTo(guide.snp.centerX)
     }
     
-    contentView.addSubview(couponView)
+    for coupon in couponArray {
+      let couponView = CouponView(frame: .zero, coupon: coupon)
+      couponView.draw(couponView.frame)
+      downLoadButtonArray.append(couponView.downloadButton)
+      couponViewArray.append(couponView)
+    }
     
-    couponView.snp.makeConstraints {
+    let stackView = UIStackView(arrangedSubviews: couponViewArray)
+    stackView.axis = .vertical
+    stackView.distribution = .fillEqually
+    stackView.spacing = 10
+    
+    contentView.addSubview(stackView)
+    
+    stackView.snp.makeConstraints {
       $0.top.equalTo(couponSubTitleLable.snp.bottom).offset(20)
       $0.leading.trailing.equalTo(guide)
-      $0.height.equalTo(110)
+      $0.height.equalTo(110*couponArray.count + 10*(couponArray.count-1))
     }
-    couponView.draw(couponView.frame)
-    downLoadButtonArray.append(couponView.downloadButton)
     
     showLavelBenefitsButton.snp.makeConstraints {
-      $0.top.equalTo(couponView.snp.bottom).offset(10)
+      $0.top.equalTo(stackView.snp.bottom).offset(10)
       $0.leading.trailing.equalTo(guide)
       $0.height.equalTo(60)
     }
