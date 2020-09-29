@@ -39,6 +39,8 @@ class CouponView: UIView {
     button.imageView?.tintColor = .white
     button.backgroundColor = .systemGray4
     button.layer.cornerRadius = 25
+    button.isUserInteractionEnabled = true
+    button.isEnabled = true
     return button
   }()
   

@@ -64,12 +64,10 @@ class SocarClubVC: UIViewController {
   }
   
   @objc private func tapDownloadCouponButton(_ sender: UIButton) {
-    print("aaa")
-    guard let couponTitle = sender.currentTitle else { return print("aa") }
-    print(couponTitle)
+    print("tapDownloadCouponButton")
   }
   
   @objc private func tapShowDetailLevelBenefits() {
-    print("bbb")
+    print("tapShowDetailLevelBenefits")
   }
 }

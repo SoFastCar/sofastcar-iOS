@@ -12,6 +12,7 @@ import AVFoundation
 
 class SocarClubScrollView: UIScrollView {
   // MARK: - Properties
+  var socarClubVC: SocarClubVC?
   var username = "김광수"
   var userLevel = 4
   var socarClubLable: Int = 0
@@ -198,7 +199,7 @@ class SocarClubScrollView: UIScrollView {
                              height: UIScreen.main.bounds.height+heightPadding+CGFloat(verticalPadding))
     contentView.frame = CGRect(x: 0, y: 0,
                                width: UIScreen.main.bounds.width,
-                               height: UIScreen.main.bounds.height+heightPadding)
+                               height: UIScreen.main.bounds.height+heightPadding+CGFloat(verticalPadding))
     contentView.layoutMargins = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
     self.addSubview(contentView)
   }
@@ -254,33 +255,30 @@ class SocarClubScrollView: UIScrollView {
     context.strokePath()
     
     displayLevelImageView.image = UIGraphicsGetImageFromCurrentImageContext()
+        
+    let animation = CABasicAnimation(keyPath: "strokeEnd")
+    animation.fromValue = 0
+    animation.toValue = 1
+    animation.duration = 1
+    animation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.linear)
     
-    let layer = CAShapeLayer()
     let path = UIBezierPath(arcCenter: CGPoint(x: circleGuide.outLineCircleCenterX+85,
                                                y: circleGuide.outlineCircleCenterY+85),
                             radius: circleGuide.outLineCircleWidth/2,
                             startAngle: .pi * -180 / 360,
                             endAngle: .pi * 270 / 360,
                             clockwise: true)
-    path.lineWidth = circleGuide.userExCircleLineWidth
-    path.lineCapStyle = .square
-    path.lineJoinStyle = .bevel
-    CommonUI.mainBlue.set()
-    path.stroke()
     
+    let layer = CAShapeLayer()
     layer.path = path.cgPath
-    let animation = CABasicAnimation(keyPath: "position")
-    animation.fromValue = 0
-    animation.toValue = 1
-    animation.duration = 5
     layer.lineWidth = circleGuide.userExCircleLineWidth
     layer.fillColor = nil
     layer.strokeColor = CommonUI.mainBlue.cgColor
-//    layer.strokeEnd = .pi
+    layer.lineWidth = circleGuide.userExCircleLineWidth
+    layer.strokeEnd = 1
     layer.add(animation, forKey: animation.keyPath)
     
     displayLevelImageView.layer.addSublayer(layer)
-    UIGraphicsEndImageContext()
   }
   
   private func configureLabelInCircle() {
@@ -367,6 +365,7 @@ class SocarClubScrollView: UIScrollView {
     }
     
     for coupon in couponArray {
+      print("Start")
       let couponView = CouponView(frame: .zero, coupon: coupon)
       couponView.draw(couponView.frame)
       downLoadButtonArray.append(couponView.downloadButton)
