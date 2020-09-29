@@ -166,9 +166,16 @@ extension SideBarVC: UITableViewDelegate, UITableViewDataSource {
         navicontroller.modalPresentationStyle = .overFullScreen
         mainVC.present(navicontroller, animated: true, completion: nil)
       }
+    case .inviteFriendCell:
+      dismissWithAnimated {
+        let friendsInciteVC = FriendsInciteVC()
+        let navicontroller = UINavigationController(rootViewController: friendsInciteVC)
+        navicontroller.modalPresentationStyle = .overFullScreen
+        mainVC.present(navicontroller, animated: true, completion: nil)
+      }
     case .couponCell, .customerCenterCell, .eventBannerCell:
       break
-    case .mainBoardCell, .socarPassCell, .socarPlusCell, .inviteFriendCell:
+    case .mainBoardCell, .socarPassCell, .socarPlusCell:
       break
     }
   }
