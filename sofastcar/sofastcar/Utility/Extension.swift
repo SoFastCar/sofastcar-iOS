@@ -199,7 +199,7 @@ extension UITableViewCell {
     view.snp.makeConstraints {
       $0.bottom.equalTo(self)
       $0.leading.trailing.equalTo(guide)
-      $0.height.equalTo(0.7)
+      $0.height.equalTo(0.5)
     }
   }
 }

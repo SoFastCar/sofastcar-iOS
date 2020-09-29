@@ -44,7 +44,7 @@ class EventAndBenefitsCell: UITableViewCell {
   // MARK: - Life Cycle
   init(style: UITableViewCell.CellStyle, reuseIdentifier: String?, cellType: EventAndBenefitsCellType) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
-    contentView.layoutMargins = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+    contentView.layoutMargins = UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 10)
     configuerLayout(cellType: cellType)
   }
   
@@ -63,6 +63,8 @@ class EventAndBenefitsCell: UITableViewCell {
     case .expendButton:
       configureExpendButton()
       configureContentViewTopBottomLayer()
+    case .blank:
+      self.backgroundColor = .systemGray6
     }
   }
   

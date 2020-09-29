@@ -12,12 +12,19 @@ enum EventAndBenefitsCellType: String {
   case title = "이벤트"
   case nomal
   case expendButton = "진행중 이벤트 더보기"
+  case blank
   
-  static func allcase(isExpent: Bool) -> [EventAndBenefitsCellType] {
+  static func allcase(isExpent: Bool, cellCount: Int?) -> [EventAndBenefitsCellType] {
     if !isExpent {
-      return [title, nomal, nomal, nomal, expendButton]
+      return [title, nomal, nomal, nomal, expendButton, blank]
     } else {
-      return [title]
+      guard let count = cellCount else { return [] }
+      var array = [title]
+      for _ in 0..<count {
+        array.append(nomal)
+      }
+      array.append(blank)
+      return array
     }
   }
 }
@@ -26,11 +33,13 @@ class EventAndBenefitsVC: UITableViewController {
   // MARK: - Properties
   var isExpend = false
   var eventAndBenefitsArray: [EventBenifits]?
-  lazy var cellTypeArray = EventAndBenefitsCellType.allcase(isExpent: isExpend)
+  var cellTypeArray: [EventAndBenefitsCellType] = []
+  let myFooterView = EventAndBenefitFooterView()
   
   // MARK: - Life cycle
   override func viewDidLoad() {
     super.viewDidLoad()
+    cellTypeArray = EventAndBenefitsCellType.allcase(isExpent: isExpend, cellCount: eventAndBenefitsArray?.count)
     configureNavigationController()
     configureTableView()
   }
@@ -47,7 +56,10 @@ class EventAndBenefitsVC: UITableViewController {
   private func configureTableView() {
     tableView.backgroundColor = .white
     tableView.separatorStyle = .none
-    tableView.register(EventAndBenefitsCell.self, forCellReuseIdentifier: EventAndBenefitsCell.identifier)
+    tableView.sectionFooterHeight = 10
+    tableView.tableFooterView = myFooterView
+    tableView.tableFooterView?.frame.size.height = 300
+    myFooterView.checkBenefitsButton.addTarget(self, action: #selector(tapCheckBenefitButton), for: .touchUpInside)
   }
   
   // MARK: - Handler
@@ -56,30 +68,45 @@ class EventAndBenefitsVC: UITableViewController {
   }
   
   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return isExpend == false ? 5 : eventAndBenefitsArray?.count ?? 0
+    return isExpend == false ? 6 : cellTypeArray.count
   }
   
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    if !isExpend {
-      let cell = EventAndBenefitsCell(style: .default, reuseIdentifier: EventAndBenefitsCell.identifier, cellType: cellTypeArray[indexPath.row])
-      if let eventAndBenefit = eventAndBenefitsArray?[indexPath.row] {
+    let cell = EventAndBenefitsCell(style: .default, reuseIdentifier: EventAndBenefitsCell.identifier, cellType: cellTypeArray[indexPath.row])
+    if indexPath.row > 0 && eventAndBenefitsArray?.count ?? 0 > indexPath.row-1 {
+      if let eventAndBenefit = eventAndBenefitsArray?[indexPath.row-1] {
         cell.configureCellContent(eventAndBenefit: eventAndBenefit)
       }
-      return cell
-    } else {
-      let cell = EventAndBenefitsCell(style: .default, reuseIdentifier: EventAndBenefitsCell.identifier, cellType: cellTypeArray[indexPath.row])
-      if let eventAndBenefit = eventAndBenefitsArray?[indexPath.row] {
-        cell.configureCellContent(eventAndBenefit: eventAndBenefit)
-      }
-      return cell
     }
+    cell.selectedBackgroundView = UIView()
+    return cell
   }
   
   override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    let blankCellIndex = cellTypeArray.count - 1
     if !isExpend {
-      return indexPath.row == 0 || indexPath.row == 4 ? 50 : 100
+      return indexPath.row == 0 || indexPath.row == 4 ? 50 : (indexPath.row == blankCellIndex ? 10 : 100)
     } else {
-      return 100
+      return indexPath.row == 0 ? 50 : (indexPath.row == blankCellIndex ? 10 : 100)
     }
+  }
+  
+  override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    if !isExpend {
+      if indexPath.row == 4 {
+        isExpend = true
+        cellTypeArray = EventAndBenefitsCellType.allcase(isExpent: isExpend, cellCount: eventAndBenefitsArray?.count)
+        tableView.reloadData()
+      } else {
+        print(indexPath.row)
+      }
+    } else {
+      print(indexPath.row)
+    }
+  }
+  
+  // MARK: - Handler
+  @objc private func tapCheckBenefitButton() {
+    print("tapCheckBenefitButton")
   }
 }
