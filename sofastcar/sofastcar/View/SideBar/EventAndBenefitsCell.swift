@@ -12,7 +12,8 @@ class EventAndBenefitsCell: UITableViewCell {
   // MARK: - Properties
   static let identifier = "EventAndBenefitsCell"
   lazy var guide = contentView.layoutMarginsGuide
-  
+  let imageString = ["Event1", "Event2", "Event3"]
+
   let myImageView: UIImageView = {
     let imageView = UIImageView()
     imageView.backgroundColor = .white
@@ -41,10 +42,10 @@ class EventAndBenefitsCell: UITableViewCell {
   }()
   
   // MARK: - Life Cycle
-  override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+  init(style: UITableViewCell.CellStyle, reuseIdentifier: String?, cellType: EventAndBenefitsCellType) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
     contentView.layoutMargins = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-    configuerLayout()
+    configuerLayout(cellType: cellType)
   }
   
   required init?(coder: NSCoder) {
@@ -52,14 +53,43 @@ class EventAndBenefitsCell: UITableViewCell {
   }
   
   // MARK: - Configure Layout
-  private func configuerLayout() {
+  private func configuerLayout(cellType: EventAndBenefitsCellType) {
+    switch cellType {
+    case .title:
+      configureTitleLabel()
+    case .nomal:
+      configureNomalCellType()
+      configureContentViewBottomLayer(guide: guide)
+    case .expendButton:
+      configureExpendButton()
+      configureContentViewTopBottomLayer()
+    }
+  }
+  
+  private func configureTitleLabel() {
+    let sectionitleLabel = UILabel()
+    sectionitleLabel.text = "이벤트"
+    sectionitleLabel.font = .boldSystemFont(ofSize: 25)
+
+    contentView.addSubview(sectionitleLabel)
+    sectionitleLabel.snp.makeConstraints {
+      $0.centerY.equalTo(contentView.snp.centerY)
+      $0.leading.equalTo(guide)
+    }
+  }
+  
+  private func configureNomalCellType() {
     [myImageView, titleLabel, durationLabel, infoLabel].forEach {
-      addSubview($0)
+      contentView.addSubview($0)
     }
     
     myImageView.snp.makeConstraints {
-      $0.top.leading.trailing.equalTo(guide)
+      $0.centerY.equalTo(guide.snp.centerY)
+      $0.leading.equalTo(guide)
       $0.width.height.equalTo(80)
+    }
+    if let imageName = imageString.randomElement() {
+      myImageView.image = UIImage(named: imageName)
     }
     
     durationLabel.snp.makeConstraints {
@@ -75,6 +105,18 @@ class EventAndBenefitsCell: UITableViewCell {
     infoLabel.snp.makeConstraints {
       $0.top.equalTo(durationLabel.snp.bottom).offset(3)
       $0.leading.equalTo(durationLabel.snp.leading)
+    }
+  }
+  
+  private func configureExpendButton() {
+    let label = UILabel()
+    label.text = "진행중 이벤트 더보기"
+    label.font = .systemFont(ofSize: CommonUI.titleTextFontSize)
+    label.textColor = .gray
+    
+    contentView.addSubview(label)
+    label.snp.makeConstraints {
+      $0.centerX.centerY.equalToSuperview()
     }
   }
   

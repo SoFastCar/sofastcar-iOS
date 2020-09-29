@@ -8,10 +8,25 @@
 
 import UIKit
 
+enum EventAndBenefitsCellType: String {
+  case title = "이벤트"
+  case nomal
+  case expendButton = "진행중 이벤트 더보기"
+  
+  static func allcase(isExpent: Bool) -> [EventAndBenefitsCellType] {
+    if !isExpent {
+      return [title, nomal, nomal, nomal, expendButton]
+    } else {
+      return [title]
+    }
+  }
+}
+
 class EventAndBenefitsVC: UITableViewController {
   // MARK: - Properties
-  var isExtend = false
+  var isExpend = false
   var eventAndBenefitsArray: [EventBenifits]?
+  lazy var cellTypeArray = EventAndBenefitsCellType.allcase(isExpent: isExpend)
   
   // MARK: - Life cycle
   override func viewDidLoad() {
@@ -31,6 +46,7 @@ class EventAndBenefitsVC: UITableViewController {
   
   private func configureTableView() {
     tableView.backgroundColor = .white
+    tableView.separatorStyle = .none
     tableView.register(EventAndBenefitsCell.self, forCellReuseIdentifier: EventAndBenefitsCell.identifier)
   }
   
@@ -39,34 +55,31 @@ class EventAndBenefitsVC: UITableViewController {
     dismiss(animated: true, completion: nil)
   }
   
-  override func numberOfSections(in tableView: UITableView) -> Int {
-    return 1
-  }
-  
   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return 5 // isExtend == false ? 4 : eventAndBenefitsArray?.count ?? 0
+    return isExpend == false ? 5 : eventAndBenefitsArray?.count ?? 0
   }
   
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell = EventAndBenefitsCell(style: .default, reuseIdentifier: EventAndBenefitsCell.identifier)
-    if let eventAndBenefit = eventAndBenefitsArray?[indexPath.row] {
-      cell.configureCellContent(eventAndBenefit: eventAndBenefit)
+    if !isExpend {
+      let cell = EventAndBenefitsCell(style: .default, reuseIdentifier: EventAndBenefitsCell.identifier, cellType: cellTypeArray[indexPath.row])
+      if let eventAndBenefit = eventAndBenefitsArray?[indexPath.row] {
+        cell.configureCellContent(eventAndBenefit: eventAndBenefit)
+      }
+      return cell
+    } else {
+      let cell = EventAndBenefitsCell(style: .default, reuseIdentifier: EventAndBenefitsCell.identifier, cellType: cellTypeArray[indexPath.row])
+      if let eventAndBenefit = eventAndBenefitsArray?[indexPath.row] {
+        cell.configureCellContent(eventAndBenefit: eventAndBenefit)
+      }
+      return cell
     }
-    return cell
-  }
-  
-  override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-    let label = UILabel()
-    label.text = "  이벤트"
-    label.font = .boldSystemFont(ofSize: 20)
-    return label
   }
   
   override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-    return 100
-  }
-  
-  override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-    return 60
+    if !isExpend {
+      return indexPath.row == 0 || indexPath.row == 4 ? 50 : 100
+    } else {
+      return 100
+    }
   }
 }

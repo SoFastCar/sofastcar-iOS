@@ -191,6 +191,17 @@ extension UITableViewCell {
       $0.height.equalTo(0.7)
     }
   }
+  
+  func configureContentViewBottomLayer(guide: UILayoutGuide) {
+    let view = UIView()
+    view.backgroundColor = .systemGray4
+    self.contentView.addSubview(view)
+    view.snp.makeConstraints {
+      $0.bottom.equalTo(self)
+      $0.leading.trailing.equalTo(guide)
+      $0.height.equalTo(0.7)
+    }
+  }
 }
 
 // MARK: - String / Underline
