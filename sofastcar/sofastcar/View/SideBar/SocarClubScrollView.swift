@@ -12,6 +12,7 @@ import AVFoundation
 
 class SocarClubScrollView: UIScrollView {
   // MARK: - Properties
+  var socarClubVC: SocarClubVC?
   var username = "김광수"
   var userLevel = 4
   var socarClubLable: Int = 0
@@ -254,33 +255,30 @@ class SocarClubScrollView: UIScrollView {
     context.strokePath()
     
     displayLevelImageView.image = UIGraphicsGetImageFromCurrentImageContext()
+        
+    let animation = CABasicAnimation(keyPath: "strokeEnd")
+    animation.fromValue = 0
+    animation.toValue = 1
+    animation.duration = 1
+    animation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.linear)
     
-    let layer = CAShapeLayer()
     let path = UIBezierPath(arcCenter: CGPoint(x: circleGuide.outLineCircleCenterX+85,
                                                y: circleGuide.outlineCircleCenterY+85),
                             radius: circleGuide.outLineCircleWidth/2,
                             startAngle: .pi * -180 / 360,
                             endAngle: .pi * 270 / 360,
                             clockwise: true)
-    path.lineWidth = circleGuide.userExCircleLineWidth
-    path.lineCapStyle = .square
-    path.lineJoinStyle = .bevel
-    CommonUI.mainBlue.set()
-    path.stroke()
     
+    let layer = CAShapeLayer()
     layer.path = path.cgPath
-    let animation = CABasicAnimation(keyPath: "position")
-    animation.fromValue = 0
-    animation.toValue = 1
-    animation.duration = 5
     layer.lineWidth = circleGuide.userExCircleLineWidth
     layer.fillColor = nil
     layer.strokeColor = CommonUI.mainBlue.cgColor
-//    layer.strokeEnd = .pi
+    layer.lineWidth = circleGuide.userExCircleLineWidth
+    layer.strokeEnd = 1
     layer.add(animation, forKey: animation.keyPath)
     
     displayLevelImageView.layer.addSublayer(layer)
-    UIGraphicsEndImageContext()
   }
   
   private func configureLabelInCircle() {
@@ -370,6 +368,7 @@ class SocarClubScrollView: UIScrollView {
       let couponView = CouponView(frame: .zero, coupon: coupon)
       couponView.draw(couponView.frame)
       downLoadButtonArray.append(couponView.downloadButton)
+      couponView.downloadButton.addTarget(self, action: #selector(tapDownLoadCouponButton(_:)), for: .touchUpInside)
       couponViewArray.append(couponView)
     }
     
@@ -391,5 +390,9 @@ class SocarClubScrollView: UIScrollView {
       $0.leading.trailing.equalTo(guide)
       $0.height.equalTo(60)
     }
+  }
+  
+  @objc private func tapDownLoadCouponButton(_ sender: UIButton) {
+    print("Tap Buttons")
   }
 }

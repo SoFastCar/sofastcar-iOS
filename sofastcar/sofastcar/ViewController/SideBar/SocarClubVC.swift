@@ -24,12 +24,20 @@ class SocarClubVC: UIViewController {
   // MARK: - Life Cycle
   override func viewDidLoad() {
     super.viewDidLoad()
+    myScrollView.isUserInteractionEnabled = true
+    myScrollView.isExclusiveTouch = true
+    myScrollView.delaysContentTouches = true
     configureNavigationController()
     configureScrollViewButtonConfigure()
   }
   
+  override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    print("tap")
+  }
+  
   override func loadView() {
     view = myScrollView
+    myScrollView.socarClubVC = self
   }
   
   override func viewWillAppear(_ animated: Bool) {

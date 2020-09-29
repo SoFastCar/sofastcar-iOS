@@ -10,6 +10,7 @@ import UIKit
 
 class CouponView: UIView {
   var coupon: Coupon?
+  var delegate: CouponViewDelegate?
   
   let couponTitleLabel: UILabel = {
     let label = UILabel()
@@ -33,12 +34,14 @@ class CouponView: UIView {
     return label
   }()
   
-  let downloadButton: UIButton = {
+  lazy var downloadButton: UIButton = {
     let button = UIButton()
     button.setImage(UIImage(systemName: "tray.and.arrow.down.fill"), for: .normal)
     button.imageView?.tintColor = .white
     button.backgroundColor = .systemGray4
     button.layer.cornerRadius = 25
+    button.isUserInteractionEnabled = true
+    button.addTarget(self.superview, action: #selector(tapDownloadCouponButton), for: .touchUpInside)
     return button
   }()
   
@@ -102,5 +105,9 @@ class CouponView: UIView {
     couponPriceLabel.text = "\(discountPrice)원"
     couponInfoLabel.text = "\(description)"
     downloadButton.setTitle(couponUid, for: .selected)
+  }
+  
+  @objc private func tapDownloadCouponButton() {
+    print("tap download coupon in Coupon View")
   }
 }
