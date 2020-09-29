@@ -54,7 +54,3 @@ protocol DetailSocarZoneInfoCellDelegate: class {
 protocol UserDetailCellDelegate: class {
   func tapLogoutButton(forCell cell: UserDetailCell)
 }
-
-protocol CouponViewDelegate: class {
-  func tapDownLoadCouponButton(forView view: CouponView)
-}

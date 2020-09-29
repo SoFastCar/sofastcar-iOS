@@ -199,7 +199,7 @@ class SocarClubScrollView: UIScrollView {
                              height: UIScreen.main.bounds.height+heightPadding+CGFloat(verticalPadding))
     contentView.frame = CGRect(x: 0, y: 0,
                                width: UIScreen.main.bounds.width,
-                               height: UIScreen.main.bounds.height+heightPadding)
+                               height: UIScreen.main.bounds.height+heightPadding+CGFloat(verticalPadding))
     contentView.layoutMargins = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
     self.addSubview(contentView)
   }
@@ -365,10 +365,10 @@ class SocarClubScrollView: UIScrollView {
     }
     
     for coupon in couponArray {
+      print("Start")
       let couponView = CouponView(frame: .zero, coupon: coupon)
       couponView.draw(couponView.frame)
       downLoadButtonArray.append(couponView.downloadButton)
-      couponView.downloadButton.addTarget(self, action: #selector(tapDownLoadCouponButton(_:)), for: .touchUpInside)
       couponViewArray.append(couponView)
     }
     
@@ -390,9 +390,5 @@ class SocarClubScrollView: UIScrollView {
       $0.leading.trailing.equalTo(guide)
       $0.height.equalTo(60)
     }
-  }
-  
-  @objc private func tapDownLoadCouponButton(_ sender: UIButton) {
-    print("Tap Buttons")
   }
 }
