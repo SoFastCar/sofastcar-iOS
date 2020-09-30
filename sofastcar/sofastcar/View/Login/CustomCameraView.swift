@@ -56,8 +56,8 @@ class CustomCameraView: UIView {
     
     configureBackgroundView()
     mask(viewToMask: backgroundView, maskRect: rect, invert: true)
-    configureCardRectangelBorderLayout()
     configureLayout()
+    configureCenterView()
   }
   
   required init?(coder: NSCoder) {
@@ -102,31 +102,54 @@ class CustomCameraView: UIView {
     }
   }
   
-  private func configureCardRectangelBorderLayout() {
-    UIGraphicsBeginImageContext(CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
-    
-    if let context = UIGraphicsGetCurrentContext() {
-      print("Paining Strart")
-      // Draw Line
-      // 선 굵기를 2.0으로 설정
-      context.setLineWidth(2.0)
-      // 선 색상을 빨간색으로 설정
-      context.setStrokeColor(UIColor.red.cgColor)
-      
-      context.move(to: CGPoint(x: 50, y: 250))
-      context.addLine(to: CGPoint(x: 50, y: 300))
-      // 추가하 선을 콘텍스트에 그림
-      context.strokePath()
-      
-      backgroundView.image = UIGraphicsGetImageFromCurrentImageContext()
-      UIGraphicsEndImageContext()
-    }
-  }
-  
   private func configureBackgroundView() {
     addSubview(backgroundView)
     backgroundView.snp.makeConstraints {
       $0.edges.equalToSuperview()
     }
+  }
+  
+  private func configureCenterView() {
+    let maskWidth = UIScreen.main.bounds.width*0.9
+    let mastheight = maskWidth*0.63
+    let rect = CGRect(x: UIScreen.main.bounds.width*0.05,
+                      y: UIScreen.main.bounds.height/2-mastheight/2,
+                      width: maskWidth,
+                      height: mastheight)
+    
+    let view = CardCaptureGuideView(frame: rect)
+    view.backgroundColor = .clear
+    view.draw(rect)
+    addSubview(view)
+  }
+}
+
+class CardCaptureGuideView: UIView {
+  override func draw(_ rect: CGRect) {
+    let path = UIBezierPath()
+    CommonUI.mainBlue.set()
+    //left top
+    path.move(to: CGPoint(x: rect.minX, y: rect.minY))
+    path.addLine(to: CGPoint(x: rect.minX, y: 50))
+    path.move(to: CGPoint(x: rect.minX, y: rect.minY))
+    path.addLine(to: CGPoint(x: 50, y: rect.minY))
+    //right top
+    path.move(to: CGPoint(x: rect.maxX, y: rect.minY))
+    path.addLine(to: CGPoint(x: rect.maxX-50, y: rect.minY))
+    path.move(to: CGPoint(x: rect.maxX, y: rect.minY))
+    path.addLine(to: CGPoint(x: rect.maxX, y: rect.minY+50))
+    //left bottom
+    path.move(to: CGPoint(x: rect.minX, y: rect.maxY))
+    path.addLine(to: CGPoint(x: rect.minX+50, y: rect.maxY))
+    path.move(to: CGPoint(x: rect.minX, y: rect.maxY))
+    path.addLine(to: CGPoint(x: rect.minX, y: rect.maxY-50))
+    //right Bottom
+    path.move(to: CGPoint(x: rect.maxX, y: rect.maxY))
+    path.addLine(to: CGPoint(x: rect.maxX-50, y: rect.maxY))
+    path.move(to: CGPoint(x: rect.maxX, y: rect.maxY))
+    path.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY-50))
+    
+    path.lineWidth = 10
+    path.stroke()
   }
 }
