@@ -20,6 +20,7 @@
 		7E8473E72509FBD00007962F /* LeftAlignedCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8473E62509FBD00007962F /* LeftAlignedCollectionViewFlowLayout.swift */; };
 		7EAA8F6824FFBB510049D514 /* ReservationDashboardVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EAA8F6724FFBB510049D514 /* ReservationDashboardVC.swift */; };
 		7EF1A28825241AEB004DADAD /* CoreBluetoothIO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF1A28725241AEB004DADAD /* CoreBluetoothIO.swift */; };
+		7EF1A28C25241C45004DADAD /* NSData+Int8.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF1A28B25241C45004DADAD /* NSData+Int8.swift */; };
 		7EF41FC62501F6D90030752A /* CarKeyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF41FC52501F6D90030752A /* CarKeyView.swift */; };
 		BC3F2E9A250E49B3003E2C44 /* EndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3F2E99250E49B3003E2C44 /* EndPoint.swift */; };
 		BC4F3A05250E01B400B7E1E7 /* SearchResultTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4F39FE250E01B300B7E1E7 /* SearchResultTableViewCell.swift */; };
@@ -159,6 +160,7 @@
 		7E8473E62509FBD00007962F /* LeftAlignedCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeftAlignedCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		7EAA8F6724FFBB510049D514 /* ReservationDashboardVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationDashboardVC.swift; sourceTree = "<group>"; };
 		7EF1A28725241AEB004DADAD /* CoreBluetoothIO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreBluetoothIO.swift; sourceTree = "<group>"; };
+		7EF1A28B25241C45004DADAD /* NSData+Int8.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSData+Int8.swift"; sourceTree = "<group>"; };
 		7EF41FC22500AB3A0030752A /* ReservationStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationStateView.swift; sourceTree = "<group>"; };
 		7EF41FC52501F6D90030752A /* CarKeyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarKeyView.swift; sourceTree = "<group>"; };
 		7EFAC68625063594005E47C8 /* TopView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopView.swift; sourceTree = "<group>"; };
@@ -356,6 +358,7 @@
 				BC91B635250FA7A200B76398 /* ServiceError.swift */,
 				C78071A72510413700EF214C /* Time.swift */,
 				7EF1A28725241AEB004DADAD /* CoreBluetoothIO.swift */,
+				7EF1A28B25241C45004DADAD /* NSData+Int8.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -907,6 +910,7 @@
 				C73D348B251601910075471F /* Reservation.swift in Sources */,
 				C7CEF7482511BFBE00C063B0 /* VehicleDoubleCheckView.swift in Sources */,
 				C769C83224FDD97F00DC8226 /* CheckDriverLicenseVC.swift in Sources */,
+				7EF1A28C25241C45004DADAD /* NSData+Int8.swift in Sources */,
 				7E8473E42509AB420007962F /* LeftAlignedTagCollectionViewFlowLayout.swift in Sources */,
 				BC4F3A06250E01B400B7E1E7 /* CarListView.swift in Sources */,
 				C779CE12251AF2AD00A81EB3 /* CustomCameraVC.swift in Sources */,
