@@ -91,6 +91,8 @@ extension ReservationDashboardVC: CarKeyViewDelegate {
       let mainVC = ReturnVehicleStatusVC()
       mainVC.modalPresentationStyle = .overFullScreen
       self.present(mainVC, animated: false, completion: nil)
+    case carKey.rightChevronButton:
+      print("rightChevronButton")
     case carKey.lockButton:
       print("lockButton")
     case carKey.unlockButton:

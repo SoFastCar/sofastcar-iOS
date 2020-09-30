@@ -91,16 +91,13 @@ class CarKeyView: UIView {
     return label
   }()
   
-  fileprivate let rightChevronIcon: UIImageView = {
-    let imageView = UIImageView()
-    imageView.image = UIImage(systemName: CommonUI.SFSymbolKey.rightChevron.rawValue)
-    imageView.tintColor = CommonUI.mainDark
-    imageView.snp.makeConstraints {
-      $0.width.equalTo(7)
-      $0.height.equalTo(15)
-    }
+  let rightChevronButton: UIButton = {
+    let button = UIButton()
+    button.setImage(UIImage(systemName: CommonUI.SFSymbolKey.rightChevron.rawValue), for: .normal)
+    button.tintColor = CommonUI.mainDark
+    button.addTarget(self, action: #selector(didTapButton(_:)), for: .touchUpInside)
     
-    return imageView
+    return button
   }()
   
   fileprivate let underGestureView: UIView = {
@@ -392,7 +389,7 @@ class CarKeyView: UIView {
     self.layer.cornerRadius = 10
     self.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
     
-    [handleArea, smartKeyLabel, onLabel, boltIcon, openOneSecondLabel, rightChevronIcon, underGestureView, riseGestureView].forEach {
+    [handleArea, smartKeyLabel, onLabel, boltIcon, openOneSecondLabel, rightChevronButton, underGestureView, riseGestureView].forEach {
       self.addSubview($0)
     }
     
@@ -440,10 +437,10 @@ class CarKeyView: UIView {
     
     openOneSecondLabel.snp.makeConstraints {
       $0.top.equalTo(handleArea.snp.bottom)
-      $0.trailing.equalTo(rightChevronIcon.snp.leading).offset(-5)
+      $0.trailing.equalTo(rightChevronButton.snp.leading).offset(-5)
     }
     
-    rightChevronIcon.snp.makeConstraints {
+    rightChevronButton.snp.makeConstraints {
       $0.top.equalTo(handleArea.snp.bottom).offset(-3)
       $0.trailing.equalTo(self).offset(-20)
     }
