@@ -26,6 +26,7 @@ class CustomCameraVC: UIViewController {
   let videoDataOutput = AVCaptureVideoDataOutput()
   
   var image: UIImage?
+  var isRecognizeImageInRect: Bool = false
   
   // MARK: - LifeCycle
   override func viewDidLoad() {
@@ -106,14 +107,6 @@ class CustomCameraVC: UIViewController {
     cameraPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
     cameraPreviewLayer?.videoGravity = .resizeAspectFill
     cameraPreviewLayer?.connection?.videoOrientation = .portrait
-    
-    let maskWidth = UIScreen.main.bounds.width*0.9
-    let mastheight = maskWidth*0.63
-    let rect = CGRect(x: UIScreen.main.bounds.width*0.05,
-                      y: UIScreen.main.bounds.height/2-mastheight/2,
-                      width: maskWidth,
-                      height: mastheight)
-    
     cameraPreviewLayer?.frame = self.view.frame
     myView.layer.insertSublayer(cameraPreviewLayer!, at: 0)
   }
@@ -122,6 +115,7 @@ class CustomCameraVC: UIViewController {
     captureSession.startRunning()
   }
   
+  // MARK: - Setting Vision For Recognize Rectangle
   private func detectRectangle(in image: CVPixelBuffer) {
     let request = VNDetectRectanglesRequest(completionHandler: { (request: VNRequest, _: Error?) in
       DispatchQueue.main.async {
@@ -136,7 +130,7 @@ class CustomCameraVC: UIViewController {
     })
     request.minimumAspectRatio = VNAspectRatio(1.5)
     request.maximumAspectRatio = VNAspectRatio(1.6)
-    request.minimumSize = Float(0.3)
+    request.minimumSize = Float(0.4)
     request.maximumObservations = 1
     
     let imageRequestHandler = VNImageRequestHandler(cvPixelBuffer: image, options: [:])
@@ -158,6 +152,45 @@ class CustomCameraVC: UIViewController {
     if rect.maxY < myView.rect.maxY { bottomRecSucess = true }
     myView.regonSucessTopLine.backgroundColor = topRecSucess == true ? CommonUI.mainBlue : .clear
     myView.regonSucessBottomLine.backgroundColor = bottomRecSucess == true ? CommonUI.mainBlue : .clear
+    
+    if topRecSucess && bottomRecSucess == true {
+      print("capture")
+      let settings = AVCapturePhotoSettings()
+      photoOutput?.capturePhoto(with: settings, delegate: self)
+      captureSession.stopRunning()
+      myView.activityIndicator.startAnimating()
+    }
+  }
+  
+  // MARK: - Vision For Recognize Text
+  private func createTextBox(in bounds: CGRect) {
+    let layer = CALayer()
+    view.layer.addSublayer(layer)
+    layer.borderWidth = 2
+    layer.borderColor = UIColor.green.cgColor
+
+//    let rect = cameraPreviewLayer?.layerRectConverted(fromMetadataOutputRect: bounds)
+    layer.frame = boundingBox(forRegionOfInterest: myView.rect, withinImageBounds: bounds)
+    cameraPreviewLayer?.addSublayer(layer)
+  }
+  
+  fileprivate func boundingBox(forRegionOfInterest: CGRect, withinImageBounds bounds: CGRect) -> CGRect {
+      let imageWidth = bounds.width
+      let imageHeight = bounds.height
+      
+      // Begin with input rect.
+      var rect = forRegionOfInterest
+      
+      // Reposition origin.
+      rect.origin.x *= imageWidth
+      rect.origin.x += bounds.origin.x
+      rect.origin.y = (1 - rect.origin.y) * imageHeight + bounds.origin.y
+      
+      // Rescale normalized coordinates.
+      rect.size.width *= imageWidth
+      rect.size.height *= imageHeight
+      
+      return rect
   }
   
   // MARK: - button Action
@@ -189,4 +222,22 @@ extension CustomCameraVC: AVCaptureVideoDataOutputSampleBufferDelegate {
     }
     self.detectRectangle(in: frame)
   }
+}
+
+// Convert UIImageOrientation to CGImageOrientation for use in Vision analysis.
+extension CGImagePropertyOrientation {
+    init(_ uiImageOrientation: UIImage.Orientation) {
+        switch uiImageOrientation {
+        case .up: self = .up
+        case .down: self = .down
+        case .left: self = .left
+        case .right: self = .right
+        case .upMirrored: self = .upMirrored
+        case .downMirrored: self = .downMirrored
+        case .leftMirrored: self = .leftMirrored
+        case .rightMirrored: self = .rightMirrored
+        @unknown default:
+          fatalError()
+        }
+    }
 }

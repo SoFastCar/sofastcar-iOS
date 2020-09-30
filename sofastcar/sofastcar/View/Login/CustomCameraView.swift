@@ -19,6 +19,14 @@ class CustomCameraView: UIView {
                     width: maskWidth,
                     height: mastheight)
   
+  lazy var activityIndicator: UIActivityIndicatorView = {
+    let activity = UIActivityIndicatorView()
+    activity.style = .large
+    activity.hidesWhenStopped = true
+    activity.color = CommonUI.mainBlue
+    return activity
+  }()
+  
   let infomationLabel: UILabel = {
     let label = UILabel()
     label.textColor = CommonUI.mainBlue
@@ -135,6 +143,11 @@ class CustomCameraView: UIView {
     cardCaptureGuideView.backgroundColor = .clear
     cardCaptureGuideView.draw(rect)
     addSubview(cardCaptureGuideView)
+    
+    cardCaptureGuideView.addSubview(activityIndicator)
+    activityIndicator.snp.makeConstraints {
+      $0.centerX.centerY.equalToSuperview()
+    }
   }
   
   private func configureSucessTopButtonLine() {
