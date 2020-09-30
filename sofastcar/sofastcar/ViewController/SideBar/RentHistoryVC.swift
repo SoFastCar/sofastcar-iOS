@@ -55,6 +55,7 @@ class RentHistoryVC: UITableViewController {
   
   override func viewWillDisappear(_ animated: Bool) {
     super.viewWillDisappear(animated)
+    removeFilterImageViewInNavigationController()
     statusBar.alpha = 0
   }
   
@@ -79,6 +80,14 @@ class RentHistoryVC: UITableViewController {
     navi.navigationBar.addSubview(filterButtonImageView)
     filterButtonImageView.snp.makeConstraints {
       $0.bottom.trailing.equalTo(navi.navigationBar).offset(-10)
+    }
+  }
+  
+  private func removeFilterImageViewInNavigationController() {
+    if let subViews = navigationController?.navigationBar.subviews {
+      for view in subViews where view == filterButtonImageView {
+        view.removeFromSuperview()
+      }
     }
   }
   

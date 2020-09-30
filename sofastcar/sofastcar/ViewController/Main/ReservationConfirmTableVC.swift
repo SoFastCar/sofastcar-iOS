@@ -47,6 +47,8 @@ class ReservationConfirmTableVC: UITableViewController {
   var isElectronicCar: Bool = false
   var isBurom: Bool = false
   
+  let statusBar =  UIView()
+  
   let reservationCostInfoButton: UIButton = {
     let button = UIButton()
     button.setTitle("총 합계 23,380원", for: .normal)
@@ -82,9 +84,18 @@ class ReservationConfirmTableVC: UITableViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    configureStatusBar()
     configureNavigationContoller()
     configureTableHeaderView()
     configureReservationConfirmButton()
+  }
+  
+  func configureStatusBar() {
+    let window = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
+    guard let statusBarFrame = window?.windowScene?.statusBarManager?.statusBarFrame else { return }
+    statusBar.frame = statusBarFrame
+    statusBar.backgroundColor = .white
+    UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.addSubview(statusBar)
   }
   
   override func viewWillAppear(_ animated: Bool) {
