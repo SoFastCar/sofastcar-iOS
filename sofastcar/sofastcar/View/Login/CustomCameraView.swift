@@ -12,6 +12,12 @@ import SnapKit
 class CustomCameraView: UIView {
   // MARK: - Init
   let buttonWidthSize: CGFloat = 80
+  let maskWidth = UIScreen.main.bounds.width*0.9
+  lazy var mastheight = maskWidth*0.63
+  lazy var rect = CGRect(x: UIScreen.main.bounds.width*0.05,
+                    y: UIScreen.main.bounds.height/2-mastheight/2,
+                    width: maskWidth,
+                    height: mastheight)
   
   let infomationLabel: UILabel = {
     let label = UILabel()
@@ -44,9 +50,24 @@ class CustomCameraView: UIView {
     return view
   }()
   
+  let regonSucessTopLine: UIView = {
+    let view = UIView()
+    view.backgroundColor = .clear
+    return view
+  }()
+  
+  let regonSucessBottomLine: UIView = {
+    let view = UIView()
+    view.backgroundColor = .clear
+    return view
+  }()
+  
+  lazy var cardCaptureGuideView = CardCaptureGuideView(frame: rect)
+  
   // MARK: - Life Cycle
   override init(frame: CGRect) {
     super.init(frame: frame)
+    backgroundColor = .clear
     let maskWidth = UIScreen.main.bounds.width*0.9
     let mastheight = maskWidth*0.63
     let rect = CGRect(x: UIScreen.main.bounds.width*0.05,
@@ -58,6 +79,7 @@ class CustomCameraView: UIView {
     mask(viewToMask: backgroundView, maskRect: rect, invert: true)
     configureLayout()
     configureCenterView()
+    configureSucessTopButtonLine()
   }
   
   required init?(coder: NSCoder) {
@@ -110,17 +132,25 @@ class CustomCameraView: UIView {
   }
   
   private func configureCenterView() {
-    let maskWidth = UIScreen.main.bounds.width*0.9
-    let mastheight = maskWidth*0.63
-    let rect = CGRect(x: UIScreen.main.bounds.width*0.05,
-                      y: UIScreen.main.bounds.height/2-mastheight/2,
-                      width: maskWidth,
-                      height: mastheight)
+    cardCaptureGuideView.backgroundColor = .clear
+    cardCaptureGuideView.draw(rect)
+    addSubview(cardCaptureGuideView)
+  }
+  
+  private func configureSucessTopButtonLine() {
+    [regonSucessTopLine, regonSucessBottomLine].forEach {
+      cardCaptureGuideView.addSubview($0)
+    }
     
-    let view = CardCaptureGuideView(frame: rect)
-    view.backgroundColor = .clear
-    view.draw(rect)
-    addSubview(view)
+    regonSucessTopLine.snp.makeConstraints {
+      $0.top.leading.trailing.equalToSuperview()
+      $0.height.equalTo(5)
+    }
+    
+    regonSucessBottomLine.snp.makeConstraints {
+      $0.bottom.leading.trailing.equalToSuperview()
+      $0.height.equalTo(5)
+    }
   }
 }
 
