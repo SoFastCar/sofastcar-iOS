@@ -79,7 +79,7 @@ class UserStatusAfterReturnVC: UIViewController {
   }
   
   // MARK: - UI
-
+  
   fileprivate func setUI() {
     let guid = view.safeAreaLayoutGuide
     userStatusAfterReturnView.delegate = self
