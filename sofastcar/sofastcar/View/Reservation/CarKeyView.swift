@@ -74,8 +74,7 @@ class CarKeyView: UIView {
     imageView.image = UIImage(systemName: CommonUI.SFSymbolKey.bolt.rawValue)
     imageView.tintColor = .black
     imageView.snp.makeConstraints {
-      $0.width.equalTo(10)
-      $0.height.equalTo(10)
+      $0.width.height.equalTo(12)
     }
     imageView.alpha = 0.3
     
@@ -85,7 +84,7 @@ class CarKeyView: UIView {
   fileprivate let openOneSecondLabel: UILabel = {
     let label = UILabel()
     label.text = "1초만에 문 열기"
-    label.font = UIFont.preferredFont(forTextStyle: .headline)
+    label.font = UIFont.preferredFont(forTextStyle: .footnote)
     label.textColor = CommonUI.mainDark
     
     return label
@@ -93,7 +92,12 @@ class CarKeyView: UIView {
   
   let rightChevronButton: UIButton = {
     let button = UIButton()
-    button.setImage(UIImage(systemName: CommonUI.SFSymbolKey.rightChevron.rawValue), for: .normal)
+    let config = UIImage.SymbolConfiguration(pointSize: 12, weight: .light, scale: .large)
+    let closeSymbol = UIImage(systemName: CommonUI.SFSymbolKey.rightChevron.rawValue, withConfiguration: config)
+    button.setImage(
+      closeSymbol,
+      for: .normal
+    )
     button.tintColor = CommonUI.mainDark
     button.addTarget(self, action: #selector(didTapButton(_:)), for: .touchUpInside)
     
@@ -438,6 +442,7 @@ class CarKeyView: UIView {
     openOneSecondLabel.snp.makeConstraints {
       $0.top.equalTo(handleArea.snp.bottom)
       $0.trailing.equalTo(rightChevronButton.snp.leading).offset(-5)
+      $0.centerY.equalTo(rightChevronButton)
     }
     
     rightChevronButton.snp.makeConstraints {
