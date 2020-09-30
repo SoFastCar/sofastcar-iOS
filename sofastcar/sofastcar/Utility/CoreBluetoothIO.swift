@@ -8,6 +8,23 @@
 
 import CoreBluetooth
 
-class CoreBluetoothIO: NSObject {
+protocol CoreBluetoothIODelegate: class {
+  func coreBluetoothIO(coreBluetoothIO: CoreBluetoothIO, didReceiveValue value: Int8)
+}
 
+class CoreBluetoothIO: NSObject {
+  let serviceUUID: String
+  weak var delegate: CoreBluetoothIODelegate?
+  
+  var centralManager: CBCentralManager!
+  var connectedPeripheral: CBPeripheral?
+  var targetService: CBService?
+  var writableCharacteristic: CBCharacteristic?
+  
+  init(serviceUUID: String, delegate: CoreBluetoothIODelegate?) {
+    super.init()
+    self.serviceUUID = serviceUUID
+    self.delegate = delegate
+    
+  }
 }
