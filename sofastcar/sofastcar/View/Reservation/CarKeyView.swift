@@ -485,6 +485,7 @@ class CarKeyView: UIView {
     emergencyButton.snp.makeConstraints {
       $0.top.equalTo(smartKeyLabel.snp.bottom).offset(60)
       $0.leading.equalTo(self).offset(50)
+      $0.centerX.equalTo(emergencyLabel)
     }
     
     emergencyLabel.snp.makeConstraints {
