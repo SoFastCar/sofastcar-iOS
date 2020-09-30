@@ -96,15 +96,16 @@ extension ReservationDashboardVC: CarKeyViewDelegate {
     case carKey.rightChevronButton:
       print("rightChevronButton")
       coreBluetoothIO = CoreBluetoothIO(serviceUUID: "0xFFE0", delegate: self)
-      
     case carKey.lockButton:
       print("lockButton")
     case carKey.unlockButton:
       print("unlockButton")
     case carKey.emergencyButton:
       print("emergencyButton")
+      coreBluetoothIO.writeValue(value: 1)
     case carKey.hornButton:
       print("hornButton")
+      coreBluetoothIO.writeValue(value: 3)
     case carKey.riseLockButton:
       print("riseLockButton")
     case carKey.riseUnlockButton:
