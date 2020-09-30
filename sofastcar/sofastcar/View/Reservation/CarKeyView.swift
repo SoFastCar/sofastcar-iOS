@@ -74,8 +74,7 @@ class CarKeyView: UIView {
     imageView.image = UIImage(systemName: CommonUI.SFSymbolKey.bolt.rawValue)
     imageView.tintColor = .black
     imageView.snp.makeConstraints {
-      $0.width.equalTo(10)
-      $0.height.equalTo(10)
+      $0.width.height.equalTo(12)
     }
     imageView.alpha = 0.3
     
@@ -85,22 +84,24 @@ class CarKeyView: UIView {
   fileprivate let openOneSecondLabel: UILabel = {
     let label = UILabel()
     label.text = "1초만에 문 열기"
-    label.font = UIFont.preferredFont(forTextStyle: .headline)
+    label.font = UIFont.preferredFont(forTextStyle: .footnote)
     label.textColor = CommonUI.mainDark
     
     return label
   }()
   
-  fileprivate let rightChevronIcon: UIImageView = {
-    let imageView = UIImageView()
-    imageView.image = UIImage(systemName: CommonUI.SFSymbolKey.rightChevron.rawValue)
-    imageView.tintColor = CommonUI.mainDark
-    imageView.snp.makeConstraints {
-      $0.width.equalTo(7)
-      $0.height.equalTo(15)
-    }
+  let rightChevronButton: UIButton = {
+    let button = UIButton()
+    let config = UIImage.SymbolConfiguration(pointSize: 12, weight: .light, scale: .large)
+    let closeSymbol = UIImage(systemName: CommonUI.SFSymbolKey.rightChevron.rawValue, withConfiguration: config)
+    button.setImage(
+      closeSymbol,
+      for: .normal
+    )
+    button.tintColor = CommonUI.mainDark
+    button.addTarget(self, action: #selector(didTapButton(_:)), for: .touchUpInside)
     
-    return imageView
+    return button
   }()
   
   fileprivate let underGestureView: UIView = {
@@ -392,7 +393,7 @@ class CarKeyView: UIView {
     self.layer.cornerRadius = 10
     self.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
     
-    [handleArea, smartKeyLabel, onLabel, boltIcon, openOneSecondLabel, rightChevronIcon, underGestureView, riseGestureView].forEach {
+    [handleArea, smartKeyLabel, onLabel, boltIcon, openOneSecondLabel, rightChevronButton, underGestureView, riseGestureView].forEach {
       self.addSubview($0)
     }
     
@@ -440,10 +441,11 @@ class CarKeyView: UIView {
     
     openOneSecondLabel.snp.makeConstraints {
       $0.top.equalTo(handleArea.snp.bottom)
-      $0.trailing.equalTo(rightChevronIcon.snp.leading).offset(-5)
+      $0.trailing.equalTo(rightChevronButton.snp.leading).offset(-5)
+      $0.centerY.equalTo(rightChevronButton)
     }
     
-    rightChevronIcon.snp.makeConstraints {
+    rightChevronButton.snp.makeConstraints {
       $0.top.equalTo(handleArea.snp.bottom).offset(-3)
       $0.trailing.equalTo(self).offset(-20)
     }
@@ -483,6 +485,7 @@ class CarKeyView: UIView {
     emergencyButton.snp.makeConstraints {
       $0.top.equalTo(smartKeyLabel.snp.bottom).offset(60)
       $0.leading.equalTo(self).offset(50)
+      $0.centerX.equalTo(emergencyLabel)
     }
     
     emergencyLabel.snp.makeConstraints {

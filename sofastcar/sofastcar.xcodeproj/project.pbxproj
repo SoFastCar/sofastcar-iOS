@@ -19,6 +19,8 @@
 		7E8473E42509AB420007962F /* LeftAlignedTagCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8473E32509AB420007962F /* LeftAlignedTagCollectionViewFlowLayout.swift */; };
 		7E8473E72509FBD00007962F /* LeftAlignedCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8473E62509FBD00007962F /* LeftAlignedCollectionViewFlowLayout.swift */; };
 		7EAA8F6824FFBB510049D514 /* ReservationDashboardVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EAA8F6724FFBB510049D514 /* ReservationDashboardVC.swift */; };
+		7EF1A28825241AEB004DADAD /* CoreBluetoothIO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF1A28725241AEB004DADAD /* CoreBluetoothIO.swift */; };
+		7EF1A28C25241C45004DADAD /* NSData+Int8.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF1A28B25241C45004DADAD /* NSData+Int8.swift */; };
 		7EF41FC62501F6D90030752A /* CarKeyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EF41FC52501F6D90030752A /* CarKeyView.swift */; };
 		BC3F2E9A250E49B3003E2C44 /* EndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC3F2E99250E49B3003E2C44 /* EndPoint.swift */; };
 		BC4F3A05250E01B400B7E1E7 /* SearchResultTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4F39FE250E01B300B7E1E7 /* SearchResultTableViewCell.swift */; };
@@ -169,6 +171,8 @@
 		7E8473E32509AB420007962F /* LeftAlignedTagCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeftAlignedTagCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		7E8473E62509FBD00007962F /* LeftAlignedCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeftAlignedCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		7EAA8F6724FFBB510049D514 /* ReservationDashboardVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationDashboardVC.swift; sourceTree = "<group>"; };
+		7EF1A28725241AEB004DADAD /* CoreBluetoothIO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreBluetoothIO.swift; sourceTree = "<group>"; };
+		7EF1A28B25241C45004DADAD /* NSData+Int8.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSData+Int8.swift"; sourceTree = "<group>"; };
 		7EF41FC22500AB3A0030752A /* ReservationStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationStateView.swift; sourceTree = "<group>"; };
 		7EF41FC52501F6D90030752A /* CarKeyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarKeyView.swift; sourceTree = "<group>"; };
 		7EFAC68625063594005E47C8 /* TopView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopView.swift; sourceTree = "<group>"; };
@@ -377,6 +381,8 @@
 				C7F5B54125106A1800AE0054 /* SocaZoneProvidable.swift */,
 				BC91B635250FA7A200B76398 /* ServiceError.swift */,
 				C78071A72510413700EF214C /* Time.swift */,
+				7EF1A28725241AEB004DADAD /* CoreBluetoothIO.swift */,
+				7EF1A28B25241C45004DADAD /* NSData+Int8.swift */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -938,6 +944,7 @@
 				C7D66D1624FB76D900679B99 /* CompleteButton.swift in Sources */,
 				C73D34AE2518E7180075471F /* ReservationStateView.swift in Sources */,
 				C7CEF7402511BF7A00C063B0 /* VehicleDoubleCheckVC.swift in Sources */,
+				7EF1A28825241AEB004DADAD /* CoreBluetoothIO.swift in Sources */,
 				7E8473E72509FBD00007962F /* LeftAlignedCollectionViewFlowLayout.swift in Sources */,
 				C7D66D1424FA930100679B99 /* DefaultUserInfoView.swift in Sources */,
 				C73D34AA2518E7010075471F /* ReturnVehicleStatusView.swift in Sources */,
@@ -960,6 +967,7 @@
 				C7CEF7482511BFBE00C063B0 /* VehicleDoubleCheckView.swift in Sources */,
 				C7B29AC42523661900AB081B /* FriendsInviteView.swift in Sources */,
 				C769C83224FDD97F00DC8226 /* CheckDriverLicenseVC.swift in Sources */,
+				7EF1A28C25241C45004DADAD /* NSData+Int8.swift in Sources */,
 				C7B29ABA252348D700AB081B /* EventAndBenefitFooterView.swift in Sources */,
 				7E8473E42509AB420007962F /* LeftAlignedTagCollectionViewFlowLayout.swift in Sources */,
 				BC4F3A06250E01B400B7E1E7 /* CarListView.swift in Sources */,
@@ -1190,7 +1198,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 52ZXCPY3WQ;
+				DEVELOPMENT_TEAM = X6LA4P7TFP;
 				INFOPLIST_FILE = sofastcar/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1210,7 +1218,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 52ZXCPY3WQ;
+				DEVELOPMENT_TEAM = X6LA4P7TFP;
 				INFOPLIST_FILE = sofastcar/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
