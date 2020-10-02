@@ -93,11 +93,11 @@ class CustomCameraVC: UIViewController {
       self.videoDataOutput.videoSettings = [(kCVPixelBufferPixelFormatTypeKey as NSString): NSNumber(value: kCVPixelFormatType_32BGRA)] as [String: Any]
       videoDataOutput.alwaysDiscardsLateVideoFrames = true
       videoDataOutput.setSampleBufferDelegate(self, queue: DispatchQueue(label: "camera_frame_processing_queue"))
+//      videoDataOutput.setSampleBufferDelegate(self, queue: DispatchQueue(label: "MyQueue"))
       captureSession.addOutput(self.videoDataOutput)
       guard let connection = self.videoDataOutput.connection(with: AVMediaType.video),
             connection.isVideoOrientationSupported else { return }
       connection.videoOrientation = .portrait
-      
     } catch {
       print(error)
     }
@@ -152,45 +152,67 @@ class CustomCameraVC: UIViewController {
     if rect.maxY < myView.rect.maxY { bottomRecSucess = true }
     myView.regonSucessTopLine.backgroundColor = topRecSucess == true ? CommonUI.mainBlue : .clear
     myView.regonSucessBottomLine.backgroundColor = bottomRecSucess == true ? CommonUI.mainBlue : .clear
-    
+    isRecognizeImageInRect = false
+//    guard isRecognizeImageInRect == false else { return }
     if topRecSucess && bottomRecSucess == true {
-      print("capture")
-      let settings = AVCapturePhotoSettings()
-      photoOutput?.capturePhoto(with: settings, delegate: self)
-      captureSession.stopRunning()
-      myView.activityIndicator.startAnimating()
+      isRecognizeImageInRect = true
     }
   }
   
   // MARK: - Vision For Recognize Text
+  private func detectTextRectangle(in image: CVPixelBuffer) {
+    let request = VNDetectTextRectanglesRequest { (request, error) in
+      if let error = error {
+        print("Error", error.localizedDescription)
+        return
+      } else {
+        DispatchQueue.main.async {
+          guard let results = request.results as? [VNTextObservation] else { return }
+          self.drawTextBoundingBox(rect: results)
+        }
+      }
+    }
+    request.reportCharacterBoxes = true
+    
+    let imageRequestHandler = VNImageRequestHandler(cvPixelBuffer: image, options: [:])
+    try? imageRequestHandler.perform([request])
+  }
+  
+  func drawTextBoundingBox(rect: [VNRectangleObservation]) {
+    guard let cameraPreviewLayer = cameraPreviewLayer else { return }
+    let transform = CGAffineTransform(scaleX: 1, y: -1).translatedBy(x: 0, y: -cameraPreviewLayer.frame.height)
+    let scale = CGAffineTransform.identity.scaledBy(x: cameraPreviewLayer.frame.width, y: cameraPreviewLayer.frame.height)
+    rect.forEach {
+      let bounds = $0.boundingBox.applying(scale).applying(transform)
+      createTextBox(in: bounds)
+    }
+  }
+  
   private func createTextBox(in bounds: CGRect) {
     let layer = CALayer()
-    view.layer.addSublayer(layer)
     layer.borderWidth = 2
     layer.borderColor = UIColor.green.cgColor
-
-//    let rect = cameraPreviewLayer?.layerRectConverted(fromMetadataOutputRect: bounds)
-    layer.frame = boundingBox(forRegionOfInterest: myView.rect, withinImageBounds: bounds)
+    layer.frame = bounds
     cameraPreviewLayer?.addSublayer(layer)
   }
   
   fileprivate func boundingBox(forRegionOfInterest: CGRect, withinImageBounds bounds: CGRect) -> CGRect {
-      let imageWidth = bounds.width
-      let imageHeight = bounds.height
-      
-      // Begin with input rect.
-      var rect = forRegionOfInterest
-      
-      // Reposition origin.
-      rect.origin.x *= imageWidth
-      rect.origin.x += bounds.origin.x
-      rect.origin.y = (1 - rect.origin.y) * imageHeight + bounds.origin.y
-      
-      // Rescale normalized coordinates.
-      rect.size.width *= imageWidth
-      rect.size.height *= imageHeight
-      
-      return rect
+    let imageWidth = bounds.width
+    let imageHeight = bounds.height
+    
+    // Begin with input rect.
+    var rect = forRegionOfInterest
+    
+    // Reposition origin.
+    rect.origin.x *= imageWidth
+    rect.origin.x += bounds.origin.x
+    rect.origin.y = (1 - rect.origin.y) * imageHeight + bounds.origin.y
+    
+    // Rescale normalized coordinates.
+    rect.size.width *= imageWidth
+    rect.size.height *= imageHeight
+    
+    return rect
   }
   
   // MARK: - button Action
@@ -207,9 +229,13 @@ class CustomCameraVC: UIViewController {
 
 extension CustomCameraVC: AVCapturePhotoCaptureDelegate {
   func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
+    print("Get Image")
     if let imageDate = photo.fileDataRepresentation() {
       print(imageDate)
       image = UIImage(data: imageDate)
+      myView.backgroundView.image = image
+      captureSession.stopRunning()
+      myView.activityIndicator.startAnimating()
     }
   }
 }
@@ -221,23 +247,37 @@ extension CustomCameraVC: AVCaptureVideoDataOutputSampleBufferDelegate {
       return
     }
     self.detectRectangle(in: frame)
+    if isRecognizeImageInRect == true {
+      self.detectTextRectangle(in: frame)
+    }
   }
 }
 
 // Convert UIImageOrientation to CGImageOrientation for use in Vision analysis.
 extension CGImagePropertyOrientation {
-    init(_ uiImageOrientation: UIImage.Orientation) {
-        switch uiImageOrientation {
-        case .up: self = .up
-        case .down: self = .down
-        case .left: self = .left
-        case .right: self = .right
-        case .upMirrored: self = .upMirrored
-        case .downMirrored: self = .downMirrored
-        case .leftMirrored: self = .leftMirrored
-        case .rightMirrored: self = .rightMirrored
-        @unknown default:
-          fatalError()
-        }
+  init(_ uiImageOrientation: UIImage.Orientation) {
+    switch uiImageOrientation {
+    case .up: self = .up
+    case .down: self = .down
+    case .left: self = .left
+    case .right: self = .right
+    case .upMirrored: self = .upMirrored
+    case .downMirrored: self = .downMirrored
+    case .leftMirrored: self = .leftMirrored
+    case .rightMirrored: self = .rightMirrored
+    @unknown default:
+      fatalError()
     }
+  }
+}
+
+extension CIImage {
+  func toUIImage() -> UIImage? {
+    let context: CIContext = CIContext.init(options: nil)
+    if let cgImage: CGImage = context.createCGImage(self, from: self.extent) {
+      return UIImage(cgImage: cgImage)
+    } else {
+      return nil
+    }
+  }
 }
