@@ -146,16 +146,21 @@ class CarListTableViewCell: UITableViewCell {
         let trailingPeriodByDate = calendar.dateComponents([.second], from: eTime, to: endDateOfTimeSlot)
         let trailingPeriod = CGFloat(trailingPeriodByDate.second ?? 1)
         
-        firstDateLabel.text = Time.getTimeString(type: .castMMd, date: startDateOfTimeSlot)
-        lastDateLabel.text = Time.getTimeString(type: .castMMd, date: endDateOfTimeSlot)
-        middleDateLabel.text = "12:00"
-        
-        let newLeadingConst = availableTimeSlotView.frame.width * (leadingPeriod / timeSlotPeriod)
-        let newTrailingConst = availableTimeSlotView.frame.width * (trailingPeriod / timeSlotPeriod)
+        let middleDate = Date(timeInterval: TimeInterval(timeSlotPeriod / 2), since: startDateOfTimeSlot)
+        let newLeadingConst = (UIScreen.main.bounds.width - 40) * (leadingPeriod / timeSlotPeriod)
+        let newTrailingConst = (UIScreen.main.bounds.width - 40) * (trailingPeriod / timeSlotPeriod)
         print("slot width: \(availableTimeSlotView.frame.width), newLeading: \(newLeadingConst), newTrailing: \(newTrailingConst)")
         timeSlotUnitView.snp.updateConstraints({
             $0.leading.equalToSuperview().offset(newLeadingConst)
             $0.trailing.equalToSuperview().offset(-newTrailingConst)
         })
+        firstDateLabel.text = Time.getTimeString(type: .castMMd, date: startDateOfTimeSlot)
+        lastDateLabel.text = Time.getTimeString(type: .castMMd, date: endDateOfTimeSlot)
+        if timeSlotPeriod <= 86400 {
+            middleDateLabel.text = "12:00" 
+        } else {
+            middleDateLabel.text = Time.getTimeString(type: .castMMd, date: middleDate)
+        }
+        
     }
 }
