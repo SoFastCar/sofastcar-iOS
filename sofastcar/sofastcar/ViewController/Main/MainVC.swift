@@ -127,9 +127,9 @@ class MainVC: UIViewController {
         request.addValue("10nhse2dsn", forHTTPHeaderField: "X-NCP-APIGW-API-KEY-ID")
         request.addValue("ZgM6sLboiN7u4kNtFDj0sZeglDjEVtBW3vaLvEg7", forHTTPHeaderField: "X-NCP-APIGW-API-KEY")
         URLSession.shared.dataTask(with: request) { (data, response, error) in
-            guard error == nil else { return print(error?.localizedDescription)}
+            guard error == nil else { return print(error!)}
             guard let responseCode = response as? HTTPURLResponse,
-                (200...300).contains(responseCode.statusCode) else { return print("에러 응답: \(response)") }
+                (200...300).contains(responseCode.statusCode) else { return print("에러 응답: \(response!)") }
             guard let responseData = data else { return print("Geocoding 실패") }
             do {
 //                let serializedData = try JSONSerialization.jsonObject(with: responseData) as? [String: AnyObject]
@@ -151,6 +151,7 @@ class MainVC: UIViewController {
 //                print("Geocoding Result: \(self.roadAddrName) \(self.roadAddrNumber1)")
                 DispatchQueue.main.async {
 //                    self.topView.searchButton.setTitle(self.admCodeArea3Name, for: .normal)
+                    print("12312313123123")
                     self.topView.searchButton.addrLabel.text = self.admCodeArea3Name
                 }
             } catch {
@@ -748,8 +749,13 @@ extension MainVC: NMFMapViewCameraDelegate {
         let meterPerPixel = mapView.projection.metersPerPixel(atLatitude: camPosition.lat, zoom: camZoom)
         
         // 검색 바 Geocoding
-        nmReveseGeocoding(of: "\(camPosition.lng),\(camPosition.lat)")
-        callPositionMarker.position = camPosition
+        if searchVCDismissFlag {
+            
+        } else {
+            nmReveseGeocoding(of: "\(camPosition.lng),\(camPosition.lat)")
+            callPositionMarker.position = camPosition
+        }
+        searchVCDismissFlag = false
         
         // 반경 쏘카존 요청
         fetchSocarZone(lat: camPosition.lat, lng: camPosition.lng, dist: meterPerPixel)
