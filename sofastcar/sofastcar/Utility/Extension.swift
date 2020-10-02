@@ -191,6 +191,17 @@ extension UITableViewCell {
       $0.height.equalTo(0.7)
     }
   }
+  
+  func configureContentViewBottomLayer(guide: UILayoutGuide) {
+    let view = UIView()
+    view.backgroundColor = .systemGray4
+    self.contentView.addSubview(view)
+    view.snp.makeConstraints {
+      $0.bottom.equalTo(self)
+      $0.leading.trailing.equalTo(guide)
+      $0.height.equalTo(0.5)
+    }
+  }
 }
 
 // MARK: - String / Underline
@@ -209,5 +220,17 @@ extension UIViewController {
     statusBar.frame = statusBarFrame
     statusBar.backgroundColor = backgroundColor
     UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.addSubview(statusBar)
+  }
+}
+
+// MARK: - Shadow Maker
+
+extension UIView {
+  func shadowMaker(view: UIView) {
+    view.layer.shadowColor = UIColor.systemGray3.cgColor
+    view.layer.shadowOffset = CGSize(width: 0, height: 2.0)
+    view.layer.shadowRadius = 5
+    view.layer.shadowOpacity = 0.5
+    view.layer.masksToBounds = false
   }
 }

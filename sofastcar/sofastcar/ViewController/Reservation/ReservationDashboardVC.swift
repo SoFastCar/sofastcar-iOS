@@ -11,6 +11,8 @@ import SnapKit
 
 class ReservationDashboardVC: UIViewController {
   
+  var coreBluetoothIO: CoreBluetoothIO!
+  
   let reservationStateView: ReservationStateView = {
     let scrollView = ReservationStateView()
     
@@ -82,23 +84,28 @@ extension ReservationDashboardVC: CarKeyViewDelegate {
     switch sender {
     case carKey.returnButton:
       print("return")
-//      UserDefaults.setReadyToDrive(isDriveReady: false)
-//      let provideVC = MainVC()
-//      provideVC.socarZoneProvider = SocarZoneProvider()
-//      let mainVC = UINavigationController(rootViewController: provideVC)
-//      mainVC.modalPresentationStyle = .overFullScreen
+      //      UserDefaults.setReadyToDrive(isDriveReady: false)
+      //      let provideVC = MainVC()
+      //      provideVC.socarZoneProvider = SocarZoneProvider()
+      //      let mainVC = UINavigationController(rootViewController: provideVC)
+      //      mainVC.modalPresentationStyle = .overFullScreen
       
       let mainVC = ReturnVehicleStatusVC()
       mainVC.modalPresentationStyle = .overFullScreen
       self.present(mainVC, animated: false, completion: nil)
+    case carKey.rightChevronButton:
+      print("rightChevronButton")
+      coreBluetoothIO = CoreBluetoothIO(serviceUUID: "0xFFE0", delegate: self)
     case carKey.lockButton:
       print("lockButton")
     case carKey.unlockButton:
       print("unlockButton")
     case carKey.emergencyButton:
       print("emergencyButton")
+      coreBluetoothIO.writeValue(value: 1)
     case carKey.hornButton:
       print("hornButton")
+      coreBluetoothIO.writeValue(value: 3)
     case carKey.riseLockButton:
       print("riseLockButton")
     case carKey.riseUnlockButton:
@@ -106,13 +113,21 @@ extension ReservationDashboardVC: CarKeyViewDelegate {
     case carKey.riseReturnButton:
       print("riseReturnButton")
       UserDefaults.setReadyToDrive(isDriveReady: false)
-      let provideVC = MainVC()
-      provideVC.socarZoneProvider = SocarZoneProvider()
-      let mainVC = UINavigationController(rootViewController: provideVC)
+      let mainVC = UINavigationController(rootViewController: ReturnVehicleVC())
       mainVC.modalPresentationStyle = .fullScreen
       self.present(mainVC, animated: false, completion: nil)
     default:
       break
+    }
+  }
+}
+
+extension ReservationDashboardVC: CoreBluetoothIODelegate {
+  func coreBluetoothIO(coreBluetoothIO simpleBluetoothIO: CoreBluetoothIO, didReceiveValue value: Int8) {
+    if value > 0 {
+      // corebluetoothio의 상태값이 0보다 클경우
+    } else {
+      // corebluetoothio의 상태값이 0일경우
     }
   }
 }

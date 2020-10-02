@@ -50,3 +50,7 @@ protocol DetailSocarZoneInfoCellDelegate: class {
   func tapFindWayToSocarZone(forCell cell: DetailSocarZoneInfoCell)
   func tapShowDetailInfo(forCell cell: DetailSocarZoneInfoCell)
 }
+
+protocol UserDetailCellDelegate: class {
+  func tapLogoutButton(forCell cell: UserDetailCell)
+}

@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var rootView: UIViewController = UIViewController()
 //    UserDefaults.resetUserAuthTocken() // 로그아웃필요할때 사용
-//    UserDefaults.setReadyToDrive(isDriveReady: false) // 
+//    UserDefaults.setReadyToDrive(isDriveReady: false) //
     if UserDefaults.getUserAuthTocken() != nil {
       if UserDefaults.getReadyToDrive() == true {
         let reservationDashBoard = ReservationDashboardVC()
@@ -36,8 +36,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let navigationController = UINavigationController(rootViewController: rootView)
     let backButtonImage = UIImage(systemName: "arrow.left")
     navigationController.navigationBar.backIndicatorImage = backButtonImage
-    navigationController.navigationBar.prefersLargeTitles = true
-    navigationController.navigationItem.largeTitleDisplayMode = .always
     navigationController.navigationBar.backIndicatorTransitionMaskImage = backButtonImage
     navigationController.navigationBar.topItem?.title = ""
     

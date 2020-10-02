@@ -11,11 +11,13 @@ import UIKit
 class SideBarHeaderView: UIView {
   // MARK: - Properties
   lazy var guide = self.layoutMarginsGuide
+  var isMain: Bool = false
   let userNameLable: UILabel = {
     let label = UILabel()
     label.text = "사용자 이름"
     label.textColor = .black
     label.font = .boldSystemFont(ofSize: 25)
+    label.sizeToFit()
     return label
   }()
   
@@ -27,7 +29,15 @@ class SideBarHeaderView: UIView {
     return label
   }()
   
-  let userlevelButton: UIButton = {
+  let userPhoneNumberLabel: UILabel = {
+    let label = UILabel()
+    label.text = "010-0000-0000"
+    label.font = .systemFont(ofSize: CommonUI.contentsTextFontSize)
+    label.textColor = .systemGray
+    return label
+  }()
+  
+  let socarClubButton: UIButton = {
     let button = UIButton()
     let attributedString = NSMutableAttributedString()
     attributedString.append(NSAttributedString(string: "쏘카클럽 Level 1 >", attributes:
@@ -56,50 +66,63 @@ class SideBarHeaderView: UIView {
     return button
   }()
   
-  override init(frame: CGRect) {
+  init(frame: CGRect, isMain: Bool) {
     super.init(frame: frame)
     self.layoutMargins = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
-    
-    configureLayout()
+    configureLayout(isMain)
   }
   
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
   
-  private func configureLayout() {
+  private func configureLayout(_ isMain: Bool) {
     
-    [userNameLable, userIdLable, userlevelButton, settingButton, notiButton].forEach {
-      addSubview($0)
+    if isMain {
+      [userNameLable, userIdLable, socarClubButton, settingButton, notiButton].forEach {
+        addSubview($0)
+      }
+    } else {
+      [userNameLable, userIdLable, userPhoneNumberLabel].forEach {
+        addSubview($0)
+      }
     }
-    
+   
     userNameLable.snp.makeConstraints {
       $0.top.leading.equalTo(guide)
+      $0.height.equalTo(50)
     }
     
     userIdLable.snp.makeConstraints {
-      $0.top.equalTo(userNameLable.snp.bottom).offset(-5)
+      $0.top.equalTo(userNameLable.snp.bottom).offset(-10)
       $0.leading.equalTo(guide)
     }
     
-    userlevelButton.snp.makeConstraints {
-      $0.top.equalTo(userIdLable.snp.bottom).offset(10)
-      $0.leading.equalTo(guide)
-      $0.bottom.equalTo(guide)
-      $0.width.equalTo(140)
-      $0.height.equalTo(20)
-    }
-    
-    notiButton.snp.makeConstraints {
-      $0.top.equalTo(guide)
-      $0.trailing.equalTo(guide)
-      $0.width.height.equalTo(30)
-    }
-    
-    settingButton.snp.makeConstraints {
-      $0.centerY.equalTo(notiButton.snp.centerY)
-      $0.trailing.equalTo(notiButton.snp.leading).offset(-10)
-      $0.width.height.equalTo(23)
+    if isMain {
+      socarClubButton.snp.makeConstraints {
+        $0.top.equalTo(userIdLable.snp.bottom).offset(5)
+        $0.leading.equalTo(guide)
+        $0.bottom.equalTo(guide)
+        $0.width.equalTo(140)
+        $0.height.equalTo(20)
+      }
+      
+      notiButton.snp.makeConstraints {
+        $0.top.equalTo(guide)
+        $0.trailing.equalTo(guide)
+        $0.width.height.equalTo(30)
+      }
+      
+      settingButton.snp.makeConstraints {
+        $0.centerY.equalTo(notiButton.snp.centerY)
+        $0.trailing.equalTo(notiButton.snp.leading).offset(-10)
+        $0.width.height.equalTo(23)
+      }
+    } else {
+      userPhoneNumberLabel.snp.makeConstraints {
+        $0.top.equalTo(userIdLable.snp.bottom).offset(5)
+        $0.leading.equalTo(guide)
+      }
     }
   }
   
