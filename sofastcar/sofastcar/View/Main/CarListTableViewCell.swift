@@ -133,6 +133,7 @@ class CarListTableViewCell: UITableViewCell {
     }
     
     func timeInfoConfiguration(startTime sTime: Date, finishTime fTime: Date) {
+        var plusOneDay = Int(fTime.timeIntervalSince(<#T##date: Date##Date#>))
         firstDateLabel.text = Time.getTimeString(type: .todayHHmm, date: sTime)
         lastDateLabel.text = Time.getTimeString(type: .hourHHmm, date: fTime)
         middleDateLabel.text = "12:00"

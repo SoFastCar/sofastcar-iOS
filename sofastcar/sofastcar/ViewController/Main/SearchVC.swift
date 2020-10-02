@@ -21,7 +21,6 @@ class SearchVC: UIViewController {
     lazy var safeArea = self.view.safeAreaLayoutGuide
     var isClearButtonTapped = false
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
