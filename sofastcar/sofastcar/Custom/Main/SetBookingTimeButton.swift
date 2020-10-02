@@ -35,7 +35,7 @@ class SetBookingTimeButton: UIButton {
     self.init()
     setupUI(on: place)
     setupConstraint(on: place)
-    setupTime(isChaged: false, startTime: Date(), endTime: Date())
+    setupTime(on: place, isChaged: false, startTime: Date(), endTime: Date())
   }
   
   private func setupUI(on place: SetPlace) {
@@ -132,17 +132,26 @@ class SetBookingTimeButton: UIButton {
     setTimeLabel.text = Time.getDiffTwoDateValueReturnString(start: sTime, end: eTime)
   }
   
-  func setupTime(isChaged flag: Bool, startTime sTime: Date, endTime eTime: Date) {
+    func setupTime(on place: SetPlace, isChaged flag: Bool, startTime sTime: Date, endTime eTime: Date) {
     if flag {
         startTime = sTime
         endTime = eTime
-        timeLabel.text = Time.getStartEndTimeShowLabel(start: sTime, end: eTime)
+        switch place {
+        case .mainVC:
+            timeLabel.text = Time.getStartEndTimeShowLabel(start: sTime, end: eTime)
+        case .carList:
+            timeLabel.text = Time.getStartEndTimeShowLabelShort(start: sTime)
+        }
     } else {
       Time.getInitialStartAndEndTimeForReservation { (sTime, eTime) in
         self.startTime = sTime
         self.endTime = eTime
-        self.timeLabel.text = "\(Time.getTimeString(type: .todayHHmm, date: startTime)) - \(Time.getTimeString(type: .hourHHmm, date: endTime))"
-
+        switch place {
+        case .mainVC:
+            timeLabel.text = Time.getStartEndTimeShowLabel(start: sTime, end: eTime)
+        case .carList:
+            timeLabel.text = Time.getStartEndTimeShowLabelShort(start: sTime)
+        }
       }
     }
   }

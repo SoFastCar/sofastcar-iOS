@@ -93,12 +93,6 @@ class MainVC: UIViewController {
         setupNM()
         setupUI()
         setupConstraint()
-        #if true
-        
-        #else
-        _ = setupMarkers(zoneData: nil)
-        #endif
-        
         activateSearchView()
         networking()
     }
@@ -151,7 +145,6 @@ class MainVC: UIViewController {
 //                print("Geocoding Result: \(self.roadAddrName) \(self.roadAddrNumber1)")
                 DispatchQueue.main.async {
 //                    self.topView.searchButton.setTitle(self.admCodeArea3Name, for: .normal)
-                    print("12312313123123")
                     self.topView.searchButton.addrLabel.text = self.admCodeArea3Name
                 }
             } catch {
@@ -427,7 +420,6 @@ class MainVC: UIViewController {
     // MARK: - SetupMarkers
     private func setupMarkers(zoneData data: [SocarZoneData]?) -> Bool {
         if markerTapFlag != true {
-            #if true
             guard data?.count != 0 else { fatalError()}
             if prevNumOfMarkers != 0 {
                 for index in 0...(prevNumOfMarkers - 1) {
@@ -507,38 +499,6 @@ class MainVC: UIViewController {
                     return true
                 }
             }
-            
-            #else
-            testMarker.position = NMGLatLng(lat: defaultMarkerPosition.lat, lng: defaultMarkerPosition.lng)
-            testMarker.mapView = naverMapView.mapView
-            testMarker.touchHandler = { (overlay) in
-                guard let marker = overlay as? NMFMarker else { return false }
-                self.markerTapFlag = true
-                self.carListOnTopFlag = true
-                marker.iconImage = NMFOverlayImage(name: "mSNormalBlue")
-                self.callPositionMarker.mapView = nil
-                self.carListView.socarZoneInfoButton.configuration(["성수", "강남"].randomElement() ?? "", ["지상", "지하"].randomElement() ?? "", 
-                                                                   ["좋음", "나쁨"].randomElement() ?? "", "서초역-1")
-                // Car List 팝업 by View
-                UIView.animateKeyframes(withDuration: 1, delay: 0, animations: {
-                    UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.5, animations: {
-                        self.setBookingTimeButton.frame.origin.y = self.view.frame.height
-                        self.carListView.frame.origin.y = self.view.center.y
-                        self.naverMapView.mapView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: self.view.center.y, right: 0)
-                        self.topView.alpha = 0
-                        self.backCircleButton.isHidden = false
-                    })
-                    UIView.addKeyframe(withRelativeStartTime: 0.5, relativeDuration: 1, animations: {
-                        self.carListView.frame.origin.y = self.view.center.y
-                    })
-                })
-                let camUpdate = NMFCameraUpdate(position: NMFCameraPosition(marker.position, zoom: 16))
-                camUpdate.animation = .fly
-                camUpdate.animationDuration = 0.5
-                self.naverMapView.mapView.moveCamera(camUpdate)
-                return true   
-            }
-            #endif
         } else {
             
         }
@@ -765,34 +725,7 @@ extension MainVC: NMFMapViewCameraDelegate {
 
 // MARK: - Extenstion(Gesture)
 extension MainVC: UIGestureRecognizerDelegate {
-//    
-//    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive press: UIPress) -> Bool {
-//        print(#function, "press")
-//        return true
-//    }
-//    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive event: UIEvent) -> Bool {
-//        print(#function, "event")
-//        return true
-//    }
-//    
-//    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-//        print(#function, "touch")
-//        return true
-//    }
-//    
-//    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-//        print(#function)
-//        if topAreaFlag,
-//            !carListOnTopFlag {
-//            carListView.carListTableView.isScrollEnabled = true
-//            return true
-//        } else {
-//            carListView.carListTableView.isScrollEnabled = false
-//            return true
-//        }
-//    }
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-//        print(#function)
         if topAreaFlag {
             if carListOnTopFlag {
                 print("1, topAreaFlag : \(topAreaFlag), carListOnTopFlag: \(carListOnTopFlag)")
@@ -800,7 +733,6 @@ extension MainVC: UIGestureRecognizerDelegate {
                 return true
             } else {
                 print("2, topAreaFlag : \(topAreaFlag), carListOnTopFlag: \(carListOnTopFlag)")
-//              carListView.carListTableView.isScrollEnabled = true
                 return false
             }  
         } else {
@@ -809,52 +741,24 @@ extension MainVC: UIGestureRecognizerDelegate {
             return true
         }
     }
-    
-//    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRequireFailureOf otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-//
-//        if topAreaFlag,
-//            !carListOnTopFlag {
-//            otherGestureRecognizer.
-//            return false
-//        } else {
-//            print("2")
-//            return true
-//        }
-//    }
-//    
-//    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-//        if topAreaFlag,
-//            !carListOnTopFlag {
-//            print("3")
-//            return false
-//        } else {
-//            print("4")
-//            return true
-//        }
-//    }
 }
 
 // MARK: - Extension(TableView)
 extension MainVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        #if true
         return socarListData?.count ?? 0
-        #else
-        return 30
-        #endif
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: CarListTableViewCell.identifier, for: indexPath) as? CarListTableViewCell else { return UITableViewCell() }
         cell.selectionStyle = .none
         cell.separatorInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
-        #if true
+        
         calculatedCarPrice.append(divideRendTotalTimeByHalfHour * (socarListData?[indexPath.row].carPrices.standardPrice ?? 0))
         cell.carInfoConfiguration(carImage: socarListData?[indexPath.row].image ?? "", carName: socarListData?[indexPath.row].name ?? "", carPrice: calculatedCarPrice[indexPath.row], availableDiscount: socarListData?[indexPath.row].isEvent ?? false)
-        cell.timeInfoConfiguration(startTime: newStartDate, finishTime: newEndDate)
-        #else
-        cell.carInfoConfiguration(carImage: "SampleCar", carName: "모닝", carPrice: 30000, availableDiscount: true)
-        #endif
+        
+        cell.timeInfoConfiguration(startTime: newStartDate, endTime: newEndDate)
+        
         return cell
     }
 
@@ -864,28 +768,17 @@ extension MainVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         120
     }
+    
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return (UIScreen.main.bounds.height / 2) * 0.15
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        print(indexPath.row)
         if indexPath.row == 0 {
             carListOnTopFlag = true
         } else {
             carListOnTopFlag = false
         }
-    }
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        print(#function)
-    }
-    
-    func scrollViewDidScrollToTop(_ scrollView: UIScrollView) {
-//        print(#function)
-    }
-    
-    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-//        print(#function)
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
