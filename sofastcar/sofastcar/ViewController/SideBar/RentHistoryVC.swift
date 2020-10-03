@@ -8,7 +8,7 @@
 
 import UIKit
 
-class RentHistoryVC: UITableViewController {
+class RentHistoryVC: UIViewController {
   // MARK: - Properties
   var reservations: [Reservation]?
   lazy var filterButtonImageView: UIImageView = {
@@ -23,36 +23,28 @@ class RentHistoryVC: UITableViewController {
     return imageView
   }()
   
-  let topBackgroundView: UIView = {
-    let view = UIView()
-    view.backgroundColor = .white
-    return view
+  lazy var backButtonImageView: UIImageView = {
+    let imageView = UIImageView()
+    let sysImageConfigure = UIImage.SymbolConfiguration(pointSize: 20, weight: .medium)
+    imageView.image = UIImage(systemName: "arrow.left", withConfiguration: sysImageConfigure)
+    imageView.isUserInteractionEnabled = true
+    let tapguesture = UITapGestureRecognizer.init(target: self, action: #selector(tapBackButton))
+    imageView.addGestureRecognizer(tapguesture)
+    return imageView
   }()
   
+  let tableView = UITableView(frame: .zero, style: .grouped)
+
   let statusBar =  UIView()
   
   // MARK: - Life Cycle
-  override init(style: UITableView.Style) {
-    super.init(style: .grouped)
-  }
-  
-  required init?(coder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
-  }
-  
   override func viewDidLoad() {
     super.viewDidLoad()
-    view.backgroundColor = .white
-    configureNavigationContoller()
     configureStatusBar()
+    configureNavigationContoller()
     configureTableView()
   }
-  
-  override func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(animated)
-    configureNavigationContoller()
-  }
-  
+
   override func viewWillDisappear(_ animated: Bool) {
     super.viewWillDisappear(animated)
     removeFilterImageViewInNavigationController()
@@ -71,16 +63,21 @@ class RentHistoryVC: UITableViewController {
     guard let navi = navigationController else { return print("navi Missing")}
     title = "이용내역"
     navi.isNavigationBarHidden = false
-    navi.navigationBar.isHidden = false
-    navi.navigationBar.prefersLargeTitles = true
-    navi.navigationItem.largeTitleDisplayMode = .always
     navi.navigationBar.backgroundColor = .white
     navi.navigationBar.barTintColor = UIColor.white
     navi.navigationBar.tintColor = UIColor.black
-    navi.navigationBar.addSubview(filterButtonImageView)
+    [filterButtonImageView, backButtonImageView].forEach {
+      navi.navigationBar.addSubview($0)
+    }
+    
     filterButtonImageView.snp.makeConstraints {
       $0.bottom.trailing.equalTo(navi.navigationBar).offset(-10)
     }
+    
+    backButtonImageView.snp.makeConstraints {
+      $0.top.leading.equalTo(navi.navigationBar.safeAreaLayoutGuide).offset(10)
+    }
+    
   }
   
   private func removeFilterImageViewInNavigationController() {
@@ -100,17 +97,37 @@ class RentHistoryVC: UITableViewController {
     tableView.sectionHeaderHeight = 10
     tableView.sectionFooterHeight = 0
     tableView.separatorStyle = .none
+    
+    view.backgroundColor = .white
+    view.addSubview(tableView)
+    tableView.frame = view.frame
   }
   
   // MARK: - Button Action
   @objc private func tapFilterButton() {
     print("tapFilterButton")
   }
+  
+  @objc private func tapBackButton() {
+    dismissDetail()
+  }
+  
+  func presentWithAnimation() {
+    configureNavigationContoller()
+    UIView.animate(withDuration: 0.5) {
+      self.view.center.x -= UIScreen.main.bounds.width
+      self.tableView.center.x -= UIScreen.main.bounds.width
+    }
+  }
+  
+  func dismissWithAnimation() {
+    
+  }
 }
 
 // MARK: - UITableViewDelegate, UITableViewDataSource
-extension RentHistoryVC {
-  override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+extension RentHistoryVC: UITableViewDelegate, UITableViewDataSource {
+  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     if indexPath.section == 0 {
       let cell = UITableViewCell()
       cell.configureContentViewTopBottomLayer()
@@ -120,19 +137,19 @@ extension RentHistoryVC {
     return cell
   }
   
-  override func numberOfSections(in tableView: UITableView) -> Int {
+  func numberOfSections(in tableView: UITableView) -> Int {
     return reservations?.count ?? 5
   }
   
-  override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return 1
   }
   
-  override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+  func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
     return indexPath.section == 0 ? 0 : UITableView.automaticDimension
   }
   
-  override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     let reservationDetailTableVC = ReservationDetailTableVC(isReservationEnd: true)
     reservationDetailTableVC.modalPresentationStyle = .overFullScreen
     present(reservationDetailTableVC, animated: true, completion: nil)

@@ -139,8 +139,18 @@ extension SideBarVC: UITableViewDelegate, UITableViewDataSource {
     switch cellType {
     case .usingHistocyCell:
       dismissWithAnimated {
-        let rentHistoryVC = RentHistoryVC(style: .grouped)
-        mainVC.navigationController?.pushViewController(rentHistoryVC, animated: true)
+        let rentHistoryVC = RentHistoryVC()
+        let navicontroller = UINavigationController(rootViewController: rentHistoryVC)
+        navicontroller.modalPresentationStyle = .overFullScreen
+        navicontroller.isNavigationBarHidden = true
+        navicontroller.navigationBar.prefersLargeTitles = true
+        mainVC.presentDetail(navicontroller)
+//        mainVC.present(navicontroller, animated: false, completion: {
+//          rentHistoryVC.presentWithAnimation()
+//        })
+//        mainVC.navigationController?.isNavigationBarHidden = false
+//        mainVC.navigationController?.navigationBar.prefersLargeTitles = true
+//        mainVC.navigationController?.pushViewController(rentHistoryVC, animated: true)
       }
     case .evnetWithBenigitCell:
       dismissWithAnimated {
