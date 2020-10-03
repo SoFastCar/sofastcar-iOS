@@ -64,29 +64,27 @@ extension UIViewController {
   
   func presentDetail(_ viewControllerToPresent: UIViewController) {
     let transition = CATransition()
-    transition.duration = 0
-//    transition.type = CATransitionType.push
-    transition.subtype = CATransitionSubtype.fromLeft
-    transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
+    transition.duration = 0.5
+    transition.type = CATransitionType.moveIn
+    transition.subtype = CATransitionSubtype.fromRight
+    transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.default)
     self.view.window!.layer.add(transition, forKey: kCATransition)
     present(viewControllerToPresent, animated: false)
   }
   
   func dismissDetail() {
     let transition = CATransition()
-    transition.duration = 0
-//    transition.type = CATransitionType.push
-    transition.subtype = CATransitionSubtype.fromRight
-    transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
+    transition.duration = 0.5
+    transition.type = CATransitionType.reveal
+    transition.subtype = CATransitionSubtype.fromLeft
+    transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.default)
     self.view.window!.layer.add(transition, forKey: kCATransition)
     dismiss(animated: false)
   }
-
 }
 
 extension UINavigationController {
   func noTitlePushViewController(_ viewController: UIViewController, animated: Bool) {
-    print("add")
     let backButtonImage = UIImage(systemName: "arrow.left")
     self.navigationController?.navigationBar.backIndicatorImage = backButtonImage
     self.navigationController?.navigationBar.backIndicatorTransitionMaskImage = backButtonImage
