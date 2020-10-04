@@ -77,7 +77,6 @@ class RentHistoryVC: UIViewController {
     backButtonImageView.snp.makeConstraints {
       $0.top.leading.equalTo(navi.navigationBar.safeAreaLayoutGuide).offset(10)
     }
-    
   }
   
   private func removeFilterImageViewInNavigationController() {
