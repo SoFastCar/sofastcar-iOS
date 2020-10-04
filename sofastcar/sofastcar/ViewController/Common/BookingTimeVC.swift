@@ -172,7 +172,40 @@ class BookingTimeVC: UIViewController {
             setBookingTimeCarList?.setupTime(on: .carList, isChaged: true, startTime: startDate, endTime: endDate)
             setBookingTimeCarList?.setButtonTitle(sTime: startDate, eTime: endDate)
             presentingVC.calculatedCarPrice.removeAll()
-            presentingVC.carListView.carListTableView.reloadData()
+            print("==================\(presentingVC.markerTapFlag)")
+            // Socar List Info Update
+            if presentingVC.markerTapFlag {
+            let dateTimeStart = Time.getTimeString(type: .castYYYYMMDDHHmm, date: self.startDate)
+            let dateTimeEnd = Time.getTimeString(type: .castYYYYMMDDHHmm, date: self.endDate)
+            print(dateTimeStart, dateTimeEnd)
+                guard let testUrl = URL(string: "https://sofastcar.moorekwon.xyz/carzones/\(presentingVC.selectedSocarZone?.id ?? 260)/cars?date_time_start=\(dateTimeStart)&date_time_end=\(dateTimeEnd)") else { return }
+            var testRequest = URLRequest(url: testUrl)
+            testRequest.httpMethod = "GET"
+            testRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            testRequest.addValue("JWT \(UserDefaults.getUserAuthTocken() ?? "")", forHTTPHeaderField: "Authorization")
+            let testTask = URLSession.shared.dataTask(with: testRequest) {(data, response, error) in
+                guard error == nil else { return print("error2: \(error!.localizedDescription)")}
+                guard let responseCode = response as? HTTPURLResponse,
+                    (200...400).contains(responseCode.statusCode) else { return print("response: \(response ?? URLResponse())") }
+                guard let responseData = data else { return print("No data")}
+                print("쏘카 리스트 데이터: \(responseData)")
+                let jsonDecoder = JSONDecoder()
+                do {
+                    let decodedData = try jsonDecoder.decode(SocarListData.self, from: responseData)
+                    presentingVC.socarListDataList = decodedData
+                    presentingVC.socarListData = presentingVC.socarListDataList?.results
+                    print("쏘카 리스트 가져오기 성공")
+                    DispatchQueue.main.async {
+                        presentingVC.carListView.carListTableView.reloadData()
+                    }
+                } catch {
+                    print("쏘카 리스트 가져오기 실패")
+                }
+            }
+            testTask.resume()
+            } else {
+                presentingVC.carListView.carListTableView.reloadData()
+            }
         }
         
         if let presentingVC = navi.viewControllers.last as? ReservationConfirmTableVC {
