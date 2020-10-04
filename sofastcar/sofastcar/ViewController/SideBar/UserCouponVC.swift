@@ -45,12 +45,19 @@ class UserCouponVC: UIViewController {
     return imageView
   }()
   
+  let cellSelectedBackgroundView: UIView = {
+    let view = UIView()
+    view.backgroundColor = .white
+    return view
+  }()
+  
   // MARK: - Life Cycle
   override func viewDidLoad() {
     super.viewDidLoad()
     configureNavigation()
     configureCouponDate()
     configureTableView()
+    configureMyViewButtonAction()
   }
   
   override func loadView() {
@@ -80,22 +87,44 @@ class UserCouponVC: UIViewController {
       $0.bottom.equalToSuperview()
     }
     tableView.dataSource = self
+    tableView.delegate = self
     tableView.backgroundColor = .systemGray6
     tableView.layoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 30, right: 0)
     tableView.rowHeight = UITableView.automaticDimension
     tableView.estimatedRowHeight = 500
     tableView.separatorStyle = .none
-    tableView.allowsSelection = false
     tableView.sectionHeaderHeight = 10
     tableView.sectionFooterHeight = 10
+  }
+  
+  private func configureMyViewButtonAction() {
+    myView.couponBookButton.addTarget(self, action: #selector(tapCouponBookButton), for: .touchUpInside)
+    myView.myCouponButton.addTarget(self, action: #selector(tapMyCouponButton), for: .touchUpInside)
   }
   
   // MARK: - Handler
   @objc private func tapCancelButton() {
     dismiss(animated: true)
   }
+  
+  @objc private func tapCouponBookButton() {
+    if currentSelectedTableView == .myCoupon {
+      myView.buttonBottomView.center.x -= UIScreen.main.bounds.width/2
+      currentSelectedTableView = .couponBook
+      tableView.reloadData()
+    }
+  }
+  
+  @objc private func tapMyCouponButton() {
+    if currentSelectedTableView == .couponBook {
+      myView.buttonBottomView.center.x += UIScreen.main.bounds.width/2
+      currentSelectedTableView = .myCoupon
+      tableView.reloadData()
+    }
+  }
 }
 
+// MARK: - UITableViewDataSource
 extension UserCouponVC: UITableViewDataSource {
   func numberOfSections(in tableView: UITableView) -> Int {
     switch currentSelectedTableView {
@@ -116,10 +145,30 @@ extension UserCouponVC: UITableViewDataSource {
       guard let userCouponList = userCouponList else { fatalError() }
       let cell = UserCouponBookCell(cellType: cellTypeArray[indexPath.section], couponData: userCouponList[indexPath.section])
       cell.couponData = userCouponList[indexPath.section]
+      cell.selectedBackgroundView = cellSelectedBackgroundView
       return cell
     case .myCoupon:
       let cell = UITableViewCell(style: .default, reuseIdentifier: "cell")
       return cell
     }
+  }
+}
+
+// MARK: - UITableViewDelegate
+extension UserCouponVC: UITableViewDelegate {
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    if indexPath.section == 0 {
+      let alertController = UIAlertController(title: "알림", message: "'쏘카'에서 '카카오톡'을(를) 열려고 합니다.", preferredStyle: .alert)
+      alertController.addAction(UIAlertAction(title: "취소", style: .default, handler: nil))
+      alertController.addAction(UIAlertAction(title: "열기", style: .default, handler: nil))
+      present(alertController, animated: true, completion: nil)
+      return
+    }
+    
+    guard let cell = tableView.cellForRow(at: indexPath) as? UserCouponBookCell else { return }
+    let couponDetailVC = CouponDetailVC()
+    couponDetailVC.couponDate = cell.couponData
+    couponDetailVC.modalPresentationStyle = .overFullScreen
+    present(couponDetailVC, animated: false, completion: nil)
   }
 }

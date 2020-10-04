@@ -59,6 +59,7 @@ class UserCouponBookCell: UITableViewCell {
     
     attreibutedString.append(NSAttributedString(attachment: unSelectButtonImage))
     button.setAttributedTitle(attreibutedString, for: .normal)
+    button.isUserInteractionEnabled = false
     return button
   }()
   

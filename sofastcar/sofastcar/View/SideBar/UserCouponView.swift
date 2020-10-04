@@ -19,8 +19,6 @@ class UserCouponView: UIView {
     button.setTitleColor(.black, for: .normal)
     button.titleLabel?.font = .boldSystemFont(ofSize: CommonUI.titleTextFontSize)
     button.backgroundColor = .white
-    button.layer.borderWidth = 1
-    button.layer.borderColor = UIColor.systemGray4.cgColor
     return button
   }()
   
@@ -30,9 +28,13 @@ class UserCouponView: UIView {
     button.setTitleColor(.black, for: .normal)
     button.titleLabel?.font = .boldSystemFont(ofSize: CommonUI.titleTextFontSize)
     button.backgroundColor = .white
-    button.layer.borderWidth = 1
-    button.layer.borderColor = UIColor.systemGray4.cgColor
     return button
+  }()
+  
+  let buttonBottomView: UIView = {
+    let view = UIView()
+    view.backgroundColor = CommonUI.mainDark
+    return view
   }()
   
   // MARK: - Life Cycle
@@ -48,7 +50,7 @@ class UserCouponView: UIView {
   }
   
   private func configureTopButton() {
-    [couponBookButton, myCouponButton].forEach {
+    [couponBookButton, myCouponButton, buttonBottomView].forEach {
       addSubview($0)
     }
     
@@ -63,6 +65,11 @@ class UserCouponView: UIView {
       $0.trailing.equalTo(safeGuide.snp.trailing)
       $0.width.equalTo(couponBookButton.snp.width)
       $0.height.equalTo(66)
+    }
+    
+    buttonBottomView.snp.makeConstraints {
+      $0.leading.trailing.bottom.equalTo(couponBookButton)
+      $0.height.equalTo(2)
     }
   }
 }

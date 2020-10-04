@@ -114,6 +114,7 @@
 		C7B29AD025291E5400AB081B /* UserCouponView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B29ACF25291E5400AB081B /* UserCouponView.swift */; };
 		C7B29AD425292D1400AB081B /* CouponBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B29AD325292D1400AB081B /* CouponBook.swift */; };
 		C7B29AD8252930CD00AB081B /* UserCouponBookCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B29AD7252930CD00AB081B /* UserCouponBookCell.swift */; };
+		C7B29ADC2529928A00AB081B /* CouponDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B29ADB2529928A00AB081B /* CouponDetailVC.swift */; };
 		C7BD348C24F54A5700089F0D /* InitVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BD348B24F54A5700089F0D /* InitVC.swift */; };
 		C7CA53EC2509AA3F008DA68C /* ReservationDetailTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CA53EB2509AA3F008DA68C /* ReservationDetailTableVC.swift */; };
 		C7CA53EE2509AF2F008DA68C /* ReservationDetailHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CA53ED2509AF2F008DA68C /* ReservationDetailHeader.swift */; };
@@ -271,6 +272,7 @@
 		C7B29ACF25291E5400AB081B /* UserCouponView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCouponView.swift; sourceTree = "<group>"; };
 		C7B29AD325292D1400AB081B /* CouponBook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouponBook.swift; sourceTree = "<group>"; };
 		C7B29AD7252930CD00AB081B /* UserCouponBookCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCouponBookCell.swift; sourceTree = "<group>"; };
+		C7B29ADB2529928A00AB081B /* CouponDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouponDetailVC.swift; sourceTree = "<group>"; };
 		C7BD348B24F54A5700089F0D /* InitVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitVC.swift; sourceTree = "<group>"; tabWidth = 3; };
 		C7CA53EB2509AA3F008DA68C /* ReservationDetailTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationDetailTableVC.swift; sourceTree = "<group>"; };
 		C7CA53ED2509AF2F008DA68C /* ReservationDetailHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationDetailHeader.swift; sourceTree = "<group>"; };
@@ -497,6 +499,7 @@
 				C7B29AA02522DED400AB081B /* EventAndBenefitsVC.swift */,
 				C7B29ABF252365D900AB081B /* FriendsInciteVC.swift */,
 				C7B29ACB2528AC3D00AB081B /* UserCouponVC.swift */,
+				C7B29ADB2529928A00AB081B /* CouponDetailVC.swift */,
 			);
 			path = SideBar;
 			sourceTree = "<group>";
@@ -929,6 +932,7 @@
 				C72A914424F67D9F005D464F /* TouView.swift in Sources */,
 				BC4F3A0F250E01D000B7E1E7 /* MainVC.swift in Sources */,
 				C78071A82510413700EF214C /* Time.swift in Sources */,
+				C7B29ADC2529928A00AB081B /* CouponDetailVC.swift in Sources */,
 				C769C82924FD0A1200DC8226 /* CardEnrollView.swift in Sources */,
 				C7FED69B250C729C00778923 /* ReservationEtcCell.swift in Sources */,
 				BC4F3A0B250E01B400B7E1E7 /* SearchView.swift in Sources */,
