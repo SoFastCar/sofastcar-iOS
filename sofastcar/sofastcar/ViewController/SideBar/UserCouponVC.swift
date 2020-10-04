@@ -35,6 +35,16 @@ class UserCouponVC: UIViewController {
   
   var cellTypeArray: [UserCouponCellType] = []
   
+  lazy var backButtonImageView: UIImageView = {
+    let imageView = UIImageView()
+    let sysImageConfigure = UIImage.SymbolConfiguration(pointSize: 20, weight: .medium)
+    imageView.image = UIImage(systemName: "xmark", withConfiguration: sysImageConfigure)
+    imageView.isUserInteractionEnabled = true
+    let tapguesture = UITapGestureRecognizer.init(target: self, action: #selector(tapCancelButton))
+    imageView.addGestureRecognizer(tapguesture)
+    return imageView
+  }()
+  
   // MARK: - Life Cycle
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -50,8 +60,11 @@ class UserCouponVC: UIViewController {
   
   private func configureNavigation() {
     title = "쿠폰"
-    navigationController?.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(tapCancelButton))
     navigationController?.navigationBar.tintColor = .black
+    navigationController?.navigationBar.addSubview(backButtonImageView)
+    backButtonImageView.snp.makeConstraints {
+      $0.top.leading.equalTo(navigationController!.navigationBar.safeAreaLayoutGuide).offset(10)
+    }
   }
   
   private func configureCouponDate() {
@@ -72,6 +85,7 @@ class UserCouponVC: UIViewController {
     tableView.rowHeight = UITableView.automaticDimension
     tableView.estimatedRowHeight = 500
     tableView.separatorStyle = .none
+    tableView.allowsSelection = false
     tableView.sectionHeaderHeight = 10
     tableView.sectionFooterHeight = 10
   }

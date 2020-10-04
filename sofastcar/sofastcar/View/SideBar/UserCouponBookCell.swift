@@ -41,7 +41,26 @@ class UserCouponBookCell: UITableViewCell {
   
   let sideButton = UIButton()
   
-  let showDetailButton = TouButton(title: "상세조건보기", imageName: "chevron.right.circle", textColor: .systemGray2, fontSize: 10, style: .authStyle)
+  let showDetailButton: UIButton = {
+    let button = UIButton()
+    let imageConf = UIImage.SymbolConfiguration(font: .systemFont(ofSize: 10), scale: .medium)
+    let unSelectButtonImage = NSTextAttachment(
+      image: UIImage(systemName: "chevron.right.circle.fill",
+                     withConfiguration: imageConf)!.withTintColor(.systemGray2))
+    unSelectButtonImage.bounds = CGRect(x: 0, y: 0, width: 13, height: 13)
+    
+    let myAttributedStringOption = [
+      NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12),
+      NSAttributedString.Key.foregroundColor: UIColor.systemGray2]
+    
+    var attreibutedString = NSMutableAttributedString(
+      string: "상세조건보기", attributes: myAttributedStringOption)
+    attreibutedString.append(NSAttributedString(string: " "))
+    
+    attreibutedString.append(NSAttributedString(attachment: unSelectButtonImage))
+    button.setAttributedTitle(attreibutedString, for: .normal)
+    return button
+  }()
   
   // MARK: - Life cycle
   init(cellType: UserCouponCellType, couponData: CouponBook?) {
@@ -148,12 +167,12 @@ class UserCouponBookCell: UITableViewCell {
     usageLabel.text = couponData.usage
     
     showDetailButton.snp.makeConstraints {
-      $0.top.equalTo(usageLabel.snp.bottom)
+      $0.top.equalTo(usageLabel.snp.bottom).offset(3)
       $0.leading.equalTo(titleLabel)
       $0.height.equalTo(20)
+      $0.width.equalTo(80)
       $0.bottom.equalTo(guide)
     }
-    showDetailButton.isSelected = true
     
     sideButton.snp.makeConstraints {
       $0.top.trailing.bottom.equalTo(contentView)
