@@ -19,6 +19,8 @@ class UserCouponView: UIView {
     button.setTitleColor(.black, for: .normal)
     button.titleLabel?.font = .boldSystemFont(ofSize: CommonUI.titleTextFontSize)
     button.backgroundColor = .white
+    button.layer.borderWidth = 1
+    button.layer.borderColor = UIColor.systemGray4.cgColor
     return button
   }()
   
@@ -28,6 +30,8 @@ class UserCouponView: UIView {
     button.setTitleColor(.black, for: .normal)
     button.titleLabel?.font = .boldSystemFont(ofSize: CommonUI.titleTextFontSize)
     button.backgroundColor = .white
+    button.layer.borderWidth = 1
+    button.layer.borderColor = UIColor.systemGray4.cgColor
     return button
   }()
   
@@ -55,7 +59,7 @@ class UserCouponView: UIView {
     
     myCouponButton.snp.makeConstraints {
       $0.top.equalTo(safeGuide)
-      $0.leading.equalTo(couponBookButton.snp.trailing)
+      $0.leading.equalTo(couponBookButton.snp.trailing).offset(-1)
       $0.trailing.equalTo(safeGuide.snp.trailing)
       $0.width.equalTo(couponBookButton.snp.width)
       $0.height.equalTo(66)

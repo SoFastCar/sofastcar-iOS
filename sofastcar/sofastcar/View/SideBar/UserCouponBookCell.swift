@@ -112,7 +112,7 @@ class UserCouponBookCell: UITableViewCell {
   
   private func configureCouponUI() {
     guard let couponData = couponData else { return }
-    let dotView = DotsLineView()
+    let dotView = DotsVerticalLineView()
     
     [mainImageView, titleLabel, discriptionLabel, usageLabel, showDetailButton, dotView, sideButton].forEach {
       contentView.addSubview($0)
@@ -164,10 +164,10 @@ class UserCouponBookCell: UITableViewCell {
     sideButton.imageView?.tintColor = .white
     
     dotView.snp.makeConstraints {
-      $0.trailing.equalTo(sideButton.snp.leading).offset(-1)
+      $0.trailing.equalTo(sideButton.snp.leading)
       $0.top.bottom.equalTo(contentView)
-      $0.width.equalTo(10)
+      $0.width.equalTo(3)
     }
-    dotView.drawVertical(dotView.frame)
+    dotView.draw(dotView.frame)
   }
 }

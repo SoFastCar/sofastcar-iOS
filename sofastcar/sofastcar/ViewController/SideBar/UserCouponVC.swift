@@ -66,7 +66,6 @@ class UserCouponVC: UIViewController {
       $0.leading.trailing.equalTo(myView.guide)
       $0.bottom.equalToSuperview()
     }
-    
     tableView.dataSource = self
     tableView.backgroundColor = .systemGray6
     tableView.layoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 30, right: 0)
@@ -75,7 +74,6 @@ class UserCouponVC: UIViewController {
     tableView.separatorStyle = .none
     tableView.sectionHeaderHeight = 10
     tableView.sectionFooterHeight = 10
-    
   }
   
   // MARK: - Handler
