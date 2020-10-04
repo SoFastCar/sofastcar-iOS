@@ -55,12 +55,13 @@ class MainVC: UIViewController {
     let setMyPositionButton = UIButton()
     let pairingButton = UIButton()
     
-    // Socar Zone, Socar List Data
+    // Socar Zone, Socar List Data, Price Data
     var socarZoneDataList: [SocarZoneData] = []
     var selectedSocarZone: SocarZoneData?
     var socarListDataList: SocarListData?
     var socarListData: [SocarList]?
     var selectedSocar: SocarList?
+    var pricesByTime: PriceByTimes?
     var calculatedCarPrice: [Int] = []
     var selectedCarPrice: Int = 0
     
@@ -459,7 +460,7 @@ class MainVC: UIViewController {
                             guard let responseCode = response as? HTTPURLResponse,
                                 (200...400).contains(responseCode.statusCode) else { return print("response: \(response ?? URLResponse())") }
                             guard let responseData = data else { return print("No data")}
-                            print(responseData)
+                            print("쏘카 리스트 데이터: \(responseData)")
                             let jsonDecoder = JSONDecoder()
                             do {
                                 let decodedData = try jsonDecoder.decode(SocarListData.self, from: responseData)
@@ -474,6 +475,35 @@ class MainVC: UIViewController {
                             }
                         }
                         testTask.resume()
+                        
+                        // Price Info Update
+                        let dateTimeStart = Time.getTimeString(type: .castYYYYMMDDHHmm, date: self.newStartDate)
+                        let dateTimeEnd = Time.getTimeString(type: .castYYYYMMDDHHmm, date: self.newEndDate)
+                        print(dateTimeStart, dateTimeEnd)
+                        guard let getPriceUrl = URL(string: "https://sofastcar.moorekwon.xyz/carzones/\(data?[index].id ?? 260)/info?date_time_start=\(dateTimeStart)&date_time_end=\(dateTimeEnd)") else { return false }
+                        var getPriceRequest = URLRequest(url: getPriceUrl)
+                        getPriceRequest.httpMethod = "GET"
+                        getPriceRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+                        getPriceRequest.addValue("JWT \(UserDefaults.getUserAuthTocken() ?? "")", forHTTPHeaderField: "Authorization")
+                        let getPriceTask = URLSession.shared.dataTask(with: getPriceRequest) {(data, response, error) in
+                            guard error == nil else { return print("error: \(error!.localizedDescription)")}
+                            guard let responseCode = response as? HTTPURLResponse,
+                                (200...400).contains(responseCode.statusCode) else { return print("response: \(response ?? URLResponse())") }
+                            guard let responseData = data else { return print("No data")}
+                            print("가격 데이터: \(responseData)")
+                            let jsonDecoder = JSONDecoder()
+                            do {
+                                let decodedData = try jsonDecoder.decode(PriceByTimes.self, from: responseData)
+                                self.pricesByTime = decodedData
+                                print("가격 가져오기 성공")
+//                                DispatchQueue.main.async {
+//                                    self.carListView.carListTableView.reloadData()
+//                                }
+                            } catch {
+                                print("가격 가져오기 실패")
+                            }
+                        }
+                        getPriceTask.resume()
                         
                         // Car List 팝업 by View
                         UIView.animateKeyframes(withDuration: 1, delay: 0, animations: {
@@ -753,7 +783,7 @@ extension MainVC: UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: CarListTableViewCell.identifier, for: indexPath) as? CarListTableViewCell else { return UITableViewCell() }
         cell.selectionStyle = .none
         cell.separatorInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
-        
+        print(socarListData?[indexPath.row].name, pricesByTime?.cars[indexPath.row].name)
         calculatedCarPrice.append(divideRendTotalTimeByHalfHour * (socarListData?[indexPath.row].carPrices.standardPrice ?? 0))
         cell.carInfoConfiguration(carImage: socarListData?[indexPath.row].image ?? "", carName: socarListData?[indexPath.row].name ?? "", carPrice: calculatedCarPrice[indexPath.row], availableDiscount: socarListData?[indexPath.row].isEvent ?? false)
         
