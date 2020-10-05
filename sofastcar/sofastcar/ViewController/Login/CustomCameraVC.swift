@@ -9,6 +9,7 @@
 import UIKit
 import SnapKit
 import AVFoundation
+import Vision
 
 class CustomCameraVC: UIViewController {
   // MARK: - Properties
@@ -22,8 +23,10 @@ class CustomCameraVC: UIViewController {
   var photoOutput: AVCapturePhotoOutput?
   
   var cameraPreviewLayer: AVCaptureVideoPreviewLayer?
+  let videoDataOutput = AVCaptureVideoDataOutput()
   
   var image: UIImage?
+  var isRecognizeImageInRect: Bool = false
   
   // MARK: - LifeCycle
   override func viewDidLoad() {
@@ -86,6 +89,15 @@ class CustomCameraVC: UIViewController {
       photoOutput = AVCapturePhotoOutput()
       photoOutput?.setPreparedPhotoSettingsArray([AVCapturePhotoSettings(format: [AVVideoCodecKey: AVVideoCodecType.jpeg])], completionHandler: nil)
       captureSession.addOutput(photoOutput!)
+      
+      self.videoDataOutput.videoSettings = [(kCVPixelBufferPixelFormatTypeKey as NSString): NSNumber(value: kCVPixelFormatType_32BGRA)] as [String: Any]
+      videoDataOutput.alwaysDiscardsLateVideoFrames = true
+      videoDataOutput.setSampleBufferDelegate(self, queue: DispatchQueue(label: "camera_frame_processing_queue"))
+//      videoDataOutput.setSampleBufferDelegate(self, queue: DispatchQueue(label: "MyQueue"))
+      captureSession.addOutput(self.videoDataOutput)
+      guard let connection = self.videoDataOutput.connection(with: AVMediaType.video),
+            connection.isVideoOrientationSupported else { return }
+      connection.videoOrientation = .portrait
     } catch {
       print(error)
     }
@@ -93,14 +105,114 @@ class CustomCameraVC: UIViewController {
   
   private func setupPreviewLayer() {
     cameraPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
-    cameraPreviewLayer?.videoGravity = AVLayerVideoGravity.resizeAspectFill
-    cameraPreviewLayer?.connection?.videoOrientation = AVCaptureVideoOrientation.portrait
+    cameraPreviewLayer?.videoGravity = .resizeAspectFill
+    cameraPreviewLayer?.connection?.videoOrientation = .portrait
     cameraPreviewLayer?.frame = self.view.frame
     myView.layer.insertSublayer(cameraPreviewLayer!, at: 0)
   }
   
   private func startRunningCAptureSession() {
     captureSession.startRunning()
+  }
+  
+  // MARK: - Setting Vision For Recognize Rectangle
+  private func detectRectangle(in image: CVPixelBuffer) {
+    let request = VNDetectRectanglesRequest(completionHandler: { (request: VNRequest, _: Error?) in
+      DispatchQueue.main.async {
+        guard let results = request.results as? [VNRectangleObservation] else { return }
+        guard let rect = results.first else { return }
+        self.drawBoundingBox(rect: rect)
+        //        if self.isTapped{
+        //          self.isTapped = false
+        //          self.doPerspectiveCorrection(rect, from: image)
+        //        }
+      }
+    })
+    request.minimumAspectRatio = VNAspectRatio(1.5)
+    request.maximumAspectRatio = VNAspectRatio(1.6)
+    request.minimumSize = Float(0.4)
+    request.maximumObservations = 1
+    
+    let imageRequestHandler = VNImageRequestHandler(cvPixelBuffer: image, options: [:])
+    try? imageRequestHandler.perform([request])
+  }
+  
+  func drawBoundingBox(rect: VNRectangleObservation) {
+    guard let cameraPreviewLayer = cameraPreviewLayer else { return }
+    let transform = CGAffineTransform(scaleX: 1, y: -1).translatedBy(x: 0, y: -cameraPreviewLayer.frame.height)
+    let scale = CGAffineTransform.identity.scaledBy(x: cameraPreviewLayer.frame.width, y: cameraPreviewLayer.frame.height)
+    let bounds = rect.boundingBox.applying(scale).applying(transform)
+    createRecongSucessLayer(in: bounds)
+  }
+  
+  private func createRecongSucessLayer(in rect: CGRect) {
+    var topRecSucess = false
+    var bottomRecSucess = false
+    if rect.minY > myView.rect.minY { topRecSucess = true }
+    if rect.maxY < myView.rect.maxY { bottomRecSucess = true }
+    myView.regonSucessTopLine.backgroundColor = topRecSucess == true ? CommonUI.mainBlue : .clear
+    myView.regonSucessBottomLine.backgroundColor = bottomRecSucess == true ? CommonUI.mainBlue : .clear
+    isRecognizeImageInRect = false
+//    guard isRecognizeImageInRect == false else { return }
+    if topRecSucess && bottomRecSucess == true {
+      isRecognizeImageInRect = true
+    }
+  }
+  
+  // MARK: - Vision For Recognize Text
+  private func detectTextRectangle(in image: CVPixelBuffer) {
+    let request = VNDetectTextRectanglesRequest { (request, error) in
+      if let error = error {
+        print("Error", error.localizedDescription)
+        return
+      } else {
+        DispatchQueue.main.async {
+          guard let results = request.results as? [VNTextObservation] else { return }
+          self.drawTextBoundingBox(rect: results)
+        }
+      }
+    }
+    request.reportCharacterBoxes = true
+    
+    let imageRequestHandler = VNImageRequestHandler(cvPixelBuffer: image, options: [:])
+    try? imageRequestHandler.perform([request])
+  }
+  
+  func drawTextBoundingBox(rect: [VNRectangleObservation]) {
+    guard let cameraPreviewLayer = cameraPreviewLayer else { return }
+    let transform = CGAffineTransform(scaleX: 1, y: -1).translatedBy(x: 0, y: -cameraPreviewLayer.frame.height)
+    let scale = CGAffineTransform.identity.scaledBy(x: cameraPreviewLayer.frame.width, y: cameraPreviewLayer.frame.height)
+    rect.forEach {
+      let bounds = $0.boundingBox.applying(scale).applying(transform)
+      createTextBox(in: bounds)
+    }
+  }
+  
+  private func createTextBox(in bounds: CGRect) {
+    let layer = CALayer()
+    layer.borderWidth = 2
+    layer.borderColor = UIColor.green.cgColor
+    layer.frame = bounds
+    cameraPreviewLayer?.addSublayer(layer)
+  }
+  
+  fileprivate func boundingBox(forRegionOfInterest: CGRect, withinImageBounds bounds: CGRect) -> CGRect {
+    let imageWidth = bounds.width
+    let imageHeight = bounds.height
+    
+    // Begin with input rect.
+    var rect = forRegionOfInterest
+    
+    // Reposition origin.
+    rect.origin.x *= imageWidth
+    rect.origin.x += bounds.origin.x
+    rect.origin.y = (1 - rect.origin.y) * imageHeight + bounds.origin.y
+    
+    // Rescale normalized coordinates.
+    rect.size.width *= imageWidth
+    rect.size.height *= imageHeight
+    
+    return rect
   }
   
   // MARK: - button Action
@@ -117,9 +229,55 @@ class CustomCameraVC: UIViewController {
 
 extension CustomCameraVC: AVCapturePhotoCaptureDelegate {
   func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
+    print("Get Image")
     if let imageDate = photo.fileDataRepresentation() {
       print(imageDate)
       image = UIImage(data: imageDate)
+      myView.backgroundView.image = image
+      captureSession.stopRunning()
+      myView.activityIndicator.startAnimating()
+    }
+  }
+}
+
+extension CustomCameraVC: AVCaptureVideoDataOutputSampleBufferDelegate {
+  func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
+    guard let frame = CMSampleBufferGetImageBuffer(sampleBuffer) else {
+      debugPrint("unable to get image from sample buffer")
+      return
+    }
+    self.detectRectangle(in: frame)
+    if isRecognizeImageInRect == true {
+      self.detectTextRectangle(in: frame)
+    }
+  }
+}
+
+// Convert UIImageOrientation to CGImageOrientation for use in Vision analysis.
+extension CGImagePropertyOrientation {
+  init(_ uiImageOrientation: UIImage.Orientation) {
+    switch uiImageOrientation {
+    case .up: self = .up
+    case .down: self = .down
+    case .left: self = .left
+    case .right: self = .right
+    case .upMirrored: self = .upMirrored
+    case .downMirrored: self = .downMirrored
+    case .leftMirrored: self = .leftMirrored
+    case .rightMirrored: self = .rightMirrored
+    @unknown default:
+      fatalError()
+    }
+  }
+}
+
+extension CIImage {
+  func toUIImage() -> UIImage? {
+    let context: CIContext = CIContext.init(options: nil)
+    if let cgImage: CGImage = context.createCGImage(self, from: self.extent) {
+      return UIImage(cgImage: cgImage)
+    } else {
+      return nil
     }
   }
 }
