@@ -15,9 +15,11 @@ class Time {
   
   // 참고 URL: https://ownstory.tistory.com/21
   enum PresnetDateString: String {
+    case castYYYYMMDDHHmm = "YYYYMMddHHmm"
     case castMddEHHmm = "M/dd (E) HH:mm"
     case castMddEHH = "M/dd (E) HH"
     case castMMddE = "MM / dd (E)"
+    case castMMd = "MM/d"
     case todayE = "오늘 (E)"
     case todayH = "오늘 H"
     case todayHHmm = "오늘 HH:mm"
@@ -87,6 +89,21 @@ class Time {
     }
     return returnString
   }
+    
+    static func getStartEndTimeShowLabelShort(start: Date) -> String {
+      var returnString = ""
+      let todayString = Time.getTimeString(type: .dayd, date: Date())
+      let tommorowString = Time.getTimeString(type: .dayd, date: Date().addingTimeInterval(TimeInterval(day)))
+      // start Time
+      if todayString == Time.getTimeString(type: .dayd, date: start) {
+        returnString.append("\(Time.getTimeString(type: .todayHHmm, date: start))")
+      } else if tommorowString == Time.getTimeString(type: .dayd, date: start) {
+        returnString.append("\(Time.getTimeString(type: .tommorowHHmm, date: start))")
+      } else {
+        returnString.append("\(Time.getTimeString(type: .castMddEHHmm, date: start))")
+      }
+      return returnString
+    }
   
   static func getDivideRentTodalTimeByHalfHour(start: Date, end: Date) -> Int {
     return Int((end.timeIntervalSince1970 - start.timeIntervalSince1970))/Time.hour*2

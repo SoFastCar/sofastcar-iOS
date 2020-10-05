@@ -134,7 +134,6 @@ extension UserDetailVC: UITableViewDataSource, UITableViewDelegate {
   func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
     let label = UILabel()
     if sectionTitleArray[section] == .blank || sectionTitleArray[section] == .logoutButton {
-      print("HeaderSection")
       label.frame = .zero
       return label
     }
@@ -146,7 +145,6 @@ extension UserDetailVC: UITableViewDataSource, UITableViewDelegate {
   }
   
   func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-    print(sectionTitleArray.count)
     if section == 0 { return 0 }
     if section == sectionTitleArray.count - 2 { return 0 }
     return 50

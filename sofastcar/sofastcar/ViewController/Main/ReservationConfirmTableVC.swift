@@ -24,6 +24,7 @@ class ReservationConfirmTableVC: UITableViewController {
   // MARK: - Properties
   var socarZoneData: SocarZoneData?
   var insuranceData: Insurance?
+  var insuranceDataArry: [Insurance]?
   var socarData: SocarList? {
     didSet {
       isSocarSaveCar = isSaveCarCheck()
@@ -46,6 +47,8 @@ class ReservationConfirmTableVC: UITableViewController {
   var isSocarSaveCar: Bool = false
   var isElectronicCar: Bool = false
   var isBurom: Bool = false
+  
+  let statusBar =  UIView()
   
   let reservationCostInfoButton: UIButton = {
     let button = UIButton()
@@ -82,9 +85,18 @@ class ReservationConfirmTableVC: UITableViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    configureStatusBar()
     configureNavigationContoller()
     configureTableHeaderView()
     configureReservationConfirmButton()
+  }
+  
+  func configureStatusBar() {
+    let window = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
+    guard let statusBarFrame = window?.windowScene?.statusBarManager?.statusBarFrame else { return }
+    statusBar.frame = statusBarFrame
+    statusBar.backgroundColor = .white
+    UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.addSubview(statusBar)
   }
   
   override func viewWillAppear(_ animated: Bool) {
@@ -224,6 +236,7 @@ class ReservationConfirmTableVC: UITableViewController {
 extension ReservationConfirmTableVC: ResrvationConfirmCellDelegate {
   func tapChangeInsuranceButton(forCell: ReservationConfirmCustomCell) {
     let insurancePopVC = InsurancePopVC()
+    insurancePopVC.updatedInsuranceData = insuranceDataArry
     insurancePopVC.modalPresentationStyle = .overFullScreen
     present(insurancePopVC, animated: false, completion: {
       insurancePopVC.presnetWithAnimate()

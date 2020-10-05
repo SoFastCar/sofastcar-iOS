@@ -55,18 +55,19 @@ class MainVC: UIViewController {
     let setMyPositionButton = UIButton()
     let pairingButton = UIButton()
     
-    // Socar Zone, Socar List Data
+    // Socar Zone, Socar List Data, Price Data
     var socarZoneDataList: [SocarZoneData] = []
     var selectedSocarZone: SocarZoneData?
     var socarListDataList: SocarListData?
     var socarListData: [SocarList]?
     var selectedSocar: SocarList?
+//    var pricesByTime: PriceByTimes?
     var calculatedCarPrice: [Int] = []
     var selectedCarPrice: Int = 0
     
     // Insurance Item Data
     var insuranceDataList: InsuranceDataList?
-    var insuranceData: [InsuranceData]?
+    var insuranceData: [Insurance]?
     var selectedInsurance = Insurance(name: "", guarantee: 0, cost: 0)
     
     // New Booking Time Data
@@ -93,12 +94,6 @@ class MainVC: UIViewController {
         setupNM()
         setupUI()
         setupConstraint()
-        #if true
-        
-        #else
-        _ = setupMarkers(zoneData: nil)
-        #endif
-        
         activateSearchView()
         networking()
     }
@@ -127,9 +122,9 @@ class MainVC: UIViewController {
         request.addValue("10nhse2dsn", forHTTPHeaderField: "X-NCP-APIGW-API-KEY-ID")
         request.addValue("ZgM6sLboiN7u4kNtFDj0sZeglDjEVtBW3vaLvEg7", forHTTPHeaderField: "X-NCP-APIGW-API-KEY")
         URLSession.shared.dataTask(with: request) { (data, response, error) in
-            guard error == nil else { return print(error?.localizedDescription)}
+            guard error == nil else { return print(error!)}
             guard let responseCode = response as? HTTPURLResponse,
-                (200...300).contains(responseCode.statusCode) else { return print("에러 응답: \(response)") }
+                (200...300).contains(responseCode.statusCode) else { return print("에러 응답: \(response!)") }
             guard let responseData = data else { return print("Geocoding 실패") }
             do {
 //                let serializedData = try JSONSerialization.jsonObject(with: responseData) as? [String: AnyObject]
@@ -245,6 +240,7 @@ class MainVC: UIViewController {
         presentedVC.socarZoneData = selectedSocarZone // 쏘카존 데이터
         presentedVC.socarData = selectedSocar // 차량 데이터
         presentedVC.insuranceData = selectedInsurance // 보험 데이터
+        presentedVC.insuranceDataArry = insuranceData
         presentedVC.startDate = newStartDate // 시작 시간
         presentedVC.endDate = newEndDate // 종료 시간
         presentedVC.rentPrice = selectedCarPrice // 차량 렌트 가격
@@ -426,7 +422,6 @@ class MainVC: UIViewController {
     // MARK: - SetupMarkers
     private func setupMarkers(zoneData data: [SocarZoneData]?) -> Bool {
         if markerTapFlag != true {
-            #if true
             guard data?.count != 0 else { fatalError()}
             if prevNumOfMarkers != 0 {
                 for index in 0...(prevNumOfMarkers - 1) {
@@ -456,7 +451,10 @@ class MainVC: UIViewController {
                         self.carListView.socarZoneInfoButton.configuration(data?[index].name ?? "", data?[index].type ?? "", 
                                                                            data?[index].subInfo ?? "", data?[index].image ?? "")
                         // Socar List Info Update
-                        guard let testUrl = URL(string: "https://sofastcar.moorekwon.xyz/carzones/\(data?[index].id ?? 260)/cars") else { return false }
+                        let dateTimeStart = Time.getTimeString(type: .castYYYYMMDDHHmm, date: self.newStartDate)
+                        let dateTimeEnd = Time.getTimeString(type: .castYYYYMMDDHHmm, date: self.newEndDate)
+                        print(dateTimeStart, dateTimeEnd)
+                        guard let testUrl = URL(string: "https://sofastcar.moorekwon.xyz/carzones/\(data?[index].id ?? 260)/cars?date_time_start=\(dateTimeStart)&date_time_end=\(dateTimeEnd)") else { return false }
                         var testRequest = URLRequest(url: testUrl)
                         testRequest.httpMethod = "GET"
                         testRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -466,7 +464,7 @@ class MainVC: UIViewController {
                             guard let responseCode = response as? HTTPURLResponse,
                                 (200...400).contains(responseCode.statusCode) else { return print("response: \(response ?? URLResponse())") }
                             guard let responseData = data else { return print("No data")}
-                            print(responseData)
+                            print("쏘카 리스트 데이터: \(responseData)")
                             let jsonDecoder = JSONDecoder()
                             do {
                                 let decodedData = try jsonDecoder.decode(SocarListData.self, from: responseData)
@@ -481,6 +479,35 @@ class MainVC: UIViewController {
                             }
                         }
                         testTask.resume()
+                        
+                        // Price Info Update
+//                        let dateTimeStart = Time.getTimeString(type: .castYYYYMMDDHHmm, date: self.newStartDate)
+//                        let dateTimeEnd = Time.getTimeString(type: .castYYYYMMDDHHmm, date: self.newEndDate)
+//                        print(dateTimeStart, dateTimeEnd)
+//                        guard let getPriceUrl = URL(string: "https://sofastcar.moorekwon.xyz/carzones/\(data?[index].id ?? 260)/info?date_time_start=\(dateTimeStart)&date_time_end=\(dateTimeEnd)") else { return false }
+//                        var getPriceRequest = URLRequest(url: getPriceUrl)
+//                        getPriceRequest.httpMethod = "GET"
+//                        getPriceRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+//                        getPriceRequest.addValue("JWT \(UserDefaults.getUserAuthTocken() ?? "")", forHTTPHeaderField: "Authorization")
+//                        let getPriceTask = URLSession.shared.dataTask(with: getPriceRequest) {(data, response, error) in
+//                            guard error == nil else { return print("error: \(error!.localizedDescription)")}
+//                            guard let responseCode = response as? HTTPURLResponse,
+//                                (200...400).contains(responseCode.statusCode) else { return print("response: \(response ?? URLResponse())") }
+//                            guard let responseData = data else { return print("No data")}
+//                            print("가격 데이터: \(responseData)")
+//                            let jsonDecoder = JSONDecoder()
+//                            do {
+//                                let decodedData = try jsonDecoder.decode(PriceByTimes.self, from: responseData)
+//                                self.pricesByTime = decodedData
+//                                print("가격 가져오기 성공")
+////                                DispatchQueue.main.async {
+////                                    self.carListView.carListTableView.reloadData()
+////                                }
+//                            } catch {
+//                                print("가격 가져오기 실패")
+//                            }
+//                        }
+//                        getPriceTask.resume()
                         
                         // Car List 팝업 by View
                         UIView.animateKeyframes(withDuration: 1, delay: 0, animations: {
@@ -506,38 +533,6 @@ class MainVC: UIViewController {
                     return true
                 }
             }
-            
-            #else
-            testMarker.position = NMGLatLng(lat: defaultMarkerPosition.lat, lng: defaultMarkerPosition.lng)
-            testMarker.mapView = naverMapView.mapView
-            testMarker.touchHandler = { (overlay) in
-                guard let marker = overlay as? NMFMarker else { return false }
-                self.markerTapFlag = true
-                self.carListOnTopFlag = true
-                marker.iconImage = NMFOverlayImage(name: "mSNormalBlue")
-                self.callPositionMarker.mapView = nil
-                self.carListView.socarZoneInfoButton.configuration(["성수", "강남"].randomElement() ?? "", ["지상", "지하"].randomElement() ?? "", 
-                                                                   ["좋음", "나쁨"].randomElement() ?? "", "서초역-1")
-                // Car List 팝업 by View
-                UIView.animateKeyframes(withDuration: 1, delay: 0, animations: {
-                    UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.5, animations: {
-                        self.setBookingTimeButton.frame.origin.y = self.view.frame.height
-                        self.carListView.frame.origin.y = self.view.center.y
-                        self.naverMapView.mapView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: self.view.center.y, right: 0)
-                        self.topView.alpha = 0
-                        self.backCircleButton.isHidden = false
-                    })
-                    UIView.addKeyframe(withRelativeStartTime: 0.5, relativeDuration: 1, animations: {
-                        self.carListView.frame.origin.y = self.view.center.y
-                    })
-                })
-                let camUpdate = NMFCameraUpdate(position: NMFCameraPosition(marker.position, zoom: 16))
-                camUpdate.animation = .fly
-                camUpdate.animationDuration = 0.5
-                self.naverMapView.mapView.moveCamera(camUpdate)
-                return true   
-            }
-            #endif
         } else {
             
         }
@@ -748,8 +743,13 @@ extension MainVC: NMFMapViewCameraDelegate {
         let meterPerPixel = mapView.projection.metersPerPixel(atLatitude: camPosition.lat, zoom: camZoom)
         
         // 검색 바 Geocoding
-        nmReveseGeocoding(of: "\(camPosition.lng),\(camPosition.lat)")
-        callPositionMarker.position = camPosition
+        if searchVCDismissFlag {
+            
+        } else {
+            nmReveseGeocoding(of: "\(camPosition.lng),\(camPosition.lat)")
+            callPositionMarker.position = camPosition
+        }
+        searchVCDismissFlag = false
         
         // 반경 쏘카존 요청
         fetchSocarZone(lat: camPosition.lat, lng: camPosition.lng, dist: meterPerPixel)
@@ -759,34 +759,7 @@ extension MainVC: NMFMapViewCameraDelegate {
 
 // MARK: - Extenstion(Gesture)
 extension MainVC: UIGestureRecognizerDelegate {
-//    
-//    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive press: UIPress) -> Bool {
-//        print(#function, "press")
-//        return true
-//    }
-//    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive event: UIEvent) -> Bool {
-//        print(#function, "event")
-//        return true
-//    }
-//    
-//    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-//        print(#function, "touch")
-//        return true
-//    }
-//    
-//    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-//        print(#function)
-//        if topAreaFlag,
-//            !carListOnTopFlag {
-//            carListView.carListTableView.isScrollEnabled = true
-//            return true
-//        } else {
-//            carListView.carListTableView.isScrollEnabled = false
-//            return true
-//        }
-//    }
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-//        print(#function)
         if topAreaFlag {
             if carListOnTopFlag {
                 print("1, topAreaFlag : \(topAreaFlag), carListOnTopFlag: \(carListOnTopFlag)")
@@ -794,7 +767,6 @@ extension MainVC: UIGestureRecognizerDelegate {
                 return true
             } else {
                 print("2, topAreaFlag : \(topAreaFlag), carListOnTopFlag: \(carListOnTopFlag)")
-//              carListView.carListTableView.isScrollEnabled = true
                 return false
             }  
         } else {
@@ -803,52 +775,21 @@ extension MainVC: UIGestureRecognizerDelegate {
             return true
         }
     }
-    
-//    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRequireFailureOf otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-//
-//        if topAreaFlag,
-//            !carListOnTopFlag {
-//            otherGestureRecognizer.
-//            return false
-//        } else {
-//            print("2")
-//            return true
-//        }
-//    }
-//    
-//    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-//        if topAreaFlag,
-//            !carListOnTopFlag {
-//            print("3")
-//            return false
-//        } else {
-//            print("4")
-//            return true
-//        }
-//    }
 }
 
 // MARK: - Extension(TableView)
 extension MainVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        #if true
         return socarListData?.count ?? 0
-        #else
-        return 30
-        #endif
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: CarListTableViewCell.identifier, for: indexPath) as? CarListTableViewCell else { return UITableViewCell() }
         cell.selectionStyle = .none
         cell.separatorInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
-        #if true
-        calculatedCarPrice.append(divideRendTotalTimeByHalfHour * (socarListData?[indexPath.row].carPrices.standardPrice ?? 0))
-        cell.carInfoConfiguration(carImage: socarListData?[indexPath.row].image ?? "", carName: socarListData?[indexPath.row].name ?? "", carPrice: calculatedCarPrice[indexPath.row], availableDiscount: socarListData?[indexPath.row].isEvent ?? false)
-        cell.timeInfoConfiguration(startTime: newStartDate, finishTime: newEndDate)
-        #else
-        cell.carInfoConfiguration(carImage: "SampleCar", carName: "모닝", carPrice: 30000, availableDiscount: true)
-        #endif
+        cell.carInfoConfiguration(carImage: socarListData?[indexPath.row].image ?? "", carName: socarListData?[indexPath.row].name ?? "", carPrice: socarListData?[indexPath.row].termPrice ?? 0, availableDiscount: socarListData?[indexPath.row].isEvent ?? false)
+        cell.timeInfoConfiguration(startTime: newStartDate, endTime: newEndDate)
+        
         return cell
     }
 
@@ -858,61 +799,24 @@ extension MainVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         120
     }
+    
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return (UIScreen.main.bounds.height / 2) * 0.15
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        print(indexPath.row)
         if indexPath.row == 0 {
             carListOnTopFlag = true
         } else {
             carListOnTopFlag = false
         }
     }
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        print(#function)
-    }
-    
-    func scrollViewDidScrollToTop(_ scrollView: UIScrollView) {
-//        print(#function)
-    }
-    
-    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-//        print(#function)
-    }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         insuranceMenuViewFlag = true
-        
-//        guard let testUrl = URL(string: "https://sofastcar.moorekwon.xyz/reservations/<reservation_id>/insurances/") else { return }
-//        var testRequest = URLRequest(url: testUrl)
-//        testRequest.httpMethod = "GET"
-//        testRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
-//        testRequest.addValue("JWT \(UserDefaults.getUserAuthTocken() ?? "")", forHTTPHeaderField: "Authorization")
-//        let testTask = URLSession.shared.dataTask(with: testRequest) {(data, response, error) in
-//            guard error == nil else { return print("error2: \(error!.localizedDescription)")}
-//            guard let responseCode = response as? HTTPURLResponse,
-//                (200...400).contains(responseCode.statusCode) else { return print("response: \(response ?? URLResponse())") }
-//            guard let responseData = data else { return print("No data")}
-//            print(responseData)
-//            let jsonDecoder = JSONDecoder()
-//            do {
-//                let decodedData = try jsonDecoder.decode(InsuranceDataList.self, from: responseData)
-//                self.insuranceDataList = decodedData
-//                self.insuranceData = self.insuranceDataList?.items 
-//                print("면책 상품 가져오기 성공")
-//                DispatchQueue.main.async {
-//                    self.carListView.carListTableView.reloadData()
-//                }
-//            } catch {
-//                print("면책 상품 가져오기 실패")
-//            }
-//        }
-//        testTask.resume()
         self.selectedSocar = socarListData?[indexPath.row]
-        selectedCarPrice = calculatedCarPrice[indexPath.row]
-        self.insuranceData = [InsuranceData(name: "스페셜", guarantee: 10, cost: 10000), InsuranceData(name: "스탠다드", guarantee: 30, cost: 30000), InsuranceData(name: "라이트", guarantee: 50, cost: 50000)]
+        selectedCarPrice = socarListData?[indexPath.row].termPrice ?? 0
+        self.insuranceData = [Insurance(name: "스페셜", guarantee: 10, cost: socarListData?[indexPath.row].insurancePrices.special ?? 0), Insurance(name: "스탠다드", guarantee: 30, cost: socarListData?[indexPath.row].insurancePrices.standard ?? 0), Insurance(name: "라이트", guarantee: 50, cost: socarListData?[indexPath.row].insurancePrices.light ?? 0)]
         insuranceMenuView.special.configuration(symbol: "circle", name: insuranceData?[0].name ?? "불러오기 실패", guarantee: insuranceData?[0].guarantee ?? 0, cost: insuranceData?[0].cost ?? 0)
         insuranceMenuView.standard.configuration(symbol: "circle", name: insuranceData?[1].name ?? "불러오기 실패", guarantee: insuranceData?[1].guarantee ?? 0, cost: insuranceData?[1].cost ?? 0)
         insuranceMenuView.light.configuration(symbol: "circle", name: insuranceData?[2].name ?? "불러오기 실패", guarantee: insuranceData?[2].guarantee ?? 0, cost: insuranceData?[2].cost ?? 0)

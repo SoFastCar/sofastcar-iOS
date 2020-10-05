@@ -32,11 +32,8 @@ class InsuranceMenuView: UIView {
         
         itemStackView.axis = .vertical
         itemStackView.distribution = .fillProportionally
-        special.configuration(symbol: "circle", name: "스페셜", guarantee: 5, cost: 7500)
         itemStackView.addArrangedSubview(special)
-        standard.configuration(symbol: "circle", name: "스탠다드", guarantee: 30, cost: 7500)
         itemStackView.addArrangedSubview(standard)
-        light.configuration(symbol: "circle", name: "라이트", guarantee: 70, cost: 7500)
         itemStackView.addArrangedSubview(light)
         self.addSubview(itemStackView)
         
