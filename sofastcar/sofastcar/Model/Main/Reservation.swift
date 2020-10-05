@@ -8,9 +8,24 @@
 
 import Foundation
 
-class Reservation {
-  var reservationId: String = ""
-  var userId: String = ""
-  var startDate: Date = Date()
-  var endDate: Date = Date()
+struct Reservation: Decodable {
+  var reservationUid: Int
+  var car: Int
+  var zone: Int
+  var insurance: String
+  var startTime: String
+  var endTime: String
+  var creatTime: String
+  var updateTime: String
+  
+  enum CodingKeys: String, CodingKey {
+    case reservationUid = "id"
+    case car
+    case zone
+    case insurance
+    case startTime = "date_time_start"
+    case endTime = "date_time_end"
+    case creatTime = "created_at"
+    case updateTime = "updated_at"
+  }
 }
