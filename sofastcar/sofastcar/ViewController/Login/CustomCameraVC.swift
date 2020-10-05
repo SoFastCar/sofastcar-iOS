@@ -227,6 +227,7 @@ class CustomCameraVC: UIViewController {
   }
 }
 
+// MARK: - AVCapturePhotoCaptureDelegate
 extension CustomCameraVC: AVCapturePhotoCaptureDelegate {
   func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
     print("Get Image")

@@ -117,4 +117,20 @@ class Time {
     let endTime = startTime.addingTimeInterval(TimeInterval(Time.hour*4))
     complete(startTime, endTime)
   }
+  /*
+   "date_time_start": "2020-10-05T05:23:06Z",
+   "date_time_end": "2020-10-05T05:23:06Z"
+   */
+  static func toStringUTC(changeForDate date: Date) -> String {
+    var resultString = ""
+    let dateFormatter = DateFormatter()
+    dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+    dateFormatter.dateFormat = "yyyy-MM-dd"
+    resultString.append(dateFormatter.string(from: date))
+    resultString.append("T")
+    dateFormatter.dateFormat = "hh:mm:ss"
+    resultString.append(dateFormatter.string(from: date))
+    resultString.append("+00:00")
+    return resultString
+  }
 }
