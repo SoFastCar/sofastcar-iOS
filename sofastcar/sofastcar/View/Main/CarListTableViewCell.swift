@@ -149,7 +149,7 @@ class CarListTableViewCell: UITableViewCell {
         let middleDate = Date(timeInterval: TimeInterval(timeSlotPeriod / 2), since: startDateOfTimeSlot)
         let newLeadingConst = (UIScreen.main.bounds.width - 40) * (leadingPeriod / timeSlotPeriod)
         let newTrailingConst = (UIScreen.main.bounds.width - 40) * (trailingPeriod / timeSlotPeriod)
-        print("slot width: \(availableTimeSlotView.frame.width), newLeading: \(newLeadingConst), newTrailing: \(newTrailingConst)")
+//        print("slot width: \(availableTimeSlotView.frame.width), newLeading: \(newLeadingConst), newTrailing: \(newTrailingConst)")
         timeSlotUnitView.snp.updateConstraints({
             $0.leading.equalToSuperview().offset(newLeadingConst)
             $0.trailing.equalToSuperview().offset(-newTrailingConst)
