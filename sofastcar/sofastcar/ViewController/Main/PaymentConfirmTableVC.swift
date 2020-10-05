@@ -170,46 +170,27 @@ class PaymentConfirmTableVC: UITableViewController {
       "date_time_start": utcStartDate,
       "date_time_end": utcEndDate
     ]
-    print(url)
-    print(startDate)
-    print(endDate)
-    print(utcStartDate)
-    print(utcEndDate)
-    
-    print(reservationData)
-
-//    var request = URLRequest(url: url)
-//    request.httpMethod = "POST"
-//    request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-//    request.addValue("JWT \(UserDefaults.getUserAuthTocken()!)", forHTTPHeaderField: "Authorization")
-//    if let data = try? JSONSerialization.data(withJSONObject: reservationData, options: []) {
-//      request.httpBody = data
-//      print("add Date")
-//    }
-//    let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
-//      if let error = error {
-//        print("Error", error.localizedDescription)
-//        return
-//      }
-//      guard let httpResponse = response as? HTTPURLResponse else { return }
-//      print(httpResponse.statusCode)
-//      guard let date = data else { return }
-//      print(date)
-//    }
-//    task.resume()
-//    request.httpBody =
-    /*
-     "date_time_start": "2020-10-05T05:23:06Z",
-     "date_time_end": "2020-10-05T05:23:06Z"
-     */
     
     AF.request(url, method: .post, parameters: reservationData, encoding: JSONEncoding.default, headers: ["Content-Type": "application/json", "Authorization": "JWT \(UserDefaults.getUserAuthTocken()!)"])
       .responseJSON { response in
         if response.response?.statusCode == 201 {
-          print(response.response)
           guard let responseData = response.data else { return }
+          
+          if let jsonData = try? JSONSerialization.jsonObject(with: responseData) as? [String: AnyObject] {
+            print(jsonData)
+            if let reservationUid = jsonData["id"] as? Int {
+              UserDefaults.setReservationUid(uid: reservationUid)
+              let reservationDashboardVC = ReservationDashboardVC()
+              reservationDashboardVC.modalPresentationStyle = .overFullScreen
+              self.present(reservationDashboardVC, animated: false, completion: nil)
+            }
+          }
+          
           if let decodedData = try? JSONDecoder().decode(Reservation.self, from: responseData) {
-            
+            print("start Decodable")
+            print(decodedData.reservationUid)
+          } else {
+            print("Decodable Error")
           }
         } else {
           print("====fail====")

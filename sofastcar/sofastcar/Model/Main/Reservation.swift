@@ -9,14 +9,15 @@
 import Foundation
 
 struct Reservation: Decodable {
-  var reservationUid: Int
-  var car: Int
-  var zone: Int
-  var insurance: String
-  var startTime: String
-  var endTime: String
-  var creatTime: String
-  var updateTime: String
+  let reservationUid: Int
+  let car: Int
+  let zone: Int
+  let insurance: String
+  let startTime: String
+  let endTime: String
+  let creatTime: String
+  let updateTime: String
+  let member: Int
   
   enum CodingKeys: String, CodingKey {
     case reservationUid = "id"
@@ -27,5 +28,20 @@ struct Reservation: Decodable {
     case endTime = "date_time_end"
     case creatTime = "created_at"
     case updateTime = "updated_at"
+    case member
   }
 }
+
+/*
+ [
+ "car": 17, -
+ "insurance": light, -
+ "date_time_start": 2020-10-07T01:40:00Z, -
+ "id": 23,
+ "updated_at": 2020-10-05T13:22:30.530651Z, -
+ "created_at": 2020-10-05T13:22:30.530639Z, -
+ "member": 10, -
+ "date_time_end": 2020-10-07T05:40:00Z, -
+ "zone": 246 -
+ ]
+ */
