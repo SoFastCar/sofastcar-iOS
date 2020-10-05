@@ -46,6 +46,9 @@ struct SocarList: Decodable {
     let safetyOpt: String
     let convenienceOpt: String
     var carPrices: CarPrices
+    let termPrice: Int
+    let insurancePrices: InsurancePrice
+    let timeTables: [TimeTables]
     
     enum CodingKeys: String, CodingKey {
         case fuelType = "fuel_type"
@@ -57,6 +60,9 @@ struct SocarList: Decodable {
         case safetyOpt = "safety_option"
         case convenienceOpt = "convenience_option"
         case carPrices = "car_prices"
+        case termPrice = "term_price"
+        case insurancePrices = "insurance_prices"
+        case timeTables = "time_tables"
         case id
         case number
         case name
@@ -78,4 +84,26 @@ struct CarPrices: Decodable {
     case midPricePerKm = "mid_price_per_km"
     case maxPricePerKm = "max_price_per_km"
   }
+}
+
+struct InsurancePrice: Decodable {
+    let special: Int
+    let standard: Int
+    let light: Int
+}
+
+struct TimeTables: Decodable {
+    let id: Int
+    let zone: Int
+    let car: Int
+    let dateTimeStart: String
+    let dateTimeEnd: String
+
+    enum CodingKeys: String, CodingKey {
+        case dateTimeStart = "date_time_start"
+        case dateTimeEnd = "date_time_end"
+        case id
+        case zone
+        case car
+    }
 }

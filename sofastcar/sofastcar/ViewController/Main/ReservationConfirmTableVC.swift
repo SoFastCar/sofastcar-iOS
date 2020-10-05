@@ -24,6 +24,7 @@ class ReservationConfirmTableVC: UITableViewController {
   // MARK: - Properties
   var socarZoneData: SocarZoneData?
   var insuranceData: Insurance?
+  var insuranceDataArry: [Insurance]?
   var socarData: SocarList? {
     didSet {
       isSocarSaveCar = isSaveCarCheck()
@@ -235,6 +236,7 @@ class ReservationConfirmTableVC: UITableViewController {
 extension ReservationConfirmTableVC: ResrvationConfirmCellDelegate {
   func tapChangeInsuranceButton(forCell: ReservationConfirmCustomCell) {
     let insurancePopVC = InsurancePopVC()
+    insurancePopVC.updatedInsuranceData = insuranceDataArry
     insurancePopVC.modalPresentationStyle = .overFullScreen
     present(insurancePopVC, animated: false, completion: {
       insurancePopVC.presnetWithAnimate()

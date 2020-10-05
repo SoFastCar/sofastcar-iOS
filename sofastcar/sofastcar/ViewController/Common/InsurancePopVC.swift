@@ -12,6 +12,7 @@ class InsurancePopVC: UIViewController {
   // MARK: - Properties
   var insuranceMainView = InsuranceMenuView()
   var selectedInsurance: Insurance?
+    var updatedInsuranceData: [Insurance]?
   
   // MARK: - Life Cycle
   override func viewDidLoad() {
@@ -23,6 +24,9 @@ class InsurancePopVC: UIViewController {
   private func configureLayout() {
     view.backgroundColor = UIColor.black.withAlphaComponent(0)
     view.addSubview(insuranceMainView)
+    insuranceMainView.special.configuration(symbol: "circle", name: "스페셜", guarantee: 10, cost: updatedInsuranceData?[0].cost ?? 0)
+    insuranceMainView.standard.configuration(symbol: "circle", name: "스탠다드", guarantee: 30, cost: updatedInsuranceData?[1].cost ?? 0)
+    insuranceMainView.light.configuration(symbol: "circle", name: "라이트", guarantee: 50, cost: updatedInsuranceData?[2].cost ?? 0)
     insuranceMainView.frame = CGRect(x: 0, y: UIScreen.main.bounds.height,
                                      width: UIScreen.main.bounds.width,
                                      height: 490)
@@ -53,6 +57,11 @@ class InsurancePopVC: UIViewController {
   }
   
   private func dismissWithAnimate() {
+    guard let navi = self.presentingViewController as? UINavigationController else { return }
+    if let presentingVC = navi.viewControllers.last as? ReservationConfirmTableVC {
+        presentingVC.insuranceData = selectedInsurance
+        presentingVC.reloadUsingTimeCell()
+    }
     UIView.animate(withDuration: 0.3) {
       self.view.backgroundColor = UIColor.black.withAlphaComponent(0)
     }
@@ -79,6 +88,7 @@ class InsurancePopVC: UIViewController {
       insuranceMainView.standard.itemCostLabel.textColor = .gray
       insuranceMainView.light.selectSymbolImageView.image = UIImage(systemName: "circle", withConfiguration: sender.symbolConfig)
       insuranceMainView.light.itemCostLabel.textColor = .gray
+      selectedInsurance = updatedInsuranceData?[0]
     // Standard
     case 1:
       sender.selectSymbolImageView.image = UIImage(systemName: "circle.fill", withConfiguration: sender.symbolConfig)
@@ -87,6 +97,7 @@ class InsurancePopVC: UIViewController {
       insuranceMainView.special.itemCostLabel.textColor = .gray
       insuranceMainView.light.selectSymbolImageView.image = UIImage(systemName: "circle", withConfiguration: sender.symbolConfig)
       insuranceMainView.light.itemCostLabel.textColor = .gray
+        selectedInsurance = updatedInsuranceData?[1]
     // Light
     case 2:
       sender.selectSymbolImageView.image = UIImage(systemName: "circle.fill", withConfiguration: sender.symbolConfig)
@@ -95,6 +106,7 @@ class InsurancePopVC: UIViewController {
       insuranceMainView.special.itemCostLabel.textColor = .gray
       insuranceMainView.standard.selectSymbolImageView.image = UIImage(systemName: "circle", withConfiguration: sender.symbolConfig)
       insuranceMainView.standard.itemCostLabel.textColor = .gray
+        selectedInsurance = updatedInsuranceData?[2]
     default:
       break
     }
