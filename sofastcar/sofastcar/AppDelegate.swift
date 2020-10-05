@@ -25,8 +25,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         rootView = reservationDashBoard
       } else {
         changeUserAuthTocken()
-        let mainVC = MainVC()
-        mainVC.socarZoneProvider = SocarZoneProvider()
+        let mainVC = ReservationDashboardVC()
+//        mainVC.socarZoneProvider = SocarZoneProvider()
         rootView = mainVC
       }
     } else {

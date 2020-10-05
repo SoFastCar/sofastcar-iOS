@@ -10,12 +10,14 @@ import UIKit
 import SnapKit
 
 protocol UserStatusAfterReturnViewDelegate: class {
-    func didTapButton(_ sender: UIButton)
+  func didTapButton(_ sender: UIButton)
 }
 
 class UserStatusAfterReturnView: UIView {
   
   weak var delegate: UserStatusAfterReturnViewDelegate?
+  
+  var userStatusViewTopOffset: Constraint?
   
   let closeButton: UIButton = {
     let button = UIButton()
@@ -44,11 +46,12 @@ class UserStatusAfterReturnView: UIView {
     let view = UIView()
     view.backgroundColor = .white
     view.layer.cornerRadius = 5
+    view.alpha = 0
     view.shadowMaker(view: view)
     
     return view
   }()
-
+  
   fileprivate let userLevelLabel: UILabel = {
     let label = UILabel()
     label.text = "Level 4"
@@ -82,7 +85,7 @@ class UserStatusAfterReturnView: UIView {
     
     return view
   }()
-
+  
   fileprivate let userLevelPreviousStatusbar: UIView = {
     let view = UIView()
     view.backgroundColor = UIColor(
@@ -159,6 +162,8 @@ class UserStatusAfterReturnView: UIView {
   fileprivate func setUI() {
     self.backgroundColor = .white
     
+    animation()
+    
     [closeButton, titleLabel, userStatusView, userPaymentDescriptionLabel, detailUsageHistory].forEach {
       self.addSubview($0)
     }
@@ -174,7 +179,7 @@ class UserStatusAfterReturnView: UIView {
     }
     
     userStatusView.snp.makeConstraints {
-      $0.top.equalTo(titleLabel.snp.bottom).offset(30)
+      self.userStatusViewTopOffset =  $0.top.equalTo(titleLabel.snp.bottom).offset(100).constraint
       $0.leading.equalToSuperview().offset(20)
       $0.trailing.equalToSuperview().offset(-20)
       $0.height.equalTo(280)
@@ -244,7 +249,7 @@ class UserStatusAfterReturnView: UIView {
     userLevelAddKilometerStatusbar.snp.makeConstraints {
       $0.top.bottom.equalToSuperview()
       $0.leading.equalTo(userLevelPreviousStatusbar.snp.trailing)
-      $0.width.equalToSuperview().dividedBy(2.5) // 추가 경험치
+      $0.width.equalTo(0) // 추가 경험치
     }
   }
   
@@ -252,5 +257,24 @@ class UserStatusAfterReturnView: UIView {
   
   @objc fileprivate func didTapButton(_ sender: UIButton) {
     delegate?.didTapButton(sender)
+  }
+  
+  // MARK: - Animation
+  
+  func animation() {
+    UIView.animate(withDuration: 0.5, delay: 0, options: [], animations: {
+      self.userStatusView.alpha = 1
+      self.userStatusViewTopOffset?.update(offset: 30)
+      self.layoutIfNeeded()
+    }, completion: nil)
+  }
+  
+  func afterAnimation() {
+    UIView.animate(withDuration: 0.5) {
+      self.userLevelAddKilometerStatusbar.snp.updateConstraints {
+        $0.width.equalTo(100)
+      }
+      self.layoutIfNeeded()
+    }
   }
 }
