@@ -262,7 +262,7 @@ class UserStatusAfterReturnView: UIView {
   // MARK: - Animation
   
   func animation() {
-    UIView.animate(withDuration: 0.5, delay: 0, options: [], animations: {
+    UIView.animate(withDuration: 0.5, delay: 0, animations: {
       self.userStatusView.alpha = 1
       self.userStatusViewTopOffset?.update(offset: 30)
       self.layoutIfNeeded()
