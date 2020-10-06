@@ -11,17 +11,47 @@ import SnapKit
 
 class VehicleCustomCameraView: UIView {
   // MARK: - Init
-  let buttonWidthSize: CGFloat = 80
+  let buttonWidthSize: CGFloat = 70
   
-  let infomationLabel: UILabel = {
+  fileprivate let navigationView: UIView = {
+    let view = UIView()
+    view.backgroundColor = UIColor(
+      red: 19 / 255,
+      green: 22 / 255,
+      blue: 28 / 255,
+      alpha: 1
+    )
+    
+    return view
+  }()
+  
+  fileprivate let captureDescriptionView: UIView = {
+    let view = UIView()
+    view.backgroundColor = UIColor.black.withAlphaComponent(0.3)
+    
+    return view
+  }()
+  
+  fileprivate let captureDescriptionLabel: UILabel = {
     let label = UILabel()
-    label.textColor = CommonUI.mainBlue
+    label.text = "한 면당 최대 5장까지 촬영할 수 있습니다."
+    label.font = UIFont.preferredFont(forTextStyle: .body)
     label.textAlignment = .center
-    label.numberOfLines = 2
-    label.font = .boldSystemFont(ofSize: CommonUI.titleTextFontSize)
-    label.text = "사각형 영역에 맞춘 후\n선명하게 보일 때 촬영해주세요."
+    label.textColor = CommonUI.mainBlue
     
     return label
+  }()
+  
+  fileprivate let controlView: UIView = {
+    let view = UIView()
+    view.backgroundColor = UIColor(
+      red: 19 / 255,
+      green: 22 / 255,
+      blue: 28 / 255,
+      alpha: 1
+    )
+    
+    return view
   }()
   
   lazy var captureButton: UIButton = {
@@ -46,19 +76,32 @@ class VehicleCustomCameraView: UIView {
   }
 
   private func setUI() {
-    [infomationLabel, captureButton].forEach {
+    [navigationView, captureDescriptionView, controlView].forEach {
       addSubview($0)
     }
     
-    infomationLabel.snp.makeConstraints {
-      $0.top.equalTo(self.safeAreaLayoutGuide).offset(50)
-      $0.centerX.equalTo(self.snp.centerX)
+    navigationView.snp.makeConstraints {
+      $0.top.leading.trailing.equalToSuperview()
+      $0.height.equalTo(90)
     }
     
-    captureButton.snp.makeConstraints {
-      $0.bottom.equalTo(infomationLabel.snp.top)
-      $0.centerX.equalTo(self.snp.centerX)
-      $0.width.height.equalTo(buttonWidthSize)
+    captureDescriptionView.snp.makeConstraints {
+      $0.bottom.equalTo(controlView.snp.top)
+      $0.leading.trailing.equalToSuperview()
+      $0.height.equalTo(50)
     }
+    
+    controlView.snp.makeConstraints {
+      $0.leading.bottom.trailing.equalToSuperview()
+      $0.height.equalTo(150)
+    }
+    
+    
+    
+    //    captureButton.snp.makeConstraints {
+//      $0.top.equalTo(navigationView.snp.bottom)
+//      $0.centerX.equalTo(self.snp.centerX)
+//      $0.width.height.equalTo(buttonWidthSize)
+//    }
   }
 }
