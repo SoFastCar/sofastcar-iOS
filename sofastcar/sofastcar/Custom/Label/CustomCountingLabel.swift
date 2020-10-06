@@ -13,14 +13,14 @@ class CustomCountingLabel: UILabel {
   let counterVelocity: Float = 3.0
   
   enum CounterAnimationType {
-    case Linear
-    case EaseIn
-    case EaseOut
+    case linearCounter
+    case easeInCounter
+    case easeOutCounter
   }
   
   enum CounterType {
-    case Int
-    case Float
+    case intType
+    case floatType
   }
   
   var startNumber: Float = 0.0
@@ -35,6 +35,17 @@ class CustomCountingLabel: UILabel {
   var counterType: CounterType!
   var counterAnimationType: CounterAnimationType!
   
+  var currentCounterValue: Float {
+    if progress >= duration {
+      return endNumber
+    }
+    
+    let percentage = Float(progress / duration)
+    let update = updateCounter(counterValue: percentage)
+    
+    return startNumber + (update * (endNumber - startNumber))
+  }
+  
   func count(fromValue: Float, to toValue: Float, withDuration duration: TimeInterval, andAnimationType animationType: CounterAnimationType, andCounterType counterType: CounterType) {
     
     self.startNumber = fromValue
@@ -47,14 +58,17 @@ class CustomCountingLabel: UILabel {
     
     invalidateTimer()
     
+    if duration == 0 {
+      updateText(value: toValue)
+      return
+    }
+    
     timer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(CustomCountingLabel.updateValue), userInfo: nil, repeats: true)
-    
-    
   }
   
   @objc func updateValue() {
     let now = Date.timeIntervalSinceReferenceDate
-    progress = progress + (now - lastUpdate)
+    progress = ( progress + (now - lastUpdate) )
     lastUpdate = now
     
     if progress >= duration {
@@ -62,24 +76,25 @@ class CustomCountingLabel: UILabel {
       progress = duration
     }
     
+    updateText(value: currentCounterValue)
   }
   
   func updateText(value: Float) {
     switch counterType! {
-    case .Int:
-      self.text = "\(Int(value))"
-    case .Float:
-      self.text = "\(Int(value))"
+    case .intType:
+      self.text = "\(Int(value))km"
+    case .floatType:
+      self.text = String(format: "%.2f", value)
     }
   }
   
   func updateCounter(counterValue: Float) -> Float {
     switch counterAnimationType! {
-    case .Linear:
+    case .linearCounter:
       return counterValue
-    case .EaseIn:
+    case .easeInCounter:
       return powf(counterValue, counterVelocity)
-    case .EaseOut:
+    case .easeOutCounter:
       return 1.0 - powf(1.0 - counterValue, counterVelocity)
     }
   }
