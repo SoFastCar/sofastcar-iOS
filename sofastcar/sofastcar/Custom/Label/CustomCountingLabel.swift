@@ -9,5 +9,14 @@
 import UIKit
 
 class CustomCountingLabel: UILabel {
-
+  enum CounterAnimationType {
+    case Linear
+    case EaseIn
+    case EaseOut
+  }
+  
+  enum CounterType {
+    case Int
+    case Float
+  }
 }
