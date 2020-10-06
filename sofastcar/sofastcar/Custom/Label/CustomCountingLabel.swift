@@ -9,6 +9,9 @@
 import UIKit
 
 class CustomCountingLabel: UILabel {
+  
+  let counterVelocity: Float = 3.0
+  
   enum CounterAnimationType {
     case Linear
     case EaseIn
@@ -70,6 +73,17 @@ class CustomCountingLabel: UILabel {
     }
   }
   
+  func updateCounter(counterValue: Float) -> Float {
+    switch counterAnimationType! {
+    case .Linear:
+      return counterValue
+    case .EaseIn:
+      return powf(counterValue, counterVelocity)
+    case .EaseOut:
+      return 1.0 - powf(1.0 - counterValue, counterVelocity)
+    }
+  }
+
   func invalidateTimer() {
     timer?.invalidate()
     timer = nil
