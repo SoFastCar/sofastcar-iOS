@@ -44,7 +44,6 @@
 		BC4F3A23250E024F00B7E1E7 /* ReservationConfirmCustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4F3A21250E024F00B7E1E7 /* ReservationConfirmCustomCell.swift */; };
 		BC4F3A25250E028A00B7E1E7 /* TosVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4F3A24250E028A00B7E1E7 /* TosVC.swift */; };
 		BC4F3A28250E029B00B7E1E7 /* ReservationConfirmTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4F3A26250E029B00B7E1E7 /* ReservationConfirmTableVC.swift */; };
-		BC544E292528A08E00F1F0C7 /* PriceByTimes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC544E282528A08E00F1F0C7 /* PriceByTimes.swift */; };
 		BC56AE3425107FC10044E995 /* SocarListData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC56AE3325107FC10044E995 /* SocarListData.swift */; };
 		BC91B62E250F571100B76398 /* CallZoneData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC91B62D250F571100B76398 /* CallZoneData.swift */; };
 		BC91B630250FA6F200B76398 /* SocarZoneProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC91B62F250FA6F200B76398 /* SocarZoneProvider.swift */; };
@@ -199,7 +198,6 @@
 		BC4F3A21250E024F00B7E1E7 /* ReservationConfirmCustomCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReservationConfirmCustomCell.swift; sourceTree = "<group>"; };
 		BC4F3A24250E028A00B7E1E7 /* TosVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TosVC.swift; sourceTree = "<group>"; };
 		BC4F3A26250E029B00B7E1E7 /* ReservationConfirmTableVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReservationConfirmTableVC.swift; sourceTree = "<group>"; };
-		BC544E282528A08E00F1F0C7 /* PriceByTimes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceByTimes.swift; sourceTree = "<group>"; };
 		BC56AE3325107FC10044E995 /* SocarListData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocarListData.swift; sourceTree = "<group>"; };
 		BC793DBC933237B89DC3FEED /* Pods_sofastcar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_sofastcar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC91B62D250F571100B76398 /* CallZoneData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallZoneData.swift; sourceTree = "<group>"; };
@@ -669,7 +667,6 @@
 				C7F5B5432510BC7900AE0054 /* NMapAddress.swift */,
 				BCDFBCDD251237B2002E4789 /* GeocodingData.swift */,
 				C73D348A251601910075471F /* Reservation.swift */,
-				BC544E282528A08E00F1F0C7 /* PriceByTimes.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -931,7 +928,6 @@
 				C73D349C251879BB0075471F /* DetailSocarZoneInfoCell.swift in Sources */,
 				C7BD348C24F54A5700089F0D /* InitVC.swift in Sources */,
 				C769C82E24FDB69B00DC8226 /* DriverLicenseEnrollinitView.swift in Sources */,
-				BC544E292528A08E00F1F0C7 /* PriceByTimes.swift in Sources */,
 				C7F5B54225106A1800AE0054 /* SocaZoneProvidable.swift in Sources */,
 				C7B29A7A2520C79E00AB081B /* CouponView.swift in Sources */,
 				C7CEF73C2511B07D00C063B0 /* SideBarBottonView.swift in Sources */,
