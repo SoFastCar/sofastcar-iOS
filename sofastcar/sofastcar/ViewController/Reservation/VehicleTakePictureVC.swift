@@ -8,10 +8,12 @@
 
 import UIKit
 import SnapKit
+import MobileCoreServices
 
 class VehicleTakePictureVC: UIViewController {
   
   fileprivate let vehicleTakePictureView = VehicleTakePictureView()
+  fileprivate let picker = UIImagePickerController()
   
   fileprivate lazy var leftNavigationButton: UIBarButtonItem = {
     let barButtonItem = UIBarButtonItem(
@@ -48,6 +50,7 @@ class VehicleTakePictureVC: UIViewController {
   fileprivate func setUI() {
     let guid = view.safeAreaLayoutGuide
     vehicleTakePictureView.customDelegate = self
+    picker.delegate =  self
     
     self.view.backgroundColor = .white
     setNavigation()
@@ -118,18 +121,33 @@ extension VehicleTakePictureVC: VehicleTakePictureViewDelegate {
     switch sender {
     case vehicleTakePictureView.vehicleTakePictureFrontView.vehicleTakePictureButton:
       print("전면")
+      openCamera()
     case vehicleTakePictureView.vehicleTakePicturePassengerFrontSeatView.vehicleTakePictureButton:
       print("보조석 앞면")
+      openCamera()
     case vehicleTakePictureView.vehicleTakePicturePassengerBackSeatView.vehicleTakePictureButton:
       print("보조석 뒷면")
+      openCamera()
     case vehicleTakePictureView.vehicleTakePictureBackView.vehicleTakePictureButton:
       print("후면")
+      openCamera()
     case vehicleTakePictureView.vehicleTakePictureDriveBackSeatView.vehicleTakePictureButton:
       print("운전석 뒷면")
+      openCamera()
     case vehicleTakePictureView.vehicleTakePictureDriveFrontSeatView.vehicleTakePictureButton:
       print("운전석 앞면")
+      openCamera()
     default:
       break
     }
+  }
+}
+
+// MARK: - UIImagePickerControllerDelegate, UINavigationControllerDelegate
+
+extension VehicleTakePictureVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+  func openCamera() {
+    picker.sourceType = .camera
+    present(picker, animated: false, completion: nil)
   }
 }
