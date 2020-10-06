@@ -15,8 +15,8 @@ struct Reservation: Decodable {
   let insurance: String
   let startTime: String
   let endTime: String
-  let creatTime: String
-  let updateTime: String
+//  let creatTime: String
+//  let updateTime: String
   let member: Int
   
   enum CodingKeys: String, CodingKey {
@@ -26,8 +26,8 @@ struct Reservation: Decodable {
     case insurance
     case startTime = "date_time_start"
     case endTime = "date_time_end"
-    case creatTime = "created_at"
-    case updateTime = "updated_at"
+//    case creatTime = "created_at"
+//    case updateTime = "updated_at"
     case member
   }
 }
