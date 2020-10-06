@@ -56,9 +56,14 @@ class VehicleCustomCameraView: UIView {
   
   lazy var captureButton: UIButton = {
     let button = UIButton()
-    button.backgroundColor = .black
+    button.backgroundColor = UIColor(
+      red: 19 / 255,
+      green: 22 / 255,
+      blue: 28 / 255,
+      alpha: 1
+    )
     button.layer.cornerRadius = buttonWidthSize/2
-    button.layer.borderWidth = 6
+    button.layer.borderWidth = 5
     button.layer.borderColor = CommonUI.mainBlue.cgColor
     
     return button
@@ -98,13 +103,7 @@ class VehicleCustomCameraView: UIView {
       $0.height.equalTo(150)
     }
     
-    
-    
-    //    captureButton.snp.makeConstraints {
-//      $0.top.equalTo(navigationView.snp.bottom)
-//      $0.centerX.equalTo(self.snp.centerX)
-//      $0.width.height.equalTo(buttonWidthSize)
-//    }
+    controlUI()
   }
   
   fileprivate func captureDescriptionUI() {
@@ -114,6 +113,18 @@ class VehicleCustomCameraView: UIView {
     
     captureDescriptionLabel.snp.makeConstraints {
       $0.centerX.centerY.equalToSuperview()
+    }
+  }
+  
+  fileprivate func controlUI() {
+    [captureButton].forEach {
+      controlView.addSubview($0)
+    }
+    
+    captureButton.snp.makeConstraints {
+      $0.top.equalToSuperview().offset(30)
+      $0.centerX.equalToSuperview()
+      $0.width.height.equalTo(buttonWidthSize)
     }
   }
 }
