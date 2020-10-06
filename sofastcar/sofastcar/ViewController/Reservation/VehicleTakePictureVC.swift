@@ -29,7 +29,7 @@ class VehicleTakePictureVC: UIViewController {
     let button = UIButton()
     button.setTitle("외관에 이상이 없습니다", for: .normal)
     button.backgroundColor = CommonUI.mainBlue
-    button.addTarget(self, action: #selector(buttonAction(_:)), for: .touchUpInside)
+    button.addTarget(self, action: #selector(startButtonAction(_:)), for: .touchUpInside)
     button.contentHorizontalAlignment = .center
     button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 20, right: 0)
     
@@ -47,6 +47,7 @@ class VehicleTakePictureVC: UIViewController {
   
   fileprivate func setUI() {
     let guid = view.safeAreaLayoutGuide
+    vehicleTakePictureView.customDelegate = self
     
     self.view.backgroundColor = .white
     setNavigation()
@@ -92,7 +93,7 @@ class VehicleTakePictureVC: UIViewController {
     }
   }
   
-  @objc func buttonAction(_ sender: UIButton) {
+  @objc func startButtonAction(_ sender: UIButton) {
     print("\(sender) button press")
     switch sender {
     case vehicleCheckStartButton:
@@ -104,6 +105,29 @@ class VehicleTakePictureVC: UIViewController {
         self.present(vehicleTakePictureVC, animated: true, completion: nil)
       }))
       self.present(alert, animated: true, completion: nil)
+    default:
+      break
+    }
+  }
+}
+
+// MARK: - VehicleTakePictureViewDelegate
+
+extension VehicleTakePictureVC: VehicleTakePictureViewDelegate {
+  func buttonAction(_ sender: UIButton) {
+    switch sender {
+    case vehicleTakePictureView.vehicleTakePictureFrontView.vehicleTakePictureButton:
+      print("전면")
+    case vehicleTakePictureView.vehicleTakePicturePassengerFrontSeatView.vehicleTakePictureButton:
+      print("보조석 앞면")
+    case vehicleTakePictureView.vehicleTakePicturePassengerBackSeatView.vehicleTakePictureButton:
+      print("보조석 뒷면")
+    case vehicleTakePictureView.vehicleTakePictureBackView.vehicleTakePictureButton:
+      print("후면")
+    case vehicleTakePictureView.vehicleTakePictureDriveBackSeatView.vehicleTakePictureButton:
+      print("운전석 뒷면")
+    case vehicleTakePictureView.vehicleTakePictureDriveFrontSeatView.vehicleTakePictureButton:
+      print("운전석 앞면")
     default:
       break
     }
