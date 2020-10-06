@@ -110,6 +110,11 @@
 		C7B29ABA252348D700AB081B /* EventAndBenefitFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B29AB9252348D700AB081B /* EventAndBenefitFooterView.swift */; };
 		C7B29AC0252365D900AB081B /* FriendsInciteVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B29ABF252365D900AB081B /* FriendsInciteVC.swift */; };
 		C7B29AC42523661900AB081B /* FriendsInviteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B29AC32523661900AB081B /* FriendsInviteView.swift */; };
+		C7B29ACC2528AC3D00AB081B /* UserCouponVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B29ACB2528AC3D00AB081B /* UserCouponVC.swift */; };
+		C7B29AD025291E5400AB081B /* UserCouponView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B29ACF25291E5400AB081B /* UserCouponView.swift */; };
+		C7B29AD425292D1400AB081B /* CouponBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B29AD325292D1400AB081B /* CouponBook.swift */; };
+		C7B29AD8252930CD00AB081B /* UserCouponBookCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B29AD7252930CD00AB081B /* UserCouponBookCell.swift */; };
+		C7B29ADC2529928A00AB081B /* CouponDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B29ADB2529928A00AB081B /* CouponDetailVC.swift */; };
 		C7BD348C24F54A5700089F0D /* InitVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7BD348B24F54A5700089F0D /* InitVC.swift */; };
 		C7CA53EC2509AA3F008DA68C /* ReservationDetailTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CA53EB2509AA3F008DA68C /* ReservationDetailTableVC.swift */; };
 		C7CA53EE2509AF2F008DA68C /* ReservationDetailHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7CA53ED2509AF2F008DA68C /* ReservationDetailHeader.swift */; };
@@ -263,6 +268,11 @@
 		C7B29AB9252348D700AB081B /* EventAndBenefitFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventAndBenefitFooterView.swift; sourceTree = "<group>"; };
 		C7B29ABF252365D900AB081B /* FriendsInciteVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsInciteVC.swift; sourceTree = "<group>"; };
 		C7B29AC32523661900AB081B /* FriendsInviteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsInviteView.swift; sourceTree = "<group>"; };
+		C7B29ACB2528AC3D00AB081B /* UserCouponVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCouponVC.swift; sourceTree = "<group>"; };
+		C7B29ACF25291E5400AB081B /* UserCouponView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCouponView.swift; sourceTree = "<group>"; };
+		C7B29AD325292D1400AB081B /* CouponBook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouponBook.swift; sourceTree = "<group>"; };
+		C7B29AD7252930CD00AB081B /* UserCouponBookCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCouponBookCell.swift; sourceTree = "<group>"; };
+		C7B29ADB2529928A00AB081B /* CouponDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouponDetailVC.swift; sourceTree = "<group>"; };
 		C7BD348B24F54A5700089F0D /* InitVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitVC.swift; sourceTree = "<group>"; tabWidth = 3; };
 		C7CA53EB2509AA3F008DA68C /* ReservationDetailTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationDetailTableVC.swift; sourceTree = "<group>"; };
 		C7CA53ED2509AF2F008DA68C /* ReservationDetailHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationDetailHeader.swift; sourceTree = "<group>"; };
@@ -488,6 +498,8 @@
 				C7B29A66251DBB0800AB081B /* SocarClubVC.swift */,
 				C7B29AA02522DED400AB081B /* EventAndBenefitsVC.swift */,
 				C7B29ABF252365D900AB081B /* FriendsInciteVC.swift */,
+				C7B29ACB2528AC3D00AB081B /* UserCouponVC.swift */,
+				C7B29ADB2529928A00AB081B /* CouponDetailVC.swift */,
 			);
 			path = SideBar;
 			sourceTree = "<group>";
@@ -504,6 +516,8 @@
 				C7B29AAC2522E56D00AB081B /* EventAndBenefitsCell.swift */,
 				C7B29AB9252348D700AB081B /* EventAndBenefitFooterView.swift */,
 				C7B29AC32523661900AB081B /* FriendsInviteView.swift */,
+				C7B29ACF25291E5400AB081B /* UserCouponView.swift */,
+				C7B29AD7252930CD00AB081B /* UserCouponBookCell.swift */,
 			);
 			path = SideBar;
 			sourceTree = "<group>";
@@ -568,6 +582,7 @@
 			children = (
 				C7B29A8D252181AB00AB081B /* Coupon.swift */,
 				C7B29AB02522E7C800AB081B /* EventBenifits.swift */,
+				C7B29AD325292D1400AB081B /* CouponBook.swift */,
 			);
 			path = SideBar;
 			sourceTree = "<group>";
@@ -904,6 +919,7 @@
 				C7CA53EE2509AF2F008DA68C /* ReservationDetailHeader.swift in Sources */,
 				C769C82B24FDB35600DC8226 /* DriverLicenseEnrollinitVC.swift in Sources */,
 				C790FB1C251343BB00AF98E2 /* InsurancePopVC.swift in Sources */,
+				C7B29AD8252930CD00AB081B /* UserCouponBookCell.swift in Sources */,
 				BC91B636250FA7A200B76398 /* ServiceError.swift in Sources */,
 				BC4F3A11250E01D000B7E1E7 /* SearchVC.swift in Sources */,
 				C72A913A24F5E32A005D464F /* SingUpInitVC.swift in Sources */,
@@ -911,10 +927,12 @@
 				7E77D9AF251C45C1002C6BF1 /* UserStatusAfterReturnVC.swift in Sources */,
 				C72A913824F5E15B005D464F /* Extension.swift in Sources */,
 				C7F5B5442510BC7900AE0054 /* NMapAddress.swift in Sources */,
+				C7B29ACC2528AC3D00AB081B /* UserCouponVC.swift in Sources */,
 				BC4F3A10250E01D000B7E1E7 /* BookingTimeVC.swift in Sources */,
 				C72A914424F67D9F005D464F /* TouView.swift in Sources */,
 				BC4F3A0F250E01D000B7E1E7 /* MainVC.swift in Sources */,
 				C78071A82510413700EF214C /* Time.swift in Sources */,
+				C7B29ADC2529928A00AB081B /* CouponDetailVC.swift in Sources */,
 				C769C82924FD0A1200DC8226 /* CardEnrollView.swift in Sources */,
 				C7FED69B250C729C00778923 /* ReservationEtcCell.swift in Sources */,
 				BC4F3A0B250E01B400B7E1E7 /* SearchView.swift in Sources */,
@@ -970,6 +988,7 @@
 				7EF1A28C25241C45004DADAD /* NSData+Int8.swift in Sources */,
 				C7B29ABA252348D700AB081B /* EventAndBenefitFooterView.swift in Sources */,
 				7E8473E42509AB420007962F /* LeftAlignedTagCollectionViewFlowLayout.swift in Sources */,
+				C7B29AD425292D1400AB081B /* CouponBook.swift in Sources */,
 				BC4F3A06250E01B400B7E1E7 /* CarListView.swift in Sources */,
 				C7B29AAD2522E56D00AB081B /* EventAndBenefitsCell.swift in Sources */,
 				C779CE12251AF2AD00A81EB3 /* CustomCameraVC.swift in Sources */,
@@ -997,6 +1016,7 @@
 				BC4F3A15250E01EB00B7E1E7 /* SocarZoneData.swift in Sources */,
 				C728C85024F7E35100063005 /* SignUpUserData.swift in Sources */,
 				C7B29A8E252181AB00AB081B /* Coupon.swift in Sources */,
+				C7B29AD025291E5400AB081B /* UserCouponView.swift in Sources */,
 				7E77D994251A402B002C6BF1 /* ReturnVehicleVC.swift in Sources */,
 				BC4F3A1C250E01FE00B7E1E7 /* AxaButton.swift in Sources */,
 				C7D66D1224FA925000679B99 /* DefualtUserInfoVC.swift in Sources */,
@@ -1198,7 +1218,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = W5DN7MBP3R;
+				DEVELOPMENT_TEAM = 52ZXCPY3WQ;
 				INFOPLIST_FILE = sofastcar/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1218,7 +1238,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = W5DN7MBP3R;
+				DEVELOPMENT_TEAM = 52ZXCPY3WQ;
 				INFOPLIST_FILE = sofastcar/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (

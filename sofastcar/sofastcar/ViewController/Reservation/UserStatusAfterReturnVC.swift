@@ -17,6 +17,7 @@ class UserStatusAfterReturnVC: UIViewController {
     let view = UIView()
     view.backgroundColor = .white
     view.layer.cornerRadius = 5
+    view.alpha = 0
     view.shadowMaker(view: view)
     
     return view
@@ -78,6 +79,24 @@ class UserStatusAfterReturnVC: UIViewController {
     setUI()
   }
   
+  override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(true)
+    
+    userStatusAfterReturnView.animation()
+    
+    UIView.animate(withDuration: 0.5, delay: 0, options: [], animations: {
+      self.floatingSurveyView.alpha = 1
+      self.floatingSurveyView.frame = CGRect(
+        x: 20,
+        y: UIScreen.main.bounds.maxY - 140,
+        width: UIScreen.main.bounds.width - 40,
+        height: 140
+      )
+    }) { _ in
+      self.userStatusAfterReturnView.afterAnimation()
+    }
+  }
+  
   // MARK: - UI
   
   fileprivate func setUI() {
@@ -96,7 +115,7 @@ class UserStatusAfterReturnVC: UIViewController {
     
     floatingSurveyView.frame = CGRect(
       x: 20,
-      y: UIScreen.main.bounds.maxY - 140,
+      y: UIScreen.main.bounds.maxY - 60,
       width: UIScreen.main.bounds.width - 40,
       height: 140
     )

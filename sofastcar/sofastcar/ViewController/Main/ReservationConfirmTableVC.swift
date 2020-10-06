@@ -85,18 +85,9 @@ class ReservationConfirmTableVC: UITableViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    configureStatusBar()
     configureNavigationContoller()
     configureTableHeaderView()
     configureReservationConfirmButton()
-  }
-  
-  func configureStatusBar() {
-    let window = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
-    guard let statusBarFrame = window?.windowScene?.statusBarManager?.statusBarFrame else { return }
-    statusBar.frame = statusBarFrame
-    statusBar.backgroundColor = .white
-    UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.addSubview(statusBar)
   }
   
   override func viewWillAppear(_ animated: Bool) {
@@ -197,13 +188,17 @@ class ReservationConfirmTableVC: UITableViewController {
   @objc func tabReservationConfirmButton() {
     guard let insuranceData = insuranceData else { return }
     guard let standardPrice = socarData?.carPrices.standardPrice else { return }
+    guard let socarData = socarData else { return }
+    guard  let socarZoneData = socarZoneData else { return }
     let rentPrice = standardPrice*divideRendTotalTimeByHalfHour
     if let navi = self.presentingViewController as? UINavigationController, 
        let presentingVC = navi.viewControllers.last as? MainVC {
         presentingVC.reservationCompleteFlag = true        
     }
     let paymentConfirmTableVC = PaymentConfirmTableVC(style: .grouped)
-    paymentConfirmTableVC.configurePaymentConfirmTableVC(rentPrice: rentPrice, insuranceData: insuranceData)
+    paymentConfirmTableVC.configurePaymentConfirmTableVC(rentPrice: rentPrice, insuranceData: insuranceData, socarData: socarData, socarZoneData: socarZoneData)
+    paymentConfirmTableVC.startDate = startDate
+    paymentConfirmTableVC.endDate = endDate
     navigationController?.pushViewController(paymentConfirmTableVC, animated: true)
   }
   
