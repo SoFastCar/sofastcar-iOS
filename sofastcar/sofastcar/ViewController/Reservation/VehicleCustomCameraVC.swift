@@ -32,6 +32,8 @@ class VehicleCustomCameraVC: UIViewController {
   }
   
   private func configureMyView() {
+    myView.delegate = self
+    
     view.addSubview(myView)
     myView.frame = self.view.frame
   }
@@ -109,5 +111,13 @@ extension VehicleCustomCameraVC: AVCapturePhotoCaptureDelegate {
       print(imageDate)
       image = UIImage(data: imageDate)
     }
+  }
+}
+
+// MARK: - VehicleCustomCameraViewwDelegate
+
+extension VehicleCustomCameraVC: VehicleCustomCameraViewwDelegate {
+  func didTapButton(_ sender: UIButton) {
+    dismiss(animated: true, completion: nil)
   }
 }

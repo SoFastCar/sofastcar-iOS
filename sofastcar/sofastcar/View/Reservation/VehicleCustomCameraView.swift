@@ -9,8 +9,14 @@
 import UIKit
 import SnapKit
 
+protocol VehicleCustomCameraViewwDelegate: class {
+  func didTapButton(_ sender: UIButton)
+}
+
 class VehicleCustomCameraView: UIView {
-  // MARK: - Init
+  
+  weak var delegate: VehicleCustomCameraViewwDelegate?
+  
   let buttonWidthSize: CGFloat = 70
   
   fileprivate let navigationView: UIView = {
@@ -33,7 +39,7 @@ class VehicleCustomCameraView: UIView {
       closeSymbol,
       for: .normal
     )
-//    button.addTarget(self, action: #selector(didTapButton(_:)), for: .touchUpInside)
+    button.addTarget(self, action: #selector(didTapButton(_:)), for: .touchUpInside)
     button.tintColor = .white
     
     return button
@@ -170,5 +176,11 @@ class VehicleCustomCameraView: UIView {
       $0.bottom.equalToSuperview()
       $0.centerX.equalToSuperview()
     }
+  }
+  
+  // MARK: - Action
+  
+  @objc fileprivate func didTapButton(_ sender: UIButton) {
+    delegate?.didTapButton(sender)
   }
 }
