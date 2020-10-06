@@ -68,5 +68,6 @@ extension UserDefaults {
     setReadyToDrive(isDriveReady: false)
     setVehicleDoubleCheck(check: false)
     setVehiclCheck(check: false)
+    setReservationUid(uid: 0)
   }
 }
