@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		1226A60FC1A80A06F7DAB1AE /* Pods_sofastcar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC793DBC933237B89DC3FEED /* Pods_sofastcar.framework */; };
+		7E0F2FC0252CEFD700044A35 /* VehicleCustomCameraVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E0F2FBF252CEFD700044A35 /* VehicleCustomCameraVC.swift */; };
+		7E0F2FC4252CF0F600044A35 /* VehicleCustomCameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E0F2FC3252CF0F600044A35 /* VehicleCustomCameraView.swift */; };
 		7E77D994251A402B002C6BF1 /* ReturnVehicleVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E77D993251A402B002C6BF1 /* ReturnVehicleVC.swift */; };
 		7E77D998251A41AD002C6BF1 /* ReturnVehicleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E77D997251A41AD002C6BF1 /* ReturnVehicleView.swift */; };
 		7E77D99C251B07D1002C6BF1 /* CheckButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E77D99B251B07D1002C6BF1 /* CheckButtonView.swift */; };
@@ -163,6 +165,8 @@
 
 /* Begin PBXFileReference section */
 		385247949553C4B863A7F4DF /* Pods-sofastcar.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-sofastcar.debug.xcconfig"; path = "Target Support Files/Pods-sofastcar/Pods-sofastcar.debug.xcconfig"; sourceTree = "<group>"; };
+		7E0F2FBF252CEFD700044A35 /* VehicleCustomCameraVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehicleCustomCameraVC.swift; sourceTree = "<group>"; };
+		7E0F2FC3252CF0F600044A35 /* VehicleCustomCameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehicleCustomCameraView.swift; sourceTree = "<group>"; };
 		7E35BE98251840590024DCE5 /* ReturnVehicleStatusVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReturnVehicleStatusVC.swift; sourceTree = "<group>"; };
 		7E35BE9A251841B70024DCE5 /* ReturnVehicleStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReturnVehicleStatusView.swift; sourceTree = "<group>"; };
 		7E77D993251A402B002C6BF1 /* ReturnVehicleVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReturnVehicleVC.swift; sourceTree = "<group>"; };
@@ -347,6 +351,7 @@
 				7E77D993251A402B002C6BF1 /* ReturnVehicleVC.swift */,
 				C73D34A52518E6DD0075471F /* ReturnVehicleStatusVC.swift */,
 				7E77D9AE251C45C1002C6BF1 /* UserStatusAfterReturnVC.swift */,
+				7E0F2FBF252CEFD700044A35 /* VehicleCustomCameraVC.swift */,
 			);
 			path = Reservation;
 			sourceTree = "<group>";
@@ -375,6 +380,7 @@
 				C73D34A92518E7010075471F /* ReturnVehicleStatusView.swift */,
 				C73D34AD2518E7180075471F /* ReservationStateView.swift */,
 				7E77D9B2251C4BDC002C6BF1 /* UserStatusAfterReturnView.swift */,
+				7E0F2FC3252CF0F600044A35 /* VehicleCustomCameraView.swift */,
 			);
 			path = Reservation;
 			sourceTree = "<group>";
@@ -945,6 +951,7 @@
 				7EF41FC62501F6D90030752A /* CarKeyView.swift in Sources */,
 				C73D349C251879BB0075471F /* DetailSocarZoneInfoCell.swift in Sources */,
 				C7BD348C24F54A5700089F0D /* InitVC.swift in Sources */,
+				7E0F2FC4252CF0F600044A35 /* VehicleCustomCameraView.swift in Sources */,
 				C769C82E24FDB69B00DC8226 /* DriverLicenseEnrollinitView.swift in Sources */,
 				C7F5B54225106A1800AE0054 /* SocaZoneProvidable.swift in Sources */,
 				C7B29A7A2520C79E00AB081B /* CouponView.swift in Sources */,
@@ -983,6 +990,7 @@
 				C73D348B251601910075471F /* Reservation.swift in Sources */,
 				C7B29A712520799F00AB081B /* DotsLineView.swift in Sources */,
 				C7CEF7482511BFBE00C063B0 /* VehicleDoubleCheckView.swift in Sources */,
+				7E0F2FC0252CEFD700044A35 /* VehicleCustomCameraVC.swift in Sources */,
 				C7B29AC42523661900AB081B /* FriendsInviteView.swift in Sources */,
 				C769C83224FDD97F00DC8226 /* CheckDriverLicenseVC.swift in Sources */,
 				7EF1A28C25241C45004DADAD /* NSData+Int8.swift in Sources */,

@@ -8,7 +8,6 @@
 
 import UIKit
 import SnapKit
-import MobileCoreServices
 
 class VehicleTakePictureVC: UIViewController {
   
@@ -50,7 +49,6 @@ class VehicleTakePictureVC: UIViewController {
   fileprivate func setUI() {
     let guid = view.safeAreaLayoutGuide
     vehicleTakePictureView.customDelegate = self
-    picker.delegate =  self
     
     self.view.backgroundColor = .white
     setNavigation()
@@ -143,11 +141,12 @@ extension VehicleTakePictureVC: VehicleTakePictureViewDelegate {
   }
 }
 
-// MARK: - UIImagePickerControllerDelegate, UINavigationControllerDelegate
+// MARK: - Function
 
-extension VehicleTakePictureVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+extension VehicleTakePictureVC {
   func openCamera() {
-    picker.sourceType = .camera
-    present(picker, animated: false, completion: nil)
+    let vehicleCustomCameraVC = VehicleCustomCameraVC()
+    vehicleCustomCameraVC.modalPresentationStyle = .fullScreen
+    present(vehicleCustomCameraVC, animated: true)
   }
 }
