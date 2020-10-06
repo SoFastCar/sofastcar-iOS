@@ -74,7 +74,7 @@ class VehicleCustomCameraView: UIView {
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
-
+  
   private func setUI() {
     [navigationView, captureDescriptionView, controlView].forEach {
       addSubview($0)
@@ -91,6 +91,8 @@ class VehicleCustomCameraView: UIView {
       $0.height.equalTo(50)
     }
     
+    captureDescriptionUI()
+    
     controlView.snp.makeConstraints {
       $0.leading.bottom.trailing.equalToSuperview()
       $0.height.equalTo(150)
@@ -103,5 +105,15 @@ class VehicleCustomCameraView: UIView {
 //      $0.centerX.equalTo(self.snp.centerX)
 //      $0.width.height.equalTo(buttonWidthSize)
 //    }
+  }
+  
+  fileprivate func captureDescriptionUI() {
+    [captureDescriptionLabel].forEach {
+      captureDescriptionView.addSubview($0)
+    }
+    
+    captureDescriptionLabel.snp.makeConstraints {
+      $0.centerX.centerY.equalToSuperview()
+    }
   }
 }
