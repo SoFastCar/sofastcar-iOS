@@ -132,6 +132,10 @@ class CarListTableViewCell: UITableViewCell {
     }
     
     func timeInfoConfiguration(startTime sTime: Date, endTime eTime: Date) {
+        
+//        Time.toUTCString(changeForString: <#T##String#>)
+        
+        
         var startDateOfTimeSlot = sTime
         var endDateOfTimeSlot = Date(timeInterval: 86400, since: eTime)
         startDateOfTimeSlot = calendar.startOfDay(for: startDateOfTimeSlot)
