@@ -29,6 +29,12 @@ class ReservationStateView: UIScrollView {
     }
   }
   
+  var carOilTypeString: String? {
+    didSet {
+      carOilTypeLabel.text = carOilTypeString
+    }
+  }
+  
   // MARK: - Attribute
   
   lazy var leftNavigationButton: UIBarButtonItem = {
@@ -91,7 +97,7 @@ class ReservationStateView: UIScrollView {
   
   let carTypeLabel: UILabel = {
     let label = UILabel()
-    label.text = "마세라티"
+    label.text = ""
     label.font = UIFont.preferredFont(forTextStyle: .body)
     label.textColor = .white
     label.alpha = 0.55
@@ -109,9 +115,9 @@ class ReservationStateView: UIScrollView {
     return label
   }()
   
-  fileprivate let carOilTypeLabel: UILabel = {
+  let carOilTypeLabel: UILabel = {
     let label = UILabel()
-    label.text = "휘발유"
+    label.text = ""
     label.font = UIFont.preferredFont(forTextStyle: .body)
     label.textColor = .white
     label.alpha = 0.55

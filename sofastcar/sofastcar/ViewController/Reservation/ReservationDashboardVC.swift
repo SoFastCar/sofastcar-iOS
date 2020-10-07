@@ -48,6 +48,7 @@ class ReservationDashboardVC: UIViewController {
           self.reservationStateView.reservationCarImageString = value.image
           self.reservationStateView.numberPlateString = value.number
           self.reservationStateView.carTypeString = value.name
+          self.reservationStateView.carOilTypeString = value.fuelType
           
           print("❤️number", value.number)
           print("❤️name", value.name)
