@@ -11,6 +11,14 @@ import SnapKit
 
 class ReservationStateView: UIScrollView {
   
+  var reservationCarImageString: String? {
+    didSet {
+      self.reservationCarImage.loadImage(with: reservationCarImageString ?? "empty")
+    }
+  }
+  
+  var 
+  
   // MARK: - Attribute
   lazy var leftNavigationButton: UIBarButtonItem = {
     let barButtonItem = UIBarButtonItem(
@@ -42,9 +50,8 @@ class ReservationStateView: UIScrollView {
     return view
   }()
   
-  fileprivate let reservationCarImage: UIImageView = {
-    let imageView = UIImageView()
-    imageView.image = UIImage(named: "SampleCar")
+  let reservationCarImage: CustomImageView = {
+    let imageView = CustomImageView()
     imageView.contentMode = .scaleAspectFit
     
     return imageView

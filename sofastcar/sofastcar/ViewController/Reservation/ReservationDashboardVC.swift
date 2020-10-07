@@ -34,23 +34,32 @@ class ReservationDashboardVC: UIViewController {
     setUI()
     
     ReservationNetWorkService.shared.getReservationInfo { (result) in
-
+    
+      print("🚙", result.creatTime)
+      print("🚙", result.startTime)
+      print("🚙", result.endTime)
+      
       let url = "https://sofastcar.moorekwon.xyz/carzones/\(result.zone)/cars/\(result.car)/info"
-//      https://sofastcar.moorekwon.xyz/carzones/260/cars/1/info
       
       AF.request(url, headers: ["Content-Type": "application/json", "Authorization": "JWT \(UserDefaults.getUserAuthTocken()!)"]).validate(statusCode: 200..<300).responseDecodable(of: Socar.self) { (response) in
         switch response.result {
         case .success(let value):
-            print("value: \(value)")
+          
+          self.reservationStateView.reservationCarImageString = value.image
+          
+          print("❤️number", value.number)
+          print("❤️name", value.name)
+          print("❤️fueltype", value.fuelType)
+          print("❤️image", value.image)
         case .failure(let error):
-            print("error: \(String(describing: error.errorDescription))")
+          print("error: \(String(describing: error.errorDescription))")
         }
       }
       
     } onError: { (errorMessage) in
       debugPrint(errorMessage)
     }
-
+    
     print("❤️", UserDefaults.getReservationUid())
     print("😇", UserDefaults.getUserAuthTocken())
   }
