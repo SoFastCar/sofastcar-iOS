@@ -233,8 +233,11 @@ class ReservationRentalInfoCell: UITableViewCell {
   }
   
   private func configureUsingTimeCellContent() {
-    contentTitleLabel.text = "총 1일 10분 이용"
-    contentLabel.text = "08/14 (금) 14:00 - 08/15 (토) 14:10"
+    guard let reservation = reservationData else { return }
+    let startTime = Time.toUTCString(changeForString: reservation.startTime)
+    let endTime = Time.toUTCString(changeForString: reservation.endTime)
+    contentTitleLabel.text = Time.getDiffTwoDateValueReturnString(start: startTime, end: endTime)
+    contentLabel.text = "\(Time.getTimeString(type: .castMddEHHmm, date: startTime)) - \(Time.getTimeString(type: .castMddEHHmm, date: endTime))"
   }
   
   private func configureTagCollectionViewInRentCar() {
@@ -368,7 +371,7 @@ class ReservationRentalInfoCell: UITableViewCell {
   }
   
   private func configureInsuranceCellContent() {
-    guard let reservationData = reservationData else { return print("Errot") }
+    guard let reservationData = reservationData else { return }
     var insureMoney = "0"
     var insuranceTitle = ""
     switch reservationData.insurance {

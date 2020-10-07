@@ -11,7 +11,7 @@ import UIKit
 class CardEnrollinitVC: UIViewController {
   
   // MARK: - Properties
-  var user: SignUpUserData?
+  var user: User?
   
   let pageController: UIPageControl = {
     let pageC = UIPageControl(frame: .zero)

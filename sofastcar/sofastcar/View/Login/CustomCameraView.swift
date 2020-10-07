@@ -121,7 +121,7 @@ class CustomCameraView: UIView {
     
     bottomView.snp.makeConstraints {
       $0.leading.trailing.equalTo(self.safeAreaLayoutGuide)
-      $0.bottom.equalTo(self.safeAreaLayoutGuide).offset(40)
+      $0.bottom.equalTo(self.safeAreaLayoutGuide)
       $0.height.equalTo(100)
     }
     
