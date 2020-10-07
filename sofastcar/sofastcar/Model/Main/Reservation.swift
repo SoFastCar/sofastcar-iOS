@@ -37,17 +37,3 @@ struct Reservation: Decodable {
     case member
   }
 }
-
-/*
- [
- "car": 17, -
- "insurance": light, -
- "date_time_start": 2020-10-07T01:40:00Z, -
- "id": 23,
- "updated_at": 2020-10-05T13:22:30.530651Z, -
- "created_at": 2020-10-05T13:22:30.530639Z, -
- "member": 10, -
- "date_time_end": 2020-10-07T05:40:00Z, -
- "zone": 246 -
- ]
- */
