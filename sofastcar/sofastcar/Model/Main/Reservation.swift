@@ -8,6 +8,18 @@
 
 import Foundation
 
+// MARK: - Sample
+
+//  "id": 14,
+//  "member": 10,
+//  "car": 1,
+//  "zone": 260,
+//  "insurance": "special",
+//  "date_time_start": "2020-10-10T13:00:00+09:00",
+//  "date_time_end": "2020-10-10T15:40:00+09:00",
+//  "created_at": "2020-10-05T11:15:59.398797Z",
+//  "updated_at": "2020-10-05T11:15:59.398809Z"
+
 struct Reservation: Decodable {
   let reservationUid: Int
   let car: Int
@@ -15,8 +27,8 @@ struct Reservation: Decodable {
   let insurance: String
   let startTime: String
   let endTime: String
-//  let creatTime: String
-//  let updateTime: String
+  let creatTime: String
+  let updateTime: String
   let member: Int
   
   enum CodingKeys: String, CodingKey {
@@ -26,8 +38,8 @@ struct Reservation: Decodable {
     case insurance
     case startTime = "date_time_start"
     case endTime = "date_time_end"
-//    case creatTime = "created_at"
-//    case updateTime = "updated_at"
+    case creatTime = "created_at"
+    case updateTime = "updated_at"
     case member
   }
 }

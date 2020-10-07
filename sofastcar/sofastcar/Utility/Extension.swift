@@ -109,48 +109,48 @@ extension UIViewController {
 }
 
 extension UIView {
-    enum ViewSide {
-        case top, left, right, bottom
+  enum ViewSide {
+    case top, left, right, bottom
+  }
+  
+  func addBorder(toSide side: ViewSide, withColor color: CGColor, andThickness thickness: CGFloat) {
+    let border = CALayer()
+    border.backgroundColor = color
+    
+    switch side {
+    case .top:
+      border.frame = CGRect(x: frame.minX, y: frame.minY, width: frame.width, height: thickness)
+    case .left:
+      border.frame = CGRect(x: frame.minX, y: frame.minY, width: thickness, height: frame.height)
+    case .right:
+      border.frame = CGRect(x: frame.maxX, y: frame.minY, width: thickness, height: frame.height)
+    case .bottom:
+      border.frame = CGRect(x: frame.minX, y: frame.maxY, width: frame.width, height: thickness)
     }
     
-    func addBorder(toSide side: ViewSide, withColor color: CGColor, andThickness thickness: CGFloat) {
-        let border = CALayer()
-        border.backgroundColor = color
-        
-        switch side {
-        case .top:
-            border.frame = CGRect(x: frame.minX, y: frame.minY, width: frame.width, height: thickness)
-        case .left:
-            border.frame = CGRect(x: frame.minX, y: frame.minY, width: thickness, height: frame.height)
-        case .right:
-            border.frame = CGRect(x: frame.maxX, y: frame.minY, width: thickness, height: frame.height)
-        case .bottom:
-            border.frame = CGRect(x: frame.minX, y: frame.maxY, width: frame.width, height: thickness)
-        }
-        
-        self.layer.addSublayer(border)
-    }
-    
-    func symbolConfiguration(pointSize bySize: CGFloat, weight byWeight: UIImage.SymbolWeight) -> UIImage.SymbolConfiguration {
-        return UIImage.SymbolConfiguration(pointSize: bySize, weight: byWeight)
-    }
+    self.layer.addSublayer(border)
+  }
+  
+  func symbolConfiguration(pointSize bySize: CGFloat, weight byWeight: UIImage.SymbolWeight) -> UIImage.SymbolConfiguration {
+    return UIImage.SymbolConfiguration(pointSize: bySize, weight: byWeight)
+  }
 }
 
 // MARK: - BoldFont
 
 extension UIFont {
   func withTraits(traits: UIFontDescriptor.SymbolicTraits) -> UIFont {
-        let descriptor = fontDescriptor.withSymbolicTraits(traits)
-        return UIFont(descriptor: descriptor!, size: 0) //size 0 means keep the size as it is
-    }
-
-    func bold() -> UIFont {
-        return withTraits(traits: .traitBold)
-    }
-
-    func italic() -> UIFont {
-        return withTraits(traits: .traitItalic)
-    }
+    let descriptor = fontDescriptor.withSymbolicTraits(traits)
+    return UIFont(descriptor: descriptor!, size: 0) //size 0 means keep the size as it is
+  }
+  
+  func bold() -> UIFont {
+    return withTraits(traits: .traitBold)
+  }
+  
+  func italic() -> UIFont {
+    return withTraits(traits: .traitItalic)
+  }
 }
 
 // MARK: - numberFomatter
@@ -179,7 +179,7 @@ extension UITableViewCell {
       $0.height.equalTo(0.7)
     }
   }
-
+  
   func configureContentViewBottomLayer() {
     let view = UIView()
     view.backgroundColor = .systemGray4
@@ -204,9 +204,9 @@ extension UITableViewCell {
 
 // MARK: - String / Underline
 extension String {
-   func getUnderLineAttributedText() -> NSAttributedString {
+  func getUnderLineAttributedText() -> NSAttributedString {
     return NSMutableAttributedString(string: self, attributes: [.underlineStyle: NSUnderlineStyle.single.rawValue])
-   }
+  }
 }
 
 // MARK: - Status Bar
