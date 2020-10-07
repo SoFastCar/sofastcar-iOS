@@ -65,6 +65,11 @@ class MainVC: UIViewController {
     var calculatedCarPrice: [Int] = []
     var selectedCarPrice: Int = 0
     
+    
+    // reservation
+    var reserveStartTimeArry: [Date] = []
+    var reserveEndTimeArry: [Date] = []
+    
     // Insurance Item Data
     var insuranceDataList: InsuranceDataList?
     var insuranceData: [Insurance]?
@@ -725,7 +730,6 @@ extension MainVC: NMFMapViewCameraDelegate {
         
         // 반경 쏘카존 요청
         fetchSocarZone(lat: camPosition.lat, lng: camPosition.lng, dist: meterPerPixel)
-        
     }
 }
 
@@ -759,11 +763,24 @@ extension MainVC: UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: CarListTableViewCell.identifier, for: indexPath) as? CarListTableViewCell else { return UITableViewCell() }
         cell.selectionStyle = .none
         cell.separatorInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
-        cell.carInfoConfiguration(carImage: socarListData?[indexPath.row].image ?? "", carName: socarListData?[indexPath.row].name ?? "", carPrice: socarListData?[indexPath.row].termPrice ?? 0, availableDiscount: socarListData?[indexPath.row].isEvent ?? false)
-//        cell.timeInfoConfiguration(startTime: newStartDate, endTime: newEndDate, reservStartTime: socarListData?[indexPath.row].timeTables)        
+        
+        if let uwSocarListData = socarListData {
+            if uwSocarListData[indexPath.row].timeTables.count != 0 {
+                for index in 0...(uwSocarListData[indexPath.row].timeTables.count - 1) {
+                    reserveStartTimeArry.append(Time.toUTCString(changeForString: uwSocarListData[indexPath.row].timeTables[index].dateTimeStart))
+                    reserveEndTimeArry.append(Time.toUTCString(changeForString: uwSocarListData[indexPath.row].timeTables[index].dateTimeEnd))
+                }
+            } else {
+                // do nothing
+            }
+            
+        cell.carInfoConfiguration(carImage: uwSocarListData[indexPath.row].image, carName: uwSocarListData[indexPath.row].name, carPrice: uwSocarListData[indexPath.row].termPrice, availableDiscount: uwSocarListData[indexPath.row].isEvent)
+            cell.timeInfoConfiguration(listIndex: indexPath.row, startTime: newStartDate, endTime: newEndDate, reserveStartTime: reserveStartTimeArry, reserveEndTime: reserveEndTimeArry)        
+        } else {
+            print("No socar list")
+        }
         return cell
     }
-
 }
 
 extension MainVC: UITableViewDelegate {
