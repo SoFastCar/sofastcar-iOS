@@ -20,6 +20,7 @@ class CarListTableViewCell: UITableViewCell {
     let firstDateLabel = UILabel()
     let middleDateLabel = UILabel()
     let lastDateLabel = UILabel()
+    let blockView = UIView()
     let numberFormatter = NumberFormatter()
     let dateFormatter = DateFormatter()
     var calendar = Calendar.current
@@ -78,11 +79,13 @@ class CarListTableViewCell: UITableViewCell {
             self.dateStackView.addArrangedSubview($0)
         })
         contentView.addSubview(dateStackView)
+        
+        contentView.addSubview(blockView)
     }
     
     private func setupConstraint() {
         [carImageView, carNameLabel, carPriceLabel, discountSignLabel, availableTimeSlotView,
-         timeSlotUnitView, dateStackView, firstDateLabel, middleDateLabel, lastDateLabel].forEach({
+         timeSlotUnitView, dateStackView, firstDateLabel, middleDateLabel, lastDateLabel, blockView].forEach({
             $0.translatesAutoresizingMaskIntoConstraints = false   
         })
         carImageView.snp.makeConstraints({
@@ -121,6 +124,9 @@ class CarListTableViewCell: UITableViewCell {
             $0.trailing.equalToSuperview()
             $0.height.equalTo(10)
         })
+        blockView.snp.makeConstraints({
+            $0.top.bottom.leading.trailing.equalToSuperview()
+        })
     }
     
     func carInfoConfiguration(carImage image: String, carName name: String, carPrice price: Int, availableDiscount discount: Bool) {
@@ -131,11 +137,36 @@ class CarListTableViewCell: UITableViewCell {
         discountSignLabel.text = discount ? "할인가" : ""
     }
     
-    func timeInfoConfiguration(startTime sTime: Date, endTime eTime: Date) {
-        
-//        Time.toUTCString(changeForString: <#T##String#>)
-        
-        
+    func timeInfoConfiguration(listIndex index: Int, startTime sTime: Date, endTime eTime: Date, reserveStartTime rsTime: [Date], reserveEndTime reTime: [Date]) {
+        if rsTime.count != 0 {
+            for index in 0...(rsTime.count - 1) {
+                if rsTime[index] > sTime || reTime[index] < eTime {
+                    print("겹침")
+                    
+                } else {
+                    print("안겹침")
+                }
+            }
+        } else {
+            
+        }
+//        var reserveDict: [Date: Date] = [:]
+//        var reserveDictArry: [[Date: Date]] = [[:]]
+//        print(rsTime, rsTime.count)
+//        if rsTime.count != 0 {
+//            for index in 0...(rsTime.count - 1) {
+//                let dateTimeStart = Time.toUTCString(changeForString: rsTime[index].dateTimeStart)
+//                let dateTimeEnd = Time.toUTCString(changeForString: rsTime[index].dateTimeEnd)
+//                reserveDict[dateTimeStart] = dateTimeEnd
+//            }
+//            reserveDictArry.append(reserveDict)
+//        } else {
+////            reserveDictArry.append([:])
+//            // do nothing
+//        }
+//        print(reserveDictArry)
+////        Time.toUTCString(changeForString: <#T##String#>)
+
         var startDateOfTimeSlot = sTime
         var endDateOfTimeSlot = Date(timeInterval: 86400, since: eTime)
         startDateOfTimeSlot = calendar.startOfDay(for: startDateOfTimeSlot)
