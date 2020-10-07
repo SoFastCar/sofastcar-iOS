@@ -27,6 +27,9 @@ class CustomCameraVC: UIViewController {
   
   var image: UIImage?
   var isRecognizeImageInRect: Bool = false
+  var isFinish: Bool = false
+  var croppedImages: [UIImage] = []
+  var mainImage: UIImage = UIImage()
   
   // MARK: - LifeCycle
   override func viewDidLoad() {
@@ -35,6 +38,11 @@ class CustomCameraVC: UIViewController {
     configureButtonAction()
     configureCameraFeature()
     configureMyView()
+  }
+  
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    navigationController?.navigationBar.isHidden = false
   }
   
   private func configureMyView() {
@@ -93,7 +101,7 @@ class CustomCameraVC: UIViewController {
       self.videoDataOutput.videoSettings = [(kCVPixelBufferPixelFormatTypeKey as NSString): NSNumber(value: kCVPixelFormatType_32BGRA)] as [String: Any]
       videoDataOutput.alwaysDiscardsLateVideoFrames = true
       videoDataOutput.setSampleBufferDelegate(self, queue: DispatchQueue(label: "camera_frame_processing_queue"))
-//      videoDataOutput.setSampleBufferDelegate(self, queue: DispatchQueue(label: "MyQueue"))
+      //      videoDataOutput.setSampleBufferDelegate(self, queue: DispatchQueue(label: "MyQueue"))
       captureSession.addOutput(self.videoDataOutput)
       guard let connection = self.videoDataOutput.connection(with: AVMediaType.video),
             connection.isVideoOrientationSupported else { return }
@@ -122,10 +130,6 @@ class CustomCameraVC: UIViewController {
         guard let results = request.results as? [VNRectangleObservation] else { return }
         guard let rect = results.first else { return }
         self.drawBoundingBox(rect: rect)
-        //        if self.isTapped{
-        //          self.isTapped = false
-        //          self.doPerspectiveCorrection(rect, from: image)
-        //        }
       }
     })
     request.minimumAspectRatio = VNAspectRatio(1.5)
@@ -153,7 +157,7 @@ class CustomCameraVC: UIViewController {
     myView.regonSucessTopLine.backgroundColor = topRecSucess == true ? CommonUI.mainBlue : .clear
     myView.regonSucessBottomLine.backgroundColor = bottomRecSucess == true ? CommonUI.mainBlue : .clear
     isRecognizeImageInRect = false
-//    guard isRecognizeImageInRect == false else { return }
+    //    guard isRecognizeImageInRect == false else { return }
     if topRecSucess && bottomRecSucess == true {
       isRecognizeImageInRect = true
     }
@@ -178,13 +182,19 @@ class CustomCameraVC: UIViewController {
     try? imageRequestHandler.perform([request])
   }
   
-  func drawTextBoundingBox(rect: [VNRectangleObservation]) {
+  func drawTextBoundingBox(rect: [VNTextObservation]) {
     guard let cameraPreviewLayer = cameraPreviewLayer else { return }
     let transform = CGAffineTransform(scaleX: 1, y: -1).translatedBy(x: 0, y: -cameraPreviewLayer.frame.height)
     let scale = CGAffineTransform.identity.scaledBy(x: cameraPreviewLayer.frame.width, y: cameraPreviewLayer.frame.height)
     rect.forEach {
+      
       let bounds = $0.boundingBox.applying(scale).applying(transform)
+      print(bounds)
       createTextBox(in: bounds)
+      
+      let croppedCGImage: CGImage = (mainImage.cgImage?.cropping(to: $0.boundingBox))!
+      let croppedImage = UIImage(cgImage: croppedCGImage)
+      croppedImages.append(croppedImage)
     }
   }
   
@@ -217,7 +227,7 @@ class CustomCameraVC: UIViewController {
   
   // MARK: - button Action
   @objc private func tapCancelButton() {
-    navigationController?.navigationBar.isHidden = false
+    navigationController?.navigationBar.isHidden = true
     navigationController?.popViewController(animated: false)
   }
   
@@ -239,18 +249,73 @@ extension CustomCameraVC: AVCapturePhotoCaptureDelegate {
       myView.activityIndicator.startAnimating()
     }
   }
+  
+  func imageFromSampleBuffer(sampleBuffer: CMSampleBuffer) -> UIImage {
+    // Get a CMSampleBuffer's Core Video image buffer for the media data
+    let  imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer)
+    // Lock the base address of the pixel buffer
+    CVPixelBufferLockBaseAddress(imageBuffer!, CVPixelBufferLockFlags.readOnly)
+    
+    // Get the number of bytes per row for the pixel buffer
+    let baseAddress = CVPixelBufferGetBaseAddress(imageBuffer!)
+    
+    // Get the number of bytes per row for the pixel buffer
+    let bytesPerRow = CVPixelBufferGetBytesPerRow(imageBuffer!)
+    // Get the pixel buffer width and height
+    let width = CVPixelBufferGetWidth(imageBuffer!)
+    let height = CVPixelBufferGetHeight(imageBuffer!)
+    
+    // Create a device-dependent RGB color space
+    let colorSpace = CGColorSpaceCreateDeviceRGB()
+    
+    // Create a bitmap graphics context with the sample buffer data
+    var bitmapInfo: UInt32 = CGBitmapInfo.byteOrder32Little.rawValue
+    bitmapInfo |= CGImageAlphaInfo.premultipliedFirst.rawValue & CGBitmapInfo.alphaInfoMask.rawValue
+    //let bitmapInfo: UInt32 = CGBitmapInfo.alphaInfoMask.rawValue
+    let context = CGContext.init(data: baseAddress, width: width, height: height, bitsPerComponent: 8, bytesPerRow: bytesPerRow, space: colorSpace, bitmapInfo: bitmapInfo)
+    // Create a Quartz image from the pixel data in the bitmap graphics context
+    let quartzImage = context?.makeImage()
+    // Unlock the pixel buffer
+    CVPixelBufferUnlockBaseAddress(imageBuffer!, CVPixelBufferLockFlags.readOnly)
+    
+    // Create an image object from the Quartz image
+    return  UIImage.init(cgImage: quartzImage!)
+  }
 }
 
 extension CustomCameraVC: AVCaptureVideoDataOutputSampleBufferDelegate {
   func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
-    guard let frame = CMSampleBufferGetImageBuffer(sampleBuffer) else {
+    guard let imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else {
       debugPrint("unable to get image from sample buffer")
       return
     }
-    self.detectRectangle(in: frame)
+    self.detectRectangle(in: imageBuffer)
     if isRecognizeImageInRect == true {
-      self.detectTextRectangle(in: frame)
+      mainImage = imageFromSampleBuffer(sampleBuffer: sampleBuffer)
+      if isFinish == false {
+        self.detectTextRectangle(in: imageBuffer)
+        isFinish = true
+      }
+      
     }
+  }
+  
+  func orientation() -> UIImage.Orientation {
+    let curDeviceOrientation = UIDevice.current.orientation
+    var exifOrientation: UIImage.Orientation
+    switch curDeviceOrientation {
+    case .portraitUpsideDown:  // Device oriented vertically, Home button on the top
+      exifOrientation = .left
+    case .landscapeLeft:       // Device oriented horizontally, Home button on the right
+      exifOrientation = .upMirrored
+    case .landscapeRight:      // Device oriented horizontally, Home button on the left
+      exifOrientation = .down
+    case .portrait:            // Device oriented vertically, Home button on the bottom
+      exifOrientation = .up
+    default:
+      exifOrientation = .up
+    }
+    return exifOrientation
   }
 }
 
@@ -272,13 +337,16 @@ extension CGImagePropertyOrientation {
   }
 }
 
-extension CIImage {
-  func toUIImage() -> UIImage? {
-    let context: CIContext = CIContext.init(options: nil)
-    if let cgImage: CGImage = context.createCGImage(self, from: self.extent) {
-      return UIImage(cgImage: cgImage)
-    } else {
-      return nil
-    }
+extension UIImage {
+  func crop( rect: CGRect) -> UIImage {
+    var rect = rect
+    rect.origin.x*=self.scale
+    rect.origin.y*=self.scale
+    rect.size.width*=self.scale
+    rect.size.height*=self.scale
+    
+    let imageRef = self.cgImage!.cropping(to: rect)
+    let image = UIImage(cgImage: imageRef!, scale: self.scale, orientation: self.imageOrientation)
+    return image
   }
 }
