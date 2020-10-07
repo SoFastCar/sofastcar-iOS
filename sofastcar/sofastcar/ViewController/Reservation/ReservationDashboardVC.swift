@@ -39,21 +39,27 @@ class ReservationDashboardVC: UIViewController {
       print("🚙", result.startTime)
       print("🚙", result.endTime)
       
-      let url = "https://sofastcar.moorekwon.xyz/carzones/\(result.zone)/cars/\(result.car)/info"
+      let socarUrl = "https://sofastcar.moorekwon.xyz/carzones/\(result.zone)/cars/\(result.car)/info"
       
-      AF.request(url, headers: ["Content-Type": "application/json", "Authorization": "JWT \(UserDefaults.getUserAuthTocken()!)"]).validate(statusCode: 200..<300).responseDecodable(of: Socar.self) { (response) in
+      AF.request(socarUrl, headers: ["Content-Type": "application/json", "Authorization": "JWT \(UserDefaults.getUserAuthTocken()!)"]).validate(statusCode: 200..<300).responseDecodable(of: Socar.self) { (response) in
         switch response.result {
         case .success(let value):
-          
           self.reservationStateView.reservationCarImageString = value.image
           self.reservationStateView.numberPlateString = value.number
           self.reservationStateView.carTypeString = value.name
           self.reservationStateView.carOilTypeString = value.fuelType
-          
-          print("❤️number", value.number)
-          print("❤️name", value.name)
-          print("❤️fueltype", value.fuelType)
-          print("❤️image", value.image)
+        case .failure(let error):
+          print("error: \(String(describing: error.errorDescription))")
+        }
+      }
+      
+      let socarzonUrl = "https://sofastcar.moorekwon.xyz/carzones/\(result.zone)"
+      
+      AF.request(socarzonUrl, headers: ["Content-Type": "application/json", "Authorization": "JWT \(UserDefaults.getUserAuthTocken()!)"]).validate(statusCode: 200..<300).responseDecodable(of: SocarZoneData.self) { (response) in
+        switch response.result {
+        case .success(let value):
+          self.reservationStateView.reservationPlaceStateSubString = value.name
+          self.reservationStateView.returnPlaceStirng = value.name
         case .failure(let error):
           print("error: \(String(describing: error.errorDescription))")
         }
@@ -62,9 +68,6 @@ class ReservationDashboardVC: UIViewController {
     } onError: { (errorMessage) in
       debugPrint(errorMessage)
     }
-    
-    print("❤️", UserDefaults.getReservationUid())
-    print("😇", UserDefaults.getUserAuthTocken())
   }
   
   // MARK: - UI

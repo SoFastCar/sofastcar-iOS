@@ -35,6 +35,18 @@ class ReservationStateView: UIScrollView {
     }
   }
   
+  var reservationPlaceStateSubString: String? {
+    didSet {
+      reservationPlaceStateSubLabel.text = reservationPlaceStateSubString
+    }
+  }
+  
+  var returnPlaceStirng: String? {
+    didSet {
+      returnPlaceLabel.text = returnPlaceStirng
+    }
+  }
+  
   // MARK: - Attribute
   
   lazy var leftNavigationButton: UIBarButtonItem = {
@@ -67,16 +79,16 @@ class ReservationStateView: UIScrollView {
     return view
   }()
   
-  let reservationCarImage: CustomImageView = {
+  fileprivate let reservationCarImage: CustomImageView = {
     let imageView = CustomImageView()
     imageView.contentMode = .scaleAspectFit
     
     return imageView
   }()
   
-  let numberPlateLabel: UILabel = {
+  fileprivate let numberPlateLabel: UILabel = {
     let label = UILabel()
-    label.text = "57하4455"
+    label.text = ""
     label.font = UIFont.preferredFont(forTextStyle: .title1)
     label.textColor = .white
     
@@ -95,7 +107,7 @@ class ReservationStateView: UIScrollView {
     return button
   }()
   
-  let carTypeLabel: UILabel = {
+  fileprivate let carTypeLabel: UILabel = {
     let label = UILabel()
     label.text = ""
     label.font = UIFont.preferredFont(forTextStyle: .body)
@@ -115,7 +127,7 @@ class ReservationStateView: UIScrollView {
     return label
   }()
   
-  let carOilTypeLabel: UILabel = {
+  fileprivate let carOilTypeLabel: UILabel = {
     let label = UILabel()
     label.text = ""
     label.font = UIFont.preferredFont(forTextStyle: .body)
@@ -288,7 +300,7 @@ class ReservationStateView: UIScrollView {
   }()
   fileprivate let reservationPlaceStateSubLabel: UILabel = {
     let label = UILabel()
-    label.text = "송파동 공영주차장 지상 4층"
+    label.text = ""
     label.font = UIFont.preferredFont(forTextStyle: .headline)
     label.textColor = .white
     label.alpha = 0.55
@@ -332,7 +344,7 @@ class ReservationStateView: UIScrollView {
   }()
   fileprivate let returnPlaceLabel: UILabel = {
     let label = UILabel()
-    label.text = "송파구 공영주차장 지상 4층"
+    label.text = ""
     label.font = UIFont.preferredFont(forTextStyle: .headline)
     label.textColor = .white
     
