@@ -157,7 +157,6 @@ class CustomCameraVC: UIViewController {
     myView.regonSucessTopLine.backgroundColor = topRecSucess == true ? CommonUI.mainBlue : .clear
     myView.regonSucessBottomLine.backgroundColor = bottomRecSucess == true ? CommonUI.mainBlue : .clear
     isRecognizeImageInRect = false
-    //    guard isRecognizeImageInRect == false else { return }
     if topRecSucess && bottomRecSucess == true {
       isRecognizeImageInRect = true
     }
@@ -296,7 +295,6 @@ extension CustomCameraVC: AVCaptureVideoDataOutputSampleBufferDelegate {
         self.detectTextRectangle(in: imageBuffer)
         isFinish = true
       }
-      
     }
   }
   

@@ -15,7 +15,6 @@ class RentHistoryVC: UIViewController {
   var socarZones: [SocarZoneData?] = [nil]
   var socars: [Socar?] = [nil] {
     didSet {
-      print(socars.count)
       tableView.reloadData()
     }
   }
@@ -145,10 +144,9 @@ extension RentHistoryVC: UITableViewDelegate, UITableViewDataSource {
     let cell = RentHistoryCell(style: .default, reuseIdentifier: RentHistoryCell.identifier)
     if let socarZone = socarZones[indexPath.section],
        let socarDate = socars[indexPath.section],
-       let reservationData = reservations[indexPath.section]{
+       let reservationData = reservations[indexPath.section] {
       cell.configureContent(reservationData, socarZone, socarDate)
     }
-    print(socars.count)
     return cell
   }
   
@@ -181,7 +179,11 @@ extension RentHistoryVC {
     AF.request(reservationUrl, headers: ["Content-Type": "application/json", "Authorization": "JWT \(UserDefaults.getUserAuthTocken()!)"]).validate().responseDecodable(of: UserReservation.self) { (response) in
       switch response.result {
       case .success(let data):
-        data.results.forEach {
+        var tempDate = data
+        tempDate.results.sort { (reservaion1, reservation2) -> Bool in
+          return Time.toUTCString(changeForString: reservaion1.startTime) > Time.toUTCString(changeForString: reservation2.startTime)
+        }
+        tempDate.results.forEach {
           self.reservations.append($0)
           self.getSocarZoneData(reservationData: $0)
         }

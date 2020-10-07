@@ -16,10 +16,10 @@ struct UserData: Decodable {
 
 struct User: Decodable {
   let userUid: Int
-  let name: String
+  var name: String
   let email: String
   let creditPoint: Int
-  let phoneNumber: String
+  var phoneNumber: String
   let totalDrivinDistance: Int
   
   enum CodingKeys: String, CodingKey {

@@ -180,13 +180,15 @@ class RentHistoryCell: UITableViewCell {
     } 
   }
   
-  func configureContent(_ reservation: Reservation, _ socarZone: SocarZoneData,_ socarDate: Socar) {
+  func configureContent(_ reservation: Reservation, _ socarZone: SocarZoneData, _ socarDate: Socar) {
     rentPlaceTitleLabel.text = socarZone.name
     returnPlaceTitleLabel.text = socarZone.name
     carImage.loadImage(with: socarDate.image)
     carName.text = socarDate.name
     carNumber.text = socarDate.number
-//    reservation.startTime
-//    reservation.endTime
+    
+    let startTime = Time.toUTCString(changeForString: reservation.startTime)
+    let endTime = Time.toUTCString(changeForString: reservation.endTime)
+    rentDurtaionLabel.text = "\(Time.getTimeString(type: .castMddEHHmm, date: startTime)) - \(Time.getTimeString(type: .castMddEHHmm, date: endTime))"
   }
 }

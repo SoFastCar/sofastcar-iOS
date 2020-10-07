@@ -17,7 +17,8 @@ enum ValidationCheck: String {
 
 class DefualtUserInfoVC: UIViewController {
   // MARK: - Properties
-  var user: SignUpUserData?
+  var username: String = ""
+  var phoneNumber: String = ""
   var viewUpAmount: CGFloat = 0
   
   let myView = DefaultUserInfoView()
@@ -112,14 +113,20 @@ class DefualtUserInfoVC: UIViewController {
   }
   
   @objc private func tabInputCompletButton() {
-    guard let userEmail = myView.userIdTextField.text else { return }
-    guard let userPassword = myView.userPasswordField.text else { return }
-    guard let userName = user?.username else { return }
-//    guard let encryptedUserPassword = sha256(userPassword: userPassword) else { return }
+    print("tap")
+    print(phoneNumber)
+    print(username)
+    guard let userEmail = myView.userIdTextField.text else { return print("aa") }
+    guard let userPassword = myView.userPasswordField.text else { return print("bb") }
+//    guard let userName = user?.name else { return print("cc") }
+//    guard let phone = user?.phoneNumber else { return print("dd") }
+    print("aaaaaaaa")
+    
     let sendUSerSignUpData: [String: Any] = [
-      "name": userName,
+      "name": username,
       "email": userEmail,
-      "password": userPassword
+      "password": userPassword,
+      "phone": phoneNumber
     ]
     
     print(sendUSerSignUpData)
@@ -151,7 +158,6 @@ class DefualtUserInfoVC: UIViewController {
   private func presentSignUpCompleteVC() {
     DispatchQueue.main.async {
       let singUpCompleteVC = SingUpCompleteVC()
-      singUpCompleteVC.user = self.user
       singUpCompleteVC.passBlurView = self.myView.blurView
       singUpCompleteVC.modalPresentationStyle = .overFullScreen
       singUpCompleteVC.passPushViewFunc = self.presentCreditCardInputVC
@@ -234,7 +240,6 @@ extension DefualtUserInfoVC: UITextFieldDelegate {
   
   func presentCreditCardInputVC() {
     let cardEnrollinitVC = CardEnrollinitVC()
-    cardEnrollinitVC.user = self.user
     navigationController?.pushViewController(cardEnrollinitVC, animated: true)
   }
 }

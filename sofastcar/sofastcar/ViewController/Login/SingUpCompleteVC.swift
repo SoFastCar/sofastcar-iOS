@@ -14,7 +14,7 @@ class SingUpCompleteVC: UIViewController {
   // MARK: - Properties
   var passBlurView: UIView!
   var passPushViewFunc: (() -> Void)?
-  var user: SignUpUserData?
+  var user: User?
   
   let contentView = UIView()
   
