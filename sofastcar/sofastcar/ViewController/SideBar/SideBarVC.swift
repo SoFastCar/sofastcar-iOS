@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 
 enum SideBarMenuType: String {
   case eventBannerCell = ""
@@ -27,6 +28,14 @@ enum SideBarMenuType: String {
 
 class SideBarVC: UIViewController {
   // MARK: - Properties
+  var user: User? {
+    didSet {
+      guard let user = user else { return }
+      tableHeaderView.userIdLable.text = user.email
+      tableHeaderView.userNameLable.text = user.name
+    }
+  }
+  
   let tableView = UITableView(frame: .zero, style: .plain)
   let viewWidthSizeRatio: CGFloat = 0.85
   let tableHeaderView = SideBarHeaderView(frame: .zero, isMain: true)
@@ -44,6 +53,9 @@ class SideBarVC: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     view.backgroundColor = UIColor.black.withAlphaComponent(0)
+    getUserDate { user in
+      self.user = user
+    }
     configureTableView()
     configureTableViewPanGuesture()
     configureBottomView()
@@ -208,6 +220,24 @@ extension SideBarVC: UITableViewDelegate, UITableViewDataSource {
     isVerticalStcolling = true
   }
 }
+
+// MARK: - Fetch User Data
+extension SideBarVC {
+  func getUserDate(completion: @escaping (User) -> Void) {
+    let userGetUrl = URL(string: "https://sofastcar.moorekwon.xyz/members")!
+    AF.request(userGetUrl, headers: ["Content-Type": "application/json", "Authorization": "JWT \(UserDefaults.getUserAuthTocken()!)"]).validate().responseDecodable(of: UserData.self) { (response) in
+      print(response.data)
+      switch response.result {
+      case .success(let data):
+        print(data.results[0].name)
+        completion(data.results[0])
+      case .failure(let error):
+        print("Error", error.localizedDescription)
+      }
+    }
+  }
+}
+
 // MARK: - button Action
 extension SideBarVC {
   @objc func tapButtomViewButton(_ sender: UIButton) {

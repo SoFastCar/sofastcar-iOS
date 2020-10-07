@@ -178,6 +178,23 @@ class PaymentConfirmTableVC: UITableViewController {
           
           if let jsonData = try? JSONSerialization.jsonObject(with: responseData) as? [String: AnyObject] {
             print(jsonData)
+            
+            if let updateTime = jsonData["updated_at"] as? Date {
+              print(updateTime)
+            }
+            if let createTime = jsonData["created_at"] as? Date {
+              print(createTime)
+            }
+            if let endTime = jsonData["date_time_end"] as? Date {
+              print(endTime)
+            }
+            if let startTime = jsonData["date_time_start"] as? Date {
+              print(startTime)
+            }
+            if let insurance = jsonData["insurance"] as? String {
+              print(insurance)
+            }
+            
             if let reservationUid = jsonData["id"] as? Int {
               print(reservationUid)
               UserDefaults.setReservationUid(uid: reservationUid)
@@ -198,21 +215,7 @@ class PaymentConfirmTableVC: UITableViewController {
              "zone": 246 -
              ]
              */
-            if let updateTime = jsonData["updated_at"] as? String {
-              print(updateTime)
-            }
-            if let createTime = jsonData["created_at"] as? String {
-              print(createTime)
-            }
-            if let endTime = jsonData["date_time_end"] as? String {
-              print(endTime)
-            }
-            if let startTime = jsonData["date_time_start"] as? String {
-              print(startTime)
-            }
-            if let insurance = jsonData["insurance"] as? String {
-              print(insurance)
-            } 
+            
           }
         } else {
           print("====Reservation Update fail====")
