@@ -113,16 +113,10 @@ class DefualtUserInfoVC: UIViewController {
   }
   
   @objc private func tabInputCompletButton() {
-    print("tap")
-    print(phoneNumber)
-    print(username)
     guard let userEmail = myView.userIdTextField.text else { return print("aa") }
     guard let userPassword = myView.userPasswordField.text else { return print("bb") }
-//    guard let userName = user?.name else { return print("cc") }
-//    guard let phone = user?.phoneNumber else { return print("dd") }
-    print("aaaaaaaa")
     
-    let sendUSerSignUpData: [String: Any] = [
+    let sendUSerSignUpData = [
       "name": username,
       "email": userEmail,
       "password": userPassword,
@@ -147,12 +141,6 @@ class DefualtUserInfoVC: UIViewController {
           }
         }
     }
-  }
-  
-  private func sha256(userPassword: String) -> String? {
-    guard let data = userPassword.data(using: .utf8) else { return nil }
-    let digest = SHA256.hash(data: data)
-    return digest.description
   }
   
   private func presentSignUpCompleteVC() {

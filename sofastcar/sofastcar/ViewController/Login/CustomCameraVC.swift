@@ -14,6 +14,7 @@ import Vision
 class CustomCameraVC: UIViewController {
   // MARK: - Properties
   let myView = CustomCameraView()
+  var mySuperView: DriverLicenseEnrollinitVC?
   
   var captureSession = AVCaptureSession()
   var backCamera: AVCaptureDevice?
@@ -52,7 +53,8 @@ class CustomCameraVC: UIViewController {
   
   private func configureNavigationController() {
     self.navigationController?.navigationBar.topItem?.title = ""
-    navigationItem.rightBarButtonItem = UIBarButtonItem(title: "취소", style: .plain, target: self, action: #selector(tapCancelButton))
+    let cancelButton = UIBarButtonItem(title: "취소", style: .plain, target: self, action: #selector(tapCancelButton))
+    navigationItem.rightBarButtonItem = cancelButton
     navigationController?.navigationBar.backIndicatorImage = UIImage()
     navigationController?.navigationBar.backIndicatorTransitionMaskImage = UIImage()
     navigationController?.navigationBar.barTintColor = CommonUI.mainDark
@@ -186,7 +188,6 @@ class CustomCameraVC: UIViewController {
     let transform = CGAffineTransform(scaleX: 1, y: -1).translatedBy(x: 0, y: -cameraPreviewLayer.frame.height)
     let scale = CGAffineTransform.identity.scaledBy(x: cameraPreviewLayer.frame.width, y: cameraPreviewLayer.frame.height)
     rect.forEach {
-      
       let bounds = $0.boundingBox.applying(scale).applying(transform)
       print(bounds)
       createTextBox(in: bounds)
@@ -194,6 +195,15 @@ class CustomCameraVC: UIViewController {
       let croppedCGImage: CGImage = (mainImage.cgImage?.cropping(to: $0.boundingBox))!
       let croppedImage = UIImage(cgImage: croppedCGImage)
       croppedImages.append(croppedImage)
+    }
+    myView.activityIndicator.startAnimating()
+    DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+      self.myView.activityIndicator.stopAnimating()
+      self.dismiss(animated: true) {
+        guard let superView = self.mySuperView else { return }
+        let checkDriverLicenseVC = CheckDriverLicenseVC()
+        superView.navigationController?.pushViewController(checkDriverLicenseVC, animated: true)
+      }
     }
   }
   
@@ -226,8 +236,7 @@ class CustomCameraVC: UIViewController {
   
   // MARK: - button Action
   @objc private func tapCancelButton() {
-    navigationController?.navigationBar.isHidden = true
-    navigationController?.popViewController(animated: false)
+    dismiss(animated: true, completion: nil)
   }
   
   @objc private func cameraButtonTouchInside(_ sender: Any) {
