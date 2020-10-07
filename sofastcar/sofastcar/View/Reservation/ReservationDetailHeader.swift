@@ -72,10 +72,11 @@ class ReservationDetailHeader: UIView {
   }()
   
   // MARK: - Life Cycle
-  init(frame: CGRect, isReservationEnd: Bool) {
+  init(frame: CGRect, _ isReservationEnd: Bool, _ socarNumber: String) {
     super.init(frame: frame)
     reservationStatueLabel.isSelected = isReservationEnd
     reservationStatueLabel.backgroundColor = isReservationEnd ? .systemGray5 : CommonUI.mainDark
+    carNumberLabel.text = socarNumber
     configureDefaultSetting()
     configureLayout()
     configureTopBackgroundSetting()

@@ -177,24 +177,6 @@ class PaymentConfirmTableVC: UITableViewController {
           guard let responseData = response.data else { return }
           
           if let jsonData = try? JSONSerialization.jsonObject(with: responseData) as? [String: AnyObject] {
-            print(jsonData)
-            
-            if let updateTime = jsonData["updated_at"] as? Date {
-              print(updateTime)
-            }
-            if let createTime = jsonData["created_at"] as? Date {
-              print(createTime)
-            }
-            if let endTime = jsonData["date_time_end"] as? Date {
-              print(endTime)
-            }
-            if let startTime = jsonData["date_time_start"] as? Date {
-              print(startTime)
-            }
-            if let insurance = jsonData["insurance"] as? String {
-              print(insurance)
-            }
-            
             if let reservationUid = jsonData["id"] as? Int {
               print(reservationUid)
               UserDefaults.setReservationUid(uid: reservationUid)
@@ -202,20 +184,6 @@ class PaymentConfirmTableVC: UITableViewController {
               reservationDashboardVC.modalPresentationStyle = .overFullScreen
               self.present(reservationDashboardVC, animated: false, completion: nil)
             }
-            /*
-             [
-             "car": 17, -
-             "insurance": light, -
-             "date_time_start": 2020-10-07T01:40:00Z, -
-             "id": 23,
-             "updated_at": 2020-10-05T13:22:30.530651Z, -
-             "created_at": 2020-10-05T13:22:30.530639Z, -
-             "member": 10, -
-             "date_time_end": 2020-10-07T05:40:00Z, -
-             "zone": 246 -
-             ]
-             */
-            
           }
         } else {
           print("====Reservation Update fail====")

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 
 enum DetailTableViewType: Int {
   case rentalInfo = 0
@@ -44,6 +45,7 @@ class ReservationDetailTableVC: UITableViewController {
   var socarZoneData: SocarZoneData?
   var socarData: Socar?
   var reservationData: Reservation?
+  var paymentBefore: PaymentBefore?
   
   var customTableHeaderView: ReservationDetailHeader?
   var rentalTypeTitleArray: [RentalCellType] = [.blank, .usingTime, .rentCarInfo, .socarZone, .otherDriver, .insurance, .cancelWarning, .cancel]
@@ -53,12 +55,14 @@ class ReservationDetailTableVC: UITableViewController {
   var isReservationEnd: Bool = false
   
   // MARK: - Life Cycle
-  init(isReservationEnd: Bool, socar: Socar, socarZoneData: SocarZoneData) {
+  init(_ isReservationEnd: Bool, _ socar: Socar, _ socarZoneData: SocarZoneData, _ reservation: Reservation) {
     super.init(style: .grouped)
     self.socarData = socar
     self.socarZoneData = socarZoneData
     self.isReservationEnd = isReservationEnd
-    customTableHeaderView = ReservationDetailHeader(frame: .zero, isReservationEnd: isReservationEnd)
+    self.reservationData = reservation
+    getReservaionPaymentInfo(reservation: reservation)
+    customTableHeaderView = ReservationDetailHeader(frame: .zero, isReservationEnd, socar.number)
   }
   
   required init?(coder: NSCoder) {
@@ -82,9 +86,6 @@ class ReservationDetailTableVC: UITableViewController {
     tableView.sectionHeaderHeight = 10
     tableView.sectionFooterHeight = 0
     tableView.separatorStyle = .none
-    tableView.register(ReservationRentalInfoCell.self, forCellReuseIdentifier: ReservationRentalInfoCell.identifier)
-    tableView.register(ReservationPaymentCell.self, forCellReuseIdentifier: ReservationPaymentCell.identifier)
-    tableView.register(ReservationEtcCell.self, forCellReuseIdentifier: ReservationEtcCell.identifier)
   }
   
   private  func configureTableViewSegController() {
@@ -113,17 +114,18 @@ class ReservationDetailTableVC: UITableViewController {
     case .rentalInfo:
       guard let socarData = socarData else { fatalError() }
       guard let socarZoneData = socarZoneData else { fatalError() }
-      guard let resrvationData = reservationData else { fatalError() }
-      let cell = ReservationRentalInfoCell(socar: socarData, socarZoneData: socarZoneData, reservationData: resrvationData)
+      guard let reservationData = reservationData else { fatalError() }
+      let cell = ReservationRentalInfoCell(socarData, socarZoneData, reservationData)
       cell.configureCell(cellType: rentalTypeTitleArray[indexPath.section])
       cell.delegate = self
       if rentalTypeTitleArray[indexPath.section] == .usingTime {
-        guard let reservationStatus = customTableHeaderView?.reservationStatueLabel.isSelected else { fatalError() }
-        cell.changeOptionButton.isHidden = reservationStatus
+//        guard let reservationStatus = customTableHeaderView?.reservationStatueLabel.isSelected else { fatalError() }
+        cell.changeOptionButton.isHidden = true
       }
       return cell
     case .paymentInfo:
-      let cell = ReservationPaymentCell(style: .default, reuseIdentifier: ReservationPaymentCell.identifier)
+      guard let paymentBefore = paymentBefore else { fatalError() }
+      let cell = ReservationPaymentCell(paymentBefore: paymentBefore)
       cell.isReservationEnd = isReservationEnd
       cell.delegate = self
       cell.configureCell(cellType: paymentTypeTitleArray[indexPath.section])
@@ -183,7 +185,9 @@ extension ReservationDetailTableVC: ReservationRentalInfoCellDelegate {
   }
   
   func tapDetailButton(forCell cell: ReservationRentalInfoCell, sectionTitle: String) {
-    print("tabDetailButton", sectionTitle)
+    guard let socarZoneData = socarZoneData else { return }
+    let detailSocarZoneInfoVC = DetailSocarZoneInfoVC(socarZoneData: socarZoneData)
+    present(detailSocarZoneInfoVC, animated: true, completion: nil)
   }
 }
 
@@ -214,5 +218,21 @@ extension ReservationDetailTableVC: ReservationEtcCellDelegate {
   
   func tapContectCustomerCenter(forCell cell: ReservationEtcCell) {
     print("tapContectCustomerCenter")
+  }
+}
+
+// MARK: - NetworkService
+extension ReservationDetailTableVC {
+  private func getReservaionPaymentInfo(reservation: Reservation) {
+    print("Start Download")
+    let paymentBefore = URL(string: "https://sofastcar.moorekwon.xyz/reservations/\(reservation.reservationUid)/payment_before")!
+    AF.request(paymentBefore, headers: ["Content-Type": "application/json", "Authorization": "JWT \(UserDefaults.getUserAuthTocken()!)"]).validate().responseDecodable(of: PaymentBeforeDataSet.self, queue: .main, completionHandler: { (response) in
+      switch response.result {
+      case .success(let paymentBefore):
+        self.paymentBefore = paymentBefore.results[0]
+      case .failure(let error):
+        print("fail to get payment Before Data", error.localizedDescription)
+      }
+    })
   }
 }

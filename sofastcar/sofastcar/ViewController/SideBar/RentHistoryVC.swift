@@ -127,10 +127,6 @@ class RentHistoryVC: UIViewController {
       self.tableView.center.x -= UIScreen.main.bounds.width
     }
   }
-  
-  func dismissWithAnimation() {
-    
-  }
 }
 
 // MARK: - UITableViewDelegate, UITableViewDataSource
@@ -165,8 +161,8 @@ extension RentHistoryVC: UITableViewDelegate, UITableViewDataSource {
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     guard let socarCarData = socars[indexPath.section] else { return }
     guard let socarZoneData = socarZones[indexPath.section] else { return }
-    let reservationDetailTableVC = ReservationDetailTableVC(isReservationEnd: true, socar: socarCarData, socarZoneData: socarZoneData)
-    reservationDetailTableVC.reservationData = reservations[indexPath.section]
+    guard let reservation = reservations[indexPath.section] else { return }
+    let reservationDetailTableVC = ReservationDetailTableVC( true, socarCarData, socarZoneData, reservation)
     reservationDetailTableVC.modalPresentationStyle = .overFullScreen
     present(reservationDetailTableVC, animated: true, completion: nil)
   }
