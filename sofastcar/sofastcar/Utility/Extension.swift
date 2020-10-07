@@ -219,6 +219,18 @@ extension UIViewController {
     statusBar.backgroundColor = backgroundColor
     UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.addSubview(statusBar)
   }
+//  
+//  var shouldAutorotate: Bool {
+//      return false
+//  }
+//  
+//  var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+//      return .portrait
+//  }
+//  
+//  var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
+//      return .portrait
+//  }
 }
 
 // MARK: - Shadow Maker

@@ -17,8 +17,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                    didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
     
     var rootView: UIViewController = UIViewController()
-//    UserDefaults.resetUserAuthTocken() // 로그아웃필요할때 사용
-//    UserDefaults.setReadyToDrive(isDriveReady: false) //
+    //    UserDefaults.resetUserAuthTocken() // 로그아웃필요할때 사용
+    //    UserDefaults.setReadyToDrive(isDriveReady: false) //
     if UserDefaults.getUserAuthTocken() != nil {
       if UserDefaults.getReadyToDrive() == true {
         let reservationDashBoard = ReservationDashboardVC()
@@ -66,7 +66,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
           return
         }
         guard let header = response as? HTTPURLResponse,
-          (200..<300) ~= header.statusCode else { print("Create User Auth token Error"); return }
+              (200..<300) ~= header.statusCode else { print("Create User Auth token Error"); return }
         guard let responseData = data else { return }
         if let jsonData = try? JSONSerialization.jsonObject(with: responseData, options: []) as? [String: String] {
           if let newUserAuthToken = jsonData["token"] {
@@ -77,5 +77,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       }
       task.resume()
     }
+  }
+  
+  func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
+    return  [.portrait]
   }
 }
