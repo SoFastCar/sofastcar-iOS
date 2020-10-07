@@ -33,41 +33,7 @@ class ReservationDashboardVC: UIViewController {
     UserDefaults.setVehiclCheck(check: false)
     setUI()
     
-    ReservationNetWorkService.shared.getReservationInfo { (result) in
-    
-      print("🚙", result.creatTime)
-      print("🚙", result.startTime)
-      print("🚙", result.endTime)
-      
-      let socarUrl = "https://sofastcar.moorekwon.xyz/carzones/\(result.zone)/cars/\(result.car)/info"
-      
-      AF.request(socarUrl, headers: ["Content-Type": "application/json", "Authorization": "JWT \(UserDefaults.getUserAuthTocken()!)"]).validate(statusCode: 200..<300).responseDecodable(of: Socar.self) { (response) in
-        switch response.result {
-        case .success(let value):
-          self.reservationStateView.reservationCarImageString = value.image
-          self.reservationStateView.numberPlateString = value.number
-          self.reservationStateView.carTypeString = value.name
-          self.reservationStateView.carOilTypeString = value.fuelType
-        case .failure(let error):
-          print("error: \(String(describing: error.errorDescription))")
-        }
-      }
-      
-      let socarzonUrl = "https://sofastcar.moorekwon.xyz/carzones/\(result.zone)"
-      
-      AF.request(socarzonUrl, headers: ["Content-Type": "application/json", "Authorization": "JWT \(UserDefaults.getUserAuthTocken()!)"]).validate(statusCode: 200..<300).responseDecodable(of: SocarZoneData.self) { (response) in
-        switch response.result {
-        case .success(let value):
-          self.reservationStateView.reservationPlaceStateSubString = value.name
-          self.reservationStateView.returnPlaceStirng = value.name
-        case .failure(let error):
-          print("error: \(String(describing: error.errorDescription))")
-        }
-      }
-      
-    } onError: { (errorMessage) in
-      debugPrint(errorMessage)
-    }
+    reservationNetWork()
   }
   
   // MARK: - UI
@@ -99,6 +65,52 @@ class ReservationDashboardVC: UIViewController {
     let tapGestureRecongnizer = UITapGestureRecognizer(target: self, action: #selector(didTapVehiclePictureView(recongnize:)))
     
     reservationStateView.vehiclePictureViewButton.addGestureRecognizer(tapGestureRecongnizer)
+  }
+  
+  fileprivate func reservationNetWork() {
+    ReservationNetWorkService.shared.getReservationInfo { (result) in
+      
+      print("🚙", result.creatTime)
+      print("🚙", result.startTime)
+      print("🚙", result.endTime)
+      
+      self.socarNetWork(result)
+      
+      self.socarzonNetWork(result)
+      
+    } onError: { (errorMessage) in
+      debugPrint(errorMessage)
+    }
+  }
+  
+  fileprivate func socarNetWork(_ result: Reservation) {
+    let socarUrl = "https://sofastcar.moorekwon.xyz/carzones/\(result.zone)/cars/\(result.car)/info"
+    
+    AF.request(socarUrl, headers: ["Content-Type": "application/json", "Authorization": "JWT \(UserDefaults.getUserAuthTocken()!)"]).validate(statusCode: 200..<300).responseDecodable(of: Socar.self) { (response) in
+      switch response.result {
+      case .success(let value):
+        self.reservationStateView.reservationCarImageString = value.image
+        self.reservationStateView.numberPlateString = value.number
+        self.reservationStateView.carTypeString = value.name
+        self.reservationStateView.carOilTypeString = value.fuelType
+      case .failure(let error):
+        print("error: \(String(describing: error.errorDescription))")
+      }
+    }
+  }
+  
+  fileprivate func socarzonNetWork(_ result: Reservation) {
+    let socarzonUrl = "https://sofastcar.moorekwon.xyz/carzones/\(result.zone)"
+    
+    AF.request(socarzonUrl, headers: ["Content-Type": "application/json", "Authorization": "JWT \(UserDefaults.getUserAuthTocken()!)"]).validate(statusCode: 200..<300).responseDecodable(of: SocarZoneData.self) { (response) in
+      switch response.result {
+      case .success(let value):
+        self.reservationStateView.reservationPlaceStateSubString = value.name
+        self.reservationStateView.returnPlaceStirng = value.name
+      case .failure(let error):
+        print("error: \(String(describing: error.errorDescription))")
+      }
+    }
   }
   
   // MARK: - Action
