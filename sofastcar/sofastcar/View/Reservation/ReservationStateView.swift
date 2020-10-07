@@ -23,7 +23,14 @@ class ReservationStateView: UIScrollView {
     }
   }
   
+  var carTypeString: String? {
+    didSet {
+      carTypeLabel.text = carTypeString
+    }
+  }
+  
   // MARK: - Attribute
+  
   lazy var leftNavigationButton: UIBarButtonItem = {
     let barButtonItem = UIBarButtonItem(
       image: UIImage(systemName: CommonUI.SFSymbolKey.hamburger.rawValue),
@@ -82,7 +89,7 @@ class ReservationStateView: UIScrollView {
     return button
   }()
   
-  fileprivate let carTypeLabel: UILabel = {
+  let carTypeLabel: UILabel = {
     let label = UILabel()
     label.text = "마세라티"
     label.font = UIFont.preferredFont(forTextStyle: .body)
