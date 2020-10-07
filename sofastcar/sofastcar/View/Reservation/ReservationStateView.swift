@@ -47,6 +47,12 @@ class ReservationStateView: UIScrollView {
     }
   }
   
+  var reservationRemainingTimeString: String? {
+    didSet {
+      reservationRemainingTimeLabel.text = reservationRemainingTimeString
+    }
+  }
+  
   // MARK: - Attribute
   
   lazy var leftNavigationButton: UIBarButtonItem = {
@@ -187,7 +193,7 @@ class ReservationStateView: UIScrollView {
   
   fileprivate let reservationRemainingTimeLabel: UILabel = {
     let label = UILabel()
-    label.text = "쏘카 이용 10분 전"
+    label.text = ""
     label.font = UIFont.preferredFont(forTextStyle: .footnote)
     label.textColor = CommonUI.mainBlue
     

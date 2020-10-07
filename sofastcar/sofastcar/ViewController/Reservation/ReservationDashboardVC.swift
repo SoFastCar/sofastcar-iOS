@@ -70,6 +70,22 @@ class ReservationDashboardVC: UIViewController {
   fileprivate func reservationNetWork() {
     ReservationNetWorkService.shared.getReservationInfo { (result) in
       
+      let now = Date()
+      let dateFormatter = DateFormatter()
+      dateFormatter.locale = Locale(identifier: "ko-KR")
+      dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+      let startDate = dateFormatter.date(from: result.startTime)!
+      
+      print(startDate.timeIntervalSince1970)
+      print(now.timeIntervalSince1970)
+      
+      let useSocarTime = Int(startDate.timeIntervalSince1970 - now.timeIntervalSince1970) / 60
+      
+      self.reservationStateView.reservationRemainingTimeString = "쏘카 이용 \(useSocarTime)분 전 "
+      
+      print("🚗", useSocarTime)
+      print(Time.getDivideRentTodalTimeByHalfHour(start: now, end: startDate))
+      
       print("🚙", result.creatTime)
       print("🚙", result.startTime)
       print("🚙", result.endTime)
