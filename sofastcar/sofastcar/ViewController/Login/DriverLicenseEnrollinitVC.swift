@@ -39,10 +39,9 @@ class DriverLicenseEnrollinitVC: UIViewController {
     myView.driverAuthCompleteButton.addTarget(self, action: #selector(tapDriverAuthCompletebutton), for: .touchUpInside)
   }
   
-  // MARK: - Handler
+  // MARK: - Hand
   @objc private func tabBackButton() {
-    navigationController?.navigationBar.isHidden = false
-    navigationController?.popViewController(animated: true)
+    navigationController?.popViewController(animated: false)
   }
   
   @objc private func tapDriverAuthCompletebutton() {
