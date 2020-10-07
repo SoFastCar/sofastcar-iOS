@@ -194,7 +194,7 @@ class SocarClubScrollView: UIScrollView {
       heightPadding = 0
     }
     backgroundColor = .white
-    let verticalPadding = Int(movPlayerHeight) + 110*couponArray.count + 10*(couponArray.count) + 44
+    let verticalPadding = Int(movPlayerHeight) + 110*couponArray.count + 10*(couponArray.count) + 140
     self.contentSize = .init(width: UIScreen.main.bounds.width,
                              height: UIScreen.main.bounds.height+heightPadding+CGFloat(verticalPadding))
     contentView.frame = CGRect(x: 0, y: 0,

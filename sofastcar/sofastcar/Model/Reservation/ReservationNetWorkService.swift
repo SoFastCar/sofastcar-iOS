@@ -14,7 +14,7 @@ class ReservationNetWorkService {
   static let shared = ReservationNetWorkService()
 
   let reservationBaseUrl = "https://sofastcar.moorekwon.xyz/reservations"
-  let reservationUidUrl = UserDefaults.getReservationUid()
+  let reservationUidUrl = UserDefaults.getReservationUid()!
   var urlGetOneCall = ""
   
   let session = URLSession(configuration: .default)

@@ -8,7 +8,7 @@
 import Foundation
 
 struct UserReservation: Decodable {
-  let results: [Reservation]
+  var results: [Reservation]
   let previous: String?
   let next: String
 }

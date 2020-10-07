@@ -46,6 +46,9 @@ class DriverLicenseEnrollinitVC: UIViewController {
   
   @objc private func tapDriverAuthCompletebutton() {
     let customCameraVC = CustomCameraVC()
-    navigationController?.pushViewController(customCameraVC, animated: false)
+    customCameraVC.mySuperView = self
+    let navigationController = UINavigationController(rootViewController: customCameraVC)
+    navigationController.modalPresentationStyle = .overFullScreen
+    present(navigationController, animated: true, completion: nil)
   }
 }

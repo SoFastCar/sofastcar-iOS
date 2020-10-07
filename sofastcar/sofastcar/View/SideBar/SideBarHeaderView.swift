@@ -37,10 +37,18 @@ class SideBarHeaderView: UIView {
     return label
   }()
   
+  let creditLabel: UILabel = {
+    let label = UILabel()
+    label.text = "1,000,000원"
+    label.font = .systemFont(ofSize: CommonUI.contentsTextFontSize)
+    label.textColor = .systemGray
+    return label
+  }()
+  
   let socarClubButton: UIButton = {
     let button = UIButton()
     let attributedString = NSMutableAttributedString()
-    attributedString.append(NSAttributedString(string: "쏘카클럽 Level 1 >", attributes:
+    attributedString.append(NSAttributedString(string: "쏘카클럽 Level 4 >", attributes:
       [NSAttributedString.Key.foregroundColor: CommonUI.mainBlue,
        NSAttributedString.Key.font: UIFont.systemFont(ofSize: CommonUI.contentsTextFontSize-1)]))
     button.setAttributedTitle(attributedString, for: .normal)
@@ -79,7 +87,7 @@ class SideBarHeaderView: UIView {
   private func configureLayout(_ isMain: Bool) {
     
     if isMain {
-      [userNameLable, userIdLable, socarClubButton, settingButton, notiButton].forEach {
+      [userNameLable, userIdLable, creditLabel, socarClubButton, settingButton, notiButton].forEach {
         addSubview($0)
       }
     } else {
@@ -99,8 +107,13 @@ class SideBarHeaderView: UIView {
     }
     
     if isMain {
-      socarClubButton.snp.makeConstraints {
+      creditLabel.snp.makeConstraints {
         $0.top.equalTo(userIdLable.snp.bottom).offset(5)
+        $0.leading.equalTo(guide)
+      }
+      
+      socarClubButton.snp.makeConstraints {
+        $0.top.equalTo(creditLabel.snp.bottom).offset(5)
         $0.leading.equalTo(guide)
         $0.bottom.equalTo(guide)
         $0.width.equalTo(140)

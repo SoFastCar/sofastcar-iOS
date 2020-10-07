@@ -11,7 +11,7 @@ import UIKit
 class UserAuthVC: UIViewController {
   
   // MARK: - Properties
-  var user: SignUpUserData?
+  var user: User?
   let scrollView = UserAuthScrollView()
   var isKeyboardUp: Bool = false
   var isUserAgreeWithAlltou: Bool = false
@@ -329,16 +329,11 @@ class UserAuthVC: UIViewController {
     DispatchQueue.main.async {
       let view = self.scrollView
       guard let userName = view.usernameTextField.text else { return }
-      guard let userBirthDay = view.userBirthTextField.text else { return }
-      guard let userGender = view.userSexTextField.text else { return }
-      guard let userPhoneNumber = Int(view.userPhoneNumberTextField.text ?? "") else { return print("Errir0")}
-      
-      self.user?.username = userName
-      self.user?.userBirthDay = "\(userBirthDay)\(userGender)"
-      self.user?.userPhoneNumber = "\(userPhoneNumber)"
-      
+      guard let userPhoneNumber = view.userPhoneNumberTextField.text else { return }
+
       let defualtUserInfoVC = DefualtUserInfoVC()
-      defualtUserInfoVC.user = self.user
+      defualtUserInfoVC.username = userName
+      defualtUserInfoVC.phoneNumber = userPhoneNumber
       self.navigationController?.pushViewController(defualtUserInfoVC, animated: true)
     }
   }

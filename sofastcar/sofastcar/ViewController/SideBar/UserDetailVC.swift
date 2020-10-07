@@ -40,6 +40,7 @@ enum UserDetailSectionType: String {
 
 class UserDetailVC: UIViewController {
   // MARK: - Properties
+  var user: User?
   let tableView = UITableView(frame: .zero, style: .grouped)
   let tableHeaderView = SideBarHeaderView(frame: .zero, isMain: false)
   lazy var sectionTitleArray = UserDetailSectionType.allcase()
@@ -92,6 +93,13 @@ class UserDetailVC: UIViewController {
     tableView.rowHeight = 50
     tableView.sectionHeaderHeight = 50
     tableView.sectionFooterHeight = 10
+  }
+  
+  func configureTableHaderView() {
+    guard let user = user else { return }
+    tableHeaderView.userNameLable.text = user.name
+    tableHeaderView.userPhoneNumberLabel.text = user.phoneNumber
+    tableHeaderView.userIdLable.text = user.email
   }
   
   // MARK: - Present, dismiss Animation
