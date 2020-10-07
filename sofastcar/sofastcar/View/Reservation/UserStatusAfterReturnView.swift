@@ -70,14 +70,23 @@ class UserStatusAfterReturnView: UIView {
     return label
   }()
   
-  fileprivate let userAddKilometerLabel: UILabel = {
-    let label = UILabel()
-    label.text = "+170km"
+  fileprivate let userAddKilometerLabel: CustomCountingLabel = {
+    let label = CustomCountingLabel()
+    label.count(fromValue: 0, to: 180, withDuration: 1.5, andAnimationType: .easeInCounter, andCounterType: .intType)
     label.font = UIFont.preferredFont(forTextStyle: .subheadline).bold()
     label.textColor = CommonUI.mainBlue
     
     return label
   }()
+//
+//  fileprivate let userAddKilometerLabel: UILabel = {
+//    let label = UILabel()
+//    label.text = "+170km"
+//    label.font = UIFont.preferredFont(forTextStyle: .subheadline).bold()
+//    label.textColor = CommonUI.mainBlue
+//
+//    return label
+//  }()
   
   fileprivate let userLevelStatusbarView: UIView = {
     let view = UIView()
