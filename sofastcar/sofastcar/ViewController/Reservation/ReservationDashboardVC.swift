@@ -46,7 +46,7 @@ class ReservationDashboardVC: UIViewController {
         case .success(let value):
           
           self.reservationStateView.reservationCarImageString = value.image
-          
+          self.reservationStateView.numberPlateString = value.number
           print("❤️number", value.number)
           print("❤️name", value.name)
           print("❤️fueltype", value.fuelType)

@@ -17,7 +17,11 @@ class ReservationStateView: UIScrollView {
     }
   }
   
-  var 
+  var numberPlateString: String? {
+    didSet {
+      self.numberPlateLabel.text = numberPlateString
+    }
+  }
   
   // MARK: - Attribute
   lazy var leftNavigationButton: UIBarButtonItem = {
@@ -57,7 +61,7 @@ class ReservationStateView: UIScrollView {
     return imageView
   }()
   
-  fileprivate let numberPlateLabel: UILabel = {
+  let numberPlateLabel: UILabel = {
     let label = UILabel()
     label.text = "57하4455"
     label.font = UIFont.preferredFont(forTextStyle: .title1)
