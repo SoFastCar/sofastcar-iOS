@@ -8,6 +8,7 @@
 
 import UIKit
 import SnapKit
+import Alamofire
 
 class ReservationDashboardVC: UIViewController {
   
@@ -31,6 +32,9 @@ class ReservationDashboardVC: UIViewController {
     super.viewDidLoad()
     UserDefaults.setVehiclCheck(check: false)
     setUI()
+    
+    print("❤️", UserDefaults.getReservationUid())
+    print("😇", UserDefaults.getUserAuthTocken())
   }
   
   // MARK: - UI
