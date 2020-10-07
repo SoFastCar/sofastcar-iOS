@@ -90,8 +90,8 @@ class SideBarVC: UIViewController {
     tableView.addSubview(sideBarBottonView)
     sideBarBottonView.snp.makeConstraints {
       $0.leading.trailing.equalTo(tableView.safeAreaLayoutGuide)
-      $0.bottom.equalTo(tableView.safeAreaLayoutGuide).offset(50)
-      $0.height.equalTo(120)
+      $0.bottom.equalTo(tableView.safeAreaLayoutGuide).offset(40)
+      $0.height.equalTo(130)
     }
     sideBarBottonView.businessButton.addTarget(self, action: #selector(tapButtomViewButton(_:)), for: .touchUpInside)
     sideBarBottonView.planButton.addTarget(self, action: #selector(tapButtomViewButton(_:)), for: .touchUpInside)
@@ -142,7 +142,7 @@ extension SideBarVC: UITableViewDelegate, UITableViewDataSource {
   }
   
   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-    return 55
+    return 53
   }
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

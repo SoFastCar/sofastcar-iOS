@@ -138,7 +138,7 @@ class ReservationRentalInfoCell: UITableViewCell {
   }()
   
   // MARK: - Life Cycle
-  init(socar: Socar, socarZoneData: SocarZoneData, reservationData: Reservation) {
+  init(_ socar: Socar, _ socarZoneData: SocarZoneData, _ reservationData: Reservation) {
     super.init(style: .default, reuseIdentifier: "cell")
     self.socar = socar
     self.socarZoneData = socarZoneData

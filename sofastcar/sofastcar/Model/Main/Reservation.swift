@@ -10,7 +10,7 @@ import Foundation
 struct UserReservation: Decodable {
   var results: [Reservation]
   let previous: String?
-  let next: String
+  let next: String?
 }
 
 struct Reservation: Decodable {
