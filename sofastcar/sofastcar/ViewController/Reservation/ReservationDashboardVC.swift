@@ -76,15 +76,19 @@ class ReservationDashboardVC: UIViewController {
       dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
       let startDate = dateFormatter.date(from: result.startTime)!
       
+      let startConvertDateFormatter = DateFormatter()
+      startConvertDateFormatter.locale = Locale(identifier: "ko-KR")
+      startConvertDateFormatter.dateFormat = "M/dd (E) HH:mm"
+      
+      let startConvertDate = startConvertDateFormatter.string(from: Date(timeIntervalSince1970: startDate.timeIntervalSince1970))
+      
       print(startDate.timeIntervalSince1970)
       print(now.timeIntervalSince1970)
       
       let useSocarTime = Int(startDate.timeIntervalSince1970 - now.timeIntervalSince1970) / 60
       
       self.reservationStateView.reservationRemainingTimeString = "쏘카 이용 \(useSocarTime)분 전 "
-      
-      print("🚗", useSocarTime)
-      print(Time.getDivideRentTodalTimeByHalfHour(start: now, end: startDate))
+      self.reservationStateView.reservationTimeString = startConvertDate
       
       print("🚙", result.creatTime)
       print("🚙", result.startTime)
