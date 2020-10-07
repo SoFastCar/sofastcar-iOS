@@ -7,10 +7,13 @@
 //
 
 import UIKit
+import Alamofire
 
 class RentHistoryVC: UIViewController {
   // MARK: - Properties
-  var reservations: [Reservation]?
+  var reservations: [Reservation] = []
+  var socarZones: [SocarZoneData] = []
+  
   lazy var filterButtonImageView: UIImageView = {
     let imageView = UIImageView()
     if let image = UIImage(systemName: "slider.horizontal.3")?.cgImage {
@@ -34,17 +37,23 @@ class RentHistoryVC: UIViewController {
   }()
   
   let tableView = UITableView(frame: .zero, style: .grouped)
-
+  
   let statusBar =  UIView()
   
   // MARK: - Life Cycle
   override func viewDidLoad() {
     super.viewDidLoad()
+    networkService { socarZoneData in
+      DispatchQueue.main.async {
+        self.socarZones.append(socarZoneData)
+        self.tableView.reloadData()
+      }
+    }
     configureStatusBar()
     configureNavigationContoller()
     configureTableView()
   }
-
+  
   override func viewWillDisappear(_ animated: Bool) {
     super.viewWillDisappear(animated)
     removeFilterImageViewInNavigationController()
@@ -133,11 +142,14 @@ extension RentHistoryVC: UITableViewDelegate, UITableViewDataSource {
       return cell
     }
     let cell = RentHistoryCell(style: .default, reuseIdentifier: RentHistoryCell.identifier)
+    print(socarZones.count)
+    print(reservations.count)
+    cell.configureContent(reservation: reservations[indexPath.section-1], socarZone: socarZones[indexPath.section-1])
     return cell
   }
   
   func numberOfSections(in tableView: UITableView) -> Int {
-    return reservations?.count ?? 5
+    return socarZones.count
   }
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -152,5 +164,33 @@ extension RentHistoryVC: UITableViewDelegate, UITableViewDataSource {
     let reservationDetailTableVC = ReservationDetailTableVC(isReservationEnd: true)
     reservationDetailTableVC.modalPresentationStyle = .overFullScreen
     present(reservationDetailTableVC, animated: true, completion: nil)
+  }
+}
+
+extension RentHistoryVC {
+  private func networkService(complition: @escaping (SocarZoneData) -> Void) {
+    let reservationUrl = URL(string: "https://sofastcar.moorekwon.xyz/reservations")!
+    
+    AF.request(reservationUrl, headers: ["Content-Type": "application/json", "Authorization": "JWT \(UserDefaults.getUserAuthTocken()!)"]).validate().responseDecodable(of: UserReservation.self) { (response) in
+      switch response.result {
+      case .success(let data):
+        self.reservations = data.results
+        data.results.forEach {
+          //          let carUrl = URL(string: "https://sofastcar.moorekwon.xyz/carzones/\($0.car)")
+          let socarZoneUrl = URL(string: "https://sofastcar.moorekwon.xyz/carzones/\($0.zone)")!
+          
+          AF.request(socarZoneUrl, headers: ["Content-Type": "application/json", "Authorization": "JWT \(UserDefaults.getUserAuthTocken()!)"]).validate().responseDecodable(of: SocarZoneData.self) { (response) in
+            switch response.result {
+            case .success(let socarZoneData):
+              complition(socarZoneData)
+            case .failure(let error):
+              print("Error", error.localizedDescription)
+            }
+          }
+        }
+      case .failure(let error):
+        print("Error", error.localizedDescription)
+      }
+    }
   }
 }

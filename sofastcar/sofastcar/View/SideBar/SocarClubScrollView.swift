@@ -259,7 +259,7 @@ class SocarClubScrollView: UIScrollView {
     let animation = CABasicAnimation(keyPath: "strokeEnd")
     animation.fromValue = 0
     animation.toValue = 1
-    animation.duration = 1
+    animation.duration = 3
     animation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.linear)
     
     let path = UIBezierPath(arcCenter: CGPoint(x: circleGuide.outLineCircleCenterX+85,
@@ -365,7 +365,6 @@ class SocarClubScrollView: UIScrollView {
     }
     
     for coupon in couponArray {
-      print("Start")
       let couponView = CouponView(frame: .zero, coupon: coupon)
       couponView.draw(couponView.frame)
       downLoadButtonArray.append(couponView.downloadButton)

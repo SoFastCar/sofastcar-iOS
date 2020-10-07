@@ -11,6 +11,8 @@ import UIKit
 class RentHistoryCell: UITableViewCell {
   // MARK: - Properties
   static let identifier = "RentHistoryCell"
+//  var reservaion: Reservation?
+//  var socarZone: SocarZoneData?
   lazy var guide = contentView.layoutMarginsGuide
   
   let reservationStatueLabel: UIButton = {
@@ -176,5 +178,14 @@ class RentHistoryCell: UITableViewCell {
       $0.top.equalTo(returnPlaceTitleLabel.snp.bottom).offset(20)
       $0.leading.equalTo(rentPlaceMarkImageView).offset(3)
     } 
+  }
+  
+  func configureContent(reservation: Reservation, socarZone: SocarZoneData) {
+//    guard let reservation = reservaion else { return }
+//    guard let socarZone = socarZone else { return }
+    
+    rentPlaceTitleLabel.text = socarZone.name
+    returnPlaceTitleLabel.text = socarZone.name
+    
   }
 }
