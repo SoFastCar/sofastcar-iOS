@@ -11,7 +11,7 @@ import Alamofire
 
 class RentHistoryVC: UIViewController {
   // MARK: - Properties
-  var reservations: [Reservation] = []
+  var reservations: [Reservation?] = [nil]
   var socarZones: [SocarZoneData?] = [nil]
   var socars: [Socar?] = [nil] {
     didSet {
@@ -144,8 +144,9 @@ extension RentHistoryVC: UITableViewDelegate, UITableViewDataSource {
     }
     let cell = RentHistoryCell(style: .default, reuseIdentifier: RentHistoryCell.identifier)
     if let socarZone = socarZones[indexPath.section],
-       let socarDate = socars[indexPath.section] {
-      cell.configureContent(reservation: reservations[indexPath.section-1], socarZone: socarZone, socarDate: socarDate)
+       let socarDate = socars[indexPath.section],
+       let reservationData = reservations[indexPath.section]{
+      cell.configureContent(reservationData, socarZone, socarDate)
     }
     print(socars.count)
     return cell
@@ -164,20 +165,24 @@ extension RentHistoryVC: UITableViewDelegate, UITableViewDataSource {
   }
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    let reservationDetailTableVC = ReservationDetailTableVC(isReservationEnd: true)
+    guard let socarCarData = socars[indexPath.section] else { return }
+    guard let socarZoneData = socarZones[indexPath.section] else { return }
+    let reservationDetailTableVC = ReservationDetailTableVC(isReservationEnd: true, socar: socarCarData, socarZoneData: socarZoneData)
+    reservationDetailTableVC.reservationData = reservations[indexPath.section]
     reservationDetailTableVC.modalPresentationStyle = .overFullScreen
     present(reservationDetailTableVC, animated: true, completion: nil)
   }
 }
 
+// MARK: - NetworkService
 extension RentHistoryVC {
   private func networkService() {
     let reservationUrl = URL(string: "https://sofastcar.moorekwon.xyz/reservations")!
     AF.request(reservationUrl, headers: ["Content-Type": "application/json", "Authorization": "JWT \(UserDefaults.getUserAuthTocken()!)"]).validate().responseDecodable(of: UserReservation.self) { (response) in
       switch response.result {
       case .success(let data):
-        self.reservations = data.results
-        self.reservations.forEach {
+        data.results.forEach {
+          self.reservations.append($0)
           self.getSocarZoneData(reservationData: $0)
         }
       case .failure(let error):
@@ -192,7 +197,6 @@ extension RentHistoryVC {
       switch response.result {
       case .success(let socarZoneData):
         self.socarZones.append(socarZoneData)
-        print(socarZoneData)
         self.getSocarData(reservationData: reservationData, socarZone: socarZoneData)
       case .failure(let error):
         print("Fail to get SocarZone Data", error.localizedDescription)
@@ -205,7 +209,6 @@ extension RentHistoryVC {
     AF.request(carUrl, headers: ["Content-Type": "application/json", "Authorization": "JWT \(UserDefaults.getUserAuthTocken()!)"]).validate().responseDecodable(of: Socar.self, queue: .main, completionHandler: { (response) in
       switch response.result {
       case .success(let socarCarData):
-        print("쏘카", socarCarData)
         self.socars.append(socarCarData)
       case .failure(let error):
         print("fail to get Socar Car Data", error.localizedDescription)

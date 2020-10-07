@@ -32,23 +32,6 @@ struct User: Decodable {
   }
 }
 
-/*
- {
-     "next": null,
-     "previous": null,
-     "results": [
-         {
-             "id": 10,
-             "name": "김광수",
-             "email": "abc@naver.com",
-             "credit_point": 4331870,
-             "phone": "01012345678",
-             "total_driving_distance": 0
-         }
-     ]
- }
- */
-
 class SignUpUserData: CustomStringConvertible {
 
   // 사용자 인적 정보

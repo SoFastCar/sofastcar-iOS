@@ -180,7 +180,7 @@ class RentHistoryCell: UITableViewCell {
     } 
   }
   
-  func configureContent(reservation: Reservation, socarZone: SocarZoneData, socarDate: Socar) {
+  func configureContent(_ reservation: Reservation, _ socarZone: SocarZoneData,_ socarDate: Socar) {
     rentPlaceTitleLabel.text = socarZone.name
     returnPlaceTitleLabel.text = socarZone.name
     carImage.loadImage(with: socarDate.image)

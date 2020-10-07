@@ -52,7 +52,7 @@
 		BCDFBCDC2511E523002E4789 /* InsuranceData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCDFBCDB2511E523002E4789 /* InsuranceData.swift */; };
 		BCDFBCDE251237B2002E4789 /* GeocodingData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCDFBCDD251237B2002E4789 /* GeocodingData.swift */; };
 		BCFCF64A2513CE9A003CAA71 /* SearchCustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCFCF6492513CE9A003CAA71 /* SearchCustomButton.swift */; };
-		C728C85024F7E35100063005 /* SignUpUserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C728C84F24F7E35100063005 /* SignUpUserData.swift */; };
+		C728C85024F7E35100063005 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = C728C84F24F7E35100063005 /* User.swift */; };
 		C72A913824F5E15B005D464F /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72A913724F5E15B005D464F /* Extension.swift */; };
 		C72A913A24F5E32A005D464F /* SingUpInitVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72A913924F5E32A005D464F /* SingUpInitVC.swift */; };
 		C72A913F24F60CD9005D464F /* TouVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72A913E24F60CD9005D464F /* TouVC.swift */; };
@@ -212,7 +212,7 @@
 		BCDFBCDB2511E523002E4789 /* InsuranceData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsuranceData.swift; sourceTree = "<group>"; };
 		BCDFBCDD251237B2002E4789 /* GeocodingData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeocodingData.swift; sourceTree = "<group>"; };
 		BCFCF6492513CE9A003CAA71 /* SearchCustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SearchCustomButton.swift; path = sofastcar/Custom/Main/SearchCustomButton.swift; sourceTree = SOURCE_ROOT; };
-		C728C84F24F7E35100063005 /* SignUpUserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpUserData.swift; sourceTree = "<group>"; };
+		C728C84F24F7E35100063005 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		C72A913724F5E15B005D464F /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		C72A913924F5E32A005D464F /* SingUpInitVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingUpInitVC.swift; sourceTree = "<group>"; };
 		C72A913E24F60CD9005D464F /* TouVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouVC.swift; sourceTree = "<group>"; };
@@ -563,7 +563,7 @@
 		C79A0B59250465460061F078 /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				C728C84F24F7E35100063005 /* SignUpUserData.swift */,
+				C728C84F24F7E35100063005 /* User.swift */,
 				C79A0B5A2504656B0061F078 /* PhoneAuthResponse.swift */,
 			);
 			path = Login;
@@ -1014,7 +1014,7 @@
 				C7B29A67251DBB0800AB081B /* SocarClubVC.swift in Sources */,
 				7E77D99C251B07D1002C6BF1 /* CheckButtonView.swift in Sources */,
 				BC4F3A15250E01EB00B7E1E7 /* SocarZoneData.swift in Sources */,
-				C728C85024F7E35100063005 /* SignUpUserData.swift in Sources */,
+				C728C85024F7E35100063005 /* User.swift in Sources */,
 				C7B29A8E252181AB00AB081B /* Coupon.swift in Sources */,
 				C7B29AD025291E5400AB081B /* UserCouponView.swift in Sources */,
 				7E77D994251A402B002C6BF1 /* ReturnVehicleVC.swift in Sources */,
