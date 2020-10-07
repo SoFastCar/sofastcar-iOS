@@ -180,12 +180,13 @@ class RentHistoryCell: UITableViewCell {
     } 
   }
   
-  func configureContent(reservation: Reservation, socarZone: SocarZoneData) {
-//    guard let reservation = reservaion else { return }
-//    guard let socarZone = socarZone else { return }
-    
+  func configureContent(reservation: Reservation, socarZone: SocarZoneData, socarDate: Socar) {
     rentPlaceTitleLabel.text = socarZone.name
     returnPlaceTitleLabel.text = socarZone.name
-    
+    carImage.loadImage(with: socarDate.image)
+    carName.text = socarDate.name
+    carNumber.text = socarDate.number
+//    reservation.startTime
+//    reservation.endTime
   }
 }

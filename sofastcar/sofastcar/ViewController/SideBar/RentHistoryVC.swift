@@ -12,7 +12,13 @@ import Alamofire
 class RentHistoryVC: UIViewController {
   // MARK: - Properties
   var reservations: [Reservation] = []
-  var socarZones: [SocarZoneData] = []
+  var socarZones: [SocarZoneData?] = [nil]
+  var socars: [Socar?] = [nil] {
+    didSet {
+      print(socars.count)
+      tableView.reloadData()
+    }
+  }
   
   lazy var filterButtonImageView: UIImageView = {
     let imageView = UIImageView()
@@ -43,12 +49,7 @@ class RentHistoryVC: UIViewController {
   // MARK: - Life Cycle
   override func viewDidLoad() {
     super.viewDidLoad()
-    networkService { socarZoneData in
-      DispatchQueue.main.async {
-        self.socarZones.append(socarZoneData)
-        self.tableView.reloadData()
-      }
-    }
+    networkService()
     configureStatusBar()
     configureNavigationContoller()
     configureTableView()
@@ -142,14 +143,16 @@ extension RentHistoryVC: UITableViewDelegate, UITableViewDataSource {
       return cell
     }
     let cell = RentHistoryCell(style: .default, reuseIdentifier: RentHistoryCell.identifier)
-    print(socarZones.count)
-    print(reservations.count)
-    cell.configureContent(reservation: reservations[indexPath.section-1], socarZone: socarZones[indexPath.section-1])
+    if let socarZone = socarZones[indexPath.section],
+       let socarDate = socars[indexPath.section] {
+      cell.configureContent(reservation: reservations[indexPath.section-1], socarZone: socarZone, socarDate: socarDate)
+    }
+    print(socars.count)
     return cell
   }
   
   func numberOfSections(in tableView: UITableView) -> Int {
-    return socarZones.count
+    return socars.count
   }
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -168,29 +171,45 @@ extension RentHistoryVC: UITableViewDelegate, UITableViewDataSource {
 }
 
 extension RentHistoryVC {
-  private func networkService(complition: @escaping (SocarZoneData) -> Void) {
+  private func networkService() {
     let reservationUrl = URL(string: "https://sofastcar.moorekwon.xyz/reservations")!
-    
     AF.request(reservationUrl, headers: ["Content-Type": "application/json", "Authorization": "JWT \(UserDefaults.getUserAuthTocken()!)"]).validate().responseDecodable(of: UserReservation.self) { (response) in
       switch response.result {
       case .success(let data):
         self.reservations = data.results
-        data.results.forEach {
-          //          let carUrl = URL(string: "https://sofastcar.moorekwon.xyz/carzones/\($0.car)")
-          let socarZoneUrl = URL(string: "https://sofastcar.moorekwon.xyz/carzones/\($0.zone)")!
-          
-          AF.request(socarZoneUrl, headers: ["Content-Type": "application/json", "Authorization": "JWT \(UserDefaults.getUserAuthTocken()!)"]).validate().responseDecodable(of: SocarZoneData.self) { (response) in
-            switch response.result {
-            case .success(let socarZoneData):
-              complition(socarZoneData)
-            case .failure(let error):
-              print("Error", error.localizedDescription)
-            }
-          }
+        self.reservations.forEach {
+          self.getSocarZoneData(reservationData: $0)
         }
       case .failure(let error):
         print("Error", error.localizedDescription)
       }
     }
+  }
+  
+  private func getSocarZoneData(reservationData: Reservation) {
+    let socarZoneUrl = URL(string: "https://sofastcar.moorekwon.xyz/carzones/\(reservationData.zone)")!
+    AF.request(socarZoneUrl, headers: ["Content-Type": "application/json", "Authorization": "JWT \(UserDefaults.getUserAuthTocken()!)"]).validate().responseDecodable(of: SocarZoneData.self, queue: .main, completionHandler: {  (response) in
+      switch response.result {
+      case .success(let socarZoneData):
+        self.socarZones.append(socarZoneData)
+        print(socarZoneData)
+        self.getSocarData(reservationData: reservationData, socarZone: socarZoneData)
+      case .failure(let error):
+        print("Fail to get SocarZone Data", error.localizedDescription)
+      }
+    })
+  }
+  
+  private func getSocarData(reservationData: Reservation, socarZone: SocarZoneData) {
+    let carUrl = URL(string: "https://sofastcar.moorekwon.xyz/carzones/\(socarZone.id)/cars/\(reservationData.car)/info")!
+    AF.request(carUrl, headers: ["Content-Type": "application/json", "Authorization": "JWT \(UserDefaults.getUserAuthTocken()!)"]).validate().responseDecodable(of: Socar.self, queue: .main, completionHandler: { (response) in
+      switch response.result {
+      case .success(let socarCarData):
+        print("쏘카", socarCarData)
+        self.socars.append(socarCarData)
+      case .failure(let error):
+        print("fail to get Socar Car Data", error.localizedDescription)
+      }
+    })
   }
 }
