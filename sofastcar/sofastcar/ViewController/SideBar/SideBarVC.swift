@@ -31,8 +31,10 @@ class SideBarVC: UIViewController {
   var user: User? {
     didSet {
       guard let user = user else { return }
-      tableHeaderView.userIdLable.text = user.email
       tableHeaderView.userNameLable.text = user.name
+      tableHeaderView.userPhoneNumberLabel.text = user.phoneNumber
+      tableHeaderView.userIdLable.text = user.email
+      tableHeaderView.creditLabel.text = "\(NumberFormatter.getPriceWithDot(price: user.creditPoint)) 원"
     }
   }
   
@@ -226,10 +228,8 @@ extension SideBarVC {
   func getUserDate(completion: @escaping (User) -> Void) {
     let userGetUrl = URL(string: "https://sofastcar.moorekwon.xyz/members")!
     AF.request(userGetUrl, headers: ["Content-Type": "application/json", "Authorization": "JWT \(UserDefaults.getUserAuthTocken()!)"]).validate().responseDecodable(of: UserData.self) { (response) in
-      print(response.data)
       switch response.result {
       case .success(let data):
-        print(data.results[0].name)
         completion(data.results[0])
       case .failure(let error):
         print("Error", error.localizedDescription)
@@ -269,6 +269,8 @@ extension SideBarVC {
       print("tableHeaderView.tapHaederButton")
       dismissWithAnimated {
         let userDetailVC = UserDetailVC()
+        userDetailVC.user = self.user
+        userDetailVC.configureTableHaderView()
         mainVC.navigationController?.pushViewController(userDetailVC, animated: true)
       }
     case tableHeaderView.notiButton:
