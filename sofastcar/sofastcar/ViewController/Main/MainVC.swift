@@ -760,8 +760,7 @@ extension MainVC: UITableViewDataSource {
         cell.selectionStyle = .none
         cell.separatorInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
         cell.carInfoConfiguration(carImage: socarListData?[indexPath.row].image ?? "", carName: socarListData?[indexPath.row].name ?? "", carPrice: socarListData?[indexPath.row].termPrice ?? 0, availableDiscount: socarListData?[indexPath.row].isEvent ?? false)
-        cell.timeInfoConfiguration(startTime: newStartDate, endTime: newEndDate)
-        
+//        cell.timeInfoConfiguration(startTime: newStartDate, endTime: newEndDate, reservStartTime: socarListData?[indexPath.row].timeTables)        
         return cell
     }
 
