@@ -48,7 +48,7 @@ class SideBarHeaderView: UIView {
   let socarClubButton: UIButton = {
     let button = UIButton()
     let attributedString = NSMutableAttributedString()
-    attributedString.append(NSAttributedString(string: "쏘카클럽 Level 1 >", attributes:
+    attributedString.append(NSAttributedString(string: "쏘카클럽 Level 4 >", attributes:
       [NSAttributedString.Key.foregroundColor: CommonUI.mainBlue,
        NSAttributedString.Key.font: UIFont.systemFont(ofSize: CommonUI.contentsTextFontSize-1)]))
     button.setAttributedTitle(attributedString, for: .normal)
