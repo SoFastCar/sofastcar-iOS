@@ -172,6 +172,8 @@ class BookingTimeVC: UIViewController {
             setBookingTimeCarList?.setupTime(on: .carList, isChaged: true, startTime: startDate, endTime: endDate)
             setBookingTimeCarList?.setButtonTitle(sTime: startDate, eTime: endDate)
             presentingVC.calculatedCarPrice.removeAll()
+            presentingVC.reserveStartTimeArry.removeAll()
+            presentingVC.reserveEndTimeArry.removeAll()
             print("==================\(presentingVC.markerTapFlag)")
             // Socar List Info Update
             if presentingVC.markerTapFlag {

@@ -190,7 +190,8 @@ class ReservationConfirmTableVC: UITableViewController {
     guard let standardPrice = socarData?.carPrices.standardPrice else { return }
     guard let socarData = socarData else { return }
     guard  let socarZoneData = socarZoneData else { return }
-    let rentPrice = standardPrice*divideRendTotalTimeByHalfHour
+//    let rentPrice = standardPrice*divideRendTotalTimeByHalfHour
+    let rentPrice = socarData.termPrice + insuranceData.cost
     if let navi = self.presentingViewController as? UINavigationController, 
        let presentingVC = navi.viewControllers.last as? MainVC {
         presentingVC.reservationCompleteFlag = true        
