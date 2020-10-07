@@ -32,7 +32,10 @@ class ReservationDashboardVC: UIViewController {
     super.viewDidLoad()
     UserDefaults.setVehiclCheck(check: false)
     setUI()
-    
+  }
+  
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(true)
     reservationNetWork()
   }
   
@@ -92,7 +95,7 @@ class ReservationDashboardVC: UIViewController {
       
       let progressValue = 1 - (Double(useSocarTime) / (startDate.timeIntervalSince1970 / 60) * 100)
       
-      self.reservationStateView.reservationRemainingTimeString = "쏘카 이용 \(useSocarTime)분 전 "
+      self.reservationStateView.reservationRemainingTimeString = "쏘카 이용 \(Int(startDate.timeIntervalSinceNow / 3600))시간 전 "
       self.reservationStateView.reservationTimeString = startConvertStartDate
       self.reservationStateView.reservationProgressValue = Float(progressValue)
 
