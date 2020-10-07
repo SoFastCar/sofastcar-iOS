@@ -87,9 +87,13 @@ class ReservationDashboardVC: UIViewController {
       
       let useSocarTime = Int(startDate.timeIntervalSince1970 - now.timeIntervalSince1970) / 60
       
+      let progressValue = 1 - (Double(useSocarTime) / (startDate.timeIntervalSince1970 / 60) * 100)
+      
       self.reservationStateView.reservationRemainingTimeString = "쏘카 이용 \(useSocarTime)분 전 "
       self.reservationStateView.reservationTimeString = startConvertDate
-      
+      self.reservationStateView.reservationProgressValue = Float(progressValue)
+
+      print("🚗", progressValue)
       print("🚙", result.creatTime)
       print("🚙", result.startTime)
       print("🚙", result.endTime)

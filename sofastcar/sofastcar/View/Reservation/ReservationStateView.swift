@@ -59,6 +59,12 @@ class ReservationStateView: UIScrollView {
     }
   }
   
+  var reservationProgressValue: Float? {
+    didSet {
+      reservationProgressView.progress = reservationProgressValue ?? 0
+    }
+  }
+  
   // MARK: - Attribute
   
   lazy var leftNavigationButton: UIBarButtonItem = {
@@ -232,7 +238,7 @@ class ReservationStateView: UIScrollView {
     progressView.progressTintColor = CommonUI.mainBlue
     progressView.trackTintColor = UIColor.white.withAlphaComponent(0.15)
     progressView.transform = CGAffineTransform(rotationAngle: .pi)
-    progressView.progress = 0.3
+    progressView.progress = 0
     
     return progressView
   }()
