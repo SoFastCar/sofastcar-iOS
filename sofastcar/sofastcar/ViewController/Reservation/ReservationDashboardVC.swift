@@ -33,6 +33,24 @@ class ReservationDashboardVC: UIViewController {
     UserDefaults.setVehiclCheck(check: false)
     setUI()
     
+    ReservationNetWorkService.shared.getReservationInfo { (result) in
+
+      let url = "https://sofastcar.moorekwon.xyz/carzones/\(result.zone)/cars/\(result.car)/info"
+//      https://sofastcar.moorekwon.xyz/carzones/260/cars/1/info
+      
+      AF.request(url, headers: ["Content-Type": "application/json", "Authorization": "JWT \(UserDefaults.getUserAuthTocken()!)"]).validate(statusCode: 200..<300).responseDecodable(of: Socar.self) { (response) in
+        switch response.result {
+        case .success(let value):
+            print("value: \(value)")
+        case .failure(let error):
+            print("error: \(String(describing: error.errorDescription))")
+        }
+      }
+      
+    } onError: { (errorMessage) in
+      debugPrint(errorMessage)
+    }
+
     print("❤️", UserDefaults.getReservationUid())
     print("😇", UserDefaults.getUserAuthTocken())
   }
@@ -68,6 +86,8 @@ class ReservationDashboardVC: UIViewController {
     reservationStateView.vehiclePictureViewButton.addGestureRecognizer(tapGestureRecongnizer)
   }
   
+  // MARK: - Action
+  
   @objc func didTapVehiclePictureView(recongnize: UITapGestureRecognizer) {
     switch recongnize.state {
     case .ended:
@@ -79,6 +99,9 @@ class ReservationDashboardVC: UIViewController {
       break
     }
   }
+  
+  // MARK: - Network
+  
 }
 
 // MARK: - CarKeyViewDelegate
