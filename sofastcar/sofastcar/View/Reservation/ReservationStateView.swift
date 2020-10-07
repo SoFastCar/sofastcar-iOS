@@ -65,6 +65,12 @@ class ReservationStateView: UIScrollView {
     }
   }
   
+  var returnTimeString: String? {
+    didSet {
+      returnTimeLabel.text = returnTimeString
+    }
+  }
+  
   // MARK: - Attribute
   
   lazy var leftNavigationButton: UIBarButtonItem = {
@@ -399,7 +405,7 @@ class ReservationStateView: UIScrollView {
   }()
   fileprivate let returnTimeLabel: UILabel = {
     let label = UILabel()
-    label.text = "8/15 (토) 14:00"
+    label.text = ""
     label.font = UIFont.preferredFont(forTextStyle: .subheadline)
     label.textColor = UIColor.white.withAlphaComponent(0.55)
     

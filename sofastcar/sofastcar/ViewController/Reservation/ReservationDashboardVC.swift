@@ -75,12 +75,15 @@ class ReservationDashboardVC: UIViewController {
       dateFormatter.locale = Locale(identifier: "ko-KR")
       dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
       let startDate = dateFormatter.date(from: result.startTime)!
+      let endDate = dateFormatter.date(from: result.endTime)!
       
       let startConvertDateFormatter = DateFormatter()
       startConvertDateFormatter.locale = Locale(identifier: "ko-KR")
       startConvertDateFormatter.dateFormat = "M/dd (E) HH:mm"
       
-      let startConvertDate = startConvertDateFormatter.string(from: Date(timeIntervalSince1970: startDate.timeIntervalSince1970))
+      let startConvertStartDate = startConvertDateFormatter.string(from: Date(timeIntervalSince1970: startDate.timeIntervalSince1970))
+          
+      let startConvertEndDate = startConvertDateFormatter.string(from: Date(timeIntervalSince1970: endDate.timeIntervalSince1970))
       
       print(startDate.timeIntervalSince1970)
       print(now.timeIntervalSince1970)
@@ -90,13 +93,10 @@ class ReservationDashboardVC: UIViewController {
       let progressValue = 1 - (Double(useSocarTime) / (startDate.timeIntervalSince1970 / 60) * 100)
       
       self.reservationStateView.reservationRemainingTimeString = "쏘카 이용 \(useSocarTime)분 전 "
-      self.reservationStateView.reservationTimeString = startConvertDate
+      self.reservationStateView.reservationTimeString = startConvertStartDate
       self.reservationStateView.reservationProgressValue = Float(progressValue)
 
-      print("🚗", progressValue)
-      print("🚙", result.creatTime)
-      print("🚙", result.startTime)
-      print("🚙", result.endTime)
+      self.reservationStateView.returnTimeString = startConvertEndDate
       
       self.socarNetWork(result)
       
