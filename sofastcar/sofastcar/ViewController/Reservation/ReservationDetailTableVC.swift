@@ -41,6 +41,10 @@ enum EtcCellType: String {
 
 class ReservationDetailTableVC: UITableViewController {
   // MARK: - Properties
+  var socarZoneData: SocarZoneData?
+  var socarData: Socar?
+  var reservationData: Reservation?
+  
   var customTableHeaderView: ReservationDetailHeader?
   var rentalTypeTitleArray: [RentalCellType] = [.blank, .usingTime, .rentCarInfo, .socarZone, .otherDriver, .insurance, .cancelWarning, .cancel]
   var paymentTypeTitleArray: [PaymentCellType] = [.blank, .serviceTotalCost, .beforeCost, .afterCost]
@@ -49,10 +53,12 @@ class ReservationDetailTableVC: UITableViewController {
   var isReservationEnd: Bool = false
   
   // MARK: - Life Cycle
-  init(isReservationEnd: Bool) {
+  init(isReservationEnd: Bool, socar: Socar, socarZoneData: SocarZoneData) {
     super.init(style: .grouped)
-    customTableHeaderView = ReservationDetailHeader(frame: .zero, isReservationEnd: isReservationEnd)
+    self.socarData = socar
+    self.socarZoneData = socarZoneData
     self.isReservationEnd = isReservationEnd
+    customTableHeaderView = ReservationDetailHeader(frame: .zero, isReservationEnd: isReservationEnd)
   }
   
   required init?(coder: NSCoder) {
@@ -105,7 +111,10 @@ class ReservationDetailTableVC: UITableViewController {
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     switch showTableViewIndex {
     case .rentalInfo:
-      let cell = ReservationRentalInfoCell(style: .default, reuseIdentifier: ReservationRentalInfoCell.identifier)
+      guard let socarData = socarData else { fatalError() }
+      guard let socarZoneData = socarZoneData else { fatalError() }
+      guard let resrvationData = reservationData else { fatalError() }
+      let cell = ReservationRentalInfoCell(socar: socarData, socarZoneData: socarZoneData, reservationData: resrvationData)
       cell.configureCell(cellType: rentalTypeTitleArray[indexPath.section])
       cell.delegate = self
       if rentalTypeTitleArray[indexPath.section] == .usingTime {

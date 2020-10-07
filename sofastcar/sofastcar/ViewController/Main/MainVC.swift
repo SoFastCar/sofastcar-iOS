@@ -480,35 +480,6 @@ class MainVC: UIViewController {
                         }
                         testTask.resume()
                         
-                        // Price Info Update
-//                        let dateTimeStart = Time.getTimeString(type: .castYYYYMMDDHHmm, date: self.newStartDate)
-//                        let dateTimeEnd = Time.getTimeString(type: .castYYYYMMDDHHmm, date: self.newEndDate)
-//                        print(dateTimeStart, dateTimeEnd)
-//                        guard let getPriceUrl = URL(string: "https://sofastcar.moorekwon.xyz/carzones/\(data?[index].id ?? 260)/info?date_time_start=\(dateTimeStart)&date_time_end=\(dateTimeEnd)") else { return false }
-//                        var getPriceRequest = URLRequest(url: getPriceUrl)
-//                        getPriceRequest.httpMethod = "GET"
-//                        getPriceRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
-//                        getPriceRequest.addValue("JWT \(UserDefaults.getUserAuthTocken() ?? "")", forHTTPHeaderField: "Authorization")
-//                        let getPriceTask = URLSession.shared.dataTask(with: getPriceRequest) {(data, response, error) in
-//                            guard error == nil else { return print("error: \(error!.localizedDescription)")}
-//                            guard let responseCode = response as? HTTPURLResponse,
-//                                (200...400).contains(responseCode.statusCode) else { return print("response: \(response ?? URLResponse())") }
-//                            guard let responseData = data else { return print("No data")}
-//                            print("가격 데이터: \(responseData)")
-//                            let jsonDecoder = JSONDecoder()
-//                            do {
-//                                let decodedData = try jsonDecoder.decode(PriceByTimes.self, from: responseData)
-//                                self.pricesByTime = decodedData
-//                                print("가격 가져오기 성공")
-////                                DispatchQueue.main.async {
-////                                    self.carListView.carListTableView.reloadData()
-////                                }
-//                            } catch {
-//                                print("가격 가져오기 실패")
-//                            }
-//                        }
-//                        getPriceTask.resume()
-                        
                         // Car List 팝업 by View
                         UIView.animateKeyframes(withDuration: 1, delay: 0, animations: {
                             UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.5, animations: {
@@ -741,6 +712,7 @@ extension MainVC: NMFMapViewCameraDelegate {
         let camPosition = mapView.cameraPosition.target
         let camZoom = mapView.cameraPosition.zoom
         let meterPerPixel = mapView.projection.metersPerPixel(atLatitude: camPosition.lat, zoom: camZoom)
+        print("Meter Per Pixel: \(meterPerPixel), Width m: \(Double(UIScreen.main.bounds.width) * meterPerPixel)")
         
         // 검색 바 Geocoding
         if searchVCDismissFlag {
@@ -788,8 +760,7 @@ extension MainVC: UITableViewDataSource {
         cell.selectionStyle = .none
         cell.separatorInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
         cell.carInfoConfiguration(carImage: socarListData?[indexPath.row].image ?? "", carName: socarListData?[indexPath.row].name ?? "", carPrice: socarListData?[indexPath.row].termPrice ?? 0, availableDiscount: socarListData?[indexPath.row].isEvent ?? false)
-        cell.timeInfoConfiguration(startTime: newStartDate, endTime: newEndDate)
-        
+//        cell.timeInfoConfiguration(startTime: newStartDate, endTime: newEndDate, reservStartTime: socarListData?[indexPath.row].timeTables)        
         return cell
     }
 

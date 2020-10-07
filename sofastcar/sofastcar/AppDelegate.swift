@@ -71,7 +71,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if let jsonData = try? JSONSerialization.jsonObject(with: responseData, options: []) as? [String: String] {
           if let newUserAuthToken = jsonData["token"] {
             UserDefaults.saveUserAuthTocken(authToken: newUserAuthToken)
-            print(newUserAuthToken)
+            print("New User Token: \(newUserAuthToken)")
           }
         }
       }

@@ -22,6 +22,7 @@ class DetailSocarZoneInfoVC: UITableViewController {
   // MARK: - Properties
   var detailSocarzoneInfoCellTypeList: [DetailSocarZoneInfoCellType] = DetailSocarZoneInfoCellType.allcases()
   var socarZoneData: SocarZoneData?
+  var socarDate: SocarList?
   
   init(socarZoneData: SocarZoneData) {
     super.init(style: .grouped)

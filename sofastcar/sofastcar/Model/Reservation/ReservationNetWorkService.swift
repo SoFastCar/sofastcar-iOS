@@ -21,7 +21,7 @@ class ReservationNetWorkService {
   
   func buildURL() -> String {
 //    urlGetOneCall = "/" + "\(String(describing: reservationUidUrl))"
-      urlGetOneCall = "/" + "14"
+      urlGetOneCall = "/" + "\(String(describing: reservationUidUrl))"
       return reservationBaseUrl + urlGetOneCall
   }
 

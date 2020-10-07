@@ -5,20 +5,13 @@
 //  Created by 김광수 on 2020/09/19.
 //  Copyright © 2020 김광수. All rights reserved.
 //
-
 import Foundation
 
-// MARK: - Sample
-
-//  "id": 14,
-//  "member": 10,
-//  "car": 1,
-//  "zone": 260,
-//  "insurance": "special",
-//  "date_time_start": "2020-10-10T13:00:00+09:00",
-//  "date_time_end": "2020-10-10T15:40:00+09:00",
-//  "created_at": "2020-10-05T11:15:59.398797Z",
-//  "updated_at": "2020-10-05T11:15:59.398809Z"
+struct UserReservation: Decodable {
+  let results: [Reservation]
+  let previous: String?
+  let next: String
+}
 
 struct Reservation: Decodable {
   let reservationUid: Int
@@ -43,17 +36,3 @@ struct Reservation: Decodable {
     case member
   }
 }
-
-/*
- [
- "car": 17, -
- "insurance": light, -
- "date_time_start": 2020-10-07T01:40:00Z, -
- "id": 23,
- "updated_at": 2020-10-05T13:22:30.530651Z, -
- "created_at": 2020-10-05T13:22:30.530639Z, -
- "member": 10, -
- "date_time_end": 2020-10-07T05:40:00Z, -
- "zone": 246 -
- ]
- */
