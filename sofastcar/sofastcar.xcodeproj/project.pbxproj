@@ -91,6 +91,9 @@
 		C779CE12251AF2AD00A81EB3 /* CustomCameraVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C779CE11251AF2AD00A81EB3 /* CustomCameraVC.swift */; };
 		C77AF469251C558000DEDB76 /* UserDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77AF468251C558000DEDB76 /* UserDetailCell.swift */; };
 		C78071A82510413700EF214C /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = C78071A72510413700EF214C /* Time.swift */; };
+		C7860571252D8695008975EA /* VehicleCustomCameraVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7860570252D8695008975EA /* VehicleCustomCameraVC.swift */; };
+		C7860577252D86C6008975EA /* VehicleCustomCameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7860576252D86C6008975EA /* VehicleCustomCameraView.swift */; };
+		C7860583252D875E008975EA /* CustomCountingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7860582252D875E008975EA /* CustomCountingLabel.swift */; };
 		C790FB1C251343BB00AF98E2 /* InsurancePopVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C790FB1B251343BB00AF98E2 /* InsurancePopVC.swift */; };
 		C79A0B57250224F80061F078 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = C79A0B56250224F80061F078 /* Alamofire */; };
 		C79A0B5B2504656B0061F078 /* PhoneAuthResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C79A0B5A2504656B0061F078 /* PhoneAuthResponse.swift */; };
@@ -250,6 +253,9 @@
 		C779CE11251AF2AD00A81EB3 /* CustomCameraVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCameraVC.swift; sourceTree = "<group>"; };
 		C77AF468251C558000DEDB76 /* UserDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailCell.swift; sourceTree = "<group>"; };
 		C78071A72510413700EF214C /* Time.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Time.swift; sourceTree = "<group>"; };
+		C7860570252D8695008975EA /* VehicleCustomCameraVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VehicleCustomCameraVC.swift; sourceTree = "<group>"; };
+		C7860576252D86C6008975EA /* VehicleCustomCameraView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VehicleCustomCameraView.swift; sourceTree = "<group>"; };
+		C7860582252D875E008975EA /* CustomCountingLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCountingLabel.swift; sourceTree = "<group>"; };
 		C790FB1B251343BB00AF98E2 /* InsurancePopVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsurancePopVC.swift; sourceTree = "<group>"; };
 		C79A0B5A2504656B0061F078 /* PhoneAuthResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneAuthResponse.swift; sourceTree = "<group>"; };
 		C7A454AD24FA0C9900FA08B7 /* SelectPopupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectPopupVC.swift; sourceTree = "<group>"; };
@@ -346,6 +352,7 @@
 				7E35BE98251840590024DCE5 /* ReturnVehicleStatusVC.swift */,
 				7E77D993251A402B002C6BF1 /* ReturnVehicleVC.swift */,
 				C73D34A52518E6DD0075471F /* ReturnVehicleStatusVC.swift */,
+				C7860570252D8695008975EA /* VehicleCustomCameraVC.swift */,
 				7E77D9AE251C45C1002C6BF1 /* UserStatusAfterReturnVC.swift */,
 			);
 			path = Reservation;
@@ -369,6 +376,7 @@
 				C7CEF7472511BFBE00C063B0 /* VehicleDoubleCheckView.swift */,
 				C7CEF7492511BFD100C063B0 /* MenuCollectionViewCell.swift */,
 				C7CEF74B2511BFE900C063B0 /* VehicleCheckCell.swift */,
+				C7860576252D86C6008975EA /* VehicleCustomCameraView.swift */,
 				7E35BE9A251841B70024DCE5 /* ReturnVehicleStatusView.swift */,
 				7E77D997251A41AD002C6BF1 /* ReturnVehicleView.swift */,
 				7E77D99B251B07D1002C6BF1 /* CheckButtonView.swift */,
@@ -522,6 +530,14 @@
 			path = SideBar;
 			sourceTree = "<group>";
 		};
+		C7860581252D8745008975EA /* Label */ = {
+			isa = PBXGroup;
+			children = (
+				C7860582252D875E008975EA /* CustomCountingLabel.swift */,
+			);
+			path = Label;
+			sourceTree = "<group>";
+		};
 		C790FB1A2513439B00AF98E2 /* Common */ = {
 			isa = PBXGroup;
 			children = (
@@ -660,6 +676,7 @@
 				C7EA08F524EFF29C001A7ED4 /* AppDelegate.swift */,
 				C72A913624F5E13F005D464F /* Utility */,
 				C7D66D1924FB869300679B99 /* Custom */,
+				C7860581252D8745008975EA /* Label */,
 				C75451FB24F4E5DB00E13280 /* ViewController */,
 				C75451FA24F4E5D700E13280 /* Model */,
 				C75451F924F4E5CF00E13280 /* View */,
@@ -945,6 +962,7 @@
 				7EF41FC62501F6D90030752A /* CarKeyView.swift in Sources */,
 				C73D349C251879BB0075471F /* DetailSocarZoneInfoCell.swift in Sources */,
 				C7BD348C24F54A5700089F0D /* InitVC.swift in Sources */,
+				C7860577252D86C6008975EA /* VehicleCustomCameraView.swift in Sources */,
 				C769C82E24FDB69B00DC8226 /* DriverLicenseEnrollinitView.swift in Sources */,
 				C7F5B54225106A1800AE0054 /* SocaZoneProvidable.swift in Sources */,
 				C7B29A7A2520C79E00AB081B /* CouponView.swift in Sources */,
@@ -983,9 +1001,11 @@
 				C73D348B251601910075471F /* Reservation.swift in Sources */,
 				C7B29A712520799F00AB081B /* DotsLineView.swift in Sources */,
 				C7CEF7482511BFBE00C063B0 /* VehicleDoubleCheckView.swift in Sources */,
+				C7860571252D8695008975EA /* VehicleCustomCameraVC.swift in Sources */,
 				C7B29AC42523661900AB081B /* FriendsInviteView.swift in Sources */,
 				C769C83224FDD97F00DC8226 /* CheckDriverLicenseVC.swift in Sources */,
 				7EF1A28C25241C45004DADAD /* NSData+Int8.swift in Sources */,
+				C7860583252D875E008975EA /* CustomCountingLabel.swift in Sources */,
 				C7B29ABA252348D700AB081B /* EventAndBenefitFooterView.swift in Sources */,
 				7E8473E42509AB420007962F /* LeftAlignedTagCollectionViewFlowLayout.swift in Sources */,
 				C7B29AD425292D1400AB081B /* CouponBook.swift in Sources */,

@@ -133,4 +133,14 @@ class Time {
     resultString.append("+00:00")
     return resultString
   }
+    
+    static func toUTCString(changeForString string: String) -> Date {
+        print("String 시간: \(string)")
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "ko-KR") // set locale to reliable US_POSIX
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+        let tempDate = dateFormatter.date(from: string)!
+        print("Date 시간: \(tempDate)")
+        return tempDate
+    }
 }

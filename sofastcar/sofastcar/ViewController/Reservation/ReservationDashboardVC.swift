@@ -8,6 +8,7 @@
 
 import UIKit
 import SnapKit
+import Alamofire
 
 class ReservationDashboardVC: UIViewController {
   
@@ -31,6 +32,9 @@ class ReservationDashboardVC: UIViewController {
     super.viewDidLoad()
     UserDefaults.setVehiclCheck(check: false)
     setUI()
+    
+    print("❤️", UserDefaults.getReservationUid())
+    print("😇", UserDefaults.getUserAuthTocken())
   }
   
   // MARK: - UI
@@ -105,11 +109,13 @@ extension ReservationDashboardVC: CarKeyViewDelegate {
       coreBluetoothIO.writeValue(value: 1)
     case carKey.hornButton:
       print("hornButton")
-      coreBluetoothIO.writeValue(value: 3)
+      coreBluetoothIO.writeValue(value: 2)
     case carKey.riseLockButton:
       print("riseLockButton")
+      coreBluetoothIO.writeValue(value: 3)
     case carKey.riseUnlockButton:
       print("riseUnlockButton")
+      coreBluetoothIO.writeValue(value: 4)
     case carKey.riseReturnButton:
       print("riseReturnButton")
       UserDefaults.setReadyToDrive(isDriveReady: false)
