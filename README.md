@@ -99,7 +99,7 @@
 
 <p align="center">
   <img width="330" src="./images/sidebar_mvp.png">
-  <img width="230" src="./images/arduino.jpg">
+  <img width="230" src="./images/arduino.JPG">
 </p>
 
 - **MVP Development**
