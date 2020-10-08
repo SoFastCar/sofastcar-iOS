@@ -20,8 +20,7 @@ class ReservationNetWorkService {
   let session = URLSession(configuration: .default)
   
   func buildURL() -> String {
-//    urlGetOneCall = "/" + "\(String(describing: reservationUidUrl))"
-      urlGetOneCall = "/" + "\(String(describing: reservationUidUrl))"
+    urlGetOneCall = "/" + "\(reservationUidUrl)"
       return reservationBaseUrl + urlGetOneCall
   }
 

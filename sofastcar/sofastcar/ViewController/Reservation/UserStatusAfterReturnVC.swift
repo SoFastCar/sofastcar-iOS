@@ -162,7 +162,15 @@ extension UserStatusAfterReturnVC: UserStatusAfterReturnViewDelegate {
     print("didTapButton")
     switch sender {
     case userStatusAfterReturnView.closeButton:
-      dismiss(animated: false, completion: nil)
+      self.view.window?.rootViewController?.dismiss(animated: false, completion: {
+        let mainVC = MainVC()
+        mainVC.socarZoneProvider = SocarZoneProvider()
+        let homeVC = UINavigationController(rootViewController: mainVC)
+        homeVC.modalPresentationStyle = .fullScreen
+        homeVC.modalTransitionStyle = .crossDissolve
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { fatalError() }
+        appDelegate.window?.rootViewController?.present(homeVC, animated: true, completion: nil)
+      })
     case userStatusAfterReturnView.detailUsageHistory:
       print("detailUsageHistory")
     default:
