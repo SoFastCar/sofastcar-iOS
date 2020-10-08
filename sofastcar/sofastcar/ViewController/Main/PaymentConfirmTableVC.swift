@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 
 enum PaymentConfirmCellType: String {
   case detailCostCell = "상세요금"
@@ -23,6 +24,10 @@ class PaymentConfirmTableVC: UITableViewController {
   // MARK: - Properties
   var insuranceData: Insurance?
   var rentPrice: Int?
+  var socarData: SocarList?
+  var socarZoneData: SocarZoneData?
+  var startDate: Date?
+  var endDate: Date?
   
   lazy var tableViewCellArray: [PaymentConfirmCellType] = PaymentConfirmCellType.allcase()
   
@@ -62,6 +67,7 @@ class PaymentConfirmTableVC: UITableViewController {
     configureNavigationContoller()
     configureTableView()
     configureReservationConfirmButton()
+    setTotalPriceAtResertvationCompleteButton()
   }
   
   private func configureNavigationContoller() {
@@ -102,9 +108,11 @@ class PaymentConfirmTableVC: UITableViewController {
     }
   }
   
-  func configurePaymentConfirmTableVC(rentPrice: Int, insuranceData: Insurance) {
+  func configurePaymentConfirmTableVC(rentPrice: Int, insuranceData: Insurance, socarData: SocarList, socarZoneData: SocarZoneData) {
     self.rentPrice = rentPrice
     self.insuranceData = insuranceData
+    self.socarData = socarData
+    self.socarZoneData = socarZoneData
     tableView.reloadData()
   }
   // MARK: - Handler
@@ -118,7 +126,7 @@ class PaymentConfirmTableVC: UITableViewController {
   
   // MARK: - Table view data source
   override func numberOfSections(in tableView: UITableView) -> Int {
-    return tableViewCellArray.count
+    return tableViewCellArray.count 
   }
   
   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -127,27 +135,62 @@ class PaymentConfirmTableVC: UITableViewController {
   
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = PaymentConfirmCell(style: .default, reuseIdentifier: PaymentConfirmCell.identifier)
-    cell.configureCellByType(cellType: tableViewCellArray[indexPath.section])
     cell.delegate = self
     cell.insuranceData = insuranceData
     cell.rentPrice = rentPrice
-    switch tableViewCellArray[indexPath.section] {
-    case .detailCostCell:
-      cell.configureDetailCostConent()
-      setTotalPriceAtResertvationCompleteButton()
-    case .agreeAllTerms, .paymentCardCell, .warningBeforeReservationCell:
-      break
-    }
+    cell.configureCellByType(cellType: tableViewCellArray[indexPath.section])
     return cell
   }
   
   // MARK: - Button Action
   @objc func tabReservationFinishButton() {
-    UserDefaults.setReadyToDrive(isDriveReady: true)
-    let reservationDachBoardVC = ReservationDashboardVC()
-    let newNaviContoller = UINavigationController(rootViewController: reservationDachBoardVC)
-    newNaviContoller.modalPresentationStyle = .overFullScreen
-    present(newNaviContoller, animated: true, completion: nil)
+    guard let socarzoneUid = socarZoneData?.id else { return }
+    guard let socarUid = socarData?.id else { return }
+    guard let insuranceName = insuranceData?.name else { return }
+    guard let startDate = startDate else { return }
+    guard let endDate = endDate else { return }
+    var insuranceCaseName: String = ""
+    switch insuranceName {
+    case "라이트":
+      insuranceCaseName = "light"
+    case "스탠다드":
+      insuranceCaseName = "standard"
+    case "스페셜":
+      insuranceCaseName = "special"
+    default:
+      insuranceCaseName = "standard"
+    }
+    
+    let url = URL(string: "https://sofastcar.moorekwon.xyz/carzones/\(socarzoneUid)/cars/\(Int(socarUid))/reservations")!
+
+    let utcStartDate = Time.toStringUTC(changeForDate: startDate)
+    let utcEndDate = Time.toStringUTC(changeForDate: endDate)
+    let reservationData = [
+      "insurance": insuranceCaseName,
+      "date_time_start": utcStartDate,
+      "date_time_end": utcEndDate
+    ]
+    
+    AF.request(url, method: .post, parameters: reservationData, encoding: JSONEncoding.default, headers: ["Content-Type": "application/json", "Authorization": "JWT \(UserDefaults.getUserAuthTocken()!)"])
+      .responseJSON { response in
+        if response.response?.statusCode == 201 {
+          guard let responseData = response.data else { return }
+          
+          if let jsonData = try? JSONSerialization.jsonObject(with: responseData) as? [String: AnyObject] {
+            if let reservationUid = jsonData["id"] as? Int {
+              print(reservationUid)
+              UserDefaults.setReservationUid(uid: reservationUid)
+              let reservationDashboardVC = ReservationDashboardVC()
+              reservationDashboardVC.modalPresentationStyle = .overFullScreen
+              self.present(reservationDashboardVC, animated: false, completion: nil)
+            }
+          }
+        } else {
+          print("====Reservation Update fail====")
+          print(response.response)
+        }
+      }
+    
   }
 }
 

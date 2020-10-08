@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 
 enum DetailTableViewType: Int {
   case rentalInfo = 0
@@ -41,6 +42,11 @@ enum EtcCellType: String {
 
 class ReservationDetailTableVC: UITableViewController {
   // MARK: - Properties
+  var socarZoneData: SocarZoneData?
+  var socarData: Socar?
+  var reservationData: Reservation?
+  var paymentBefore: PaymentBefore?
+  
   var customTableHeaderView: ReservationDetailHeader?
   var rentalTypeTitleArray: [RentalCellType] = [.blank, .usingTime, .rentCarInfo, .socarZone, .otherDriver, .insurance, .cancelWarning, .cancel]
   var paymentTypeTitleArray: [PaymentCellType] = [.blank, .serviceTotalCost, .beforeCost, .afterCost]
@@ -49,10 +55,14 @@ class ReservationDetailTableVC: UITableViewController {
   var isReservationEnd: Bool = false
   
   // MARK: - Life Cycle
-  init(isReservationEnd: Bool) {
+  init(_ isReservationEnd: Bool, _ socar: Socar, _ socarZoneData: SocarZoneData, _ reservation: Reservation) {
     super.init(style: .grouped)
-    customTableHeaderView = ReservationDetailHeader(frame: .zero, isReservationEnd: isReservationEnd)
+    self.socarData = socar
+    self.socarZoneData = socarZoneData
     self.isReservationEnd = isReservationEnd
+    self.reservationData = reservation
+    getReservaionPaymentInfo(reservation: reservation)
+    customTableHeaderView = ReservationDetailHeader(frame: .zero, isReservationEnd, socar.number)
   }
   
   required init?(coder: NSCoder) {
@@ -61,27 +71,21 @@ class ReservationDetailTableVC: UITableViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    configureNavigation()
+    view.backgroundColor = .white
+    tableView.backgroundColor = .systemGray6
     configureTableView()
     configureTableViewSegController()
-  }
-  
-  private func configureNavigation() {
-    guard let customTableHeaderView = customTableHeaderView else { return }
-    navigationItem.leftBarButtonItem = customTableHeaderView.leftNavigationButton
   }
   
   private func configureTableView() {
     tableView.allowsSelection = false
     tableView.tableHeaderView = customTableHeaderView
-    tableView.tableHeaderView?.frame.size.height = 100
+    customTableHeaderView?.closeButton.addTarget(self, action: #selector(tapCloseButton), for: .touchUpInside)
+    tableView.tableHeaderView?.frame.size.height = 135
     tableView.estimatedRowHeight = 600
     tableView.sectionHeaderHeight = 10
     tableView.sectionFooterHeight = 0
     tableView.separatorStyle = .none
-    tableView.register(ReservationRentalInfoCell.self, forCellReuseIdentifier: ReservationRentalInfoCell.identifier)
-    tableView.register(ReservationPaymentCell.self, forCellReuseIdentifier: ReservationPaymentCell.identifier)
-    tableView.register(ReservationEtcCell.self, forCellReuseIdentifier: ReservationEtcCell.identifier)
   }
   
   private  func configureTableViewSegController() {
@@ -108,16 +112,20 @@ class ReservationDetailTableVC: UITableViewController {
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     switch showTableViewIndex {
     case .rentalInfo:
-      let cell = ReservationRentalInfoCell(style: .default, reuseIdentifier: ReservationRentalInfoCell.identifier)
+      guard let socarData = socarData else { fatalError() }
+      guard let socarZoneData = socarZoneData else { fatalError() }
+      guard let reservationData = reservationData else { fatalError() }
+      let cell = ReservationRentalInfoCell(socarData, socarZoneData, reservationData)
       cell.configureCell(cellType: rentalTypeTitleArray[indexPath.section])
       cell.delegate = self
       if rentalTypeTitleArray[indexPath.section] == .usingTime {
-        guard let reservationStatus = customTableHeaderView?.reservationStatueLabel.isSelected else { fatalError() }
-        cell.changeOptionButton.isHidden = reservationStatus
+//        guard let reservationStatus = customTableHeaderView?.reservationStatueLabel.isSelected else { fatalError() }
+        cell.changeOptionButton.isHidden = true
       }
       return cell
     case .paymentInfo:
-      let cell = ReservationPaymentCell(style: .default, reuseIdentifier: ReservationPaymentCell.identifier)
+      guard let paymentBefore = paymentBefore else { fatalError() }
+      let cell = ReservationPaymentCell(paymentBefore: paymentBefore)
       cell.isReservationEnd = isReservationEnd
       cell.delegate = self
       cell.configureCell(cellType: paymentTypeTitleArray[indexPath.section])
@@ -160,6 +168,10 @@ class ReservationDetailTableVC: UITableViewController {
       $0.leading.equalTo(view.segmentControll).offset(9+setIndex*83)
     }
   }
+  
+  @objc private func tapCloseButton() {
+    dismiss(animated: true, completion: nil)
+  }
 }
 
 // MARK: - RentalInfoCell Button Action
@@ -173,7 +185,9 @@ extension ReservationDetailTableVC: ReservationRentalInfoCellDelegate {
   }
   
   func tapDetailButton(forCell cell: ReservationRentalInfoCell, sectionTitle: String) {
-    print("tabDetailButton", sectionTitle)
+    guard let socarZoneData = socarZoneData else { return }
+    let detailSocarZoneInfoVC = DetailSocarZoneInfoVC(socarZoneData: socarZoneData)
+    present(detailSocarZoneInfoVC, animated: true, completion: nil)
   }
 }
 
@@ -204,5 +218,21 @@ extension ReservationDetailTableVC: ReservationEtcCellDelegate {
   
   func tapContectCustomerCenter(forCell cell: ReservationEtcCell) {
     print("tapContectCustomerCenter")
+  }
+}
+
+// MARK: - NetworkService
+extension ReservationDetailTableVC {
+  private func getReservaionPaymentInfo(reservation: Reservation) {
+    print("Start Download")
+    let paymentBefore = URL(string: "https://sofastcar.moorekwon.xyz/reservations/\(reservation.reservationUid)/payment_before")!
+    AF.request(paymentBefore, headers: ["Content-Type": "application/json", "Authorization": "JWT \(UserDefaults.getUserAuthTocken()!)"]).validate().responseDecodable(of: PaymentBeforeDataSet.self, queue: .main, completionHandler: { (response) in
+      switch response.result {
+      case .success(let paymentBefore):
+        self.paymentBefore = paymentBefore.results[0]
+      case .failure(let error):
+        print("fail to get payment Before Data", error.localizedDescription)
+      }
+    })
   }
 }

@@ -10,10 +10,14 @@ import UIKit
 
 class ReservationRentalInfoCell: UITableViewCell {
   // MARK: - Properties
+  var socar: Socar?
+  var socarZoneData: SocarZoneData?
+  var reservationData: Reservation?
+  
   static let identifier = "CustomCell"
   lazy var guide = contentView.layoutMarginsGuide
   let padding: CGFloat = 10
-  let carFeatureTagArray = ["휘발류", "에어백", "후방감지센서", "블랙박스", "네비게이션"]
+  var carFeatureTagArray: [String] = []
   
   weak var delegate: ReservationRentalInfoCellDelegate?
   
@@ -119,6 +123,7 @@ class ReservationRentalInfoCell: UITableViewCell {
     label.font = .systemFont(ofSize: 11)
     return label
   }()
+  
   // MARK: - Cancel Button UI
   lazy var cancelButton: UIButton = {
     let button = UIButton()
@@ -127,12 +132,36 @@ class ReservationRentalInfoCell: UITableViewCell {
     button.backgroundColor = .white
     button.setTitleColor(.gray, for: .normal)
     button.addTarget(self, action: #selector(tapReservationCancelButton), for: .touchUpInside)
+    button.layer.borderWidth = 1
+    button.layer.borderColor = UIColor.systemGray4.cgColor
     return button
   }()
   
   // MARK: - Life Cycle
-  override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-    super.init(style: style, reuseIdentifier: reuseIdentifier)
+  init(_ socar: Socar, _ socarZoneData: SocarZoneData, _ reservationData: Reservation) {
+    super.init(style: .default, reuseIdentifier: "cell")
+    self.socar = socar
+    self.socarZoneData = socarZoneData
+    
+    // socar
+    let convinOptions = socar.safetyOpt.split(separator: ",")
+    convinOptions.forEach {
+      carFeatureTagArray.append(String($0))
+    }
+    
+    if socar.fuelType == "전기" {
+      contentLabel.text = "\(socar.number) | \(socar.name) \(socar.carPrices.minPricePerKm)원/km"
+    } else {
+      contentLabel.text = "\(socar.number) | \(socar.name) \(socar.carPrices.minPricePerKm) ~ \(socar.carPrices.maxPricePerKm)원/km"
+    }
+    
+    // socar Zone
+    usingSocarZoneLabel.text = socarZoneData.name
+    
+    // reservation data
+    self.reservationData = reservationData
+    
+    // nomal
     contentView.layoutMargins = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
   }
   
@@ -151,10 +180,10 @@ class ReservationRentalInfoCell: UITableViewCell {
     case .rentCarInfo:
       configureTagCollectionViewInRentCar()
       rentCarInfoCellUI()
-      configureRentCarInfoCellContent()
       configureContentViewTopBottomLayer()
     case .socarZone:
       usingSocarZoneCellUI()
+      configureContentViewTopBottomLayer()
     case .otherDriver:
       otherDriverCellUI()
       configureOtherDriverCellContent()
@@ -166,7 +195,7 @@ class ReservationRentalInfoCell: UITableViewCell {
     case .cancelWarning:
       cancelWarningCellUI()
       configureCancelWarningCellContent()
-      configureContentViewBottomLayer()
+      configureContentViewTopBottomLayer()
     case .cancel:
       cancellCellUI()
     case .blank:
@@ -204,8 +233,11 @@ class ReservationRentalInfoCell: UITableViewCell {
   }
   
   private func configureUsingTimeCellContent() {
-    contentTitleLabel.text = "총 1일 10분 이용"
-    contentLabel.text = "08/14 (금) 14:00 - 08/15 (토) 14:10"
+    guard let reservation = reservationData else { return }
+    let startTime = Time.toUTCString(changeForString: reservation.startTime)
+    let endTime = Time.toUTCString(changeForString: reservation.endTime)
+    contentTitleLabel.text = Time.getDiffTwoDateValueReturnString(start: startTime, end: endTime)
+    contentLabel.text = "\(Time.getTimeString(type: .castMddEHHmm, date: startTime)) - \(Time.getTimeString(type: .castMddEHHmm, date: endTime))"
   }
   
   private func configureTagCollectionViewInRentCar() {
@@ -240,10 +272,6 @@ class ReservationRentalInfoCell: UITableViewCell {
       $0.height.equalTo(30*collectionViewLine)
       $0.leading.bottom.trailing.equalTo(guide)
     }
-  }
-  
-  private func configureRentCarInfoCellContent() {
-    contentLabel.text = "57하4455 | 더뉴레이 180 ~ 160원/km"
   }
   
   private func usingSocarZoneCellUI() {
@@ -343,8 +371,27 @@ class ReservationRentalInfoCell: UITableViewCell {
   }
   
   private func configureInsuranceCellContent() {
-    let infoText = "쏘카 사고 시, 차량 손해 금액과 관계없이 자기부담금 70만원을 지불하는 상품입니다. 차량 손해 금액 외 발생하는 다른 비용은 별도 청구됩니다."
+    guard let reservationData = reservationData else { return }
+    var insureMoney = "0"
+    var insuranceTitle = ""
+    switch reservationData.insurance {
+    case "special":
+      insureMoney = "30"
+      insuranceTitle = "스페셜"
+    case "light":
+      insureMoney = "50"
+      insuranceTitle = "라이트"
+    case "standard":
+      insureMoney = "40"
+      insuranceTitle = "스텐다드"
+    default:
+      insureMoney = "50"
+      insuranceTitle = "라이트"
+    }
+    
+    let infoText = "쏘카 사고 시, 차량 손해 금액과 관계없이 자기부담금 \(insureMoney)만원을 지불하는 상품입니다. 차량 손해 금액 외 발생하는 다른 비용은 별도 청구됩니다."
     let font = UIFont.boldSystemFont(ofSize: CommonUI.contentsTextFontSize-2)
+    contentTitleLabel.text = insuranceTitle
     contentTextView.attributedText = .attributedStringWithLienSpacing(text: infoText, font: font)
     contentTextView.textColor = .gray
   }
@@ -385,31 +432,6 @@ class ReservationRentalInfoCell: UITableViewCell {
     cancelButton.snp.makeConstraints {
       $0.top.leading.trailing.bottom.equalTo(guide)
       $0.height.equalTo(60)
-    }
-  }
-  // MARK: - For Cell Line
-  private func configureContentViewTopBottomLayer() {
-    configureContentViewTopLayer()
-    configureContentViewBottomLayer()
-  }
-  
-  private func configureContentViewTopLayer() {
-    let view = UIView()
-    view.backgroundColor = .systemGray4
-    contentView.addSubview(view)
-    view.snp.makeConstraints {
-      $0.top.leading.trailing.equalTo(contentView)
-      $0.height.equalTo(0.7)
-    }
-  }
-
-  private func configureContentViewBottomLayer() {
-    let view = UIView()
-    view.backgroundColor = .systemGray4
-    contentView.addSubview(view)
-    view.snp.makeConstraints {
-      $0.bottom.leading.trailing.equalTo(contentView)
-      $0.height.equalTo(0.7)
     }
   }
 }

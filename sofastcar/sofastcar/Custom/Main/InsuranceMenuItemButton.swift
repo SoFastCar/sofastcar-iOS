@@ -76,11 +76,9 @@ class InsuranceMenuItemButton: UIButton {
     }
     
     func configuration(symbol selectSymbol: String, name itemName: String, guarantee itemGuarantee: Int, cost itemCost: Int) {
-        let numberFormatter = NumberFormatter()
-        numberFormatter.numberStyle = .decimal
         selectSymbolImageView.image = UIImage(systemName: selectSymbol, withConfiguration: symbolConfig)
         itemNameLabel.text = itemName
         itemGuarenteeLabel.text = "자기부담금 최대 \(itemGuarantee)만원"
-        itemCostLabel.text = "+ \(numberFormatter.string(from: NSNumber(value: itemCost)) ?? "0")원"
+        itemCostLabel.text = "+ \(NumberFormatter.getPriceWithDot(price: itemCost))원"
     }
 }

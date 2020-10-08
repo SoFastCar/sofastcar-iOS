@@ -15,9 +15,11 @@ class Time {
   
   // 참고 URL: https://ownstory.tistory.com/21
   enum PresnetDateString: String {
+    case castYYYYMMDDHHmm = "YYYYMMddHHmm"
     case castMddEHHmm = "M/dd (E) HH:mm"
     case castMddEHH = "M/dd (E) HH"
     case castMMddE = "MM / dd (E)"
+    case castMMd = "MM/d"
     case todayE = "오늘 (E)"
     case todayH = "오늘 H"
     case todayHHmm = "오늘 HH:mm"
@@ -42,19 +44,26 @@ class Time {
     var returnText = "총 "
     let offsetComps = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: start, to: end)
     if let day = offsetComps.day,
-      day != 0 {
+       day != 0 {
       returnText.append("\(day)일 ")
     }
     if let hour = offsetComps.hour,
-      hour != 0 {
+       hour != 0 {
       returnText.append("\(hour)시간 ")
     }
     if let minute = offsetComps.minute,
-      minute != 0 {
+       minute != 0 {
       returnText.append("\(minute)분 ")
     }
     returnText.append("이용")
     return returnText
+  }
+  
+  static func getDayIndex(start: Date, end: Date) -> Int {
+    let calendar = Calendar.current
+    let offsetComps = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: start, to: end)
+    guard let dayIndex = offsetComps.day else { return 0 }
+    return dayIndex
   }
   
   static func getStartEndTimeShowLabel(start: Date, end: Date) -> String {
@@ -81,8 +90,55 @@ class Time {
     return returnString
   }
   
+  static func getStartEndTimeShowLabelShort(start: Date) -> String {
+    var returnString = ""
+    let todayString = Time.getTimeString(type: .dayd, date: Date())
+    let tommorowString = Time.getTimeString(type: .dayd, date: Date().addingTimeInterval(TimeInterval(day)))
+    // start Time
+    if todayString == Time.getTimeString(type: .dayd, date: start) {
+      returnString.append("\(Time.getTimeString(type: .todayHHmm, date: start))")
+    } else if tommorowString == Time.getTimeString(type: .dayd, date: start) {
+      returnString.append("\(Time.getTimeString(type: .tommorowHHmm, date: start))")
+    } else {
+      returnString.append("\(Time.getTimeString(type: .castMddEHHmm, date: start))")
+    }
+    return returnString
+  }
+  
   static func getDivideRentTodalTimeByHalfHour(start: Date, end: Date) -> Int {
     return Int((end.timeIntervalSince1970 - start.timeIntervalSince1970))/Time.hour*2
   }
   
+  static func getInitialStartAndEndTimeForReservation(complete: (_ startTime: Date, _ endTime: Date) -> Void) {
+    let date = floor(Date().timeIntervalSince1970)
+    let restMinDate = Double(Int(date) % 600)
+    var startTime = Date(timeIntervalSince1970: date-restMinDate)
+    startTime.addTimeInterval(TimeInterval(20*Time.min))
+    let endTime = startTime.addingTimeInterval(TimeInterval(Time.hour*4))
+    complete(startTime, endTime)
+  }
+  /*
+   "date_time_start": "2020-10-05T05:23:06Z",
+   "date_time_end": "2020-10-05T05:23:06Z"
+   */
+  static func toStringUTC(changeForDate date: Date) -> String {
+    var resultString = ""
+    let dateFormatter = DateFormatter()
+    dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+    dateFormatter.dateFormat = "yyyy-MM-dd"
+    resultString.append(dateFormatter.string(from: date))
+    resultString.append("T")
+    dateFormatter.dateFormat = "hh:mm:ss"
+    resultString.append(dateFormatter.string(from: date))
+    resultString.append("+00:00")
+    return resultString
+  }
+
+  static func toUTCString(changeForString string: String) -> Date {
+      let dateFormatter = DateFormatter()
+      dateFormatter.locale = CommonUI.locale as Locale // set locale to reliable US_POSIX
+      dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+      let tempDate = dateFormatter.date(from: string)!
+      return tempDate
+  }
 }

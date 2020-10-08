@@ -64,29 +64,27 @@ extension UIViewController {
   
   func presentDetail(_ viewControllerToPresent: UIViewController) {
     let transition = CATransition()
-    transition.duration = 0
-//    transition.type = CATransitionType.push
-    transition.subtype = CATransitionSubtype.fromLeft
-    transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
+    transition.duration = 0.5
+    transition.type = CATransitionType.moveIn
+    transition.subtype = CATransitionSubtype.fromRight
+    transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.default)
     self.view.window!.layer.add(transition, forKey: kCATransition)
     present(viewControllerToPresent, animated: false)
   }
   
   func dismissDetail() {
     let transition = CATransition()
-    transition.duration = 0
-//    transition.type = CATransitionType.push
-    transition.subtype = CATransitionSubtype.fromRight
-    transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
+    transition.duration = 0.5
+    transition.type = CATransitionType.reveal
+    transition.subtype = CATransitionSubtype.fromLeft
+    transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.default)
     self.view.window!.layer.add(transition, forKey: kCATransition)
     dismiss(animated: false)
   }
-
 }
 
 extension UINavigationController {
   func noTitlePushViewController(_ viewController: UIViewController, animated: Bool) {
-    print("add")
     let backButtonImage = UIImage(systemName: "arrow.left")
     self.navigationController?.navigationBar.backIndicatorImage = backButtonImage
     self.navigationController?.navigationBar.backIndicatorTransitionMaskImage = backButtonImage
@@ -111,48 +109,48 @@ extension UIViewController {
 }
 
 extension UIView {
-    enum ViewSide {
-        case top, left, right, bottom
+  enum ViewSide {
+    case top, left, right, bottom
+  }
+  
+  func addBorder(toSide side: ViewSide, withColor color: CGColor, andThickness thickness: CGFloat) {
+    let border = CALayer()
+    border.backgroundColor = color
+    
+    switch side {
+    case .top:
+      border.frame = CGRect(x: frame.minX, y: frame.minY, width: frame.width, height: thickness)
+    case .left:
+      border.frame = CGRect(x: frame.minX, y: frame.minY, width: thickness, height: frame.height)
+    case .right:
+      border.frame = CGRect(x: frame.maxX, y: frame.minY, width: thickness, height: frame.height)
+    case .bottom:
+      border.frame = CGRect(x: frame.minX, y: frame.maxY, width: frame.width, height: thickness)
     }
     
-    func addBorder(toSide side: ViewSide, withColor color: CGColor, andThickness thickness: CGFloat) {
-        let border = CALayer()
-        border.backgroundColor = color
-        
-        switch side {
-        case .top:
-            border.frame = CGRect(x: frame.minX, y: frame.minY, width: frame.width, height: thickness)
-        case .left:
-            border.frame = CGRect(x: frame.minX, y: frame.minY, width: thickness, height: frame.height)
-        case .right:
-            border.frame = CGRect(x: frame.maxX, y: frame.minY, width: thickness, height: frame.height)
-        case .bottom:
-            border.frame = CGRect(x: frame.minX, y: frame.maxY, width: frame.width, height: thickness)
-        }
-        
-        self.layer.addSublayer(border)
-    }
-    
-    func symbolConfiguration(pointSize bySize: CGFloat, weight byWeight: UIImage.SymbolWeight) -> UIImage.SymbolConfiguration {
-        return UIImage.SymbolConfiguration(pointSize: bySize, weight: byWeight)
-    }
+    self.layer.addSublayer(border)
+  }
+  
+  func symbolConfiguration(pointSize bySize: CGFloat, weight byWeight: UIImage.SymbolWeight) -> UIImage.SymbolConfiguration {
+    return UIImage.SymbolConfiguration(pointSize: bySize, weight: byWeight)
+  }
 }
 
 // MARK: - BoldFont
 
 extension UIFont {
   func withTraits(traits: UIFontDescriptor.SymbolicTraits) -> UIFont {
-        let descriptor = fontDescriptor.withSymbolicTraits(traits)
-        return UIFont(descriptor: descriptor!, size: 0) //size 0 means keep the size as it is
-    }
-
-    func bold() -> UIFont {
-        return withTraits(traits: .traitBold)
-    }
-
-    func italic() -> UIFont {
-        return withTraits(traits: .traitItalic)
-    }
+    let descriptor = fontDescriptor.withSymbolicTraits(traits)
+    return UIFont(descriptor: descriptor!, size: 0) //size 0 means keep the size as it is
+  }
+  
+  func bold() -> UIFont {
+    return withTraits(traits: .traitBold)
+  }
+  
+  func italic() -> UIFont {
+    return withTraits(traits: .traitItalic)
+  }
 }
 
 // MARK: - numberFomatter
@@ -162,5 +160,87 @@ extension NumberFormatter {
     numberFormatter.numberStyle = .decimal
     guard let priceWithDot = numberFormatter.string(from: NSNumber(value: price)) else { fatalError() }
     return "\(priceWithDot)"
+  }
+}
+
+// MARK: - For Cell Line
+extension UITableViewCell {
+  func configureContentViewTopBottomLayer() {
+    configureContentViewTopLayer()
+    configureContentViewBottomLayer()
+  }
+  
+  func configureContentViewTopLayer() {
+    let view = UIView()
+    view.backgroundColor = .systemGray4
+    self.contentView.addSubview(view)
+    view.snp.makeConstraints {
+      $0.top.leading.trailing.equalTo(self.contentView)
+      $0.height.equalTo(0.7)
+    }
+  }
+  
+  func configureContentViewBottomLayer() {
+    let view = UIView()
+    view.backgroundColor = .systemGray4
+    self.contentView.addSubview(view)
+    view.snp.makeConstraints {
+      $0.bottom.leading.trailing.equalTo(self.contentView)
+      $0.height.equalTo(0.7)
+    }
+  }
+  
+  func configureContentViewBottomLayer(guide: UILayoutGuide) {
+    let view = UIView()
+    view.backgroundColor = .systemGray4
+    self.contentView.addSubview(view)
+    view.snp.makeConstraints {
+      $0.bottom.equalTo(self)
+      $0.leading.trailing.equalTo(guide)
+      $0.height.equalTo(0.5)
+    }
+  }
+}
+
+// MARK: - String / Underline
+extension String {
+  func getUnderLineAttributedText() -> NSAttributedString {
+    return NSMutableAttributedString(string: self, attributes: [.underlineStyle: NSUnderlineStyle.single.rawValue])
+  }
+}
+
+// MARK: - Status Bar
+extension UIViewController {
+  func configureStatusBar(backgroundColor: UIColor) {
+    let statusBar =  UIView()
+    let window = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
+    guard let statusBarFrame = window?.windowScene?.statusBarManager?.statusBarFrame else { return }
+    statusBar.frame = statusBarFrame
+    statusBar.backgroundColor = backgroundColor
+    UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.addSubview(statusBar)
+  }
+//  
+//  var shouldAutorotate: Bool {
+//      return false
+//  }
+//  
+//  var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+//      return .portrait
+//  }
+//  
+//  var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
+//      return .portrait
+//  }
+}
+
+// MARK: - Shadow Maker
+
+extension UIView {
+  func shadowMaker(view: UIView) {
+    view.layer.shadowColor = UIColor.systemGray3.cgColor
+    view.layer.shadowOffset = CGSize(width: 0, height: 2.0)
+    view.layer.shadowRadius = 5
+    view.layer.shadowOpacity = 0.5
+    view.layer.masksToBounds = false
   }
 }

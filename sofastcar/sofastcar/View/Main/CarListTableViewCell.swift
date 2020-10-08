@@ -20,8 +20,10 @@ class CarListTableViewCell: UITableViewCell {
     let firstDateLabel = UILabel()
     let middleDateLabel = UILabel()
     let lastDateLabel = UILabel()
+    let blockView = UIView()
     let numberFormatter = NumberFormatter()
     let dateFormatter = DateFormatter()
+    var calendar = Calendar.current
 
     static let identifier = "CarListCell"
     
@@ -42,6 +44,8 @@ class CarListTableViewCell: UITableViewCell {
     
     private func setupUI() {
         numberFormatter.numberStyle = .decimal
+        
+        calendar.locale = Locale(identifier: "ko-KR")
         
         dateFormatter.dateStyle = .short
         dateFormatter.timeStyle = .short
@@ -75,11 +79,13 @@ class CarListTableViewCell: UITableViewCell {
             self.dateStackView.addArrangedSubview($0)
         })
         contentView.addSubview(dateStackView)
+        
+        contentView.addSubview(blockView)
     }
     
     private func setupConstraint() {
         [carImageView, carNameLabel, carPriceLabel, discountSignLabel, availableTimeSlotView,
-         timeSlotUnitView, dateStackView, firstDateLabel, middleDateLabel, lastDateLabel].forEach({
+         timeSlotUnitView, dateStackView, firstDateLabel, middleDateLabel, lastDateLabel, blockView].forEach({
             $0.translatesAutoresizingMaskIntoConstraints = false   
         })
         carImageView.snp.makeConstraints({
@@ -118,23 +124,78 @@ class CarListTableViewCell: UITableViewCell {
             $0.trailing.equalToSuperview()
             $0.height.equalTo(10)
         })
+        blockView.snp.makeConstraints({
+            $0.top.bottom.leading.trailing.equalToSuperview()
+        })
     }
     
     func carInfoConfiguration(carImage image: String, carName name: String, carPrice price: Int, availableDiscount discount: Bool) {
         let url = URL(string: image)
-        #if true
         carImageView.kf.setImage(with: url)
-        #else
-        carImageView.image = UIImage(named: image)
-        #endif
         carNameLabel.text = name
         carPriceLabel.text = numberFormatter.string(from: NSNumber(value: price))
         discountSignLabel.text = discount ? "할인가" : ""
     }
     
-    func timeInfoConfiguration(startTime sTime: Date, finishTime fTime: Date) {
-        firstDateLabel.text = Time.getTimeString(type: .todayHHmm, date: sTime)
-        lastDateLabel.text = Time.getTimeString(type: .hourHHmm, date: fTime)
-        middleDateLabel.text = "12:00"
+    func timeInfoConfiguration(listIndex index: Int, startTime sTime: Date, endTime eTime: Date, reserveStartTime rsTime: [Date], reserveEndTime reTime: [Date]) {
+        if rsTime.count != 0 {
+            for index in 0...(rsTime.count - 1) {
+                if rsTime[index] > sTime || reTime[index] < eTime {
+                    print("겹침")
+                    
+                } else {
+                    print("안겹침")
+                }
+            }
+        } else {
+            
+        }
+//        var reserveDict: [Date: Date] = [:]
+//        var reserveDictArry: [[Date: Date]] = [[:]]
+//        print(rsTime, rsTime.count)
+//        if rsTime.count != 0 {
+//            for index in 0...(rsTime.count - 1) {
+//                let dateTimeStart = Time.toUTCString(changeForString: rsTime[index].dateTimeStart)
+//                let dateTimeEnd = Time.toUTCString(changeForString: rsTime[index].dateTimeEnd)
+//                reserveDict[dateTimeStart] = dateTimeEnd
+//            }
+//            reserveDictArry.append(reserveDict)
+//        } else {
+////            reserveDictArry.append([:])
+//            // do nothing
+//        }
+//        print(reserveDictArry)
+////        Time.toUTCString(changeForString: <#T##String#>)
+
+        var startDateOfTimeSlot = sTime
+        var endDateOfTimeSlot = Date(timeInterval: 86400, since: eTime)
+        startDateOfTimeSlot = calendar.startOfDay(for: startDateOfTimeSlot)
+        endDateOfTimeSlot = calendar.startOfDay(for: endDateOfTimeSlot)
+        
+        let timeSlotPeriodByDate = calendar.dateComponents([.second], from: startDateOfTimeSlot, to: endDateOfTimeSlot)
+        let timeSlotPeriod = CGFloat(timeSlotPeriodByDate.second ?? 1)
+        let rentalPeriodByDate = calendar.dateComponents([.second], from: sTime, to: eTime)
+        let rentalPeriod = CGFloat(rentalPeriodByDate.second ?? 1)
+        let leadingPeriodByDate = calendar.dateComponents([.second], from: startDateOfTimeSlot, to: sTime)
+        let leadingPeriod = CGFloat(leadingPeriodByDate.second ?? 1)
+        let trailingPeriodByDate = calendar.dateComponents([.second], from: eTime, to: endDateOfTimeSlot)
+        let trailingPeriod = CGFloat(trailingPeriodByDate.second ?? 1)
+        
+        let middleDate = Date(timeInterval: TimeInterval(timeSlotPeriod / 2), since: startDateOfTimeSlot)
+        let newLeadingConst = (UIScreen.main.bounds.width - 40) * (leadingPeriod / timeSlotPeriod)
+        let newTrailingConst = (UIScreen.main.bounds.width - 40) * (trailingPeriod / timeSlotPeriod)
+//        print("slot width: \(availableTimeSlotView.frame.width), newLeading: \(newLeadingConst), newTrailing: \(newTrailingConst)")
+        timeSlotUnitView.snp.updateConstraints({
+            $0.leading.equalToSuperview().offset(newLeadingConst)
+            $0.trailing.equalToSuperview().offset(-newTrailingConst)
+        })
+        firstDateLabel.text = Time.getTimeString(type: .castMMd, date: startDateOfTimeSlot)
+        lastDateLabel.text = Time.getTimeString(type: .castMMd, date: endDateOfTimeSlot)
+        if timeSlotPeriod <= 86400 {
+            middleDateLabel.text = "12:00" 
+        } else {
+            middleDateLabel.text = Time.getTimeString(type: .castMMd, date: middleDate)
+        }
+        
     }
 }

@@ -188,6 +188,7 @@ class PaymentConfirmCell: UITableViewCell {
     switch cellType {
     case .detailCostCell:
       configureDeatilCostCellUI()
+      configureDetailCostConent()
       configureContentViewBottomLayer()
     case .paymentCardCell:
       configureContentViewTopLayer()
@@ -201,31 +202,9 @@ class PaymentConfirmCell: UITableViewCell {
       configureContentViewBottomLayer()
     case .agreeAllTerms:
       configureAllAgreeCell()
-    default:
-      break
     }
   }
   // MARK: - SetUI
-  private func configureContentViewTopLayer() {
-    let view = UIView()
-    view.backgroundColor = .systemGray4
-    contentView.addSubview(view)
-    view.snp.makeConstraints {
-      $0.top.leading.trailing.equalTo(contentView)
-      $0.height.equalTo(0.7)
-    }
-  }
-
-  private func configureContentViewBottomLayer() {
-    let view = UIView()
-    view.backgroundColor = .systemGray4
-    contentView.addSubview(view)
-    view.snp.makeConstraints {
-      $0.bottom.leading.trailing.equalTo(contentView)
-      $0.height.equalTo(0.7)
-    }
-  }
-  
   private func configureDeatilCostCellUI() {
     [sectionTitleLabel, rentalCostTitleLabel, rentalCostLabel,
      insuranceCostTitleLabel, insuranceCostLabel, spView1, discountTitleLabel, changeOptionButton,
@@ -297,7 +276,7 @@ class PaymentConfirmCell: UITableViewCell {
     }
   }
   
-  func configureDetailCostConent() {
+  private func configureDetailCostConent() {
     guard let rentPrice = rentPrice else { return }
     guard let insurancePrice = insuranceData?.cost else { return }
     rentalCostLabel.text = "\(NumberFormatter.getPriceWithDot(price: rentPrice))원"
