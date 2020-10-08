@@ -35,7 +35,7 @@ class SetBookingTimeButton: UIButton {
     self.init()
     setupUI(on: place)
     setupConstraint(on: place)
-    setupTime(isChaged: false, startTime: Date(), endTime: Date())
+    setupTime(on: place, isChaged: false, startTime: Date(), endTime: Date())
   }
   
   private func setupUI(on place: SetPlace) {
@@ -126,25 +126,33 @@ class SetBookingTimeButton: UIButton {
         $0.trailing.equalToSuperview().offset(-20)
       })
     }
-    
   }
   
   func setButtonTitle(sTime: Date, eTime: Date) {
     setTimeLabel.text = Time.getDiffTwoDateValueReturnString(start: sTime, end: eTime)
   }
   
-  func setupTime(isChaged flag: Bool, startTime sTime: Date, endTime eTime: Date) {
+    func setupTime(on place: SetPlace, isChaged flag: Bool, startTime sTime: Date, endTime eTime: Date) {
     if flag {
         startTime = sTime
         endTime = eTime
-        timeLabel.text = "\(Time.getTimeString(type: .todayHHmm, date: startTime)) - \(Time.getTimeString(type: .hourHHmm, date: endTime))"
+        switch place {
+        case .mainVC:
+            timeLabel.text = Time.getStartEndTimeShowLabel(start: sTime, end: eTime)
+        case .carList:
+            timeLabel.text = Time.getStartEndTimeShowLabelShort(start: sTime)
+        }
     } else {
-        let date = floor(Date().timeIntervalSince1970)
-        let restMinDate = Double(Int(date) % 600)
-        startTime = Date(timeIntervalSince1970: date-restMinDate)
-        startTime.addTimeInterval(TimeInterval(20*Time.min))
-        endTime = startTime.addingTimeInterval(TimeInterval(Time.hour*4))
-        timeLabel.text = "\(Time.getTimeString(type: .todayHHmm, date: startTime)) - \(Time.getTimeString(type: .hourHHmm, date: endTime))"
+      Time.getInitialStartAndEndTimeForReservation { (sTime, eTime) in
+        self.startTime = sTime
+        self.endTime = eTime
+        switch place {
+        case .mainVC:
+            timeLabel.text = Time.getStartEndTimeShowLabel(start: sTime, end: eTime)
+        case .carList:
+            timeLabel.text = Time.getStartEndTimeShowLabelShort(start: sTime)
+        }
+      }
     }
   }
 }

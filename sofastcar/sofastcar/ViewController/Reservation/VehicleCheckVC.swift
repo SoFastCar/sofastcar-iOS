@@ -92,6 +92,8 @@ class VehicleCheckVC: UIViewController {
   }
 }
 
+// MARK: - VehicleCheckViewDelegate
+
 extension VehicleCheckVC: VehicleCheckViewDelegate {
   func buttonAction(_ sender: UIButton) {
     switch sender {

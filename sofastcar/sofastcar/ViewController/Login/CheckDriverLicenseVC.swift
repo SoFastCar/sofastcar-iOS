@@ -47,5 +47,4 @@ class CheckDriverLicenseVC: UIViewController {
   @objc func tabAgreeButton(_ sender: UIButton) {
     sender.isSelected.toggle()
   }
-
 }

@@ -23,6 +23,16 @@ extension UserDefaults {
     UserDefaults.standard.set(nil, forKey: "UserAuthToken")
   }
   
+  // MARK: - Reservation Uid Save() {
+  static func setReservationUid(uid: Int) {
+    UserDefaults.standard.set(uid, forKey: "ReservationUid")
+  }
+  
+  static func getReservationUid() -> Int? {
+    guard let reservationUid = UserDefaults.standard.value(forKey: "ReservationUid") as? Int else { return nil }
+    return reservationUid
+  }
+  
   // MARK: - Reservation Finish Check & ReservationDashBoard
   static func setReadyToDrive(isDriveReady: Bool) {
     UserDefaults.standard.set(isDriveReady, forKey: "ReadyToDrive")
@@ -50,5 +60,14 @@ extension UserDefaults {
   static func getVehicleCheck() -> Bool {
     let check = UserDefaults.standard.bool(forKey: "VehicleCheckVC")
     return check
+  }
+  
+  // MARK: - Logout Button
+  static func deleteUserSettingForLogout() {
+    resetUserAuthTocken()
+    setReadyToDrive(isDriveReady: false)
+    setVehicleDoubleCheck(check: false)
+    setVehiclCheck(check: false)
+    setReservationUid(uid: 0)
   }
 }

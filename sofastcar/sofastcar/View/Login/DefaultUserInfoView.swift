@@ -12,7 +12,7 @@ class DefaultUserInfoView: UIScrollView {
   // MARK: - Properties
   var user: SignUpUserData? {
     didSet {
-      guard let username = user?.useranme else { return }
+      guard let username = user?.username else { return }
       infomationLabel.text = "\(username) 님,\n쏘카 이용을 위한 기본 정보를 입력해주세요."
     }
   }

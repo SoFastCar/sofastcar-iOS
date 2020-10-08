@@ -11,7 +11,68 @@ import SnapKit
 
 class ReservationStateView: UIScrollView {
   
+  var reservationCarImageString: String? {
+    didSet {
+      self.reservationCarImage.loadImage(with: reservationCarImageString ?? "empty")
+    }
+  }
+  
+  var numberPlateString: String? {
+    didSet {
+      self.numberPlateLabel.text = numberPlateString
+    }
+  }
+  
+  var carTypeString: String? {
+    didSet {
+      carTypeLabel.text = carTypeString
+    }
+  }
+  
+  var carOilTypeString: String? {
+    didSet {
+      carOilTypeLabel.text = carOilTypeString
+    }
+  }
+  
+  var reservationPlaceStateSubString: String? {
+    didSet {
+      reservationPlaceStateSubLabel.text = reservationPlaceStateSubString
+    }
+  }
+  
+  var returnPlaceStirng: String? {
+    didSet {
+      returnPlaceLabel.text = returnPlaceStirng
+    }
+  }
+  
+  var reservationRemainingTimeString: String? {
+    didSet {
+      reservationRemainingTimeLabel.text = reservationRemainingTimeString
+    }
+  }
+  
+  var reservationTimeString: String? {
+    didSet {
+      reservationTimeLabel.text = reservationTimeString
+    }
+  }
+  
+  var reservationProgressValue: Float? {
+    didSet {
+      reservationProgressView.progress = reservationProgressValue ?? 0
+    }
+  }
+  
+  var returnTimeString: String? {
+    didSet {
+      returnTimeLabel.text = returnTimeString
+    }
+  }
+  
   // MARK: - Attribute
+  
   lazy var leftNavigationButton: UIBarButtonItem = {
     let barButtonItem = UIBarButtonItem(
       image: UIImage(systemName: CommonUI.SFSymbolKey.hamburger.rawValue),
@@ -42,9 +103,8 @@ class ReservationStateView: UIScrollView {
     return view
   }()
   
-  fileprivate let reservationCarImage: UIImageView = {
-    let imageView = UIImageView()
-    imageView.image = UIImage(named: "SampleCar")
+  fileprivate let reservationCarImage: CustomImageView = {
+    let imageView = CustomImageView()
     imageView.contentMode = .scaleAspectFit
     
     return imageView
@@ -52,7 +112,7 @@ class ReservationStateView: UIScrollView {
   
   fileprivate let numberPlateLabel: UILabel = {
     let label = UILabel()
-    label.text = "57하4455"
+    label.text = ""
     label.font = UIFont.preferredFont(forTextStyle: .title1)
     label.textColor = .white
     
@@ -73,7 +133,7 @@ class ReservationStateView: UIScrollView {
   
   fileprivate let carTypeLabel: UILabel = {
     let label = UILabel()
-    label.text = "마세라티"
+    label.text = ""
     label.font = UIFont.preferredFont(forTextStyle: .body)
     label.textColor = .white
     label.alpha = 0.55
@@ -93,7 +153,7 @@ class ReservationStateView: UIScrollView {
   
   fileprivate let carOilTypeLabel: UILabel = {
     let label = UILabel()
-    label.text = "휘발유"
+    label.text = ""
     label.font = UIFont.preferredFont(forTextStyle: .body)
     label.textColor = .white
     label.alpha = 0.55
@@ -151,7 +211,7 @@ class ReservationStateView: UIScrollView {
   
   fileprivate let reservationRemainingTimeLabel: UILabel = {
     let label = UILabel()
-    label.text = "쏘카 이용 10분 전"
+    label.text = ""
     label.font = UIFont.preferredFont(forTextStyle: .footnote)
     label.textColor = CommonUI.mainBlue
     
@@ -160,7 +220,7 @@ class ReservationStateView: UIScrollView {
   
   fileprivate let reservationTimeLabel: UILabel = {
     let label = UILabel()
-    label.text = "8/15 (토) 14:00"
+    label.text = ""
     label.font = UIFont.preferredFont(forTextStyle: .footnote)
     label.textColor = CommonUI.mainBlue
     
@@ -184,7 +244,7 @@ class ReservationStateView: UIScrollView {
     progressView.progressTintColor = CommonUI.mainBlue
     progressView.trackTintColor = UIColor.white.withAlphaComponent(0.15)
     progressView.transform = CGAffineTransform(rotationAngle: .pi)
-    progressView.progress = 0.3
+    progressView.progress = 0
     
     return progressView
   }()
@@ -264,7 +324,7 @@ class ReservationStateView: UIScrollView {
   }()
   fileprivate let reservationPlaceStateSubLabel: UILabel = {
     let label = UILabel()
-    label.text = "송파동 공영주차장 지상 4층"
+    label.text = ""
     label.font = UIFont.preferredFont(forTextStyle: .headline)
     label.textColor = .white
     label.alpha = 0.55
@@ -308,7 +368,7 @@ class ReservationStateView: UIScrollView {
   }()
   fileprivate let returnPlaceLabel: UILabel = {
     let label = UILabel()
-    label.text = "송파구 공영주차장 지상 4층"
+    label.text = ""
     label.font = UIFont.preferredFont(forTextStyle: .headline)
     label.textColor = .white
     
@@ -345,7 +405,7 @@ class ReservationStateView: UIScrollView {
   }()
   fileprivate let returnTimeLabel: UILabel = {
     let label = UILabel()
-    label.text = "8/15 (토) 14:00"
+    label.text = ""
     label.font = UIFont.preferredFont(forTextStyle: .subheadline)
     label.textColor = UIColor.white.withAlphaComponent(0.55)
     

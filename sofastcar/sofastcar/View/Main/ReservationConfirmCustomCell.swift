@@ -138,10 +138,10 @@ class ReservationConfirmCustomCell: UITableViewCell {
     switch cellType {
     case .insuranceCell:
       twoLineWithChangeButton()
-//      configureinsuranceCellContent()
+      configureinsuranceCellContent()
     case .usingTiemCell:
       twoLineWithChangeButton()
-//      configureUsingTiemCellContent()
+      configureUsingTiemCellContent()
     case .usingSocarZone:
       usingSocarZoneCellUI()
     case .business:

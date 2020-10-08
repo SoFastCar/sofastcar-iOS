@@ -24,9 +24,9 @@ class ReservationConfirmTableVC: UITableViewController {
   // MARK: - Properties
   var socarZoneData: SocarZoneData?
   var insuranceData: Insurance?
+  var insuranceDataArry: [Insurance]?
   var socarData: SocarList? {
     didSet {
-      guard let socarData = socarData else { return }
       isSocarSaveCar = isSaveCarCheck()
       isElectronicCar = isEelctronicCarCheck()
       isBurom = isBuromCheck()
@@ -41,18 +41,14 @@ class ReservationConfirmTableVC: UITableViewController {
       setTotalPriceAtReservationCompleteButton()
     }
   }
+  lazy var tableViewCellTypeArray = TalbleViewCellType.allcases()
   var divideRendTotalTimeByHalfHour: Int = 0
   var headerViewHeight: CGFloat = 650
   var isSocarSaveCar: Bool = false
   var isElectronicCar: Bool = false
   var isBurom: Bool = false
   
-  let blurView: UIVisualEffectView = {
-    let effect = UIBlurEffect(style: .dark)
-    let view = UIVisualEffectView(effect: effect)
-    view.alpha = 0
-    return view
-  }()
+  let statusBar =  UIView()
   
   let reservationCostInfoButton: UIButton = {
     let button = UIButton()
@@ -89,7 +85,6 @@ class ReservationConfirmTableVC: UITableViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    configureBlurView()
     configureNavigationContoller()
     configureTableHeaderView()
     configureReservationConfirmButton()
@@ -107,7 +102,7 @@ class ReservationConfirmTableVC: UITableViewController {
   private func configureNavigationContoller() {
     title = "대여 정보 확인"
     navigationController?.navigationBar.prefersLargeTitles = true
-    navigationController?.navigationItem.largeTitleDisplayMode = .always
+    navigationController?.navigationItem.largeTitleDisplayMode = .automatic
     navigationController?.navigationBar.backgroundColor = .white
     navigationController?.navigationBar.barTintColor = UIColor.white
     navigationController?.navigationBar.tintColor = UIColor.black
@@ -169,12 +164,6 @@ class ReservationConfirmTableVC: UITableViewController {
     }
   }
   
-  private func configureBlurView() {
-    tableView.addSubview(blurView)
-//    tableView.bringSubviewToFront(blurView)
-    blurView.frame = CGRect(x: 0, y: -100, width: UIScreen.main.bounds.width, height: 2000)
-  }
-  
   private func configureReservationConfirmButton() {
     [reservationCostInfoButton, reservationConfirmButton].forEach {
       tableView.addSubview($0)
@@ -199,15 +188,24 @@ class ReservationConfirmTableVC: UITableViewController {
   @objc func tabReservationConfirmButton() {
     guard let insuranceData = insuranceData else { return }
     guard let standardPrice = socarData?.carPrices.standardPrice else { return }
-    let rentPrice = standardPrice*divideRendTotalTimeByHalfHour
+    guard let socarData = socarData else { return }
+    guard  let socarZoneData = socarZoneData else { return }
+//    let rentPrice = standardPrice*divideRendTotalTimeByHalfHour
+    let rentPrice = socarData.termPrice + insuranceData.cost
+    if let navi = self.presentingViewController as? UINavigationController, 
+       let presentingVC = navi.viewControllers.last as? MainVC {
+        presentingVC.reservationCompleteFlag = true        
+    }
     let paymentConfirmTableVC = PaymentConfirmTableVC(style: .grouped)
-    paymentConfirmTableVC.configurePaymentConfirmTableVC(rentPrice: rentPrice, insuranceData: insuranceData)
+    paymentConfirmTableVC.configurePaymentConfirmTableVC(rentPrice: rentPrice, insuranceData: insuranceData, socarData: socarData, socarZoneData: socarZoneData)
+    paymentConfirmTableVC.startDate = startDate
+    paymentConfirmTableVC.endDate = endDate
     navigationController?.pushViewController(paymentConfirmTableVC, animated: true)
   }
   
   // MARK: - UITableViewDataSource
   override func numberOfSections(in tableView: UITableView) -> Int {
-    return TalbleViewCellType.allcases().count
+    return tableViewCellTypeArray.count
   }
   
   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -216,20 +214,12 @@ class ReservationConfirmTableVC: UITableViewController {
   
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = ReservationConfirmCustomCell(style: .default, reuseIdentifier: ReservationConfirmCustomCell.identifier)
-    let cellTypeArray = TalbleViewCellType.allcases()
-    cell.confiure(cellType: cellTypeArray[indexPath.section])
+    cell.insuranceInfo = insuranceData
+    cell.socarZone = socarZoneData
+    cell.startDate = startDate
+    cell.endDate = endDate
     cell.delegate = self
-    switch cellTypeArray[indexPath.section] {
-    case .insuranceCell:
-      cell.insuranceInfo = insuranceData
-    case .usingSocarZone:
-      cell.socarZone = socarZoneData
-    case .usingTiemCell:
-      cell.startDate = startDate
-      cell.endDate = endDate
-    case .business, .blank:
-      break
-    }
+    cell.confiure(cellType: tableViewCellTypeArray[indexPath.section])
     return cell
   }
   
@@ -238,14 +228,15 @@ class ReservationConfirmTableVC: UITableViewController {
   }
 }
 
+// MARK: - ResrvationConfirmCellDelegate
 extension ReservationConfirmTableVC: ResrvationConfirmCellDelegate {
   func tapChangeInsuranceButton(forCell: ReservationConfirmCustomCell) {
     let insurancePopVC = InsurancePopVC()
-    insurancePopVC.modalPresentationStyle = .overCurrentContext
-    present(insurancePopVC, animated: true, completion: nil)
-    UIView.animate(withDuration: 0.3) {
-      self.blurView.alpha = 1
-    }
+    insurancePopVC.updatedInsuranceData = insuranceDataArry
+    insurancePopVC.modalPresentationStyle = .overFullScreen
+    present(insurancePopVC, animated: false, completion: {
+      insurancePopVC.presnetWithAnimate()
+    })
   }
   
   func tapChangeUsingTime(forCell: ReservationConfirmCustomCell) {
@@ -259,6 +250,9 @@ extension ReservationConfirmTableVC: ResrvationConfirmCellDelegate {
   
   func tapSocarZoneDetailButton(forCell: ReservationConfirmCustomCell) {
     print("tabSocarZoneDetailButton")
+    guard let socarZoneData = socarZoneData else { return }
+    let detailSocarZoneInfoVC = DetailSocarZoneInfoVC(socarZoneData: socarZoneData)
+    present(detailSocarZoneInfoVC, animated: true, completion: nil)
   }
   
   func reloadUsingTimeCell() {    
@@ -273,7 +267,8 @@ extension ReservationConfirmTableVC: ResrvationConfirmCellDelegate {
     guard let startDate = startDate,
           let endDate = endDate else { return }
     divideRendTotalTimeByHalfHour = Time.getDivideRentTodalTimeByHalfHour(start: startDate, end: endDate)
-    let totalPrice = socarData.carPrices.standardPrice*divideRendTotalTimeByHalfHour+insurancePrice
+//    let totalPrice = socarData.carPrices.standardPrice*divideRendTotalTimeByHalfHour+insurancePrice
+    let totalPrice = socarData.termPrice + insurancePrice
     let numberWithDot = NumberFormatter.getPriceWithDot(price: totalPrice)
     reservationCostInfoButton.setTitle("총 합계 \(numberWithDot) 원", for: .normal)
   }

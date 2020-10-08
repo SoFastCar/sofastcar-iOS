@@ -112,7 +112,7 @@ class ReservationPaymentCell: UITableViewCell {
   }()
   
   // MARK: - before Driving Cost UI
-  let totalCostLabel: UILabel = {
+  let totalBoforeCostLabel: UILabel = {
     let label = UILabel()
     label.text = "58,270 원"
     label.font = .boldSystemFont(ofSize: CommonUI.contentsTextFontSize)
@@ -127,7 +127,7 @@ class ReservationPaymentCell: UITableViewCell {
     return view
   }()
   
-  let mainCostTitleLabel: UILabel = {
+  let rentCostTitleLabel: UILabel = {
     let label = UILabel()
     label.text = "대여요금"
     label.font = .systemFont(ofSize: CommonUI.contentsTextFontSize)
@@ -135,7 +135,7 @@ class ReservationPaymentCell: UITableViewCell {
     return label
   }()
   
-  let mainCostLabel: UILabel = {
+  let rentCostValueLabel: UILabel = {
     let label = UILabel()
     label.text = "34,470 원"
     label.font = .systemFont(ofSize: CommonUI.contentsTextFontSize)
@@ -159,7 +159,7 @@ class ReservationPaymentCell: UITableViewCell {
     return label
   }()
   
-  let insuranceCostLabel: UILabel = {
+  let insuranceCostValueLabel: UILabel = {
     let label = UILabel()
     label.text = "7,600 원"
     label.font = .systemFont(ofSize: CommonUI.contentsTextFontSize)
@@ -175,7 +175,7 @@ class ReservationPaymentCell: UITableViewCell {
     return label
   }()
   
-  let couponCostLabel: UILabel = {
+  let couponCostValueLabel: UILabel = {
     let label = UILabel()
     label.text = "-20,600 원"
     label.font = .systemFont(ofSize: CommonUI.contentsTextFontSize)
@@ -184,15 +184,23 @@ class ReservationPaymentCell: UITableViewCell {
   }()
 
   // MARK: - Life Cycle
-  override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-    super.init(style: style, reuseIdentifier: reuseIdentifier)
+  init(paymentBefore: PaymentBefore) {
+    super.init(style: .default, reuseIdentifier: "cell")
     contentView.backgroundColor = .white
     contentView.layoutMargins = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
+    print(paymentBefore)
+    paidCost.text = "\(NumberFormatter.getPriceWithDot(price: paymentBefore.totalFee)) 원"
+    let totalCost = paymentBefore.rentalFee + paymentBefore.insuranceFee - paymentBefore.couponDiscount - paymentBefore.etcDiscount
+    totalBoforeCostLabel.text = "\(NumberFormatter.getPriceWithDot(price: totalCost)) 원"
+    rentCostValueLabel.text = "\(NumberFormatter.getPriceWithDot(price: paymentBefore.rentalFee)) 원"
+    couponCostValueLabel.text = "\(NumberFormatter.getPriceWithDot(price: paymentBefore.couponDiscount)) 원"
+    insuranceCostValueLabel.text = "\(NumberFormatter.getPriceWithDot(price: paymentBefore.insuranceFee)) 원"
   }
   
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
+  
   // MARK: - configure
   func configureCell(cellType: PaymentCellType) {
     sectionTitleLabel.text = cellType.rawValue
@@ -205,9 +213,11 @@ class ReservationPaymentCell: UITableViewCell {
     case .beforeCost:
       beforeCostCellUI()
       beforeCostContent()
+      configureContentViewTopBottomLayer()
     case .afterCost:
       afterCostCellUI()
       afterCostCellContent()
+      configureContentViewTopBottomLayer()
     }
   }
   
@@ -300,8 +310,8 @@ class ReservationPaymentCell: UITableViewCell {
   }
   
   private func beforeCostCellUI() {
-    [sectionTitleLabel, totalCostLabel, spView, mainCostTitleLabel, mainCostLabel,
-     insuranceCostTitleLabel, insuranceCostLabel, subInfoLabelLabel, couponLabel, couponCostLabel].forEach {
+    [sectionTitleLabel, totalBoforeCostLabel, spView, rentCostTitleLabel, rentCostValueLabel,
+     insuranceCostTitleLabel, insuranceCostValueLabel, subInfoLabelLabel, couponLabel, couponCostValueLabel].forEach {
       contentView.addSubview($0)
     }
     
@@ -309,7 +319,7 @@ class ReservationPaymentCell: UITableViewCell {
       $0.top.leading.equalTo(guide)
     }
     
-    totalCostLabel.snp.makeConstraints {
+    totalBoforeCostLabel.snp.makeConstraints {
       $0.centerY.equalTo(sectionTitleLabel.snp.centerY)
       $0.trailing.equalTo(guide)
     }
@@ -320,22 +330,22 @@ class ReservationPaymentCell: UITableViewCell {
       $0.height.equalTo(1)
     }
     
-    mainCostTitleLabel.snp.makeConstraints {
+    rentCostTitleLabel.snp.makeConstraints {
       $0.top.equalTo(spView.snp.bottom).offset(padding*2)
       $0.leading.equalTo(guide)
     }
     
-    mainCostLabel.snp.makeConstraints {
+    rentCostValueLabel.snp.makeConstraints {
       $0.trailing.equalTo(guide)
-      $0.centerY.equalTo(mainCostTitleLabel.snp.centerY)
+      $0.centerY.equalTo(rentCostTitleLabel.snp.centerY)
     }
     
     insuranceCostTitleLabel.snp.makeConstraints {
-      $0.top.equalTo(mainCostTitleLabel.snp.bottom).offset(padding*2)
+      $0.top.equalTo(rentCostTitleLabel.snp.bottom).offset(padding*2)
       $0.leading.equalTo(guide)
     }
     
-    insuranceCostLabel.snp.makeConstraints {
+    insuranceCostValueLabel.snp.makeConstraints {
       $0.centerY.equalTo(insuranceCostTitleLabel.snp.centerY)
       $0.trailing.equalTo(guide)
     }
@@ -351,11 +361,10 @@ class ReservationPaymentCell: UITableViewCell {
       $0.bottom.equalTo(guide)
     }
     
-    couponCostLabel.snp.makeConstraints {
+    couponCostValueLabel.snp.makeConstraints {
       $0.centerY.equalTo(couponLabel.snp.centerY)
       $0.trailing.equalTo(guide)
     }
-    configureContentViewTopBottomLayer()
   }
   
   private func beforeCostContent() {
@@ -363,8 +372,8 @@ class ReservationPaymentCell: UITableViewCell {
   }
   
   private func afterCostCellUI() {
-    [sectionTitleLabel, totalCostLabel, spView, mainCostTitleLabel, mainCostLabel,
-    subInfoLabelLabel, couponLabel, couponCostLabel].forEach {
+    [sectionTitleLabel, totalBoforeCostLabel, spView, rentCostTitleLabel, rentCostValueLabel,
+    subInfoLabelLabel, couponLabel, couponCostValueLabel].forEach {
       contentView.addSubview($0)
     }
     
@@ -372,7 +381,7 @@ class ReservationPaymentCell: UITableViewCell {
       $0.top.leading.equalTo(guide)
     }
     
-    totalCostLabel.snp.makeConstraints {
+    totalBoforeCostLabel.snp.makeConstraints {
       $0.centerY.equalTo(sectionTitleLabel.snp.centerY)
       $0.trailing.equalTo(guide)
     }
@@ -383,53 +392,31 @@ class ReservationPaymentCell: UITableViewCell {
       $0.height.equalTo(1)
     }
     
-    mainCostTitleLabel.snp.makeConstraints {
+    rentCostTitleLabel.snp.makeConstraints {
       $0.top.equalTo(spView.snp.bottom).offset(padding*2)
       $0.leading.equalTo(guide)
     }
     
-    mainCostLabel.snp.makeConstraints {
+    rentCostValueLabel.snp.makeConstraints {
       $0.trailing.equalTo(guide)
-      $0.centerY.equalTo(mainCostTitleLabel.snp.centerY)
+      $0.centerY.equalTo(rentCostTitleLabel.snp.centerY)
     }
     
     subInfoLabelLabel.snp.makeConstraints {
-      $0.top.equalTo(mainCostLabel.snp.bottom).offset(padding/2)
+      $0.top.equalTo(rentCostValueLabel.snp.bottom).offset(padding/2)
       $0.leading.equalTo(guide)
       $0.bottom.equalTo(guide)
     }
-    configureContentViewTopLayer()
   }
   
   private func afterCostCellContent() {
-    mainCostTitleLabel.text = "주행요금"
-    totalCostLabel.text = "35,220 원"
-    subInfoLabelLabel.text = "총 주행거리 300km"
-  }
-  // MARK: - For Cell Line
-  private func configureContentViewTopBottomLayer() {
-    configureContentViewTopLayer()
-    configureContentViewBottomLayer()
-  }
-  
-  private func configureContentViewTopLayer() {
-    let view = UIView()
-    view.backgroundColor = .systemGray4
-    contentView.addSubview(view)
-    view.snp.makeConstraints {
-      $0.top.leading.trailing.equalTo(contentView)
-      $0.height.equalTo(0.7)
-    }
-  }
-
-  private func configureContentViewBottomLayer() {
-    let view = UIView()
-    view.backgroundColor = .systemGray4
-    contentView.addSubview(view)
-    view.snp.makeConstraints {
-      $0.bottom.leading.trailing.equalTo(contentView)
-      $0.height.equalTo(0.7)
-    }
+    rentCostTitleLabel.text = "주행요금"
+    totalBoforeCostLabel.text = "0 원"
+    rentCostValueLabel.text = "0 원"
+    subInfoLabelLabel.text = "총 주행거리 0km"
+//    rentCostTitleLabel.text = "주행요금"
+//    totalBoforeCostLabel.text = "35,220 원"
+//    subInfoLabelLabel.text = "총 주행거리 300km"
   }
   
   // MARK: - Button Action

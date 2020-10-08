@@ -70,12 +70,18 @@ class SearchResultTableViewCell: UITableViewCell {
         })
     }
     
-    public func setupConfiguration(placeName name: String, placeAddr address: String, distanceFromMe distance: Int) {
-        
-        socarZoneNameLabel.text = name
+    public func setupConfiguration(placeName name: String, placeAddr address: String, distanceFromMe distance: String) {
+        let coloredKeyword = NSMutableAttributedString(string: name)
+        coloredKeyword.addAttribute(.foregroundColor, value: CommonUI.mainBlue, range: (name as NSString).range(of: searchKeyword))
+        socarZoneNameLabel.attributedText = coloredKeyword
         
         socarZoneAddrLabel.text = address
         
-        distanceFromMeLabel.text = "\(String(distance))m" 
+        let convertToInt = Double(distance) ?? 0
+        if convertToInt >= 1000 {
+            distanceFromMeLabel.text = String(format: "%.1fkm", convertToInt / 1000)  
+        } else {
+            distanceFromMeLabel.text = "\(distance)m"
+        }         
     }
 }

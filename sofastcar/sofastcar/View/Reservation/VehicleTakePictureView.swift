@@ -9,7 +9,13 @@
 import UIKit
 import SnapKit
 
+protocol VehicleTakePictureViewDelegate: class {
+    func buttonAction(_ sender: UIButton)
+}
+
 class VehicleTakePictureView: UIScrollView {
+  
+  weak var customDelegate: VehicleTakePictureViewDelegate?
   
   fileprivate let contentView: UIView = {
     let view = UIView()
@@ -33,7 +39,7 @@ class VehicleTakePictureView: UIScrollView {
     return view
   }()
   
-  fileprivate let vehicleTakePictureFrontView: VehicleTakePictureImageView = {
+  let vehicleTakePictureFrontView: VehicleTakePictureImageView = {
     let view = VehicleTakePictureImageView()
     view.vehicleImageStirng = "전면"
     view.vehiclePositionString = "전면"
@@ -42,7 +48,7 @@ class VehicleTakePictureView: UIScrollView {
     return view
   }()
   
-  fileprivate let vehicleTakePicturePassengerFrontSeatView: VehicleTakePictureImageView = {
+  let vehicleTakePicturePassengerFrontSeatView: VehicleTakePictureImageView = {
     let view = VehicleTakePictureImageView()
     view.vehicleImageStirng = "보조석앞면"
     view.vehiclePositionString = "보조석 앞면"
@@ -51,7 +57,7 @@ class VehicleTakePictureView: UIScrollView {
     return view
   }()
   
-  fileprivate let vehicleTakePicturePassengerBackSeatView: VehicleTakePictureImageView = {
+  let vehicleTakePicturePassengerBackSeatView: VehicleTakePictureImageView = {
     let view = VehicleTakePictureImageView()
     view.vehicleImageStirng = "보조석뒷면"
     view.vehiclePositionString = "보조석 뒷면"
@@ -60,7 +66,7 @@ class VehicleTakePictureView: UIScrollView {
     return view
   }()
   
-  fileprivate let vehicleTakePictureBackView: VehicleTakePictureImageView = {
+  let vehicleTakePictureBackView: VehicleTakePictureImageView = {
     let view = VehicleTakePictureImageView()
     view.vehicleImageStirng = "후면"
     view.vehiclePositionString = "후면"
@@ -69,7 +75,7 @@ class VehicleTakePictureView: UIScrollView {
     return view
   }()
   
-  fileprivate let vehicleTakePictureDriveBackSeatView: VehicleTakePictureImageView = {
+  let vehicleTakePictureDriveBackSeatView: VehicleTakePictureImageView = {
     let view = VehicleTakePictureImageView()
     view.vehicleImageStirng = "운전석뒷면"
     view.vehiclePositionString = "운전석 뒷면"
@@ -78,7 +84,7 @@ class VehicleTakePictureView: UIScrollView {
     return view
   }()
   
-  fileprivate let vehicleTakePictureDriveFrontSeatView: VehicleTakePictureImageView = {
+  let vehicleTakePictureDriveFrontSeatView: VehicleTakePictureImageView = {
     let view = VehicleTakePictureImageView()
     view.vehicleImageStirng = "운전석앞면"
     view.vehiclePositionString = "운전석 앞면"
@@ -196,7 +202,7 @@ class VehicleTakePictureView: UIScrollView {
   // MARK: - Action
   
   @objc func didTapButton(_ sender: UIButton) {
-    print("\(sender) button press")
+    customDelegate?.buttonAction(sender)
   }
 }
 

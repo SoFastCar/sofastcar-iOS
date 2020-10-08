@@ -61,7 +61,7 @@ class LoginVC: UIViewController {
       "email": userid,
       "password": userPassword
     ]
-
+    
     AF.request(url, method: .post, parameters: userLoginAuthPatameters)
       .responseJSON { response in
         if response.response?.statusCode == 200 {

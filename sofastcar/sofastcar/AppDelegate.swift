@@ -17,8 +17,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                    didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
     
     var rootView: UIViewController = UIViewController()
-//    UserDefaults.resetUserAuthTocken() // 로그아웃필요할때 사용
-//    UserDefaults.setReadyToDrive(isDriveReady: false) // 
+    //    UserDefaults.resetUserAuthTocken() // 로그아웃필요할때 사용
+    //    UserDefaults.setReadyToDrive(isDriveReady: false) //
     if UserDefaults.getUserAuthTocken() != nil {
       if UserDefaults.getReadyToDrive() == true {
         let reservationDashBoard = ReservationDashboardVC()
@@ -36,8 +36,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let navigationController = UINavigationController(rootViewController: rootView)
     let backButtonImage = UIImage(systemName: "arrow.left")
     navigationController.navigationBar.backIndicatorImage = backButtonImage
-    navigationController.navigationBar.prefersLargeTitles = true
-    navigationController.navigationItem.largeTitleDisplayMode = .always
     navigationController.navigationBar.backIndicatorTransitionMaskImage = backButtonImage
     navigationController.navigationBar.topItem?.title = ""
     
@@ -53,7 +51,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       let urlString = "https://sofastcar.moorekwon.xyz/api-jwt-auth/refresh/"
       let url = URL(string: urlString)!
       guard let currnetUserAuthToken = UserDefaults.getUserAuthTocken() else { return }
-      
       let sendData = [ "token": "\(currnetUserAuthToken)"]
       guard let jsonSendData = try? JSONSerialization.data(withJSONObject: sendData) else { return }
       
@@ -69,19 +66,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
           return
         }
         guard let header = response as? HTTPURLResponse,
-          (200..<300) ~= header.statusCode else { print("Create User Auth token Error"); return }
-        print("Response Code: \(header.statusCode)")
-        
+              (200..<300) ~= header.statusCode else { print("Create User Auth token Error"); return }
         guard let responseData = data else { return }
-        
         if let jsonData = try? JSONSerialization.jsonObject(with: responseData, options: []) as? [String: String] {
           if let newUserAuthToken = jsonData["token"] {
             UserDefaults.saveUserAuthTocken(authToken: newUserAuthToken)
-            print(newUserAuthToken)
+            print("New User Token: \(newUserAuthToken)")
           }
         }
       }
       task.resume()
     }
+  }
+  
+  func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
+    return  [.portrait]
   }
 }

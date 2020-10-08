@@ -12,7 +12,7 @@ class TouVC: UIViewController {
   // MARK: - Properties
   let touView = TouView()
   
-  let user = SignUpUserData()
+  var user: User?
 
   // MARK: - Life cycle
   override func viewDidLoad() {
