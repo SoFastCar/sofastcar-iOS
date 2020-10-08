@@ -14,6 +14,7 @@
   - Swift 5.0
 - **Framework**
   - UIKit
+  - CoreBluetooth
   - CocoaPods
   - SPM(SwiftPackageManager)
 - **IDE**
@@ -26,6 +27,7 @@
 |:---:|:---:|
 | [Swift Lint](https://github.com/realm/SwiftLint) | [Snapkit](https://github.com/SnapKit/SnapKit#contents) |
 | [Naver Map SDK](https://www.ncloud.com/product/applicationService/maps) | [Kingfisher](https://github.com/onevcat/Kingfisher) |
+|  | [Alamofire](https://github.com/Alamofire/Alamofire) |
 
 ---
 
@@ -38,11 +40,10 @@
 
 - **Development motivation**
 ```
-  SOCAR를 구현하며 배웠던 내용을 정리하고 현재 상용화된 서비스를 
-  따라 개발하며 배웠던 내용을 응용하며 개발에 자신감을 증가시키고
-  개발자간의 협업을 위하여 커뮤니케이션 툴을 적극적으로 활용하여 
-  커뮤니케이션 능력을 향상시키고 개발 능력을 증진시키기 위하여 
-  이번 프로젝트를 시작하게 되었습니다.
+  SOCAR를 구현하며 배웠던 내용을 정리하고 
+  현재 상용화된 서비스를 따라 개발하며 배웠던 내용을 응용하며 개발에 자신감을 증가시키고 
+  개발포지션간의(프론트, 백엔드) 협업을 위하여 커뮤니케이션 툴을 적극적으로 활용하여 
+  커뮤니케이션 능력을 향상시키고 개발 능력을 증진시키기 위하여 이번 프로젝트를 시작하게 되었습니다.
 ```
 - **MVP(Minimum Viable Product)**
 
@@ -61,11 +62,11 @@
 </p>
 
 
-### Sprint(1차 구현 단계)
+### 1st Sprint(1차 구현 단계)
 
 2020.09.03 ~ 2020.09.18일까지 진행한 1차 스프린트 입니다.
 
-- **MVPDevelopment**
+- **MVP Development**
 
 <p align="center" style="display: flex;justify-content: space-between;">
   <img width="180" height="360" src="./images/LOGIN.gif" alt="LOGIN" style="zoom: 100%;" />
@@ -92,9 +93,47 @@
   <img width="430" src="https://user-images.githubusercontent.com/45344633/93550416-50943900-f9a6-11ea-8fbd-81af7006d83d.png">
   </p>
   
+### 2nd Sprint(2차 구현 단계)
 
+2020.09.18 ~ 2020.10.08일까지 진행한 2차 스프린트 입니다.
 
+- **MVP Plan**
 
+<p align="center">
+  <img width="330" src="./images/sidebar_mvp.png">
+  <img width="230" src="./images/arduino.JPG">
+</p>
+
+- **MVP Development**
+
+<p align="center" style="display: flex;justify-content: space-between;">
+  <img width="180" height="320" src="./images/LOGIN_2nd.gif" alt="LOGIN_2nd" style="zoom: 100%;" />
+  <img width="180" height="320" src="./images/SIDEBAR.gif" alt="SIDEBAR" style="zoom: 100%;" />
+  <img width="180" height="360" src="./images/MAIN_2nd.gif" alt="MAIN_2nd" style="zoom: 100%;" />
+  <img width="180" height="360" src="./images/RETURN.gif" alt="RETURN" style="zoom: 100%;" />
+</P>
+
+*✔️왼쪽부터 [로그인/회원가입](https://youtu.be/W0kjmeD3b3g), [사이드바](https://youtu.be/IRi1NMKAUaA), [메인/예약](https://youtu.be/RbDSDtoGo4E), [대여/반납](https://www.youtube.com/watch?v=wYxdN_Lp_Cs) 화면입니다*
+
+### 회고
+
+- **김광수**
+```
+
+```
+
+- **조요한**
+```
+이번 클론 프로젝트를 진행하면서 
+개발자간 협업하여 프로젝트를 진행할때의 유의할점이나 협업시 필요한 커뮤니케이션 툴 및 커뮤니케이션 능력을 키울 수 있게 되었고, 
+피처 개발을 통하여 그간 배운 내용을 정리하며 UI를 분석하고 개발하는 능력을 키울 수 있게 되었으며, 
+배우지 못한 기술을 사용해봄으로서 새로운 기술 습득 능력을 향상시킬 수 있는 좋은 기회가 되었습니다.
+```
+
+- **천우빈**
+```
+
+```
 
 ### 추가 작업 필요
 ---
