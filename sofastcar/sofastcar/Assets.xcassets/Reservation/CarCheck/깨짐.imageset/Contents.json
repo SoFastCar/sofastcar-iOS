@@ -1,12 +1,11 @@
 {
   "images" : [
     {
-      "filename" : "깨짐.png",
+      "filename" : "깨짐-1.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "깨짐-1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },

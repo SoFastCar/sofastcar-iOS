@@ -31,34 +31,3 @@ struct User: Decodable {
     case totalDrivinDistance = "total_driving_distance"
   }
 }
-
-class SignUpUserData: CustomStringConvertible {
-
-  // 사용자 인적 정보
-  var username: String!
-  var userBirthDay: String!
-//  var userGender: Int = 0
-//  var userContury: String = ""
-//  var mobileCompany: String = "" // skt, kt, LGU+
-  var userPhoneNumber: String!
-  var drivingAmount: Int!
-
-  // 마케팅 정보 동의 여부
-//  var marketingAgreeTime: Date = Date()
-//  var smsMarketing: Bool = false
-//  var pushMarketing: Bool = false
-//  var emailMarketing: Bool = false
-
-  var description: String { // 일반 print 출력 문자열
-    "\(username), \(userBirthDay), \(userPhoneNumber)"
-  }
-  //\(marketingAgreeTime), \(smsMarketing), \(pushMarketing), \(emailMarketing)
-
-  init(name: String, birthDay: String, phoneNumber: String, drivingAmount: Int) {
-    self.username = name
-    self.userBirthDay = birthDay
-    self.userPhoneNumber = phoneNumber
-    self.drivingAmount = drivingAmount
-  }
-}
-

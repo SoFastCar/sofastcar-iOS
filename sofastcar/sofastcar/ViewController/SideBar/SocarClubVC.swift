@@ -12,14 +12,14 @@ import AVFoundation
 
 class SocarClubVC: UIViewController {
   // MARK: - [test]Passed Data
-  var user: SignUpUserData = .init(name: "김광수", birthDay: "900101", phoneNumber: "01000000000", drivingAmount: 100000)
+  var user: User?
   var couponArray: [Coupon] = [
     Coupon(uid: "12", name: "월간 저녁 쿠폰 - 최대 16시간", desctiption: "월간 쿠폰, 매달 다운로드 가능", discountPrice: 9000),
     Coupon(uid: "13", name: "월간 저녁 쿠폰 - 최대 8시간", desctiption: "월간 쿠폰, 매달 다운로드 가능", discountPrice: 10000)
   ]
   
   // MARK: - Properties
-  lazy var myScrollView = SocarClubScrollView(frame: .zero, couponArray: couponArray, user: user)
+  lazy var myScrollView = SocarClubScrollView(frame: .zero, couponArray: couponArray)
   
   // MARK: - Life Cycle
   override func viewDidLoad() {
