@@ -1,11 +1,12 @@
 {
   "images" : [
     {
-      "filename" : "보조석앞면.png",
+      "filename" : "보조석앞면.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "보조석앞면-1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },

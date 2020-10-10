@@ -1,11 +1,12 @@
 {
   "images" : [
     {
-      "filename" : "운전석뒷면.png",
+      "filename" : "운전석뒷면.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "운전석뒷면-1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
