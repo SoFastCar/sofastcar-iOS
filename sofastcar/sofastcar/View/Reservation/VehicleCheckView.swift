@@ -201,7 +201,7 @@ class VehicleCheckView: UIScrollView {
       x: 0,
       y: 0,
       width: UIScreen.main.bounds.width,
-      height: UIScreen.main.bounds.height + heightPadding - 144
+      height: UIScreen.main.bounds.height + heightPadding + 100
     )
   }
   

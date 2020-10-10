@@ -187,7 +187,8 @@ class PaymentConfirmTableVC: UITableViewController {
           }
         } else {
           print("====Reservation Update fail====")
-          print(response.response)
+          print(response.response?.statusCode)
+          print(response.error)
         }
       }
     

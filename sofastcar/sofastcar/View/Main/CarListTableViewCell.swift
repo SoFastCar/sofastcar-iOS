@@ -196,6 +196,5 @@ class CarListTableViewCell: UITableViewCell {
         } else {
             middleDateLabel.text = Time.getTimeString(type: .castMMd, date: middleDate)
         }
-        
     }
 }
