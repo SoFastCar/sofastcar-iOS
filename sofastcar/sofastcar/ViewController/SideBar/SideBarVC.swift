@@ -34,7 +34,7 @@ class SideBarVC: UIViewController {
       tableHeaderView.userNameLable.text = user.name
       tableHeaderView.userPhoneNumberLabel.text = user.phoneNumber
       tableHeaderView.userIdLable.text = user.email
-      tableHeaderView.creditLabel.text = "\(NumberFormatter.getPriceWithDot(price: user.creditPoint)) 원"
+      tableHeaderView.creditLabel.text = "\(user.creditPoint.withDots()) 원"
     }
   }
   
