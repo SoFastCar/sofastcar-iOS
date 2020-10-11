@@ -156,7 +156,6 @@ class UserStatusAfterReturnVC: UIViewController {
 }
 
 // MARK: - UserStatusAfterReturnViewDelegate
-
 extension UserStatusAfterReturnVC: UserStatusAfterReturnViewDelegate {
   func didTapButton(_ sender: UIButton) {
     print("didTapButton")

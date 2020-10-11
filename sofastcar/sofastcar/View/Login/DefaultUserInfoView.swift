@@ -10,12 +10,6 @@ import UIKit
 
 class DefaultUserInfoView: UIScrollView {
   // MARK: - Properties
-  var user: SignUpUserData? {
-    didSet {
-      guard let username = user?.username else { return }
-      infomationLabel.text = "\(username) 님,\n쏘카 이용을 위한 기본 정보를 입력해주세요."
-    }
-  }
   let smallPadding: CGFloat = 10
   let padding: CGFloat = 15
   let sectionLabelHeight: CGFloat = 25
@@ -160,6 +154,8 @@ class DefaultUserInfoView: UIScrollView {
     configureWarningLabelSetting()
     
     configureWarningImageSetting()
+    
+    infomationLabel.text = "김광수님,\n쏘카 이용을 위한 기본 정보를 입력해주세요."
   }
   
   required init?(coder: NSCoder) {
