@@ -186,6 +186,7 @@ class ReservationConfirmTableVC: UITableViewController {
   
   // MARK: - Button Action
   @objc func tabReservationConfirmButton() {
+    print("aaaaa")
     guard let insuranceData = insuranceData else { return }
     guard let standardPrice = socarData?.carPrices.standardPrice else { return }
     guard let socarData = socarData else { return }

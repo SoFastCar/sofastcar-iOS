@@ -163,7 +163,7 @@ class SocarClubScrollView: UIScrollView {
   }()
   
   // MARK: - Life Cycle
-  init(frame: CGRect, couponArray: [Coupon], user: SignUpUserData) {
+  init(frame: CGRect, couponArray: [Coupon]) {
     super.init(frame: frame)
     configureScrollView(couponArray: couponArray)
     
