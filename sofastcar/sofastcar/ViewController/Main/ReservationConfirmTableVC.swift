@@ -106,6 +106,7 @@ class ReservationConfirmTableVC: UITableViewController {
     navigationController?.navigationBar.backgroundColor = .white
     navigationController?.navigationBar.barTintColor = UIColor.white
     navigationController?.navigationBar.tintColor = UIColor.black
+    navigationController?.navigationBar.topItem?.title = ""
   }
   
   private func calculateTableViewHeaderHeight() {

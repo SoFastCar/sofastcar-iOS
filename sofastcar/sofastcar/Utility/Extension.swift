@@ -232,4 +232,3 @@ extension Int {
     return "\(priceWithDot)"
   }
 }
-
