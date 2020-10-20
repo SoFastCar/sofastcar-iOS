@@ -48,3 +48,12 @@ struct SocarZoneData: Decodable {
         case type
     }
 }
+
+extension SocarZoneData {
+  
+  static func selectZoneByID(_ socarZoneID: Int) -> Resource<SocarZoneData> {
+    let socarZoneUrl = URL(string: "https://sofastcar.moorekwon.xyz/carzones/\(socarZoneID)")!
+    return Resource(url: socarZoneUrl)
+  }
+  
+}

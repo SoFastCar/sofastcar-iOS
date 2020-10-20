@@ -13,8 +13,6 @@ import RxCocoa
 
 class SideBarVC: UIViewController {
   // MARK: - Properties
-  var user: User?
-  
   private var sideBarVM: SideBarViewModel!
   
   let tableView = UITableView(frame: .zero, style: .plain)
@@ -161,8 +159,12 @@ extension SideBarVC: UITableViewDelegate, UITableViewDataSource {
     switch cellType {
     case .usingHistocyCell:
       
-      let rentHistoryVC = RentHistoryVC()
-      dismissWithAnimated(rentHistoryVC, completion: nil)
+      guard let navi = self.presentingViewController as? UINavigationController else { return }
+      dismissWithAnimated(nil) {
+        let rentHistoryVC = RentHistoryVC()
+        navi.navigationBar.prefersLargeTitles = true
+        navi.pushViewController(rentHistoryVC, animated: true)
+      }
       
     case .evnetWithBenigitCell:
       
@@ -206,7 +208,6 @@ extension SideBarVC {
         if let result = result {
           
           self?.sideBarVM = SideBarViewModel(result.results[0])
-          
           DispatchQueue.main.async {
             self?.configureTableHeaderView()
             self?.tableView.reloadData()
@@ -243,7 +244,7 @@ extension SideBarVC {
     case tableHeaderView.settingButton:
       guard let navi = self.presentingViewController as? UINavigationController else { return }
       let userDetailVC = UserDetailVC()
-      userDetailVC.user = self.user
+      userDetailVC.user = sideBarVM.user
       userDetailVC.configureTableHaderView()
       dismissWithAnimated(nil) {
         navi.pushViewController(userDetailVC, animated: true)

@@ -148,6 +148,10 @@
 		C7EA091A24F001B8001A7ED4 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = C7EA091924F001B8001A7ED4 /* .swiftlint.yml */; };
 		C7F11AB5253E8CC1000C69FC /* URLRequest+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F11AB4253E8CC1000C69FC /* URLRequest+Extension.swift */; };
 		C7F11ABE253EF02C000C69FC /* Int+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F11ABD253EF02C000C69FC /* Int+Extension.swift */; };
+		C7F11AC9253F1005000C69FC /* ReservationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F11AC8253F1005000C69FC /* ReservationViewModel.swift */; };
+		C7F11ACF253F2410000C69FC /* SocarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F11ACE253F2410000C69FC /* SocarViewModel.swift */; };
+		C7F11AD5253F2460000C69FC /* Socar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F11AD4253F2460000C69FC /* Socar.swift */; };
+		C7F11AD9253F26BC000C69FC /* SocarZoneViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F11AD8253F26BC000C69FC /* SocarZoneViewModel.swift */; };
 		C7F2E6352505FE8E0004EBF9 /* UserDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F2E6342505FE8E0004EBF9 /* UserDefault.swift */; };
 		C7F2E63A250647ED0004EBF9 /* Insurance.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F2E639250647ED0004EBF9 /* Insurance.swift */; };
 		C7F2E63C2507133B0004EBF9 /* Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F2E63B2507133B0004EBF9 /* Protocol.swift */; };
@@ -314,6 +318,10 @@
 		C7EA091924F001B8001A7ED4 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		C7F11AB4253E8CC1000C69FC /* URLRequest+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLRequest+Extension.swift"; sourceTree = "<group>"; };
 		C7F11ABD253EF02C000C69FC /* Int+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extension.swift"; sourceTree = "<group>"; };
+		C7F11AC8253F1005000C69FC /* ReservationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationViewModel.swift; sourceTree = "<group>"; };
+		C7F11ACE253F2410000C69FC /* SocarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocarViewModel.swift; sourceTree = "<group>"; };
+		C7F11AD4253F2460000C69FC /* Socar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Socar.swift; sourceTree = "<group>"; };
+		C7F11AD8253F26BC000C69FC /* SocarZoneViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocarZoneViewModel.swift; sourceTree = "<group>"; };
 		C7F2E6342505FE8E0004EBF9 /* UserDefault.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefault.swift; sourceTree = "<group>"; };
 		C7F2E639250647ED0004EBF9 /* Insurance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Insurance.swift; sourceTree = "<group>"; };
 		C7F2E63B2507133B0004EBF9 /* Protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocol.swift; sourceTree = "<group>"; };
@@ -451,7 +459,6 @@
 		C75451F924F4E5CF00E13280 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				C7724A82251C3E08008197A5 /* SideBar */,
 				C73D34762515C1250075471F /* Common */,
 				C72A914224F67D87005D464F /* Login */,
 				C79A0B4E250122BD0061F078 /* Main */,
@@ -466,7 +473,6 @@
 				7E0F2FD2252D774200044A35 /* Reservation */,
 				C79A0B59250465460061F078 /* Login */,
 				C7F2E638250647C40004EBF9 /* Main */,
-				C7B29A912521BC0D00AB081B /* SideBar */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -474,7 +480,6 @@
 		C75451FB24F4E5DB00E13280 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
-				C7724A81251C3DF8008197A5 /* SideBar */,
 				C790FB1A2513439B00AF98E2 /* Common */,
 				C7BD348724F53BDE00089F0D /* Login */,
 				C79A0B4D250122B40061F078 /* Main */,
@@ -513,35 +518,6 @@
 				C769C81A24FCCEA900DC8226 /* Info.plist */,
 			);
 			path = sofastcarUITests;
-			sourceTree = "<group>";
-		};
-		C7724A81251C3DF8008197A5 /* SideBar */ = {
-			isa = PBXGroup;
-			children = (
-				C73D34862515FE4C0075471F /* RentHistoryVC.swift */,
-				C7724A83251C4132008197A5 /* UserDetailVC.swift */,
-				C7B29A66251DBB0800AB081B /* SocarClubVC.swift */,
-				C7B29AA02522DED400AB081B /* EventAndBenefitsVC.swift */,
-				C7B29ABF252365D900AB081B /* FriendsInciteVC.swift */,
-				C7B29ACB2528AC3D00AB081B /* UserCouponVC.swift */,
-				C7B29ADB2529928A00AB081B /* CouponDetailVC.swift */,
-			);
-			path = SideBar;
-			sourceTree = "<group>";
-		};
-		C7724A82251C3E08008197A5 /* SideBar */ = {
-			isa = PBXGroup;
-			children = (
-				C73D34902516036C0075471F /* RentHistoryCell.swift */,
-				C77AF468251C558000DEDB76 /* UserDetailCell.swift */,
-				C7B29A6A251DBBA100AB081B /* SocarClubScrollView.swift */,
-				C7B29AAC2522E56D00AB081B /* EventAndBenefitsCell.swift */,
-				C7B29AB9252348D700AB081B /* EventAndBenefitFooterView.swift */,
-				C7B29AC32523661900AB081B /* FriendsInviteView.swift */,
-				C7B29ACF25291E5400AB081B /* UserCouponView.swift */,
-				C7B29AD7252930CD00AB081B /* UserCouponBookCell.swift */,
-			);
-			path = SideBar;
 			sourceTree = "<group>";
 		};
 		C7860581252D8745008975EA /* Label */ = {
@@ -606,16 +582,6 @@
 			path = SideBar;
 			sourceTree = "<group>";
 		};
-		C7B29A912521BC0D00AB081B /* SideBar */ = {
-			isa = PBXGroup;
-			children = (
-				C7B29A8D252181AB00AB081B /* Coupon.swift */,
-				C7B29AB02522E7C800AB081B /* EventBenifits.swift */,
-				C7B29AD325292D1400AB081B /* CouponBook.swift */,
-			);
-			path = SideBar;
-			sourceTree = "<group>";
-		};
 		C7BD348724F53BDE00089F0D /* Login */ = {
 			isa = PBXGroup;
 			children = (
@@ -655,6 +621,13 @@
 				C7F5B547251197F300AE0054 /* SideBarHeaderView.swift */,
 				C7F5B5492511A61F00AE0054 /* SideBarCustomCell.swift */,
 				C7CEF73B2511B07D00C063B0 /* SideBarBottonView.swift */,
+				C77AF468251C558000DEDB76 /* UserDetailCell.swift */,
+				C7B29A6A251DBBA100AB081B /* SocarClubScrollView.swift */,
+				C7B29AAC2522E56D00AB081B /* EventAndBenefitsCell.swift */,
+				C7B29AB9252348D700AB081B /* EventAndBenefitFooterView.swift */,
+				C7B29AC32523661900AB081B /* FriendsInviteView.swift */,
+				C7B29ACF25291E5400AB081B /* UserCouponView.swift */,
+				C7B29AD7252930CD00AB081B /* UserCouponBookCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -663,6 +636,9 @@
 			isa = PBXGroup;
 			children = (
 				C728C84F24F7E35100063005 /* User.swift */,
+				C7B29A8D252181AB00AB081B /* Coupon.swift */,
+				C7B29AB02522E7C800AB081B /* EventBenifits.swift */,
+				C7B29AD325292D1400AB081B /* CouponBook.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -671,6 +647,12 @@
 			isa = PBXGroup;
 			children = (
 				C7F5B5452510D72600AE0054 /* SideBarVC.swift */,
+				C7724A83251C4132008197A5 /* UserDetailVC.swift */,
+				C7B29A66251DBB0800AB081B /* SocarClubVC.swift */,
+				C7B29AA02522DED400AB081B /* EventAndBenefitsVC.swift */,
+				C7B29ABF252365D900AB081B /* FriendsInciteVC.swift */,
+				C7B29ACB2528AC3D00AB081B /* UserCouponVC.swift */,
+				C7B29ADB2529928A00AB081B /* CouponDetailVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -680,6 +662,7 @@
 			children = (
 				C7CEF74D25124BA100C063B0 /* CustomImageView.swift */,
 				C7B29A702520799F00AB081B /* DotsLineView.swift */,
+				C7860581252D8745008975EA /* Label */,
 				C7B29A782520C78000AB081B /* SideBar */,
 				C7D66D1A24FB86A000679B99 /* Login */,
 				C759201725078DFA00778849 /* Main */,
@@ -725,10 +708,10 @@
 			children = (
 				C7EA08F524EFF29C001A7ED4 /* AppDelegate.swift */,
 				C7C8B120253E87280018E25C /* SideBarMVVM */,
+				C7F11AC3253F0ED4000C69FC /* RentHistory */,
 				C7F463DF2539882C009C55A9 /* Extension */,
 				C72A913624F5E13F005D464F /* Utility */,
 				C7D66D1924FB869300679B99 /* Custom */,
-				C7860581252D8745008975EA /* Label */,
 				C75451FB24F4E5DB00E13280 /* ViewController */,
 				C75451FA24F4E5D700E13280 /* Model */,
 				C75451F924F4E5CF00E13280 /* View */,
@@ -747,10 +730,55 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
-		C7F2E638250647C40004EBF9 /* Main */ = {
+		C7F11AC3253F0ED4000C69FC /* RentHistory */ = {
+			isa = PBXGroup;
+			children = (
+				C7F11AC6253F0EF6000C69FC /* ViewConroller */,
+				C7F11AC5253F0EF3000C69FC /* ViewModel */,
+				C7F11AC7253F0EFA000C69FC /* Model */,
+				C7F11AC4253F0EF0000C69FC /* View */,
+			);
+			path = RentHistory;
+			sourceTree = "<group>";
+		};
+		C7F11AC4253F0EF0000C69FC /* View */ = {
+			isa = PBXGroup;
+			children = (
+				C73D34902516036C0075471F /* RentHistoryCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		C7F11AC5253F0EF3000C69FC /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				C7F11AC8253F1005000C69FC /* ReservationViewModel.swift */,
+				C7F11ACE253F2410000C69FC /* SocarViewModel.swift */,
+				C7F11AD8253F26BC000C69FC /* SocarZoneViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		C7F11AC6253F0EF6000C69FC /* ViewConroller */ = {
+			isa = PBXGroup;
+			children = (
+				C73D34862515FE4C0075471F /* RentHistoryVC.swift */,
+			);
+			path = ViewConroller;
+			sourceTree = "<group>";
+		};
+		C7F11AC7253F0EFA000C69FC /* Model */ = {
 			isa = PBXGroup;
 			children = (
 				C73D348A251601910075471F /* Reservation.swift */,
+				C7F11AD4253F2460000C69FC /* Socar.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		C7F2E638250647C40004EBF9 /* Main */ = {
+			isa = PBXGroup;
+			children = (
 				C7B93933252E1D6D00572F18 /* PaymentBefore.swift */,
 				BC4F3A12250E01EB00B7E1E7 /* GlobalVariables.swift */,
 				BC4F3A13250E01EB00B7E1E7 /* SocarZoneData.swift */,
@@ -1035,6 +1063,7 @@
 				C73D34912516036C0075471F /* RentHistoryCell.swift in Sources */,
 				7EF41FC62501F6D90030752A /* CarKeyView.swift in Sources */,
 				C73D349C251879BB0075471F /* DetailSocarZoneInfoCell.swift in Sources */,
+				C7F11AC9253F1005000C69FC /* ReservationViewModel.swift in Sources */,
 				C7BD348C24F54A5700089F0D /* InitVC.swift in Sources */,
 				C7860577252D86C6008975EA /* VehicleCustomCameraView.swift in Sources */,
 				C769C82E24FDB69B00DC8226 /* DriverLicenseEnrollinitView.swift in Sources */,
@@ -1046,6 +1075,7 @@
 				C7CA53F4250A01F8008DA68C /* ReservationPaymentCell.swift in Sources */,
 				BC4F3A1E250E01FE00B7E1E7 /* RentReturnTimeButton.swift in Sources */,
 				C72A913F24F60CD9005D464F /* TouVC.swift in Sources */,
+				C7F11ACF253F2410000C69FC /* SocarViewModel.swift in Sources */,
 				C769C82724FD09CE00DC8226 /* CardEnrollVC.swift in Sources */,
 				C769C82524FCDEFC00DC8226 /* CommonUI.swift in Sources */,
 				C7A9C91E2507B314006CA543 /* TopView.swift in Sources */,
@@ -1082,6 +1112,7 @@
 				C7860583252D875E008975EA /* CustomCountingLabel.swift in Sources */,
 				C7B29ABA252348D700AB081B /* EventAndBenefitFooterView.swift in Sources */,
 				7E8473E42509AB420007962F /* LeftAlignedTagCollectionViewFlowLayout.swift in Sources */,
+				C7F11AD5253F2460000C69FC /* Socar.swift in Sources */,
 				C7B29AD425292D1400AB081B /* CouponBook.swift in Sources */,
 				BC4F3A06250E01B400B7E1E7 /* CarListView.swift in Sources */,
 				C7B29AAD2522E56D00AB081B /* EventAndBenefitsCell.swift in Sources */,
@@ -1127,6 +1158,7 @@
 				C7B29AC0252365D900AB081B /* FriendsInciteVC.swift in Sources */,
 				BC4F3A08250E01B400B7E1E7 /* InsuranceMenuView.swift in Sources */,
 				C7592016250773A700778849 /* ReservationConfirmCVCell.swift in Sources */,
+				C7F11AD9253F26BC000C69FC /* SocarZoneViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
