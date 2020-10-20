@@ -11,16 +11,16 @@ import RxCocoa
 import RxSwift
 
 struct SocarListViewModel {
-  let socars: [SocarViewModel]
+  let socarList: [SocarViewModel]
   
   init(_ socarList: [Socar]) {
-    self.socars = socarList.compactMap(SocarViewModel.init)
+    self.socarList = socarList.compactMap(SocarViewModel.init)
   }
 }
 
 extension SocarListViewModel {
   func socarAt(_ index: Int) -> SocarViewModel {
-    return self.socars[index]
+    return self.socarList[index]
   }
 }
 

@@ -708,7 +708,7 @@
 			children = (
 				C7EA08F524EFF29C001A7ED4 /* AppDelegate.swift */,
 				C7C8B120253E87280018E25C /* SideBarMVVM */,
-				C7F11AC3253F0ED4000C69FC /* RentHistory */,
+				C7F11AC3253F0ED4000C69FC /* ReservationHistory */,
 				C7F463DF2539882C009C55A9 /* Extension */,
 				C72A913624F5E13F005D464F /* Utility */,
 				C7D66D1924FB869300679B99 /* Custom */,
@@ -730,7 +730,7 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
-		C7F11AC3253F0ED4000C69FC /* RentHistory */ = {
+		C7F11AC3253F0ED4000C69FC /* ReservationHistory */ = {
 			isa = PBXGroup;
 			children = (
 				C7F11AC6253F0EF6000C69FC /* ViewConroller */,
@@ -738,7 +738,7 @@
 				C7F11AC7253F0EFA000C69FC /* Model */,
 				C7F11AC4253F0EF0000C69FC /* View */,
 			);
-			path = RentHistory;
+			path = ReservationHistory;
 			sourceTree = "<group>";
 		};
 		C7F11AC4253F0EF0000C69FC /* View */ = {

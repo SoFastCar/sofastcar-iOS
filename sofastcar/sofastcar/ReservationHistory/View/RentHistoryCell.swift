@@ -11,9 +11,6 @@ import UIKit
 class RentHistoryCell: UITableViewCell {
   // MARK: - Properties
   static let identifier = "RentHistoryCell"
-//  var reservaion: Reservation?
-//  var socarZone: SocarZoneData?
-  lazy var guide = contentView.layoutMarginsGuide
   
   let reservationStatueLabel: UIButton = {
     let button = UIButton()
@@ -122,19 +119,19 @@ class RentHistoryCell: UITableViewCell {
      }
     
     reservationStatueLabel.snp.makeConstraints {
-      $0.top.left.equalTo(guide)
+      $0.top.left.equalTo(contentView.layoutMarginsGuide)
       $0.width.equalTo(60)
       $0.height.equalTo(30)
     }
     
     drivingTotalDistanceLabel.snp.makeConstraints {
       $0.centerY.equalTo(reservationStatueLabel.snp.centerY)
-      $0.trailing.equalTo(guide)
+      $0.trailing.equalTo(contentView.layoutMarginsGuide)
     }
     
     carImage.snp.makeConstraints {
       $0.top.equalTo(reservationStatueLabel.snp.bottom).offset(20)
-      $0.leading.equalTo(guide).offset(20)
+      $0.leading.equalTo(contentView.layoutMarginsGuide).offset(20)
       $0.width.equalTo(90)
       $0.height.equalTo(60)
     }
@@ -148,7 +145,7 @@ class RentHistoryCell: UITableViewCell {
     carName.snp.makeConstraints {
       $0.top.equalTo(carNumber.snp.bottom)
       $0.leading.trailing.equalTo(carImage)
-      $0.bottom.equalTo(guide)
+      $0.bottom.equalTo(contentView.layoutMarginsGuide)
       $0.height.equalTo(30)
     }
     
@@ -178,17 +175,5 @@ class RentHistoryCell: UITableViewCell {
       $0.top.equalTo(returnPlaceTitleLabel.snp.bottom).offset(20)
       $0.leading.equalTo(rentPlaceMarkImageView).offset(3)
     } 
-  }
-  
-  func configureContent(_ reservation: Reservation, _ socarZone: SocarZoneData, _ socarDate: Socar) {
-    rentPlaceTitleLabel.text = socarZone.name
-    returnPlaceTitleLabel.text = socarZone.name
-    carImage.loadImage(with: socarDate.image)
-    carName.text = socarDate.name
-    carNumber.text = socarDate.number
-    
-    let startTime = Time.toUTCString(changeForString: reservation.startTime)
-    let endTime = Time.toUTCString(changeForString: reservation.endTime)
-    rentDurtaionLabel.text = "\(Time.getTimeString(type: .castMddEHHmm, date: startTime)) - \(Time.getTimeString(type: .castMddEHHmm, date: endTime))"
   }
 }
