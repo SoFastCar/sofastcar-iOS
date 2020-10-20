@@ -44,14 +44,14 @@ class SideBarVC: UIViewController {
   
   let sideBarBottonView = SideBarBottonView()
   
+  var disposeBag = DisposeBag()
+  
   // MARK: - Life Cycle
   override func viewDidLoad() {
     super.viewDidLoad()
     view.backgroundColor = UIColor.black.withAlphaComponent(0)
-//    getUserDate { user in
-//      self.user = user
-//    }
-    _ = getUserDataByRx()
+    
+    getUserDataByRx()
       .debug()
       .observeOn(MainScheduler.instance)
       .subscribe(onNext: { user in
@@ -61,6 +61,8 @@ class SideBarVC: UIViewController {
         self.tableHeaderView.userIdLable.text = user.email
         self.tableHeaderView.creditLabel.text = "\(user.creditPoint.withDots()) 원"
       })
+      .disposed(by: disposeBag)
+    
     configureTableView()
     configureTableViewPanGuesture()
     configureBottomView()
