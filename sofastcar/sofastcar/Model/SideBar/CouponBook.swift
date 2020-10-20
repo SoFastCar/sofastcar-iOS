@@ -25,3 +25,15 @@ class CouponBook {
     self.restrictions = restrictions
   }
 }
+
+extension CouponBook {
+  
+  static func testDataLoad() -> [CouponBook] {
+    return [
+      CouponBook(uid: "1", name: "", desctiption: "", usage: "", discountPrice: 10, restrictions: ""),
+      CouponBook(uid: "1", name: "전기차 30% 할인", desctiption: "서울시 나눔카 전기차 전용", usage: "주중/주말 사용가능", discountPrice: 30, restrictions: "서울특별시 내 전기차 전용"),
+      CouponBook(uid: "2", name: "전기차 1일 30% 할인", desctiption: "서울시 나눔카 전가차 전용", usage: "부름 요금 무료", discountPrice: 30, restrictions: "서울특별시 내 전기차 전용"),
+      CouponBook(uid: "3", name: "경기 인천 전기차 30% 할인", desctiption: "경기/인천 전기차 전용", usage: "주중/주말 사용가능", discountPrice: 30, restrictions: "경기도,인천광역시 내 전기차 전용")
+    ]
+  }
+}
