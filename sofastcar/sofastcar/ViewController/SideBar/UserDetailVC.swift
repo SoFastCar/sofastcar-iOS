@@ -52,9 +52,17 @@ class UserDetailVC: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     view.backgroundColor = .none
-    configureNavigationContoller()
+//    configureNavigationContoller()
     configureLayout()
     configureTableView()
+  }
+  
+  override func viewWillAppear(_ animated: Bool) {
+    configureNavigationContoller()
+  }
+  
+  override func viewWillDisappear(_ animated: Bool) {
+    navigationController?.navigationBar.isHidden = true
   }
   
   private func configureNavigationContoller() {
@@ -63,7 +71,7 @@ class UserDetailVC: UIViewController {
     navi.isNavigationBarHidden = false
     navi.navigationBar.isHidden = false
     navi.navigationBar.prefersLargeTitles = true
-    navi.navigationItem.largeTitleDisplayMode = .always
+    navi.navigationItem.largeTitleDisplayMode = .automatic
     navi.navigationBar.backgroundColor = .white
     navi.navigationBar.barTintColor = UIColor.white
     navi.navigationBar.tintColor = UIColor.black

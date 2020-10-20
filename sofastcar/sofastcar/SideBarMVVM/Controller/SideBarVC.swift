@@ -8,6 +8,8 @@
 
 import UIKit
 import Alamofire
+import RxSwift
+import RxCocoa
 
 enum SideBarMenuType: String {
   case eventBannerCell = ""
@@ -28,16 +30,7 @@ enum SideBarMenuType: String {
 
 class SideBarVC: UIViewController {
   // MARK: - Properties
-  var user: User? {
-    didSet {
-      guard let user = user else { return }
-      tableHeaderView.userNameLable.text = user.name
-      tableHeaderView.userPhoneNumberLabel.text = user.phoneNumber
-      tableHeaderView.userIdLable.text = user.email
-      tableHeaderView.creditLabel.text = "\(NumberFormatter.getPriceWithDot(price: user.creditPoint)) 원"
-    }
-  }
-  
+  var user: User?
   let tableView = UITableView(frame: .zero, style: .plain)
   let viewWidthSizeRatio: CGFloat = 0.85
   let tableHeaderView = SideBarHeaderView(frame: .zero, isMain: true)
@@ -51,13 +44,25 @@ class SideBarVC: UIViewController {
   
   let sideBarBottonView = SideBarBottonView()
   
+  var disposeBag = DisposeBag()
+  
   // MARK: - Life Cycle
   override func viewDidLoad() {
     super.viewDidLoad()
     view.backgroundColor = UIColor.black.withAlphaComponent(0)
-    getUserDate { user in
-      self.user = user
-    }
+    
+    getUserDataByRx()
+      .debug()
+      .observeOn(MainScheduler.instance)
+      .subscribe(onNext: { user in
+        guard let user = user else { return }
+        self.tableHeaderView.userNameLable.text = user.name
+        self.tableHeaderView.userPhoneNumberLabel.text = user.phoneNumber
+        self.tableHeaderView.userIdLable.text = user.email
+        self.tableHeaderView.creditLabel.text = "\(user.creditPoint.withDots()) 원"
+      })
+      .disposed(by: disposeBag)
+    
     configureTableView()
     configureTableViewPanGuesture()
     configureBottomView()
@@ -223,7 +228,7 @@ extension SideBarVC: UITableViewDelegate, UITableViewDataSource {
   }
 }
 
-// MARK: - Fetch User Data
+// MARK: - Network Fetch User Data
 extension SideBarVC {
   func getUserDate(completion: @escaping (User) -> Void) {
     let userGetUrl = URL(string: "https://sofastcar.moorekwon.xyz/members")!
@@ -233,6 +238,24 @@ extension SideBarVC {
         completion(data.results[0])
       case .failure(let error):
         print("Error", error.localizedDescription)
+      }
+    }
+  }
+  
+  func getUserDataByRx() -> Observable<User?> {
+    Observable.create { (emitter) -> Disposable in
+      let userGetUrl = URL(string: "https://sofastcar.moorekwon.xyz/members")!
+      AF.request(userGetUrl, headers: ["Content-Type": "application/json", "Authorization": "JWT \(UserDefaults.getUserAuthTocken()!)"]).validate().responseDecodable(of: UserData.self) { (response) in
+        switch response.result {
+        case .success(let data):
+          emitter.onNext(data.results[0])
+          emitter.onCompleted()
+        case .failure(let error):
+          emitter.onError(error)
+        }
+      }
+      return Disposables.create {
+        // 취소시 처리하는 구문
       }
     }
   }

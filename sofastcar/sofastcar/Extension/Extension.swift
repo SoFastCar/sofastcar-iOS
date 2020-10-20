@@ -153,16 +153,6 @@ extension UIFont {
   }
 }
 
-// MARK: - numberFomatter
-extension NumberFormatter {
-  static func getPriceWithDot(price: Int) -> String {
-    let numberFormatter = NumberFormatter()
-    numberFormatter.numberStyle = .decimal
-    guard let priceWithDot = numberFormatter.string(from: NSNumber(value: price)) else { fatalError() }
-    return "\(priceWithDot)"
-  }
-}
-
 // MARK: - For Cell Line
 extension UITableViewCell {
   func configureContentViewTopBottomLayer() {
@@ -219,18 +209,6 @@ extension UIViewController {
     statusBar.backgroundColor = backgroundColor
     UIApplication.shared.windows.filter {$0.isKeyWindow}.first?.addSubview(statusBar)
   }
-//  
-//  var shouldAutorotate: Bool {
-//      return false
-//  }
-//  
-//  var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-//      return .portrait
-//  }
-//  
-//  var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
-//      return .portrait
-//  }
 }
 
 // MARK: - Shadow Maker
@@ -242,5 +220,15 @@ extension UIView {
     view.layer.shadowRadius = 5
     view.layer.shadowOpacity = 0.5
     view.layer.masksToBounds = false
+  }
+}
+
+// MARK: - Int extension
+extension Int {
+  func withDots() -> String {
+    let numberFormatter = NumberFormatter()
+    numberFormatter.numberStyle = .decimal
+    guard let priceWithDot = numberFormatter.string(from: NSNumber(value: self)) else { fatalError() }
+    return "\(priceWithDot)"
   }
 }

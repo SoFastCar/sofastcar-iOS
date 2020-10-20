@@ -106,6 +106,7 @@ class ReservationConfirmTableVC: UITableViewController {
     navigationController?.navigationBar.backgroundColor = .white
     navigationController?.navigationBar.barTintColor = UIColor.white
     navigationController?.navigationBar.tintColor = UIColor.black
+    navigationController?.navigationBar.topItem?.title = ""
   }
   
   private func calculateTableViewHeaderHeight() {
@@ -186,12 +187,9 @@ class ReservationConfirmTableVC: UITableViewController {
   
   // MARK: - Button Action
   @objc func tabReservationConfirmButton() {
-    print("aaaaa")
     guard let insuranceData = insuranceData else { return }
-    guard let standardPrice = socarData?.carPrices.standardPrice else { return }
     guard let socarData = socarData else { return }
     guard  let socarZoneData = socarZoneData else { return }
-//    let rentPrice = standardPrice*divideRendTotalTimeByHalfHour
     let rentPrice = socarData.termPrice + insuranceData.cost
     if let navi = self.presentingViewController as? UINavigationController, 
        let presentingVC = navi.viewControllers.last as? MainVC {
@@ -270,7 +268,6 @@ extension ReservationConfirmTableVC: ResrvationConfirmCellDelegate {
     divideRendTotalTimeByHalfHour = Time.getDivideRentTodalTimeByHalfHour(start: startDate, end: endDate)
 //    let totalPrice = socarData.carPrices.standardPrice*divideRendTotalTimeByHalfHour+insurancePrice
     let totalPrice = socarData.termPrice + insurancePrice
-    let numberWithDot = NumberFormatter.getPriceWithDot(price: totalPrice)
-    reservationCostInfoButton.setTitle("총 합계 \(numberWithDot) 원", for: .normal)
+    reservationCostInfoButton.setTitle("총 합계 \(totalPrice.withDots()) 원", for: .normal)
   }
 }
