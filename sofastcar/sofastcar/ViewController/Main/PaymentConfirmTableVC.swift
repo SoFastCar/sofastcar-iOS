@@ -120,7 +120,7 @@ class PaymentConfirmTableVC: UITableViewController {
     guard let rentPrice = rentPrice ,
         let insurancePrice = insuranceData?.cost else { return }
     let totalPrice = rentPrice + insurancePrice
-    let totalPriceWithDot = totalPrice.withDots()
+    let totalPriceWithDot = totalPrice.priceWithDots()
     reservationCostInfoButton.setTitle("총 합계 \(totalPriceWithDot) 원", for: .normal)
   }
   

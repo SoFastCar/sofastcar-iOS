@@ -189,12 +189,12 @@ class ReservationPaymentCell: UITableViewCell {
     contentView.backgroundColor = .white
     contentView.layoutMargins = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
     print(paymentBefore)
-    paidCost.text = "\(paymentBefore.totalFee.withDots()) 원"
+    paidCost.text = "\(paymentBefore.totalFee.priceWithDots()) 원"
     let totalCost = paymentBefore.rentalFee + paymentBefore.insuranceFee - paymentBefore.couponDiscount - paymentBefore.etcDiscount
-    totalBoforeCostLabel.text = "\(totalCost.withDots()) 원"
-    rentCostValueLabel.text = "\(paymentBefore.rentalFee.withDots()) 원"
-    couponCostValueLabel.text = "\(paymentBefore.couponDiscount.withDots()) 원"
-    insuranceCostValueLabel.text = "\(paymentBefore.insuranceFee.withDots()) 원"
+    totalBoforeCostLabel.text = "\(totalCost.priceWithDots()) 원"
+    rentCostValueLabel.text = "\(paymentBefore.rentalFee.priceWithDots()) 원"
+    couponCostValueLabel.text = "\(paymentBefore.couponDiscount.priceWithDots()) 원"
+    insuranceCostValueLabel.text = "\(paymentBefore.insuranceFee.priceWithDots()) 원"
   }
   
   required init?(coder: NSCoder) {

@@ -146,6 +146,8 @@
 		C7EA090B24EFF32B001A7ED4 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = C7EA090A24EFF32B001A7ED4 /* SnapKit */; };
 		C7EA090E24EFF4CC001A7ED4 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = C7EA090D24EFF4CC001A7ED4 /* Kingfisher */; };
 		C7EA091A24F001B8001A7ED4 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = C7EA091924F001B8001A7ED4 /* .swiftlint.yml */; };
+		C7F11AB5253E8CC1000C69FC /* URLRequest+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F11AB4253E8CC1000C69FC /* URLRequest+Extension.swift */; };
+		C7F11ABE253EF02C000C69FC /* Int+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F11ABD253EF02C000C69FC /* Int+Extension.swift */; };
 		C7F2E6352505FE8E0004EBF9 /* UserDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F2E6342505FE8E0004EBF9 /* UserDefault.swift */; };
 		C7F2E63A250647ED0004EBF9 /* Insurance.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F2E639250647ED0004EBF9 /* Insurance.swift */; };
 		C7F2E63C2507133B0004EBF9 /* Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7F2E63B2507133B0004EBF9 /* Protocol.swift */; };
@@ -310,6 +312,8 @@
 		C7EA090124EFF29D001A7ED4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C7EA090324EFF29D001A7ED4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C7EA091924F001B8001A7ED4 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+		C7F11AB4253E8CC1000C69FC /* URLRequest+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLRequest+Extension.swift"; sourceTree = "<group>"; };
+		C7F11ABD253EF02C000C69FC /* Int+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extension.swift"; sourceTree = "<group>"; };
 		C7F2E6342505FE8E0004EBF9 /* UserDefault.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefault.swift; sourceTree = "<group>"; };
 		C7F2E639250647ED0004EBF9 /* Insurance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Insurance.swift; sourceTree = "<group>"; };
 		C7F2E63B2507133B0004EBF9 /* Protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocol.swift; sourceTree = "<group>"; };
@@ -637,6 +641,7 @@
 		C7C8B120253E87280018E25C /* SideBarMVVM */ = {
 			isa = PBXGroup;
 			children = (
+				C7F11AB8253E902C000C69FC /* ViewModel */,
 				C7C8B123253E873D0018E25C /* Controller */,
 				C7C8B122253E87390018E25C /* Model */,
 				C7C8B121253E87340018E25C /* View */,
@@ -658,7 +663,6 @@
 			isa = PBXGroup;
 			children = (
 				C728C84F24F7E35100063005 /* User.swift */,
-				C7C8B124253E88D40018E25C /* SideBarViewModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -719,8 +723,8 @@
 		C7EA08F424EFF29C001A7ED4 /* sofastcar */ = {
 			isa = PBXGroup;
 			children = (
-				C7C8B120253E87280018E25C /* SideBarMVVM */,
 				C7EA08F524EFF29C001A7ED4 /* AppDelegate.swift */,
+				C7C8B120253E87280018E25C /* SideBarMVVM */,
 				C7F463DF2539882C009C55A9 /* Extension */,
 				C72A913624F5E13F005D464F /* Utility */,
 				C7D66D1924FB869300679B99 /* Custom */,
@@ -733,6 +737,14 @@
 				C7EA090324EFF29D001A7ED4 /* Info.plist */,
 			);
 			path = sofastcar;
+			sourceTree = "<group>";
+		};
+		C7F11AB8253E902C000C69FC /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				C7C8B124253E88D40018E25C /* SideBarViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		C7F2E638250647C40004EBF9 /* Main */ = {
@@ -756,6 +768,8 @@
 			isa = PBXGroup;
 			children = (
 				C72A913724F5E15B005D464F /* Extension.swift */,
+				C7F11AB4253E8CC1000C69FC /* URLRequest+Extension.swift */,
+				C7F11ABD253EF02C000C69FC /* Int+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -985,6 +999,7 @@
 				BC4F3A07250E01B400B7E1E7 /* CarListTableViewCell.swift in Sources */,
 				C72A914124F61857005D464F /* TouButton.swift in Sources */,
 				7E0F2FD6252D77BA00044A35 /* ReservationNetWorkService.swift in Sources */,
+				C7F11AB5253E8CC1000C69FC /* URLRequest+Extension.swift in Sources */,
 				C7F2E6352505FE8E0004EBF9 /* UserDefault.swift in Sources */,
 				BC4F3A23250E024F00B7E1E7 /* ReservationConfirmCustomCell.swift in Sources */,
 				C769C83624FDF03C00DC8226 /* SocarPassVC.swift in Sources */,
@@ -1092,6 +1107,7 @@
 				C7CEF74A2511BFD100C063B0 /* MenuCollectionViewCell.swift in Sources */,
 				C7B29A67251DBB0800AB081B /* SocarClubVC.swift in Sources */,
 				7E77D99C251B07D1002C6BF1 /* CheckButtonView.swift in Sources */,
+				C7F11ABE253EF02C000C69FC /* Int+Extension.swift in Sources */,
 				BC4F3A15250E01EB00B7E1E7 /* SocarZoneData.swift in Sources */,
 				C728C85024F7E35100063005 /* User.swift in Sources */,
 				C7B29A8E252181AB00AB081B /* Coupon.swift in Sources */,

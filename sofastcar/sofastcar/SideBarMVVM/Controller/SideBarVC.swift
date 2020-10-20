@@ -11,33 +11,21 @@ import Alamofire
 import RxSwift
 import RxCocoa
 
-enum SideBarMenuType: String {
-  case eventBannerCell = ""
-  case usingHistocyCell = "이용내역"
-  case socarPassCell = "쏘카패스"
-  case couponCell = "쿠폰"
-  case evnetWithBenigitCell = "이벤트/해택"
-  case socarPlusCell = "쏘카플러스"
-  case inviteFriendCell = "친구 초대하기"
-  case customerCenterCell = "고객센터"
-  case mainBoardCell = "공지사항"
-  
-  static func allcase() -> [SideBarMenuType] {
-    return [eventBannerCell, usingHistocyCell, socarPassCell, couponCell, evnetWithBenigitCell,
-    socarPlusCell, inviteFriendCell, customerCenterCell, mainBoardCell]
-  }
-}
-
 class SideBarVC: UIViewController {
   // MARK: - Properties
   var user: User?
+  
+  private var sideBarVM: SideBarViewModel!
+  
   let tableView = UITableView(frame: .zero, style: .plain)
-  let viewWidthSizeRatio: CGFloat = 0.85
   let tableHeaderView = SideBarHeaderView(frame: .zero, isMain: true)
   let buttonImageName = ["business", "option", "plan"]
-  lazy var sideBarCellTypes = SideBarMenuType.allcase()
+  let viewWidthSizeRatio: CGFloat = 0.85
+//  lazy var sideBarCellTypes = SideBarMenuType.allcase()
+  
   var isHorizenScrolling = false
   var isVerticalStcolling = false
+  
   var gapX: CGFloat = 0
   var tableViewOriginX: CGFloat = 0
   var firstTouchOriginX: CGFloat = 0
@@ -52,28 +40,34 @@ class SideBarVC: UIViewController {
     view.backgroundColor = UIColor.black.withAlphaComponent(0)
     
     getUserDataByRx()
-      .debug()
-      .observeOn(MainScheduler.instance)
-      .subscribe(onNext: { user in
-        guard let user = user else { return }
-        self.tableHeaderView.userNameLable.text = user.name
-        self.tableHeaderView.userPhoneNumberLabel.text = user.phoneNumber
-        self.tableHeaderView.userIdLable.text = user.email
-        self.tableHeaderView.creditLabel.text = "\(user.creditPoint.withDots()) 원"
-      })
-      .disposed(by: disposeBag)
     
     configureTableView()
     configureTableViewPanGuesture()
     configureBottomView()
   }
   
+  private func configureTableHeaderView() {
+    tableView.tableHeaderView = tableHeaderView
+    tableView.tableHeaderView?.frame.size.height = 140
+    
+    sideBarVM.name.asDriver(onErrorJustReturn: UserData.empty.results[0].name)
+      .drive(tableHeaderView.userNameLable.rx.text)
+      .disposed(by: disposeBag)
+    
+    sideBarVM.email.asDriver(onErrorJustReturn: UserData.empty.results[0].email)
+      .drive(tableHeaderView.userIdLable.rx.text)
+      .disposed(by: disposeBag)
+    
+    sideBarVM.creditPoint.asDriver(onErrorJustReturn: "0원")
+      .drive(tableHeaderView.creditLabel.rx.text)
+      .disposed(by: disposeBag)
+  }
+  
   private func configureTableView() {
     tableView.backgroundColor = .white
     tableView.delegate = self
     tableView.dataSource = self
-    tableView.tableHeaderView = tableHeaderView
-    tableView.tableHeaderView?.frame.size.height = 140
+
     tableView.separatorStyle = .none
     tableView.register(SideBarCustomCell.self, forCellReuseIdentifier: SideBarCustomCell.identifier)
     view.addSubview(tableView)
@@ -136,13 +130,13 @@ class SideBarVC: UIViewController {
 // MARK: - UITableViewDelegate, UITableViewDataSource
 extension SideBarVC: UITableViewDelegate, UITableViewDataSource {
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return sideBarCellTypes.count
+    return sideBarVM == nil ? 0 : sideBarVM.sideBarCellTypes.count
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     guard let cell = tableView.dequeueReusableCell(withIdentifier: SideBarCustomCell.identifier)
       as? SideBarCustomCell else { fatalError() }
-    cell.cellConfigure(cellType: sideBarCellTypes[indexPath.row])
+    cell.cellConfigure(cellType: sideBarVM.sideBarCellTypes[indexPath.row])
     return cell
   }
   
@@ -154,7 +148,7 @@ extension SideBarVC: UITableViewDelegate, UITableViewDataSource {
     guard let navi = self.presentingViewController as? UINavigationController else { return }
     guard let mainVC = navi.viewControllers.last as? MainVC else { return }
     
-    let cellType = sideBarCellTypes[indexPath.row]
+    let cellType = sideBarVM.sideBarCellTypes[indexPath.row]
     switch cellType {
     case .usingHistocyCell:
       dismissWithAnimated {
@@ -230,34 +224,22 @@ extension SideBarVC: UITableViewDelegate, UITableViewDataSource {
 
 // MARK: - Network Fetch User Data
 extension SideBarVC {
-  func getUserDate(completion: @escaping (User) -> Void) {
-    let userGetUrl = URL(string: "https://sofastcar.moorekwon.xyz/members")!
-    AF.request(userGetUrl, headers: ["Content-Type": "application/json", "Authorization": "JWT \(UserDefaults.getUserAuthTocken()!)"]).validate().responseDecodable(of: UserData.self) { (response) in
-      switch response.result {
-      case .success(let data):
-        completion(data.results[0])
-      case .failure(let error):
-        print("Error", error.localizedDescription)
-      }
-    }
-  }
-  
-  func getUserDataByRx() -> Observable<User?> {
-    Observable.create { (emitter) -> Disposable in
-      let userGetUrl = URL(string: "https://sofastcar.moorekwon.xyz/members")!
-      AF.request(userGetUrl, headers: ["Content-Type": "application/json", "Authorization": "JWT \(UserDefaults.getUserAuthTocken()!)"]).validate().responseDecodable(of: UserData.self) { (response) in
-        switch response.result {
-        case .success(let data):
-          emitter.onNext(data.results[0])
-          emitter.onCompleted()
-        case .failure(let error):
-          emitter.onError(error)
+  func getUserDataByRx() {
+   
+    URLRequest.load(resource: UserData.all)
+      .subscribe(onNext: { [weak self] result in
+        if let result = result {
+          
+          self?.sideBarVM = SideBarViewModel(result.results[0])
+          
+          DispatchQueue.main.async {
+            self?.configureTableHeaderView()
+            self?.tableView.reloadData()
+          }
+          
         }
-      }
-      return Disposables.create {
-        // 취소시 처리하는 구문
-      }
-    }
+      }).disposed(by: disposeBag)
+    
   }
 }
 

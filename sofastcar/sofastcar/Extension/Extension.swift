@@ -222,13 +222,3 @@ extension UIView {
     view.layer.masksToBounds = false
   }
 }
-
-// MARK: - Int extension
-extension Int {
-  func withDots() -> String {
-    let numberFormatter = NumberFormatter()
-    numberFormatter.numberStyle = .decimal
-    guard let priceWithDot = numberFormatter.string(from: NSNumber(value: self)) else { fatalError() }
-    return "\(priceWithDot)"
-  }
-}

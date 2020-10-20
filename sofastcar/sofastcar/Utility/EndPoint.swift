@@ -27,7 +27,6 @@ struct EndPoint {
         })
         return components.url
     }
-    
 }
 
 extension EndPoint {
