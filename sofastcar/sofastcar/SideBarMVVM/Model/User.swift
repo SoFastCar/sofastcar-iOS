@@ -10,16 +10,27 @@ import Foundation
 
 struct UserData: Decodable {
   let results: [User]
-  let previous: String?
-  let next: String?
+}
+
+extension UserData {
+  
+  static var empty: UserData = {
+    return UserData(results: [User(userUid: 0, name: "로딩중..", email: "로딩중..", creditPoint: 0, phoneNumber: "로딩중..", totalDrivinDistance: 0)])
+  }()
+  
+  static var all: Resource<UserData> = {
+    let url = URL(string: "https://sofastcar.moorekwon.xyz/members")!
+    return Resource(url: url)
+  }()
+  
 }
 
 struct User: Decodable {
   let userUid: Int
-  var name: String
+  let name: String
   let email: String
   let creditPoint: Int
-  var phoneNumber: String
+  let phoneNumber: String
   let totalDrivinDistance: Int
   
   enum CodingKeys: String, CodingKey {

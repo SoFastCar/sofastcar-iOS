@@ -79,6 +79,6 @@ class InsuranceMenuItemButton: UIButton {
         selectSymbolImageView.image = UIImage(systemName: selectSymbol, withConfiguration: symbolConfig)
         itemNameLabel.text = itemName
         itemGuarenteeLabel.text = "자기부담금 최대 \(itemGuarantee)만원"
-        itemCostLabel.text = "+ \(itemCost.withDots())원"
+        itemCostLabel.text = "+ \(itemCost.priceWithDots())원"
     }
 }

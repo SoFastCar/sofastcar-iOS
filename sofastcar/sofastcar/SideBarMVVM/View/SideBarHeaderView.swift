@@ -131,12 +131,14 @@ class SideBarHeaderView: UIView {
         $0.trailing.equalTo(notiButton.snp.leading).offset(-10)
         $0.width.height.equalTo(23)
       }
+      
     } else {
+      
       userPhoneNumberLabel.snp.makeConstraints {
         $0.top.equalTo(userIdLable.snp.bottom).offset(5)
         $0.leading.equalTo(guide)
       }
+      
     }
   }
-  
 }

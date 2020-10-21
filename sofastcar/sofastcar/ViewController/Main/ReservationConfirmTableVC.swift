@@ -268,6 +268,6 @@ extension ReservationConfirmTableVC: ResrvationConfirmCellDelegate {
     divideRendTotalTimeByHalfHour = Time.getDivideRentTodalTimeByHalfHour(start: startDate, end: endDate)
 //    let totalPrice = socarData.carPrices.standardPrice*divideRendTotalTimeByHalfHour+insurancePrice
     let totalPrice = socarData.termPrice + insurancePrice
-    reservationCostInfoButton.setTitle("총 합계 \(totalPrice.withDots()) 원", for: .normal)
+    reservationCostInfoButton.setTitle("총 합계 \(totalPrice.priceWithDots()) 원", for: .normal)
   }
 }

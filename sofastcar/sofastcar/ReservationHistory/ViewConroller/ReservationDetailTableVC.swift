@@ -8,6 +8,8 @@
 
 import UIKit
 import Alamofire
+import RxSwift
+import RxCocoa
 
 enum DetailTableViewType: Int {
   case rentalInfo = 0
@@ -15,54 +17,33 @@ enum DetailTableViewType: Int {
   case etcInfo = 2
 }
 
-enum RentalCellType: String {
-  case usingTime = "이용시간"
-  case rentCarInfo = "차량정보"
-  case socarZone = "이용장소"
-  case otherDriver = "동승운전자"
-  case insurance = "차량손해면책 상품"
-  case cancelWarning = "취소수수로 및 패털티 안내"
-  case cancel = "예약 취소하기"
-  case blank = "빈칸"
-}
-
-enum PaymentCellType: String {
-  case serviceTotalCost = "서비스 이용 총 금액"
-  case beforeCost = "운행 전 요금"
-  case afterCost = "운행 후 요금"
-  case blank = "빈칸"
-}
-
-enum EtcCellType: String {
-  case usingPdfDownLoad = "이용내역서(pdf) 다운로드"
-  case washingCarHistory = "세차 기록 보기"
-  case contectCustomerCenter = "이 예약 고객센터 문의하기"
-  case blank = ""
-}
-
 class ReservationDetailTableVC: UITableViewController {
   // MARK: - Properties
+  let disposeBag = DisposeBag()
+  
+  private var socarVM: SocarViewModel!
+  private var socarZoneVM: SocarZoneViewModel!
+  private var reservationVM: ReservationViewModel!
+  private var resrvationDetailVM: ReservationDetailViewModel!
+  
   var socarZoneData: SocarZoneData?
   var socarData: Socar?
   var reservationData: Reservation?
   var paymentBefore: PaymentBefore?
   
-  var customTableHeaderView: ReservationDetailHeader?
-  var rentalTypeTitleArray: [RentalCellType] = [.blank, .usingTime, .rentCarInfo, .socarZone, .otherDriver, .insurance, .cancelWarning, .cancel]
-  var paymentTypeTitleArray: [PaymentCellType] = [.blank, .serviceTotalCost, .beforeCost, .afterCost]
-  var etcTypeTitleArray: [EtcCellType] = [.blank, .usingPdfDownLoad, .washingCarHistory, .contectCustomerCenter]
+  var customTableHeaderView = ReservationDetailHeader(frame: .zero)
+  
   var showTableViewIndex: DetailTableViewType = .rentalInfo
   var isReservationEnd: Bool = false
   
   // MARK: - Life Cycle
-  init(_ isReservationEnd: Bool, _ socar: Socar, _ socarZoneData: SocarZoneData, _ reservation: Reservation) {
+  init(_ isReservationEnd: Bool, _ socarVM: SocarViewModel, _ socarZoneVM: SocarZoneViewModel, _ reservationVM: ReservationViewModel) {
     super.init(style: .grouped)
-    self.socarData = socar
-    self.socarZoneData = socarZoneData
+    self.socarVM = socarVM
+    self.socarZoneVM = socarZoneVM
+    self.reservationVM  = reservationVM
     self.isReservationEnd = isReservationEnd
-    self.reservationData = reservation
-    getReservaionPaymentInfo(reservation: reservation)
-    customTableHeaderView = ReservationDetailHeader(frame: .zero, isReservationEnd, socar.number)
+    getPaymentBeforeInfo()
   }
   
   required init?(coder: NSCoder) {
@@ -73,35 +54,43 @@ class ReservationDetailTableVC: UITableViewController {
     super.viewDidLoad()
     view.backgroundColor = .white
     tableView.backgroundColor = .systemGray6
+    configureTableViewHeader()
     configureTableView()
-    configureTableViewSegController()
+  }
+  
+  private func configureTableViewHeader() {
+    tableView.tableHeaderView = customTableHeaderView
+    customTableHeaderView.closeButton.addTarget(self, action: #selector(tapCloseButton), for: .touchUpInside)
+    tableView.tableHeaderView?.frame.size.height = 135
+    
+    customTableHeaderView.reservationStatueLabel.isSelected = isReservationEnd
+    customTableHeaderView.reservationStatueLabel.backgroundColor = isReservationEnd ? .systemGray5 : CommonUI.mainDark
+    
+    socarVM.number.asDriver(onErrorJustReturn: "")
+      .drive(customTableHeaderView.carNumberLabel.rx.text)
+      .disposed(by: disposeBag)
+    
+    customTableHeaderView.segmentControll.addTarget(self, action: #selector(tabChangeTableViewMenuSegment(_:)), for: .valueChanged)
   }
   
   private func configureTableView() {
     tableView.allowsSelection = false
-    tableView.tableHeaderView = customTableHeaderView
-    customTableHeaderView?.closeButton.addTarget(self, action: #selector(tapCloseButton), for: .touchUpInside)
-    tableView.tableHeaderView?.frame.size.height = 135
     tableView.estimatedRowHeight = 600
     tableView.sectionHeaderHeight = 10
     tableView.sectionFooterHeight = 0
     tableView.separatorStyle = .none
   }
   
-  private  func configureTableViewSegController() {
-    customTableHeaderView?.segmentControll.addTarget(self, action: #selector(tabChangeTableViewMenuSegment(_:)), for: .valueChanged)
-  }
-  
   // MARK: - Table view data source
   override func numberOfSections(in tableView: UITableView) -> Int {
-    //var namesCount = Enum.GetNames(typeof(MyEnum)).Length;
+    guard let resrvationDetailVM = resrvationDetailVM else { return 0 }
     switch showTableViewIndex {
     case .rentalInfo:
-      return rentalTypeTitleArray.count
+      return resrvationDetailVM.rentalTypeTitleArray.count
     case .paymentInfo:
-      return paymentTypeTitleArray.count
+      return resrvationDetailVM.paymentTypeTitleArray.count
     case .etcInfo:
-      return etcTypeTitleArray.count
+      return resrvationDetailVM.etcTypeTitleArray.count
     }
   }
   
@@ -112,42 +101,29 @@ class ReservationDetailTableVC: UITableViewController {
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     switch showTableViewIndex {
     case .rentalInfo:
-      guard let socarData = socarData else { fatalError() }
-      guard let socarZoneData = socarZoneData else { fatalError() }
-      guard let reservationData = reservationData else { fatalError() }
-      let cell = ReservationRentalInfoCell(socarData, socarZoneData, reservationData)
-      cell.configureCell(cellType: rentalTypeTitleArray[indexPath.section])
+      let cell = ReservationRentalInfoCell(socarVM.socar, socarZoneVM.socarZone, reservationVM.reservation)
+      cell.configureCell(cellType: resrvationDetailVM.rentalTypeTitleArray[indexPath.section])
       cell.delegate = self
-      if rentalTypeTitleArray[indexPath.section] == .usingTime {
-//        guard let reservationStatus = customTableHeaderView?.reservationStatueLabel.isSelected else { fatalError() }
+            
+      if resrvationDetailVM.rentalTypeTitleArray[indexPath.section] == .usingTime {
         cell.changeOptionButton.isHidden = true
       }
       return cell
     case .paymentInfo:
-      guard let paymentBefore = paymentBefore else { fatalError() }
-      let cell = ReservationPaymentCell(paymentBefore: paymentBefore)
+      let cell = ReservationPaymentCell(paymentBefore: resrvationDetailVM.payments[0].payment)
       cell.isReservationEnd = isReservationEnd
       cell.delegate = self
-      cell.configureCell(cellType: paymentTypeTitleArray[indexPath.section])
+      cell.configureCell(cellType: resrvationDetailVM.paymentTypeTitleArray[indexPath.section])
       return cell
     case .etcInfo:
       let cell = ReservationEtcCell(style: .subtitle, reuseIdentifier: ReservationEtcCell.identifier)
-      cell.buttonNameLabel.text = etcTypeTitleArray[indexPath.section].rawValue
+      cell.buttonNameLabel.text = resrvationDetailVM.etcTypeTitleArray[indexPath.section].rawValue
       cell.delegate = self
-      if etcTypeTitleArray[indexPath.section] == .blank {
-        cell.rightSideImage.image = UIImage()
-      }
       return cell
     }
   }
   
   override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-    if showTableViewIndex == .etcInfo {
-      return indexPath.section == 0 ? 0 : 65
-    }
-    if indexPath.section == 0 {
-      return CGFloat(0)
-    }
     return UITableView.automaticDimension
   }
   
@@ -163,9 +139,8 @@ class ReservationDetailTableVC: UITableViewController {
   }
   
   private func changeHeaderViewTitleUnderLine(setIndex: Int) {
-    guard let view = customTableHeaderView else { return }
-    view.segmentindicator.snp.updateConstraints {
-      $0.leading.equalTo(view.segmentControll).offset(9+setIndex*83)
+    customTableHeaderView.segmentindicator.snp.updateConstraints {
+      $0.leading.equalTo(customTableHeaderView.segmentControll).offset(9+setIndex*83)
     }
   }
   
@@ -223,16 +198,18 @@ extension ReservationDetailTableVC: ReservationEtcCellDelegate {
 
 // MARK: - NetworkService
 extension ReservationDetailTableVC {
-  private func getReservaionPaymentInfo(reservation: Reservation) {
-    print("Start Download")
-    let paymentBefore = URL(string: "https://sofastcar.moorekwon.xyz/reservations/\(reservation.reservationUid)/payment_before")!
-    AF.request(paymentBefore, headers: ["Content-Type": "application/json", "Authorization": "JWT \(UserDefaults.getUserAuthTocken()!)"]).validate().responseDecodable(of: PaymentBeforeDataSet.self, queue: .main, completionHandler: { (response) in
-      switch response.result {
-      case .success(let paymentBefore):
-        self.paymentBefore = paymentBefore.results[0]
-      case .failure(let error):
-        print("fail to get payment Before Data", error.localizedDescription)
-      }
-    })
+  
+  private func getPaymentBeforeInfo() {
+    
+    URLRequest.load(resource: PaymentBefore.getPaymentInfo(reservationVM.reservation.reservationUid))
+      .subscribe(onNext: { [weak self] payments in
+        if let payments = payments?.results {
+          self?.resrvationDetailVM = ReservationDetailViewModel(payments)
+          DispatchQueue.main.async {
+            self?.tableView.reloadData()
+          }
+        }
+      }).disposed(by: disposeBag)
+    
   }
 }

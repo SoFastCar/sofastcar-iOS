@@ -8,16 +8,20 @@
 
 import UIKit
 import Alamofire
+import RxSwift
+import RxCocoa
 
 class RentHistoryVC: UIViewController {
   // MARK: - Properties
-  var reservations: [Reservation?] = [nil]
-  var socarZones: [SocarZoneData?] = [nil]
-  var socars: [Socar?] = [nil] {
-    didSet {
-      tableView.reloadData()
-    }
-  }
+  
+  private var reservationListVM: ReservationListViewModel!
+  private var socarListVM: SocarListViewModel!
+  private var socarZoneVM: SocarZoneListViewModel!
+  
+  var socars = [Socar]()
+  var socarZones = [SocarZoneData]()
+  
+  let disposeBag = DisposeBag()
   
   lazy var filterButtonImageView: UIImageView = {
     let imageView = UIImageView()
@@ -48,7 +52,7 @@ class RentHistoryVC: UIViewController {
   // MARK: - Life Cycle
   override func viewDidLoad() {
     super.viewDidLoad()
-    networkService()
+    fetchReservations()
     configureStatusBar()
     configureNavigationContoller()
     configureTableView()
@@ -117,7 +121,11 @@ class RentHistoryVC: UIViewController {
   }
   
   @objc private func tapBackButton() {
-    dismissDetail()
+    UIView.animate(withDuration: 0.5) {
+      self.view.center.x += UIScreen.main.bounds.width
+      self.tableView.center.x += UIScreen.main.bounds.width
+    }
+    self.navigationController?.popViewController(animated: true)
   }
   
   func presentWithAnimation() {
@@ -132,22 +140,38 @@ class RentHistoryVC: UIViewController {
 // MARK: - UITableViewDelegate, UITableViewDataSource
 extension RentHistoryVC: UITableViewDelegate, UITableViewDataSource {
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    if indexPath.section == 0 {
-      let cell = UITableViewCell()
-      cell.configureContentViewTopBottomLayer()
-      return cell
-    }
+    
     let cell = RentHistoryCell(style: .default, reuseIdentifier: RentHistoryCell.identifier)
-    if let socarZone = socarZones[indexPath.section],
-       let socarDate = socars[indexPath.section],
-       let reservationData = reservations[indexPath.section] {
-      cell.configureContent(reservationData, socarZone, socarDate)
-    }
+    
+    reservationListVM.reservationAt(indexPath.section).usingTime.asDriver(onErrorJustReturn: "")
+      .drive(cell.rentDurtaionLabel.rx.text)
+      .disposed(by: disposeBag)
+    
+    let socarZoneNameObservable = socarZoneVM.socarZoneAt(indexPath.section).name.asDriver(onErrorJustReturn: "")
+    socarZoneNameObservable.drive(cell.returnPlaceTitleLabel.rx.text).disposed(by: disposeBag)
+    socarZoneNameObservable.drive(cell.rentPlaceTitleLabel.rx.text).disposed(by: disposeBag)
+    
+    let mySocarListVM = socarListVM.socarAt(indexPath.section)
+    
+    mySocarListVM.imageUrl
+      .observeOn(MainScheduler.instance)
+      .subscribe(onNext: {
+        cell.carImage.loadImage(with: $0)
+      }).disposed(by: disposeBag)
+    
+    mySocarListVM.name.asDriver(onErrorJustReturn: "")
+      .drive(cell.carName.rx.text)
+      .disposed(by: disposeBag)
+    
+    mySocarListVM.number.asDriver(onErrorJustReturn: "")
+      .drive(cell.carNumber.rx.text)
+      .disposed(by: disposeBag)
+  
     return cell
   }
   
   func numberOfSections(in tableView: UITableView) -> Int {
-    return socars.count
+    return socarZoneVM == nil ? 0 : socarZoneVM.socarZoneList.count
   }
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -155,14 +179,18 @@ extension RentHistoryVC: UITableViewDelegate, UITableViewDataSource {
   }
   
   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-    return indexPath.section == 0 ? 0 : UITableView.automaticDimension
+    return UITableView.automaticDimension
   }
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    guard let socarCarData = socars[indexPath.section] else { return }
-    guard let socarZoneData = socarZones[indexPath.section] else { return }
-    guard let reservation = reservations[indexPath.section] else { return }
-    let reservationDetailTableVC = ReservationDetailTableVC( true, socarCarData, socarZoneData, reservation)
+
+    let reservationDetailTableVC = ReservationDetailTableVC(
+      true,
+      socarListVM.socarAt(indexPath.section),
+      socarZoneVM.socarZoneAt(indexPath.section),
+      reservationListVM.reservationAt(indexPath.section)
+    )
+
     reservationDetailTableVC.modalPresentationStyle = .overFullScreen
     present(reservationDetailTableVC, animated: true, completion: nil)
   }
@@ -170,47 +198,57 @@ extension RentHistoryVC: UITableViewDelegate, UITableViewDataSource {
 
 // MARK: - NetworkService
 extension RentHistoryVC {
-  private func networkService() {
-    let reservationUrl = URL(string: "https://sofastcar.moorekwon.xyz/reservations")!
-    AF.request(reservationUrl, headers: ["Content-Type": "application/json", "Authorization": "JWT \(UserDefaults.getUserAuthTocken()!)"]).validate().responseDecodable(of: UserReservation.self) { (response) in
-      switch response.result {
-      case .success(let data):
-        var tempDate = data
-        tempDate.results.sort { (reservaion1, reservation2) -> Bool in
-          return Time.toUTCString(changeForString: reservaion1.startTime) > Time.toUTCString(changeForString: reservation2.startTime)
+  
+  private func fetchReservations() {
+    
+    URLRequest.load(resource: Reservation.all())
+      .subscribe(onNext: { reservationList in
+        
+        if let reservationList = reservationList?.results {
+          self.reservationListVM = ReservationListViewModel(reservationList)
+          DispatchQueue.main.async {
+            self.fetchSocarAndSocarZone()
+          }
         }
-        tempDate.results.forEach {
-          self.reservations.append($0)
-          self.getSocarZoneData(reservationData: $0)
-        }
-      case .failure(let error):
-        print("Error", error.localizedDescription)
-      }
+        
+      }).disposed(by: disposeBag)
+  }
+  
+  private func fetchSocarAndSocarZone() {
+    
+    reservationListVM.reservationList.forEach {
+      Observable.zip($0.car, $0.zone)
+        .subscribe(onNext: { carId, zoneId in
+          URLRequest.load(resource: Socar.getSocar(carId, zoneId))
+            .subscribe(onNext: { [weak self] socar in
+              
+              if let socar = socar {
+                self?.socars.append(socar)
+                
+                if let socars = self?.socars {
+                  self?.socarListVM = SocarListViewModel(socars)
+                }
+                
+              }
+            }).disposed(by: self.disposeBag)
+        }).disposed(by: disposeBag)
+      
+      $0.zone
+        .subscribe(onNext: { zoneId in
+          URLRequest.load(resource: SocarZoneData.selectZoneByID(zoneId))
+            .subscribe(onNext: { [weak self] socarZone in
+              if let socarZone = socarZone {
+                self?.socarZones.append(socarZone)
+                
+                if let socarZones = self?.socarZones {
+                  self?.socarZoneVM = SocarZoneListViewModel(socarZones)
+                }
+                
+                self?.tableView.reloadData()
+              }
+            }).disposed(by: self.disposeBag)
+        }).disposed(by: disposeBag)
+      
     }
-  }
-  
-  private func getSocarZoneData(reservationData: Reservation) {
-    let socarZoneUrl = URL(string: "https://sofastcar.moorekwon.xyz/carzones/\(reservationData.zone)")!
-    AF.request(socarZoneUrl, headers: ["Content-Type": "application/json", "Authorization": "JWT \(UserDefaults.getUserAuthTocken()!)"]).validate().responseDecodable(of: SocarZoneData.self, queue: .main, completionHandler: {  (response) in
-      switch response.result {
-      case .success(let socarZoneData):
-        self.socarZones.append(socarZoneData)
-        self.getSocarData(reservationData: reservationData, socarZone: socarZoneData)
-      case .failure(let error):
-        print("Fail to get SocarZone Data", error.localizedDescription)
-      }
-    })
-  }
-  
-  private func getSocarData(reservationData: Reservation, socarZone: SocarZoneData) {
-    let carUrl = URL(string: "https://sofastcar.moorekwon.xyz/carzones/\(socarZone.id)/cars/\(reservationData.car)/info")!
-    AF.request(carUrl, headers: ["Content-Type": "application/json", "Authorization": "JWT \(UserDefaults.getUserAuthTocken()!)"]).validate().responseDecodable(of: Socar.self, queue: .main, completionHandler: { (response) in
-      switch response.result {
-      case .success(let socarCarData):
-        self.socars.append(socarCarData)
-      case .failure(let error):
-        print("fail to get Socar Car Data", error.localizedDescription)
-      }
-    })
   }
 }
