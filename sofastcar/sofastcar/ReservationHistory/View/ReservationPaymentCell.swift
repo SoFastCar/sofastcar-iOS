@@ -184,17 +184,19 @@ class ReservationPaymentCell: UITableViewCell {
   }()
 
   // MARK: - Life Cycle
+
+  
   init(paymentBefore: PaymentBefore) {
     super.init(style: .default, reuseIdentifier: "cell")
     contentView.backgroundColor = .white
     contentView.layoutMargins = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
     print(paymentBefore)
-    paidCost.text = "\(NumberFormatter.getPriceWithDot(price: paymentBefore.totalFee)) 원"
+    paidCost.text = paymentBefore.totalFee.priceWithDots()
     let totalCost = paymentBefore.rentalFee + paymentBefore.insuranceFee - paymentBefore.couponDiscount - paymentBefore.etcDiscount
-    totalBoforeCostLabel.text = "\(NumberFormatter.getPriceWithDot(price: totalCost)) 원"
-    rentCostValueLabel.text = "\(NumberFormatter.getPriceWithDot(price: paymentBefore.rentalFee)) 원"
-    couponCostValueLabel.text = "\(NumberFormatter.getPriceWithDot(price: paymentBefore.couponDiscount)) 원"
-    insuranceCostValueLabel.text = "\(NumberFormatter.getPriceWithDot(price: paymentBefore.insuranceFee)) 원"
+    totalBoforeCostLabel.text = totalCost.priceWithDots()
+    rentCostValueLabel.text = paymentBefore.rentalFee.priceWithDots()
+    couponCostValueLabel.text = paymentBefore.couponDiscount.priceWithDots()
+    insuranceCostValueLabel.text = paymentBefore.insuranceFee.priceWithDots()
   }
   
   required init?(coder: NSCoder) {
@@ -205,8 +207,6 @@ class ReservationPaymentCell: UITableViewCell {
   func configureCell(cellType: PaymentCellType) {
     sectionTitleLabel.text = cellType.rawValue
     switch cellType {
-    case .blank:
-      break
     case .serviceTotalCost:
       serviceTotalCostCellUI()
       serviceTotalCostCellContent()
@@ -231,7 +231,8 @@ class ReservationPaymentCell: UITableViewCell {
     
     contentView.addSubview(containerView)
     containerView.snp.makeConstraints {
-      $0.top.bottom.equalTo(contentView)
+      $0.top.equalTo(contentView).offset(10)
+      $0.bottom.equalTo(contentView)
       $0.leading.trailing.equalTo(guide)
     }
     

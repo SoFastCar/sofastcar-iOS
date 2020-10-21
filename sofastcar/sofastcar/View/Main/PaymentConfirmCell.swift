@@ -279,8 +279,8 @@ class PaymentConfirmCell: UITableViewCell {
   private func configureDetailCostConent() {
     guard let rentPrice = rentPrice else { return }
     guard let insurancePrice = insuranceData?.cost else { return }
-    rentalCostLabel.text = "\(NumberFormatter.getPriceWithDot(price: rentPrice))원"
-    insuranceCostLabel.text = "\(NumberFormatter.getPriceWithDot(price: insurancePrice))원"
+    rentalCostLabel.text = "\(rentPrice.priceWithDots())원"
+    insuranceCostLabel.text = "\(insurancePrice.priceWithDots())원"
   }
   
   private func configurePaymentCardCellUI() {

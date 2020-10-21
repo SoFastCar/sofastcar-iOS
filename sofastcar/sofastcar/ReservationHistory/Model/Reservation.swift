@@ -7,7 +7,7 @@
 //
 import Foundation
 
-struct UserReservation: Decodable {
+struct ReservationList: Decodable {
   var results: [Reservation]
   let previous: String?
   let next: String?
@@ -35,4 +35,13 @@ struct Reservation: Decodable {
     case updateTime = "updated_at"
     case member
   }
+}
+
+extension Reservation {
+    
+  static func all() -> Resource<ReservationList> {
+    let reservationUrl = URL(string: "https://sofastcar.moorekwon.xyz/reservations")!
+    return Resource(url: reservationUrl)
+  }
+  
 }
