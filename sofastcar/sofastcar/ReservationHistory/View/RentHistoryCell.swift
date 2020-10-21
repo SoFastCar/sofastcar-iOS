@@ -71,6 +71,7 @@ class RentHistoryCell: UITableViewCell {
     let label = UILabel()
     label.text = "송파동 공영주차장"
     label.font = .systemFont(ofSize: CommonUI.contentsTextFontSize)
+    label.contentHuggingPriority(for: .horizontal)
     label.textColor = .black
     return label
   }()

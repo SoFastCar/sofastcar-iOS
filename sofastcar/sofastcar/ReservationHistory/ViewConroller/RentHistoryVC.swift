@@ -183,12 +183,16 @@ extension RentHistoryVC: UITableViewDelegate, UITableViewDataSource {
   }
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//    guard let socarCarData = socars[indexPath.section] else { return }
-//    guard let socarZoneData = socarZones[indexPath.section] else { return }
-//    guard let reservation = reservations[indexPath.section] else { return }
-//    let reservationDetailTableVC = ReservationDetailTableVC( true, socarCarData, socarZoneData, reservation)
-//    reservationDetailTableVC.modalPresentationStyle = .overFullScreen
-//    present(reservationDetailTableVC, animated: true, completion: nil)
+
+    let reservationDetailTableVC = ReservationDetailTableVC(
+      true,
+      socarListVM.socarAt(indexPath.section),
+      socarZoneVM.socarZoneAt(indexPath.section),
+      reservationListVM.reservationAt(indexPath.section)
+    )
+
+    reservationDetailTableVC.modalPresentationStyle = .overFullScreen
+    present(reservationDetailTableVC, animated: true, completion: nil)
   }
 }
 

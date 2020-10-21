@@ -140,6 +140,7 @@
 		C7D66D1424FA930100679B99 /* DefaultUserInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D66D1324FA930100679B99 /* DefaultUserInfoView.swift */; };
 		C7D66D1624FB76D900679B99 /* CompleteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D66D1524FB76D900679B99 /* CompleteButton.swift */; };
 		C7D66D1824FB868A00679B99 /* LoginUserInputTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D66D1724FB868A00679B99 /* LoginUserInputTextField.swift */; };
+		C7D740E9253FD3E600FB53DF /* ResrvationDetailVeiwModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D740E8253FD3E600FB53DF /* ResrvationDetailVeiwModel.swift */; };
 		C7EA08F624EFF29C001A7ED4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7EA08F524EFF29C001A7ED4 /* AppDelegate.swift */; };
 		C7EA08FF24EFF29D001A7ED4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C7EA08FE24EFF29D001A7ED4 /* Assets.xcassets */; };
 		C7EA090224EFF29D001A7ED4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C7EA090024EFF29D001A7ED4 /* LaunchScreen.storyboard */; };
@@ -310,6 +311,7 @@
 		C7D66D1324FA930100679B99 /* DefaultUserInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultUserInfoView.swift; sourceTree = "<group>"; };
 		C7D66D1524FB76D900679B99 /* CompleteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompleteButton.swift; sourceTree = "<group>"; };
 		C7D66D1724FB868A00679B99 /* LoginUserInputTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUserInputTextField.swift; sourceTree = "<group>"; };
+		C7D740E8253FD3E600FB53DF /* ResrvationDetailVeiwModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResrvationDetailVeiwModel.swift; sourceTree = "<group>"; };
 		C7EA08F224EFF29C001A7ED4 /* sofastcar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = sofastcar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C7EA08F524EFF29C001A7ED4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C7EA08FE24EFF29D001A7ED4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -371,7 +373,6 @@
 			isa = PBXGroup;
 			children = (
 				7EAA8F6724FFBB510049D514 /* ReservationDashboardVC.swift */,
-				C7CA53EB2509AA3F008DA68C /* ReservationDetailTableVC.swift */,
 				C7CEF73D2511BF4D00C063B0 /* VehicleTakePictureVC.swift */,
 				C7CEF73F2511BF7A00C063B0 /* VehicleDoubleCheckVC.swift */,
 				7E8473D72507BD6B0007962F /* VehicleCheckVC.swift */,
@@ -389,10 +390,6 @@
 			children = (
 				7EF41FC22500AB3A0030752A /* ReservationStateView.swift */,
 				7EF41FC52501F6D90030752A /* CarKeyView.swift */,
-				C7CA53ED2509AF2F008DA68C /* ReservationDetailHeader.swift */,
-				C7CA53F12509DB1E008DA68C /* ReservationRentalInfoCell.swift */,
-				C7CA53F3250A01F8008DA68C /* ReservationPaymentCell.swift */,
-				C7FED69A250C729C00778923 /* ReservationEtcCell.swift */,
 				7E8473D92507C59D0007962F /* VehicleCheckView.swift */,
 				7E8473E125088E830007962F /* TagCollectionViewCell.swift */,
 				7E8473E32509AB420007962F /* LeftAlignedTagCollectionViewFlowLayout.swift */,
@@ -744,6 +741,10 @@
 		C7F11AC4253F0EF0000C69FC /* View */ = {
 			isa = PBXGroup;
 			children = (
+				C7CA53F12509DB1E008DA68C /* ReservationRentalInfoCell.swift */,
+				C7CA53F3250A01F8008DA68C /* ReservationPaymentCell.swift */,
+				C7FED69A250C729C00778923 /* ReservationEtcCell.swift */,
+				C7CA53ED2509AF2F008DA68C /* ReservationDetailHeader.swift */,
 				C73D34902516036C0075471F /* RentHistoryCell.swift */,
 			);
 			path = View;
@@ -755,6 +756,7 @@
 				C7F11AC8253F1005000C69FC /* ReservationViewModel.swift */,
 				C7F11ACE253F2410000C69FC /* SocarViewModel.swift */,
 				C7F11AD8253F26BC000C69FC /* SocarZoneViewModel.swift */,
+				C7D740E8253FD3E600FB53DF /* ResrvationDetailVeiwModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -763,6 +765,7 @@
 			isa = PBXGroup;
 			children = (
 				C73D34862515FE4C0075471F /* RentHistoryVC.swift */,
+				C7CA53EB2509AA3F008DA68C /* ReservationDetailTableVC.swift */,
 			);
 			path = ViewConroller;
 			sourceTree = "<group>";
@@ -770,6 +773,7 @@
 		C7F11AC7253F0EFA000C69FC /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				C7B93933252E1D6D00572F18 /* PaymentBefore.swift */,
 				C73D348A251601910075471F /* Reservation.swift */,
 				C7F11AD4253F2460000C69FC /* Socar.swift */,
 			);
@@ -779,7 +783,6 @@
 		C7F2E638250647C40004EBF9 /* Main */ = {
 			isa = PBXGroup;
 			children = (
-				C7B93933252E1D6D00572F18 /* PaymentBefore.swift */,
 				BC4F3A12250E01EB00B7E1E7 /* GlobalVariables.swift */,
 				BC4F3A13250E01EB00B7E1E7 /* SocarZoneData.swift */,
 				BC56AE3325107FC10044E995 /* SocarListData.swift */,
@@ -1144,6 +1147,7 @@
 				C7B29A8E252181AB00AB081B /* Coupon.swift in Sources */,
 				C7B29AD025291E5400AB081B /* UserCouponView.swift in Sources */,
 				7E77D994251A402B002C6BF1 /* ReturnVehicleVC.swift in Sources */,
+				C7D740E9253FD3E600FB53DF /* ResrvationDetailVeiwModel.swift in Sources */,
 				BC4F3A1C250E01FE00B7E1E7 /* AxaButton.swift in Sources */,
 				C7D66D1224FA925000679B99 /* DefualtUserInfoVC.swift in Sources */,
 				C7A454AE24FA0C9900FA08B7 /* SelectPopupVC.swift in Sources */,

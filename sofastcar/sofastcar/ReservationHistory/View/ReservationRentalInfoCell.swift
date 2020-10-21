@@ -140,8 +140,10 @@ class ReservationRentalInfoCell: UITableViewCell {
   // MARK: - Life Cycle
   init(_ socar: Socar, _ socarZoneData: SocarZoneData, _ reservationData: Reservation) {
     super.init(style: .default, reuseIdentifier: "cell")
+    
     self.socar = socar
     self.socarZoneData = socarZoneData
+    self.reservationData = reservationData
     
     // socar
     let convinOptions = socar.safetyOpt.split(separator: ",")
@@ -149,20 +151,18 @@ class ReservationRentalInfoCell: UITableViewCell {
       carFeatureTagArray.append(String($0))
     }
     
+    // socar Zone
+    usingSocarZoneLabel.text = socarZoneData.name
+    
     if socar.fuelType == "전기" {
       contentLabel.text = "\(socar.number) | \(socar.name) \(socar.carPrices.minPricePerKm)원/km"
     } else {
       contentLabel.text = "\(socar.number) | \(socar.name) \(socar.carPrices.minPricePerKm) ~ \(socar.carPrices.maxPricePerKm)원/km"
     }
     
-    // socar Zone
-    usingSocarZoneLabel.text = socarZoneData.name
-    
-    // reservation data
-    self.reservationData = reservationData
-    
     // nomal
     contentView.layoutMargins = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
+    
   }
   
   required init?(coder: NSCoder) {
@@ -198,8 +198,6 @@ class ReservationRentalInfoCell: UITableViewCell {
       configureContentViewTopBottomLayer()
     case .cancel:
       cancellCellUI()
-    case .blank:
-      configureContentViewTopBottomLayer()
     }
   }
   

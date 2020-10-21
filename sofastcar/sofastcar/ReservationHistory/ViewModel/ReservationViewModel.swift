@@ -61,6 +61,13 @@ extension ReservationViewModel {
     return Observable<String>.just(printedString)
   }
   
+  var timeGap: Observable<String> {
+    let startTime = Time.toUTCString(changeForString: self.reservation.startTime)
+    let endTime = Time.toUTCString(changeForString: self.reservation.endTime)
+    let timeGapString = Time.getDiffTwoDateValueReturnString(start: startTime, end: endTime)
+    return Observable<String>.just(timeGapString)
+  }
+  
 }
 
 /*

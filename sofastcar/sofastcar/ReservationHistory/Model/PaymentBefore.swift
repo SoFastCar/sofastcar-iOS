@@ -41,3 +41,11 @@ struct PaymentBefore: Decodable {
     case updateTime = "updated_at"
   }
 }
+
+extension PaymentBefore {
+  
+  static func getPaymentInfo(_ resrvationID: Int) -> Resource<PaymentBeforeDataSet>{
+    let paymentBeforeUrl = URL(string: "https://sofastcar.moorekwon.xyz/reservations/\(resrvationID)/payment_before")!
+    return Resource(url: paymentBeforeUrl)
+  }
+}
